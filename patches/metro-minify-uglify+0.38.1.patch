@@ -2,10 +2,10 @@ patch-package
 --- a/node_modules/metro-minify-uglify/src.real/minifier.js
 +++ b/node_modules/metro-minify-uglify/src.real/minifier.js
 @@ -34,7 +34,11 @@ function withSourceMap(
- 
+
  function minify(inputCode: string, inputMap: ?BabelSourceMap) {
    const result = uglify.minify(inputCode, {
--    mangle: {toplevel: true},
+-    mangle: {toplevel: false},
 +    mangle: {
 +      toplevel: true,
 +      safari10: true,
@@ -17,10 +17,10 @@ patch-package
 --- a/node_modules/metro-minify-uglify/src/minifier.js
 +++ b/node_modules/metro-minify-uglify/src/minifier.js
 @@ -34,7 +34,11 @@ filename)
- 
+
  function minify(inputCode, inputMap) {
    const result = uglify.minify(inputCode, {
--    mangle: { toplevel: true },
+-    mangle: { toplevel: false },
 +    mangle: {
 +      toplevel: true,
 +      safari10: true,
@@ -32,10 +32,10 @@ patch-package
 --- a/node_modules/metro-minify-uglify/src/minifier.js.flow
 +++ b/node_modules/metro-minify-uglify/src/minifier.js.flow
 @@ -34,7 +34,11 @@ function withSourceMap(
- 
+
  function minify(inputCode: string, inputMap: ?BabelSourceMap) {
    const result = uglify.minify(inputCode, {
--    mangle: {toplevel: true},
+-    mangle: {toplevel: false},
 +    mangle: {
 +      toplevel: true,
 +      safari10: true,

@@ -40,7 +40,7 @@ module.exports = {
       __dirname,
       path.resolve(fs.realpathSync('node_modules/@chronobank/core')),
       path.resolve(fs.realpathSync('node_modules/@chronobank/login')),
-      path.resolve(path.join(fs.realpathSync('node_modules/@chronobank/login'), '../../node_modules')),
+      path.resolve(path.join(fs.realpathSync('node_modules/@chronobank/login'), '../../node_modules'))
     ]
   },
   getSourceExts: () => [ 'jsx' ],
