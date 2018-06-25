@@ -267,8 +267,6 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
     }
 
     render () {
-
-    render () {
       if (this.props.errors) {
         this.props.errors.forEach(this.renderError)
       }

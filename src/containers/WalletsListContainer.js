@@ -22,15 +22,13 @@ class WalletsListContainer extends PureComponent<TWalletsListProps, TWalletsList
     leftButtons: [
       {
         id: 'drawer',
-        icon: require('../images/burger.png'),
-      },
-        icon: require('images/burger.png')
+        icon: require('../images/burger.png')
       }
     ],
     rightButtons: [
       {
         id: 'addWallet',
-        icon: require('images/plus.png')
+        icon: require('../images/plus.png')
       }
     ]
   }
