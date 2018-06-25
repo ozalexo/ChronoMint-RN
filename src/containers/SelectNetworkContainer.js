@@ -7,8 +7,8 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { DUCK_NETWORK } from 'login/redux/network/actions'
-import networkService from 'login/network/NetworkService'
+import { DUCK_NETWORK } from '@chronobank/login/redux/network/actions'
+import networkService from '@chronobank/login/network/NetworkService'
 import SelectNetwork, { type TNetwork } from '../screens/SelectNetwork'
 
 type TSelectNetworkContainerProps = {

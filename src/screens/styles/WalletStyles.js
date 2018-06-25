@@ -8,7 +8,7 @@
 import {
   StyleSheet,
 } from 'react-native'
-import colors from 'utils/colors'
+import colors from '../../utils/colors'
 
 const styles = StyleSheet.create({
   actionButton: {

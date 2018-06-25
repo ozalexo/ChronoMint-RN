@@ -12,17 +12,17 @@ import { connect } from 'react-redux'
 import {
   Alert
 } from 'react-native'
-import { BLOCKCHAIN_ETHEREUM } from 'dao/EthereumDAO'
-import { BLOCKCHAIN_NEM } from 'dao/NemDAO'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
+import { BLOCKCHAIN_NEM } from '@chronobank/core/dao/NemDAO'
 import {
   getSelectedWalletStore,
-  type TSelectedWallet
-} from 'redux/wallet/selectors'
+  type TSelectedWallet,
+} from '../redux/wallet/selectors'
 import Wallet, {
-  type TWalletProps
-} from 'screens/Wallet'
-import WalletTokensTab from 'containers/WalletTokensTabContainer'
-import WalletTransactionsTab from 'screens/WalletTransactionsTab'
+  type TWalletProps,
+} from '../screens/Wallet'
+import WalletTokensTab from '../containers/WalletTokensTabContainer'
+import WalletTransactionsTab from '../screens/WalletTransactionsTab'
 import {
   SceneMap,
   type Route,

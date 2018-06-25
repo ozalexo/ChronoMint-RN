@@ -6,7 +6,6 @@
   "license": "AGPL-3.0",
   "scripts": {
     "android": "react-native run-android",
-    "contracts:compile": "cd node_modules/chronobank-smart-contracts && node --max_old_space_size=8000 ../truffle/build/cli.bundled.js compile --all",
     "ios": "react-native run-ios --simulator 'iPhone SE'",
     "postinstall": "flow-typed install --skip",
     "postversion": "react-native-version",
@@ -17,7 +16,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@chronobank": "https://github.com/ChronoBank/ChronoMint.git#89c4e00ff3cdef0d06af2296493446d9ec8cbc85",
+    "@chronobank/core": "../ChronoMint/packages/core/",
+    "@chronobank/core-dependencies": "./src/platform",
+    "@chronobank/login": "../ChronoMint/packages/login",
     "assert": "^1.1.1",
     "asyncstorage-down": "^4.0.1",
     "axios": "^0.17.1",
@@ -27,7 +28,6 @@
     "bitcoinjs-lib": "^3.3.2",
     "browserify-zlib": "~0.1.4",
     "capture-stack-trace": "^1.0.0",
-    "chronobank-smart-contracts": "1.1.47",
     "coinselect": "^3.1.11",
     "console-browserify": "^1.1.0",
     "constants-browserify": "^1.0.0",
@@ -66,6 +66,7 @@
     "react-redux": "^5.0.6",
     "readable-stream": "1.0.33",
     "redux": "^3.7.2",
+    "redux-form": "^7.3.0",
     "redux-immutable": "^4.0.0",
     "redux-persist": "^4.3.1",
     "redux-persist-immutable": "^4.3.1",
@@ -116,6 +117,7 @@
     "lint-staged": "^7.0.4",
     "patch-package": "^5.1.1",
     "postinstall-prepare": "^1.0.1",
+    "pre-commit": "^1.2.2",
     "react-native-version": "^2.6.0",
     "react-test-renderer": "16.2.0",
     "redux-devtools-extension": "^2.13.2",
@@ -124,9 +126,13 @@
   },
   "lint-staged": {
     "./src/**/*.(js|jsx)": [
-      "eslint --fix",
+      "standard --fix",
       "git add"
     ]
+  },
+  "optionalDependencies": {
+    "@chronobank/core": "0.8.1",
+    "@chronobank/login": "0.6.1"
   },
   "standard": {
     "parser": "babel-eslint",

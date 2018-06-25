@@ -8,7 +8,7 @@ import * as React from 'react'
 import { View, StyleSheet } from 'react-native'
 import colors from '../utils/colors'
 
-const Separator = ({ style }) => <View style={[styles.separator, style ]} />
+const Separator = ({ style }) => <View style={[ styles.separator, style ]} />
 
 export default Separator
 

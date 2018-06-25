@@ -8,14 +8,14 @@
 // #region imports
 
 import { connect } from 'react-redux'
-import WalletTokensTab from 'screens/WalletTokensTab'
+import WalletTokensTab from '../screens/WalletTokensTab'
 import {
   getSelectedWalletStore,
-  getMarketPricesSelectedCurrencyStore
-} from 'redux/wallet/selectors'
+  getMarketPricesSelectedCurrencyStore,
+} from '../redux/wallet/selectors'
 import {
-  tokensAndAmountsSelector
-} from 'redux/mainWallet/selectors'
+  tokensAndAmountsSelector,
+} from '../redux/mainWallet/selectors'
 
 // #endregion
 

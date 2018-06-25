@@ -7,7 +7,7 @@
 
 import { type Dispatch } from 'redux'
 import { createCipher, createHash } from 'crypto'
-import { addError } from 'login/redux/network/actions'
+import { addError } from '@chronobank/login/redux/network/actions'
 import salt from '../../utils/salt'
 import { type TStoredAccount } from './reducer'
 

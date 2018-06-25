@@ -4,10 +4,10 @@
  *
  * @flow
  */
-import 'utils/i18n'
-import 'utils/shim'
 import { Navigation } from 'react-native-navigation'
 import { Provider } from 'react-redux'
+import './utils/i18n'
+import './utils/shim'
 import store, { injectReducer } from './redux/configureStore'
 import registerScreens from './registerScreens'
 
@@ -22,7 +22,7 @@ registerScreens(store, Provider)
 let currentRoot = ''
 
 export default function startAppRoot (root: string): Promise<void> {
-  if (currentRoot === root) return 
+  if (currentRoot === root) return
 
   currentRoot = root
 

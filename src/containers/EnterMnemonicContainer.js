@@ -6,7 +6,7 @@
  */
 
 import React, { PureComponent } from 'react'
-import mnemonicProvider from 'login/network/mnemonicProvider'
+import mnemonicProvider from '@chronobank/login/network/mnemonicProvider'
 import { MNEMONIC_LENGTH } from '../utils/globals'
 import EnterMnemonic from '../screens/EnterMnemonic'
 import withLogin, { type TWithLoginProps } from '../components/withLogin'

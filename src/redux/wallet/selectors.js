@@ -11,32 +11,32 @@ import {
   defaultMemoize,
 } from 'reselect'
 
-import { DUCK_MAIN_WALLET } from 'redux/mainWallet/actions'
-import { DUCK_MARKET } from 'redux/market/action'
-import { DUCK_MULTISIG_WALLET } from 'redux/multisigWallet/actions'
-import { DUCK_TOKENS } from 'redux/tokens/actions'
-import { DUCK_WALLET, getCurrentWallet } from 'redux/wallet/actions'
+import { DUCK_MAIN_WALLET } from '@chronobank/core/redux/mainWallet/actions'
+import { DUCK_MARKET } from '@chronobank/core/redux/market/action'
+import { DUCK_MULTISIG_WALLET } from '@chronobank/core/redux/multisigWallet/actions'
+import { DUCK_TOKENS } from '@chronobank/core/redux/tokens/actions'
+import { DUCK_WALLET, getCurrentWallet } from '@chronobank/core/redux/wallet/actions'
 
-import Amount from 'models/Amount'
-import BalanceModel from 'models/tokens/BalanceModel'
-import BalancesCollection from 'models/tokens/BalancesCollection'
-import MainWalletModel from 'models/wallet/MainWalletModel'
-import MultisigWalletModel from 'models/wallet/MultisigWalletModel'
-import AddressesCollection from 'models/wallet/AddressesCollection'
-import AddressModel from 'models/wallet/AddressModel'
-import MultisigWalletCollection from 'models/wallet/MultisigWalletCollection'
-import TokenModel from 'models/tokens/TokenModel'
-import TokensCollection from 'models/tokens/TokensCollection'
-import TxModel from 'models/TxModel'
+import Amount from '@chronobank/core/models/Amount'
+import BalanceModel from '@chronobank/core/models/tokens/BalanceModel'
+import BalancesCollection from '@chronobank/core/models/tokens/BalancesCollection'
+import MainWalletModel from '@chronobank/core/models/wallet/MainWalletModel'
+import MultisigWalletModel from '@chronobank/core/models/wallet/MultisigWalletModel'
+import AddressesCollection from '@chronobank/core/models/wallet/AddressesCollection'
+import AddressModel from '@chronobank/core/models/wallet/AddressModel'
+import MultisigWalletCollection from '@chronobank/core/models/wallet/MultisigWalletCollection'
+import TokenModel from '@chronobank/core/models/tokens/TokenModel'
+import TokensCollection from '@chronobank/core/models/tokens/TokensCollection'
+import TxModel from '@chronobank/core/models/TxModel'
 
-import { BLOCKCHAIN_ETHEREUM } from 'dao/EthereumDAO'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
 import {
   BLOCKCHAIN_BITCOIN_CASH,
   BLOCKCHAIN_BITCOIN_GOLD,
   BLOCKCHAIN_BITCOIN,
   BLOCKCHAIN_LITECOIN,
-} from 'login/network/BitcoinProvider'
-import { BLOCKCHAIN_NEM } from 'dao/NemDAO'
+} from '@chronobank/login/network/BitcoinProvider'
+import { BLOCKCHAIN_NEM } from '@chronobank/core/dao/NemDAO'
 
 const sortArrayByObjectKeys = (a, b) => {
   const oA = Object.keys(a)[0]

@@ -8,13 +8,12 @@
 import React, { PureComponent } from 'react'
 import { type Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { getTokens } from 'redux/tokens/selectors'
-import { mainTransfer } from 'redux/mainWallet/actions'
-// eslint-disable-next-line
-import Amount from 'models/Amount'
+import { getTokens } from '@chronobank/core/redux/tokens/selectors'
+import { mainTransfer } from '@chronobank/core/redux/mainWallet/actions'
+import Amount from '@chronobank/core/models/Amount'
 import { BigNumber } from 'bignumber.js'
-import TokenModel from 'models/tokens/TokenModel'
-import ConfirmSend from 'screens/ConfirmSend'
+import TokenModel from '@chronobank/core/models/tokens/TokenModel'
+import ConfirmSend from '../screens/ConfirmSend'
 
 export type TConfirmSendContainerProps = {
   tokensDuck: any, // TODO: to make a flow type for this

@@ -8,9 +8,9 @@
 import React from 'react'
 import { StyleSheet, Switch, Text, View } from 'react-native'
 import I18n from 'react-native-i18n'
-import PrimaryButton from 'components/PrimaryButton'
-import Separator from 'components/Separator'
-import TextButton from 'components/TextButton'
+import PrimaryButton from '../components/PrimaryButton'
+import Separator from '../components/Separator'
+import TextButton from '../components/TextButton'
 
 type TWalletBackupProps = {
   onDone: () => void,

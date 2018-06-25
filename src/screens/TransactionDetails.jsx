@@ -8,11 +8,11 @@
 import React, { PureComponent } from 'react'
 import {
   Text,
-  View,
+  View
 } from 'react-native'
-import LabeledItem from 'components/LabeledItem'
-import styles from 'screens/styles/TransactionDetailsStyles'
-import TransactionIcon, { type TTransactionType, type TIconMode } from 'components/TransactionIcon'
+import LabeledItem from '../components/LabeledItem'
+import styles from '../screens/styles/TransactionDetailsStyles'
+import TransactionIcon, { type TTransactionType, type TIconMode } from '../components/TransactionIcon'
 
 type TTransactionDetailsProps = {
   address: string,
@@ -40,13 +40,13 @@ export default class TransactionDetails extends PureComponent<TTransactionDetail
       fee,
       symbol,
       txDate,
-      type,
+      type
     } = this.props
 
     const iconMode: TIconMode = 'small'
 
     const Estimation = (confirmations, blockchain) => {
-      /*Ivan Abdulov [15:13]
+      /* Ivan Abdulov [15:13]
         btc/ltc/bcc/btg - ~10m per 1 confirm
         eth/erc20 - ~30s per 1 confirm */
 
@@ -76,11 +76,13 @@ export default class TransactionDetails extends PureComponent<TTransactionDetail
           labelText={`${symbol} ${amount}`}
           labelType='currencyColored'
         >
-          {/*<Text style={styles.lightGreyText}>
+          {/*
+          <Text style={styles.lightGreyText}>
             {
               `${selectedCurrency} ${amountToSend.currency.toFixed(2)}`
             }
-          </Text>*/}
+          </Text>
+          */}
         </LabeledItem>
         <LabeledItem
           labelText='Fee'
@@ -89,14 +91,17 @@ export default class TransactionDetails extends PureComponent<TTransactionDetail
             {
               `${symbol} ${fee.toFixed(6)}`
             }
-            {/*<Text style={styles.lightGreyText}>
+            {/*
+            <Text style={styles.lightGreyText}>
               {
                 ` (${selectedCurrency} ${fee.currency.toFixed(2)})`
               }
-            </Text>*/}
+            </Text>
+            */}
           </Text>
         </LabeledItem>
-        {/*<LabeledItem
+        {/*
+        <LabeledItem
           labelText='Balance'
         >
           <Text>
@@ -109,7 +114,8 @@ export default class TransactionDetails extends PureComponent<TTransactionDetail
               }
             </Text>
           </Text>
-        </LabeledItem>*/}
+        </LabeledItem>
+        */}
       </View>
     )
   }

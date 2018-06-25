@@ -7,8 +7,8 @@
 
 import React, { PureComponent } from 'react'
 import { StyleSheet, FlatList, View } from 'react-native'
-import Input from 'components/Input'
-import PrimaryButton from 'components/PrimaryButton'
+import Input from '../components/Input'
+import PrimaryButton from '../components/PrimaryButton'
 
 export type TEnterMnemonicProps = {
   inputsList: Array<any>,

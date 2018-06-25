@@ -7,7 +7,7 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import I18n from 'react-native-i18n'
-import colors from 'utils/colors'
+import colors from '../utils/colors'
 
 type FetchingStatus = 'FETCHING' | 'SYNCING' | 'SYNCED'
 

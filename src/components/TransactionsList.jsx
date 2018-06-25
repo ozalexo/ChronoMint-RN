@@ -19,9 +19,9 @@ import {
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import moment from 'moment'
-import Separator from 'components/Separator'
-import styles from 'components/styles/TransactionsListStyles'
-import TransactionIcon, { type TTransactionType } from 'components/TransactionIcon'
+import Separator from './Separator'
+import styles from './styles/TransactionsListStyles'
+import TransactionIcon, { type TTransactionType } from './TransactionIcon'
 
 //#endregion
 

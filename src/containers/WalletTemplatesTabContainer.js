@@ -6,12 +6,12 @@
  */
 
 import React, { PureComponent } from 'react'
-import WalletTemplatesTab, { type TTemplate } from 'screens/WalletTemplatesTab'
+import WalletTemplatesTab, { type TTemplate } from '../screens/WalletTemplatesTab'
 
 class WalletTemplatesContainer extends PureComponent<{}, {}> {
   /* eslint-disable-next-line no-unused-vars */
   handleSelectTemplate = (template: TTemplate) => () => {
-    throw 'Not implemented yet'
+    throw new Error('Not implemented yet')
   }
 
   render () {

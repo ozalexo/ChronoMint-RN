@@ -6,13 +6,13 @@
  */
 
 import React, { PureComponent } from 'react'
-import { type TWalletOwner } from 'components/WalletOwner'
-import WalletOwnersTab from 'screens/WalletOwnersTab'
+import { type TWalletOwner } from '../components/WalletOwner'
+import WalletOwnersTab from '../screens/WalletOwnersTab'
 
 class WalletOwnersTabContainer extends PureComponent<{}, {}> {
   /* eslint-disable-next-line no-unused-vars */
   handleSelectOwner = (owner: TWalletOwner) => () => {
-    throw 'Not implemented yet'
+    throw new Error('Not implemented yet')
   }
 
   render () {

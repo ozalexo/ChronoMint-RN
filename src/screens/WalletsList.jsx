@@ -11,9 +11,9 @@ import {
   SectionList,
   View,
 } from 'react-native'
-import SectionHeader from 'components/SectionHeader'
-import styles from 'screens/styles/WalletsListStyles'
-import WalletsListItemContainer from 'containers/WalletsListItemContainer'
+import SectionHeader from '../components/SectionHeader'
+import styles from '../screens/styles/WalletsListStyles'
+import WalletsListItemContainer from '../containers/WalletsListItemContainer'
 
 type TWalletItem = {
   address: string,

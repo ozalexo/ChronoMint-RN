@@ -9,48 +9,6 @@
     ["babel-plugin-transform-builtin-extend", {
       "globals": ["Error", "Array"]
     }],
-    ["module-resolver", {
-      "root": [
-        ".",
-        "./src",
-        "./node_modules/@chronobank/src",
-        "./node_modules/@chronobank/packages"
-      ],
-      "paths": [
-        ".",
-        "./src",
-        "./node_modules/@chronobank/src",
-        "./node_modules/@chronobank/packages"
-      ],
-      "alias": {
-        "@chronobank/login": "@chronobank/packages/login",
-        "crypto": "react-native-crypto",
-        "zlib": "browserify-zlib",
-        "console": "console-browserify",
-        "constants": "constants-browserify",
-        "child_process": "./",
-        "dns": "dns.js",
-        "net": "react-native-tcp",
-        "domain": "domain-browser",
-        "http": "react-native-http",
-        "https": "https-browserify",
-        "os": "react-native-os",
-        "path": "path-browserify",
-        "querystring": "querystring-es3",
-        "fs": "react-native-level-fs",
-        "_stream_transform": "readable-stream/transform",
-        "_stream_readable": "readable-stream/readable",
-        "_stream_writable": "readable-stream/writable",
-        "_stream_duplex": "readable-stream/duplex",
-        "_stream_passthrough": "readable-stream/passthrough",
-        "dgram": "react-native-udp",
-        "stream": "stream-browserify",
-        "timers": "timers-browserify",
-        "tty": "tty-browserify",
-        "vm": "vm-browserify",
-        "tls": "./"
-      }
-    }],
     ["transform-inline-environment-variables", {
       "include": [
         "NODE_ENV",

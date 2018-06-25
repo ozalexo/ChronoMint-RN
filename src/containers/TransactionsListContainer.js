@@ -6,16 +6,16 @@
 
 import { connect } from 'react-redux'
 import type { Dispatch } from 'redux'
-import TransactionsList from 'components/TransactionsList'
+import TransactionsList from '../components/TransactionsList'
 import {
   selWalletSelector,
-  type TSelectedWallet
-} from 'redux/wallet/selectors'
+  type TSelectedWallet,
+} from '../redux/wallet/selectors'
 import {
   listEQTransactions,
-  mwTxFetchingStatus
-} from 'redux/mainWallet/selectors'
-import { getAccountTransactions } from 'redux/mainWallet/actions'
+  mwTxFetchingStatus,
+} from '../redux/mainWallet/selectors'
+import { getAccountTransactions } from '@chronobank/core/redux/mainWallet/actions'
 
 const makeMapStateToProps = (origState, origProps) => {
   const selectedWallet: TSelectedWallet = selWalletSelector(origState)

@@ -9,18 +9,17 @@ import {
   View,
   Image
 } from 'react-native'
-import { indicators } from 'utils/globals'
 import { type StyleObj as TStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes'
-import styles from 'components/styles/WalletImageStyles'
-import { BLOCKCHAIN_ETHEREUM } from 'dao/EthereumDAO'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
 import {
   BLOCKCHAIN_BITCOIN_CASH,
   BLOCKCHAIN_BITCOIN_GOLD,
   BLOCKCHAIN_BITCOIN,
   BLOCKCHAIN_LITECOIN
-} from 'login/network/BitcoinProvider'
-// import { BLOCKCHAIN_NEM } from 'dao/NemDAO'
-const BLOCKCHAIN_NEM = 'NEM' // TODO: replace it to import above after ChronoMint depency upgrade
+} from '@chronobank/login/network/BitcoinProvider'
+import { BLOCKCHAIN_NEM } from '@chronobank/core/dao/NemDAO'
+import { indicators } from '../utils/globals'
+import styles from './styles/WalletImageStyles'
 
 export type TWalletMode = '2fa' | 'shared' | 'timeLocked'
 

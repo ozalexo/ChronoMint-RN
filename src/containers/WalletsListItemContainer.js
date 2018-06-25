@@ -8,11 +8,11 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { type Dispatch } from 'redux'
-import { DUCK_MARKET } from 'redux/market/action'
-import { selectWallet } from 'redux/wallet/actions'
+import { DUCK_MARKET } from '@chronobank/core/redux/market/action'
+import { selectWallet } from '@chronobank/core/redux/wallet/actions'
 import WalletsListItem, {
-  type TWalletsListItemProps
-} from 'components/WalletsListItem'
+  type TWalletsListItemProps,
+} from '../components/WalletsListItem'
 
 type TWalletsListItemContainerProps = TWalletsListItemProps & {
   selectWallet(blockchain: string, address: string): void,

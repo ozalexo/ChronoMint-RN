@@ -19,12 +19,12 @@ import {
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import { type Navigator as TNavigator } from 'react-native-navigation'
-import MainWalletModel from 'models/wallet/MainWalletModel'
+import MainWalletModel from '@chronobank/core/models/wallet/MainWalletModel'
 import {
   TabView,
 } from 'react-native-tab-view'
-import Separator from 'components/Separator'
-import styles from 'screens/styles/WalletStyles'
+import Separator from '../components/Separator'
+import styles from '../screens/styles/WalletStyles'
 
 //#endregion
 

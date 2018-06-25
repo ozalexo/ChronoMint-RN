@@ -30,6 +30,8 @@
 ; require from fbjs/lib instead: require('fbjs/lib/invariant')
 .*/node_modules/invariant/.*
 .*/node_modules/warning/.*
+.*/node_modules/config-chain/.*
+.*/node_modules/oboe/.*
 
 [include]
 
@@ -39,6 +41,7 @@ node_modules/react-native/flow/
 node_modules/react-native/flow-github/
 custom-definitions/
 flow-typed/
+../ChronoMint/packages/.*
 
 
 [options]
@@ -46,8 +49,6 @@ emoji=true
 
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=./src
-module.system.node.resolve_dirname=./node_modules/@chronobank/src
-module.system.node.resolve_dirname=./node_modules/@chronobank/packages
 
 munge_underscores=true
 

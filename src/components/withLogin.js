@@ -11,25 +11,25 @@ import type { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import Web3 from 'web3'
 import { createDecipher, createHash } from 'crypto'
-import { login } from 'redux/session/actions'
+import { login } from '@chronobank/core/redux/session/actions'
 import {
   addError,
   clearErrors,
   DUCK_NETWORK,
-  loading
-} from 'login/redux/network/actions'
-import networkService from 'login/network/NetworkService'
-import mnemonicProvider from 'login/network/mnemonicProvider'
-import privateKeyProvider from 'login/network/privateKeyProvider'
-import web3Provider from 'login/network/Web3Provider'
-import { ethereumProvider } from 'login/network/EthereumProvider'
+  loading,
+} from '@chronobank/login/redux/network/actions'
+import networkService from '@chronobank/login/network/NetworkService'
+import mnemonicProvider from '@chronobank/login/network/mnemonicProvider'
+import privateKeyProvider from '@chronobank/login/network/privateKeyProvider'
+import web3Provider from '@chronobank/login/network/Web3Provider'
+import { ethereumProvider } from '@chronobank/login/network/EthereumProvider'
 import {
   bccProvider,
   btcProvider,
   btgProvider,
-  ltcProvider
-} from 'login/network/BitcoinProvider'
-import { nemProvider } from 'login/network/NemProvider'
+  ltcProvider,
+} from '@chronobank/login/network/BitcoinProvider'
+import { nemProvider } from '@chronobank/login/network/NemProvider'
 import startAppRoot from '../app'
 import {
   addAccount,
@@ -265,6 +265,8 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
         { cancelable: false }
       )
     }
+
+    render () {
 
     render () {
       if (this.props.errors) {

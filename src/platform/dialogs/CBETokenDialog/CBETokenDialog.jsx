@@ -5,13 +5,13 @@
  * @flow
  */
 
+import React from 'react'
 import {
-  StyleSheet,
+  Text,
 } from 'react-native'
-import colors from '../../utils/colors'
 
-const styles = StyleSheet.create({
- 
-})
+const CBETokenDialog = () => (
+  <Text>Not implemented yet</Text>
+)
 
-export default styles
+export default CBETokenDialog

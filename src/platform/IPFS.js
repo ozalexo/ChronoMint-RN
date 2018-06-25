@@ -6,8 +6,8 @@
  */
 // import ipfsAPI from 'ipfs-api'
 import promisify from 'promisify-node-callback'
-import FileCollection from 'models/FileSelect/FileCollection'
-import FileModel, { fileConfig } from 'models/FileSelect/FileModel'
+import FileCollection from '@chronobank/core/models/FileSelect/FileCollection'
+import FileModel, { fileConfig } from '@chronobank/core/models/FileSelect/FileModel'
 
 // const DEFAULT_CONFIG = {
 //   host: 'ipfs.infura.io',

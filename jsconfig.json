@@ -3,13 +3,6 @@
     "jsx": "react-native",
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "paths": {
-      "*": [
-        "src/*",
-        "node_modules/@chronobank/src/*",
-        "node_modules/@chronobank/packages/*"
-      ]
-    }
   },
   "exclude": [
     "node_modules"
