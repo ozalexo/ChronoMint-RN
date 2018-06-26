@@ -8,7 +8,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { type Dispatch } from 'redux'
-import { DUCK_MARKET } from '@chronobank/core/redux/market/action'
+import { DUCK_MARKET } from '@chronobank/core/redux/market/actions'
 import { selectWallet } from '@chronobank/core/redux/wallet/actions'
 import WalletsListItem, {
   type TWalletsListItemProps,

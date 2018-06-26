@@ -16,7 +16,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@chronobank/core": "../ChronoMint/packages/core/",
+    "@chronobank/core": "../ChronoMint/packages/core",
     "@chronobank/core-dependencies": "./src/platform",
     "@chronobank/login": "../ChronoMint/packages/login",
     "assert": "^1.1.1",
@@ -122,10 +122,6 @@
       "standard --fix",
       "git add"
     ]
-  },
-  "optionalDependencies": {
-    "@chronobank/core": "0.8.1",
-    "@chronobank/login": "0.6.1"
   },
   "standard": {
     "parser": "babel-eslint",

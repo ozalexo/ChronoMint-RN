@@ -11,14 +11,14 @@ export {
   listEQTransactions,
   listTransactions,
   mwTxFetchingStatus,
-} from 'redux/mainWallet/selectors/transactions'
+} from './selectors/transactions'
 export {
   primaryTokenAmount,
   primaryTokenBalance,
-} from 'redux/mainWallet/selectors/primaryToken'
-export { sectionsSelector } from 'redux/mainWallet/selectors/wallets'
-export { selectedCurrencyStore } from 'redux/mainWallet/selectors/models'
-export { tokensAndAmountsSelector } from 'redux/mainWallet/selectors/tokens'
-export { walletBalanceSelector } from 'redux/mainWallet/selectors/balance'
-export { walletPrimaryBalanceSelector } from 'redux/mainWallet/selectors/primaryBalance'
+} from './selectors/primaryToken'
+export { sectionsSelector } from './selectors/wallets'
+export { selectedCurrencyStore } from './selectors/models'
+export { tokensAndAmountsSelector } from './selectors/tokens'
+export { walletBalanceSelector } from './selectors/balance'
+export { walletPrimaryBalanceSelector } from './selectors/primaryBalance'
 

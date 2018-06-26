@@ -14,7 +14,7 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger as rCreateLogger } from 'redux-logger'
 import { SESSION_DESTROY } from '../utils/globals'
-import { type TState } from './ducks'
+import { type TState } from '../redux/ducks'
 
 const getNestedReducers = (ducks) => {
   let reducers = {}

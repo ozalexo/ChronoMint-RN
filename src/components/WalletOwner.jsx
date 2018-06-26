@@ -11,7 +11,7 @@ import {
   Text,
   View,
 } from 'react-native'
-import styles from 'components/styles/WalletOwnerStyles'
+import styles from '../components/styles/WalletOwnerStyles'
 
 export type TWalletOwner = {
   address: string,

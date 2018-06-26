@@ -10,8 +10,8 @@ import {
   BLOCKCHAIN_BITCOIN_GOLD,
   BLOCKCHAIN_BITCOIN,
   BLOCKCHAIN_LITECOIN,
-} from 'login/network/BitcoinProvider'
-import { BLOCKCHAIN_ETHEREUM } from 'dao/EthereumDAO'
+} from '@chronobank/login/network/BitcoinProvider'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
 
 const BLOCKCHAIN_NEM = 'NEM' // TODO: replace it to "import { BLOCKCHAIN_NEM } from 'dao/NemDAO" after ChronoMint depency upgrade
 

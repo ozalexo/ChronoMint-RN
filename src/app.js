@@ -8,7 +8,7 @@ import { Navigation } from 'react-native-navigation'
 import { Provider } from 'react-redux'
 import './utils/i18n'
 import './utils/shim'
-import store, { injectReducer } from './redux/configureStore'
+import store, { injectReducer } from './platform/configureStore'
 import registerScreens from './registerScreens'
 
 // Listen for unhandled promise rejections

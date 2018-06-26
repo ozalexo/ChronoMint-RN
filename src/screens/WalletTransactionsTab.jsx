@@ -8,9 +8,9 @@ import React, { PureComponent } from 'react'
 import {
   ScrollView,
 } from 'react-native'
-import styles from 'screens/styles/WalletTransactionsStyles'
-import TransactionsListContainer from 'containers/TransactionsListContainer'
-import WalletInfoContainer from 'containers/WalletInfoContainer'
+import styles from './styles/WalletTransactionsStyles'
+import TransactionsListContainer from '../containers/TransactionsListContainer'
+import WalletInfoContainer from '../containers/WalletInfoContainer'
 
 export type TWalletTransactionsProps = {
   navigator: any,

@@ -9,8 +9,8 @@ import React, { PureComponent } from 'react'
 import {
   FlatList,
 } from 'react-native'
-import styles from 'screens/styles/WalletOwnersTabStyles'
-import WalletOwner, { type TWalletOwner } from 'components/WalletOwner'
+import styles from './styles/WalletOwnersTabStyles'
+import WalletOwner, { type TWalletOwner } from '../components/WalletOwner'
 
 type TWalletOwnersTabProps = {
   owners: TWalletOwner[],

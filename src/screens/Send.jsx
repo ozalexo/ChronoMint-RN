@@ -16,15 +16,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import FeeSlider from 'components/FeeSlider'
 import I18n from 'react-native-i18n'
-import SectionHeader from '../components/SectionHeader'
-import Separator from '../components/Separator'
-import styles from '../screens/styles/SendStyles'
 import TokenModel from '@chronobank/core/models/tokens/TokenModel'
 import TokensCollection from '@chronobank/core/models/tokens/TokensCollection'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
 import { BLOCKCHAIN_NEM } from '@chronobank/core/dao/NemDAO'
+import FeeSlider from '../components/FeeSlider'
+import SectionHeader from '../components/SectionHeader'
+import Separator from '../components/Separator'
+import styles from '../screens/styles/SendStyles'
+
 
 //#endregion
 
@@ -91,7 +92,7 @@ type TTokenSelectorProps = {
 //#endregion
 
 export default class Send extends PureComponent<TSendProps, {}> {
-  // Temporary 
+  // Temporary
   // eslint-disable-next-line complexity
   render () {
     const {
@@ -141,11 +142,11 @@ export default class Send extends PureComponent<TSendProps, {}> {
         <View style={styles.formHeader}>
           <Text style={styles.walletTitle}>
             {
-              strings.walletTitle 
+              strings.walletTitle
             }
           </Text>
           <Text style={styles.walletAddress}>
-            { 
+            {
               selectedWallet.address
             }
           </Text>

@@ -12,7 +12,7 @@ import {
 } from 'reselect'
 
 import { DUCK_MAIN_WALLET } from '@chronobank/core/redux/mainWallet/actions'
-import { DUCK_MARKET } from '@chronobank/core/redux/market/action'
+import { DUCK_MARKET } from '@chronobank/core/redux/market/actions'
 import { DUCK_MULTISIG_WALLET } from '@chronobank/core/redux/multisigWallet/actions'
 import { DUCK_TOKENS } from '@chronobank/core/redux/tokens/actions'
 import { DUCK_WALLET, getCurrentWallet } from '@chronobank/core/redux/wallet/actions'

@@ -11,8 +11,8 @@ import {
   View,
   Text,
 } from 'react-native'
-import Label from 'components/Label'
-import styles from 'components/styles/LabeledItemStyles'
+import Label from '../components/Label'
+import styles from '../components/styles/LabeledItemStyles'
 
 type LabeledItemProps = {
   children?: Element<typeof Text> | Array<Element<typeof Text>>, // This component my be used as pure <Label /> with no children
