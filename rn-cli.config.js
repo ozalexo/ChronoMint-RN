@@ -2,20 +2,22 @@ const path = require('path')
 const fs = require('fs')
 
 const extraNodeModules = {
-  _stream_transform: require.resolve('readable-stream/transform'),
-  child_process: require.resolve('./'),
-  crypto: require.resolve('react-native-crypto'),
-  events: require.resolve('events'),
-  fs: require.resolve('react-native-level-fs'),
-  http: require.resolve('react-native-http'),
-  https: require.resolve('https-browserify'),
-  net: require.resolve('react-native-tcp'),
-  os: require.resolve('react-native-os'),
-  path: require.resolve('path-browserify'),
-  stream: require.resolve('stream-browserify'),
-  tls: require.resolve('./'),
-  vm: require.resolve('vm-browserify'),
-  zlib: require.resolve('browserify-zlib')
+  "_stream_transform": require.resolve('readable-stream/transform'),
+  "child_process": require.resolve('./'),
+  "crypto": require.resolve('react-native-crypto'),
+  "events": require.resolve('events'),
+  "fs": require.resolve('react-native-level-fs'),
+  "http": require.resolve('react-native-http'),
+  "https": require.resolve('https-browserify'),
+  "net": require.resolve('react-native-tcp'),
+  "os": require.resolve('react-native-os'),
+  "path": require.resolve('path-browserify'),
+  "stream": require.resolve('stream-browserify'),
+  "tls": require.resolve('./'),
+  "transform-es3-member-expression-literals": require.resolve('babel-plugin-transform-es3-member-expression-literals'),
+  "transform-es3-property-literals": require.resolve('babel-plugin-transform-es3-property-literals'),
+  "vm": require.resolve('vm-browserify'),
+  "zlib": require.resolve('browserify-zlib'),
 }
 
 // Get blacklist factory
