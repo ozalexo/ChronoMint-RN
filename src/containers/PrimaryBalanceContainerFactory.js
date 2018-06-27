@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 import {
   walletPrimaryBalanceSelector
-} from 'redux/mainWallet/selectors'
+} from '../redux/mainWallet/selectors'
 
 // incoming props
 export type TPrimaryBalanceFactoryProps = {

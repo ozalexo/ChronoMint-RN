@@ -8,7 +8,7 @@
 import { connect } from 'react-redux'
 import {
   tokensAndAmountsSelector
-} from 'redux/mainWallet/selectors'
+} from '../redux/mainWallet/selectors'
 
 export type TTokenInfo = {
   [symbol: string]: number

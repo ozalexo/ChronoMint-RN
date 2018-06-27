@@ -8,7 +8,7 @@
 import { connect } from 'react-redux'
 import {
   primaryTokenAmount
-} from 'redux/mainWallet/selectors'
+} from '../redux/mainWallet/selectors'
 
 // incoming props
 export type TPrimaryTokenFactoryProps = {
