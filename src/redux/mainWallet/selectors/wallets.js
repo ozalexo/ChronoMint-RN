@@ -10,9 +10,9 @@ import {
   createSelectorCreator,
   defaultMemoize,
 } from 'reselect'
-import type AddressModel from 'models/wallet/AddressModel'
-import type MainWalletModel from 'models/wallet/MainWalletModel'
-import { mainWalletStore } from 'redux/mainWallet/selectors/models'
+import type AddressModel from '@chronobank/core/models/wallet/AddressModel'
+import type MainWalletModel from '@chronobank/core/models/wallet/MainWalletModel'
+import { mainWalletStore } from './models'
 
 const createSectionsSelector = createSelectorCreator(
   defaultMemoize,

@@ -8,9 +8,9 @@
 import {
   createSelector,
 } from 'reselect'
-import type BalanceModel from 'models/tokens/BalanceModel'
-import { getPrimaryToken } from 'redux/mainWallet/selectors/utils'
-import * as models from 'redux/mainWallet/selectors/models'
+import type BalanceModel from '@chronobank/core/models/tokens/BalanceModel'
+import { getPrimaryToken } from './utils'
+import * as models from './models'
 
 export const primaryTokenAmount = (blockchain: string) => createSelector(
   [

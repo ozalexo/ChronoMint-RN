@@ -12,9 +12,9 @@ import {
   createSelectorCreator,
   defaultMemoize,
 } from 'reselect'
-import { mainWalletStore } from 'redux/mainWallet/selectors/models'
-import { selectTokensStore, makeGetTokenSymbolListByBlockchainName } from 'redux/mainWallet/selectors/tokens'
-import { BLOCKCHAIN_ETHEREUM } from 'dao/EthereumDAO'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
+import { mainWalletStore } from './models'
+import { selectTokensStore, makeGetTokenSymbolListByBlockchainName } from './tokens'
 
 //#endregion
 

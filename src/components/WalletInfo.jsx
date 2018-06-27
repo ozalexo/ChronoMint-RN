@@ -13,18 +13,18 @@ import I18n from 'react-native-i18n'
 import PrimaryBalanceContainerFactory, {
   type TPrimaryBalanceFactoryProps,
   type TPrimaryBalanceProps,
-} from 'containers/PrimaryBalanceContainerFactory'
+} from '../containers/PrimaryBalanceContainerFactory'
 import TokensListContainerFactory, {
   type TTokensListProps,
   type TTokensListFactoryProps,
-} from 'containers/TokensListContainerFactory'
+} from '../containers/TokensListContainerFactory'
 import PrimaryTokenContainerFactory, {
   type TPrimaryTokenFactoryProps,
   type TPrimaryTokenProps,
-} from 'containers/PrimaryTokenContainerFactory'
-import WalletImage from 'components/WalletImage'
-import styles from 'components/styles/WalletInfoStyles'
-import isNumber from 'utils/numeric'
+} from '../containers/PrimaryTokenContainerFactory'
+import WalletImage from './WalletImage'
+import styles from './styles/WalletInfoStyles'
+import isNumber from '../utils/numeric'
 
 export type TWalletInfoProps = {
   address: string,

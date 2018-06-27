@@ -5,12 +5,12 @@
  */
 
 import { connect } from 'react-redux'
-import WalletInfo from 'components/WalletInfo'
 import {
   getSelectedWalletStore,
   getMarketPricesSelectedCurrencyStore,
   type TSelectedWallet
-} from 'redux/wallet/selectors'
+} from '@chronobank/core/redux/wallet/selectors'
+import WalletInfo from '../components/WalletInfo'
 
 const mapStateToProps = (state) => {
   const selectedWallet: TSelectedWallet = getSelectedWalletStore(state)

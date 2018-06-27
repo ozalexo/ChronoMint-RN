@@ -13,21 +13,21 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
-import isNumber from 'utils/numeric'
+import isNumber from '../utils/numeric'
 import PrimaryBalanceContainerFactory, {
   type TPrimaryBalanceFactoryProps,
   type TPrimaryBalanceProps,
-} from 'containers/PrimaryBalanceContainerFactory'
+} from '../containers/PrimaryBalanceContainerFactory'
 import PrimaryTokenContainerFactory, {
   type TPrimaryTokenFactoryProps,
   type TPrimaryTokenProps,
-} from 'containers/PrimaryTokenContainerFactory'
-import styles from 'components/styles/WalletListItemStyles'
+} from '../containers/PrimaryTokenContainerFactory'
+import styles from './styles/WalletListItemStyles'
 import TokensListContainerFactory, {
   type TTokensListProps,
   type TTokensListFactoryProps,
-} from 'containers/TokensListContainerFactory'
-import WalletImage from 'components/WalletImage'
+} from '../containers/TokensListContainerFactory'
+import WalletImage from '../components/WalletImage'
 
 type TPrices = {
   [token: string]: {

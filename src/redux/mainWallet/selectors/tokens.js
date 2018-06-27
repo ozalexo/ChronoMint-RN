@@ -8,9 +8,9 @@
 import {
   createSelector,
 } from 'reselect'
-import { filteredBalancesAndTokens } from 'redux/mainWallet/selectors/balance'
-import { getPrimaryToken } from 'redux/mainWallet/selectors/utils'
-import { DUCK_TOKENS } from 'redux/tokens/actions'
+import { DUCK_TOKENS } from '@chronobank/core/redux/tokens/actions'
+import { filteredBalancesAndTokens } from './balance'
+import { getPrimaryToken } from './utils'
 
 export const selectTokensStore = (state) =>
   state.get(DUCK_TOKENS) // TokensCollection, array of TokenModel

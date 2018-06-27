@@ -8,7 +8,7 @@
 import {
   createSelector,
 } from 'reselect'
-import * as models from 'redux/mainWallet/selectors/models'
+import * as models from './models'
 
 const filteredBalances = (blockchain: string) => createSelector(
   [

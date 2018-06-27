@@ -5,12 +5,12 @@
  * @flow
  */
 
-import { DUCK_MAIN_WALLET } from 'redux/mainWallet/actions'
-import { DUCK_MARKET } from 'redux/market/action'
-import { DUCK_TOKENS } from 'redux/tokens/actions'
-import type BalancesCollection from 'models/tokens/BalancesCollection'
-import type MainWalletModel from 'models/wallet/MainWalletModel'
-import type TokensCollection from 'models/tokens/TokensCollection'
+import { DUCK_MAIN_WALLET } from '@chronobank/core/redux/mainWallet/actions'
+import { DUCK_MARKET } from '@chronobank/core/redux/market/actions'
+import { DUCK_TOKENS } from '@chronobank/core/redux/tokens/actions'
+import type BalancesCollection from '@chronobank/core/models/tokens/BalancesCollection'
+import type MainWalletModel from '@chronobank/core/models/wallet/MainWalletModel'
+import type TokensCollection from '@chronobank/core/models/tokens/TokensCollection'
 
 export const mainWalletStore = (state: any): MainWalletModel =>
   state.get(DUCK_MAIN_WALLET)
