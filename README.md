@@ -17,10 +17,10 @@ Let's assume that current directory is `ChronoMint-RN` (root of current repo)
 1. Clone ChronoMint git repo near to ChronoMint-RN:
 ```bash
 cd ..
-git clone git@github.com:ChronoBank/ChronoMint.git
-git checkout develop
-git checkout -b feature/CM-NN
+git clone git@github.com:ozalexo/ChronoMint.git
+git checkout feature/uuid
 ```
+Note: Chanages from feature/uuid are required. In the nearest future it will be replaced to origin repo with develop (or release) branch
 2. Enable yarn links:
 ```bash
 cd ChronoMint/packages/core
