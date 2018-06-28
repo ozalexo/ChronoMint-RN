@@ -29,6 +29,19 @@ if (typeof process === 'undefined') {
 process.browser = false
 if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
 
+// Web3 installation with CRNA: see https://gist.github.com/dougbacelar/29e60920d8fa1982535247563eb63766
+if (typeof btoa === 'undefined') {
+  global.btoa = function (str) {
+    return new Buffer(str, 'binary').toString('base64');
+  };
+}
+
+if (typeof atob === 'undefined') {
+  global.atob = function (b64Encoded) {
+    return new Buffer(b64Encoded, 'base64').toString('binary');
+  };
+}
+
 // Polyfill for the Error.captureStackTrace (this is NodeJS core's method)
 if (typeof Error.captureStackTrace === 'undefined') {
   global.Error.captureStackTrace = require('capture-stack-trace')
