@@ -10,7 +10,7 @@ import {
   LOCAL_ID,
   LOCAL_PROVIDER_ID
 } from '@chronobank/login/network/settings'
-import logger from '../../utils/logger'
+import logger from '../logger'
 
 class Storage {
   /**
