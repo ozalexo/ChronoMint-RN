@@ -38,7 +38,7 @@ yarn link
 cd ../..
 yarn link @chronobank/core @chronobank/login @chronobank/core-dependencies
 ```
-4. Install dependencies:
+5. Install dependencies:
 ```bash
 yarn
 ```
