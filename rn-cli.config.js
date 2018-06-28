@@ -1,11 +1,9 @@
 const path = require('path')
 const fs = require('fs')
 
-const extraNodeModules = {
+const extraCustomNodeModules = {
   "_stream_transform": require.resolve('readable-stream/transform'),
-  "child_process": require.resolve('./'),
   "crypto": require.resolve('react-native-crypto'),
-  "events": require.resolve('events'),
   "fs": require.resolve('react-native-level-fs'),
   "http": require.resolve('react-native-http'),
   "https": require.resolve('https-browserify'),
@@ -18,7 +16,20 @@ const extraNodeModules = {
   "transform-es3-property-literals": require.resolve('babel-plugin-transform-es3-property-literals'),
   "vm": require.resolve('vm-browserify'),
   "zlib": require.resolve('browserify-zlib'),
+  "uuid/v1": require.resolve('react-native-uuid')
 }
+
+// As the metro bundler does not support linking correctly, we add additional
+// search path queries to all modules.
+const extraNodeModulesGetter = {
+  get: (target, name) => {
+    if (extraCustomNodeModules.hasOwnProperty(name)) {
+      return extraCustomNodeModules[name];
+    } else {
+      return path.join(process.cwd(), `node_modules/${name}`);
+    }
+  },
+};
 
 // Get blacklist factory
 try {
@@ -28,7 +39,7 @@ try {
 }
 
 module.exports = {
-  extraNodeModules,
+  extraNodeModules: new Proxy({}, extraNodeModulesGetter),
   getBlacklistRE: function () {
     //Add whatever you need to the blacklist for your project
     return blacklist([
@@ -40,7 +51,6 @@ module.exports = {
       __dirname,
       path.resolve(fs.realpathSync('node_modules/@chronobank/core')),
       path.resolve(fs.realpathSync('node_modules/@chronobank/login')),
-      path.resolve(path.join(fs.realpathSync('node_modules/@chronobank/login'), '../../node_modules'))
     ]
   },
   getSourceExts: () => [ 'jsx' ],
