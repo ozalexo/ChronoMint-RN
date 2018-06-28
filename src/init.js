@@ -10,7 +10,7 @@ import { bootstrap } from '@chronobank/core/redux/session/actions'
 import networkService from '@chronobank/login/network/NetworkService'
 import web3Utils from '@chronobank/login/network/Web3Utils'
 import web3Provider from '@chronobank/login/network/Web3Provider'
-import store from './platform/configureStore'
+import store from './redux/configureStore'
 window.web3 = Web3
 
 networkService.connectStore(store)
