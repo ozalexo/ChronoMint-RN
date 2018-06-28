@@ -79,7 +79,7 @@
     "string_decoder": "~0.10.25",
     "timers-browserify": "^1.0.1",
     "tty-browserify": "0.0.0",
-    "uniqid": "^4.1.1",
+    "react-native-uuid": "^1.4.9",
     "uport-connect": "^0.7.0",
     "url": "~0.10.1",
     "util": "~0.10.3",
@@ -137,7 +137,6 @@
     ]
   },
   "resolutions": {
-    "macaddress": "olegdizus/node-macaddress",
     "bn.js": "4.11.8",
     "inherits": "2.0.3"
   },
