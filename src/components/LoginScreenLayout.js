@@ -25,7 +25,11 @@ export default class LoginScreenLayout extends React.Component {
 
   render () {
     return (
-      <KeyboardAvoidingView behavior='position'>
+      <KeyboardAvoidingView
+        behavior='position'
+        style={styles.keyboardView}
+        contentContainerStyle={styles.keyboardView}
+      >
         <ScrollView style={styles.screenView}>
           <Image
             source={require('../images/background.jpg')}
@@ -44,6 +48,9 @@ export default class LoginScreenLayout extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  keyboardView: {
+    flexGrow: 1,
+  },
   screenView: {
     backgroundColor: '#242045'
   },
