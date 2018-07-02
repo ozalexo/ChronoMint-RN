@@ -26,7 +26,7 @@ export default class LoginScreenLayout extends React.Component {
   render () {
     return (
       <KeyboardAvoidingView
-        behavior='position'
+        behavior='padding'
         style={styles.keyboardView}
         contentContainerStyle={styles.keyboardView}
       >
