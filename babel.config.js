@@ -1,4 +1,4 @@
-{
+module.exports = {
   "presets": [
     "@babel/env",
     "@babel/preset-react",
@@ -7,6 +7,10 @@
   "sourceMaps": true,
   "plugins": [
     "@babel/plugin-transform-flow-strip-types",
+    ["@babel/plugin-transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-class-properties",
     "functional-hmr",
