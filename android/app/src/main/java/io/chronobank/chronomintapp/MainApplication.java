@@ -7,13 +7,10 @@ import com.bitgo.randombytes.RandomBytesPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.peel.react.rnos.RNOSModule;
 import com.peel.react.TcpSocketsModule;
-import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.reactnativenavigation.NavigationApplication;
-import com.rnfs.RNFSPackage;
 import com.tradle.react.UdpSocketsModule;
 
 

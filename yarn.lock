@@ -1681,15 +1681,7 @@ asap@~2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
 
-asn1.js@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-2.2.1.tgz#c8ba4dd68e84431288126230cb2045bdfa9fbfe1"
-  dependencies:
-    bn.js "^2.0.0"
-    inherits "^2.0.1"
-    minimalistic-assert "^1.0.0"
-
-asn1.js@^4.0.0, asn1.js@^4.9.1:
+asn1.js@^4.0.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-4.10.1.tgz#b9c2bf5805f1e64aadeed6df3a2bfafb5a73f5a0"
   dependencies:
@@ -1829,10 +1821,6 @@ babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
     chalk "^1.1.3"
     esutils "^2.0.2"
     js-tokens "^3.0.2"
-
-babel-core@7.0.0-bridge.0:
-  version "7.0.0-bridge.0"
-  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-7.0.0-bridge.0.tgz#95a492ddd90f9b4e9a4a1da14eb335b87b634ece"
 
 babel-core@^6.0.0, babel-core@^6.0.14, babel-core@^6.23.1, babel-core@^6.24.1, babel-core@^6.26.0, babel-core@^6.7.2:
   version "6.26.3"
@@ -2285,7 +2273,7 @@ babel-plugin-transform-es2015-modules-amd@^6.22.0, babel-plugin-transform-es2015
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
-babel-plugin-transform-es2015-modules-commonjs@6.x, babel-plugin-transform-es2015-modules-commonjs@^6.23.0, babel-plugin-transform-es2015-modules-commonjs@^6.24.1, babel-plugin-transform-es2015-modules-commonjs@^6.26.2, babel-plugin-transform-es2015-modules-commonjs@^6.8.0:
+babel-plugin-transform-es2015-modules-commonjs@6.x, babel-plugin-transform-es2015-modules-commonjs@^6.23.0, babel-plugin-transform-es2015-modules-commonjs@^6.24.1, babel-plugin-transform-es2015-modules-commonjs@^6.8.0:
   version "6.26.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.26.2.tgz#58a793863a9e7ca870bdc5a881117ffac27db6f3"
   dependencies:
@@ -2822,10 +2810,6 @@ base64-url@^1.3.3:
 base64url@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/base64url/-/base64url-2.0.0.tgz#eac16e03ea1438eff9423d69baa36262ed1f70bb"
-
-base64url@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/base64url/-/base64url-3.0.0.tgz#f2ba30b15f80413d88e3e6116c4f3f7f61e28a2a"
 
 base@^0.11.1:
   version "0.11.2"
@@ -4337,15 +4321,6 @@ electron-to-chromium@^1.3.47:
 elegant-spinner@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
-
-elliptic@^5.1.0:
-  version "5.2.1"
-  resolved "http://registry.npmjs.org/elliptic/-/elliptic-5.2.1.tgz#fa294b6563c6ddbc9ba3dc8594687ae840858f10"
-  dependencies:
-    bn.js "^3.1.1"
-    brorand "^1.0.1"
-    hash.js "^1.0.0"
-    inherits "^2.0.1"
 
 elliptic@^6.0.0, elliptic@^6.0.2, elliptic@^6.2.3, elliptic@^6.3.2, elliptic@^6.4.0:
   version "6.4.0"
@@ -7223,16 +7198,6 @@ jsontokens@^0.6.5:
     crypto "0.0.3"
     elliptic "^6.3.2"
 
-jsontokens@^0.7.6:
-  version "0.7.8"
-  resolved "https://registry.yarnpkg.com/jsontokens/-/jsontokens-0.7.8.tgz#9210bb98944ee93a156c72754c1c281b2c52d419"
-  dependencies:
-    asn1.js "^4.9.1"
-    base64url "^3.0.0"
-    elliptic "^6.3.2"
-    key-encoder "^1.1.6"
-    validator "^7.0.0"
-
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -7272,14 +7237,6 @@ keccakjs@^0.2.0, keccakjs@^0.2.1:
   dependencies:
     browserify-sha3 "^0.0.1"
     sha3 "^1.1.0"
-
-key-encoder@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/key-encoder/-/key-encoder-1.1.6.tgz#0135582cd3d0a7eb792d94eca387b681e8e5a2ad"
-  dependencies:
-    asn1.js "^2.2.0"
-    bn.js "^3.1.2"
-    elliptic "^5.1.0"
 
 keythereum@^0.5.2:
   version "0.5.2"
@@ -9176,7 +9133,7 @@ process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
 
-process@^0.11.0, process@^0.11.10, process@^0.11.9, process@~0.11.0:
+process@^0.11.0, process@^0.11.10, process@^0.11.9:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
@@ -9423,14 +9380,6 @@ react-native-device-info@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.14.0.tgz#b77d0368e197c7a6fc8de612f8272d3526847bd4"
 
-react-native-document-picker@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-2.1.0.tgz#61bbe113435a9d7bf67ab77093a4092d76b52fe3"
-
-react-native-fingerprint-scanner@^2.3.1:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-fingerprint-scanner/-/react-native-fingerprint-scanner-2.3.2.tgz#f89dd5dcecf5858c005fa583c064ef4d20ea7731"
-
 react-native-http@tradle/react-native-http#834492d:
   version "1.0.0"
   resolved "https://codeload.github.com/tradle/react-native-http/tar.gz/834492dbc792b1dec8ec8f0a1c9671f640339f01"
@@ -9461,16 +9410,12 @@ react-native-os@Robdel12/react-native-os:
   version "1.1.0"
   resolved "https://codeload.github.com/Robdel12/react-native-os/tar.gz/67f09bcfb40aba4b6e9b18170b0f1dd513b431b1"
 
-react-native-randombytes@^3.0.0:
+react-native-randombytes@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/react-native-randombytes/-/react-native-randombytes-3.4.0.tgz#c32632f475ec32aa14ea2dfef27c6fc082d4d1bb"
   dependencies:
     buffer "^4.9.1"
     sjcl "^1.0.3"
-
-react-native-segment-controller@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-segment-controller/-/react-native-segment-controller-1.0.0.tgz#940dff7f25531c4fcdc690a71e5def38bece67c9"
 
 react-native-sensitive-info@^5.1.0:
   version "5.1.0"
@@ -10553,7 +10498,7 @@ sntp@2.x.x:
   dependencies:
     hoek "4.x.x"
 
-socket.io-client@^2.0.3, socket.io-client@^2.0.4:
+socket.io-client@^2.0.3:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.1.1.tgz#dcb38103436ab4578ddb026638ae2f21b623671f"
   dependencies:
@@ -10594,17 +10539,6 @@ sockjs-client@1.0.3:
 sockjs-client@1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/sockjs-client/-/sockjs-client-1.1.4.tgz#5babe386b775e4cf14e7520911452654016c8b12"
-  dependencies:
-    debug "^2.6.6"
-    eventsource "0.1.6"
-    faye-websocket "~0.11.0"
-    inherits "^2.0.1"
-    json3 "^3.3.2"
-    url-parse "^1.1.8"
-
-sockjs-client@prsn/sockjs-client:
-  version "1.1.4"
-  resolved "https://codeload.github.com/prsn/sockjs-client/tar.gz/3eadd74b471af0e490410d57acdd9402aed565f9"
   dependencies:
     debug "^2.6.6"
     eventsource "0.1.6"
@@ -10876,7 +10810,7 @@ string_decoder@^1.0.0, string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-string_decoder@~0.10.25, string_decoder@~0.10.x:
+string_decoder@~0.10.x:
   version "0.10.31"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
@@ -11112,12 +11046,6 @@ timed-out@^4.0.0, timed-out@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"
 
-timers-browserify@^1.0.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-1.4.2.tgz#c9c58b575be8407375cb5e2462dacee74359f41d"
-  dependencies:
-    process "~0.11.0"
-
 timers-browserify@^2.0.4:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.10.tgz#1d28e3d2aadf1d5a5996c4e9f95601cd053480ae"
@@ -11331,17 +11259,9 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tweetnacl-util@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/tweetnacl-util/-/tweetnacl-util-0.15.0.tgz#4576c1cee5e2d63d207fee52f1ba02819480bc75"
-
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
-
-tweetnacl@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
 
 type-check@~0.3.2:
   version "0.3.2"
@@ -11539,24 +11459,6 @@ uport-connect@^0.6.0:
     uport "^0.4.2"
     web3 "^0.18.2"
 
-uport-connect@^0.7.0:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/uport-connect/-/uport-connect-0.7.3.tgz#4f553fc23ef6455d66f744f0ef74cfa9b4bd75a3"
-  dependencies:
-    async "^2.1.4"
-    ethjs-abi "^0.1.8"
-    ethjs-util "^0.1.3"
-    ipfs-mini "^1.0.1"
-    json-loader "^0.5.4"
-    mnid "^0.1.1"
-    mobile-detect "^1.3.5"
-    nets "^3.2.0"
-    qr-image "^3.1.0"
-    qs "^6.2.1"
-    request "^2.75.0"
-    uport "^0.6.2"
-    web3 "0.19.0"
-
 uport-lite@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uport-lite/-/uport-lite-1.0.2.tgz#f3a96d8df52d5496e2c6c8ec7cfd377b431513d4"
@@ -11572,18 +11474,6 @@ uport@^0.4.2:
     jsontokens "^0.6.5"
     mnid "^0.1.1"
     nets "^3.2.0"
-    uport-lite "^1.0.0"
-
-uport@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/uport/-/uport-0.6.2.tgz#3b75a545c530ef8b67969e580003c2128e1592ba"
-  dependencies:
-    ethjs-util "^0.1.3"
-    jsontokens "^0.7.6"
-    mnid "^0.1.1"
-    nets "^3.2.0"
-    tweetnacl "^1.0.0"
-    tweetnacl-util "^0.15.0"
     uport-lite "^1.0.0"
 
 uri-js@^4.2.1:
@@ -11634,13 +11524,6 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-url@~0.10.1:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/url/-/url-0.10.3.tgz#021e4d9c7705f21bbf37d03ceb58767402774c64"
-  dependencies:
-    punycode "1.3.2"
-    querystring "0.2.0"
-
 use@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.0.tgz#14716bf03fdfefd03040aef58d8b4b85f3a7c544"
@@ -11680,7 +11563,7 @@ util@0.10.3:
   dependencies:
     inherits "2.0.1"
 
-util@^0.10.3, util@~0.10.3:
+util@^0.10.3:
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/util/-/util-0.10.4.tgz#3aa0125bfe668a4672de58857d3ace27ecb76901"
   dependencies:
@@ -11722,10 +11605,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-validator@^7.0.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-7.2.0.tgz#a63dcbaba51d4350bf8df20988e0d5a54d711791"
 
 varuint-bitcoin@^1.0.4:
   version "1.1.0"
@@ -11973,16 +11852,6 @@ web3-utils@1.0.0-beta.34:
     randomhex "0.1.5"
     underscore "1.8.3"
     utf8 "2.1.1"
-
-web3@0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/web3/-/web3-0.19.0.tgz#8b18fba24421a59d2884859bcb9b718c2665524e"
-  dependencies:
-    bignumber.js "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
-    crypto-js "^3.1.4"
-    utf8 "^2.1.1"
-    xhr2 "*"
-    xmlhttprequest "*"
 
 web3@0.20.6, web3@^0.20.1:
   version "0.20.6"
