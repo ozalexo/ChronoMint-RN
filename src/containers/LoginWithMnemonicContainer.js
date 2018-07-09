@@ -33,14 +33,14 @@ class LoginWithMnemonicContainer extends PureComponent<TLoginWithMnemonicContain
 
     if (/\s+$/.test(word)) {
       (index + 1 === MNEMONIC_LENGTH)
-        ? this.handleLogin()
+        ? this.handleSubmit()
         : this.inputs[index + 1].focus()
     }
 
     this.setState({ mnemonicWords })
   }
 
-  handleLogin = async (): Promise<void> => {
+  handleSubmit = async (): Promise<void> => {
     const mnemonic = this.state.mnemonicWords.join(' ')
 
     if (!mnemonicProvider.validateMnemonic(mnemonic)) {
@@ -68,7 +68,7 @@ class LoginWithMnemonicContainer extends PureComponent<TLoginWithMnemonicContain
     return (<LoginWithMnemonic
       inputsList={inputsList}
       onEnterWord={this.handleEnterWord}
-      onLogin={this.handleLogin}
+      onSubmit={this.handleSubmit}
       refInput={this.refInput}
     />)
   }

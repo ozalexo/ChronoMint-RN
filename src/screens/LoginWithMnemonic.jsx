@@ -13,7 +13,7 @@ import PrimaryButton from '../components/PrimaryButton'
 export type TLoginWithMnemonicProps = {
   inputsList: Array<any>,
   onEnterWord: (wordIndex: number) => (word: string) => void,
-  onLogin: () => Promise<void>,
+  onSubmit: () => Promise<void>,
   refInput: (inputIndex: number) => (component: any) => void,
 }
 
@@ -33,7 +33,7 @@ export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicP
   )
 
   render () {
-    const { inputsList, onLogin } = this.props
+    const { inputsList, onSubmit } = this.props
 
     return (
       <View style={styles.screenView}>
@@ -45,7 +45,7 @@ export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicP
         />
         <PrimaryButton
           label='Log in'
-          onPress={onLogin}
+          onPress={onSubmit}
         />
       </View>
     )
