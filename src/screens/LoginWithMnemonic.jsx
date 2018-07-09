@@ -10,14 +10,14 @@ import { StyleSheet, FlatList, View } from 'react-native'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 
-export type TEnterMnemonicProps = {
+export type TLoginWithMnemonicProps = {
   inputsList: Array<any>,
   onEnterWord: (wordIndex: number) => (word: string) => void,
   onLogin: () => Promise<void>,
   refInput: (inputIndex: number) => (component: any) => void,
 }
 
-export default class EnterMnemonic extends PureComponent<TEnterMnemonicProps, {}> {
+export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicProps, {}> {
 
   keyExtractor = (item: null, index: number) => index.toString()
 

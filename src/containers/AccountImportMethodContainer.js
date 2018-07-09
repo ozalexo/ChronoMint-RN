@@ -41,7 +41,7 @@ export default AccountImportMethodContainer
 const accountImportMethods: Array<TAccountImportMethod> = [
   {
     id: 'mnemonic',
-    screen: 'EnterMnemonic',
+    screen: 'LoginWithMnemonic',
     title: 'Enter mnemonic',
     label: I18n.t('ImportAccount.mnemonic'),
     image: require('../images/mnemonic.png')

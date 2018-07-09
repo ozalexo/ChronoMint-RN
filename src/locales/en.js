@@ -24,7 +24,7 @@ export default {
   ChangeLanguage: {
     language: 'Language'
   },
-  EnterMnemonic: {
+  LoginWithMnemonic: {
     title: 'Mnemonic key',
     subtitle: 'Enter mnemonic key:',
     mnemonic: 'Mnemonic key',

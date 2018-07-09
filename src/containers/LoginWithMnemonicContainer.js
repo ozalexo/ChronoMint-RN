@@ -8,20 +8,20 @@
 import React, { PureComponent } from 'react'
 import mnemonicProvider from '@chronobank/login/network/mnemonicProvider'
 import { MNEMONIC_LENGTH } from '../utils/globals'
-import EnterMnemonic from '../screens/EnterMnemonic'
+import LoginWithMnemonic from '../screens/LoginWithMnemonic'
 import withLogin, { type TWithLoginProps } from '../components/withLogin'
 
-export type TEnterMnemonicContainerProps = TWithLoginProps & {
+export type TLoginWithMnemonicContainerProps = TWithLoginProps & {
   navigator: any,
 }
 
-type TEnterMnemonicContainerState = {
+type TLoginWithMnemonicContainerState = {
   mnemonicWords: Array<string>
 }
 
 const inputsList = Array(MNEMONIC_LENGTH).fill(1)
 
-class EnterMnemonicContainer extends PureComponent<TEnterMnemonicContainerProps, TEnterMnemonicContainerState> {
+class LoginWithMnemonicContainer extends PureComponent<TLoginWithMnemonicContainerProps, TLoginWithMnemonicContainerState> {
   state = {
     mnemonicWords: []
   }
@@ -65,7 +65,7 @@ class EnterMnemonicContainer extends PureComponent<TEnterMnemonicContainerProps,
   refInput = (index: number) => (input: any) => this.inputs[index] = input
 
   render () {
-    return (<EnterMnemonic
+    return (<LoginWithMnemonic
       inputsList={inputsList}
       onEnterWord={this.handleEnterWord}
       onLogin={this.handleLogin}
@@ -74,4 +74,4 @@ class EnterMnemonicContainer extends PureComponent<TEnterMnemonicContainerProps,
   }
 }
 
-export default withLogin(EnterMnemonicContainer)
+export default withLogin(LoginWithMnemonicContainer)

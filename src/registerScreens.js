@@ -26,7 +26,7 @@ import AddWallet from './containers/AddWalletContainer'
 import ConfirmMnemonic from './containers/ConfirmMnemonicContainer'
 import Download2FAApp from './containers/Download2FAAppContainer'
 import Drawer from './containers/DrawerContainer'
-import EnterMnemonic from './containers/EnterMnemonicContainer'
+import LoginWithMnemonic from './containers/LoginWithMnemonicContainer'
 import EnterPin from './containers/EnterPinContainer'
 import EnterPrivateKey from './containers/EnterPrivateKeyContainer'
 import GenerateMnemonic from './containers/GenerateMnemonicContainer'
@@ -67,7 +67,7 @@ export default function registerScreens (store: TStore<TState, { type: string }>
   Navigation.registerComponent('ConfirmMnemonic', () => screenLayout(LoginScreenLayout)(ConfirmMnemonic), store, Provider)
   Navigation.registerComponent('Download2FAApp', () => Download2FAApp, store, Provider)
   Navigation.registerComponent('Drawer', () => Drawer, store, Provider)
-  Navigation.registerComponent('EnterMnemonic', () => screenLayout(LoginScreenLayout)(EnterMnemonic), store, Provider)
+  Navigation.registerComponent('LoginWithMnemonic', () => screenLayout(LoginScreenLayout)(LoginWithMnemonic), store, Provider)
   Navigation.registerComponent('EnterPin', () => screenLayout(LoginScreenLayout)(EnterPin), store, Provider)
   Navigation.registerComponent('EnterPrivateKey', () => screenLayout(LoginScreenLayout)(EnterPrivateKey), store, Provider)
   Navigation.registerComponent('GenerateMnemonic', () => screenLayout(LoginScreenLayout)(GenerateMnemonic), store, Provider)
