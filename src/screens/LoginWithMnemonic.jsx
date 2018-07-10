@@ -6,46 +6,44 @@
  */
 
 import React, { PureComponent } from 'react'
-import { StyleSheet, FlatList, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 
 export type TLoginWithMnemonicProps = {
   inputsList: Array<any>,
   onEnterWord: (wordIndex: number) => (word: string) => void,
-  onSubmit: () => Promise<void>,
+  onSubmit: (mnemonic: string) => () => void,
   refInput: (inputIndex: number) => (component: any) => void,
 }
 
-export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicProps, {}> {
+type TLoginWithMnemonicState = {
+  mnemonic: string
+}
 
-  keyExtractor = (item: null, index: number) => index.toString()
+export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicProps, TLoginWithMnemonicState> {
+  state = {
+    mnemonic: ""
+  }
 
-  renderItem = ({ index }: { index: number }) => (
-    <Input
-      autoCapitalize='none'
-      autoCorrect={false}
-      onChangeText={this.props.onEnterWord(index)}
-      placeholder={`word ${index + 1}`}
-      ref={this.props.refInput(index)}
-      style={styles.input}
-    />
-  )
+  handleEnterMnemonic = (mnemonic) => {
+    this.setState({ mnemonic })
+  }
 
   render () {
     const { inputsList, onSubmit } = this.props
 
     return (
       <View style={styles.screenView}>
-        <FlatList
-          data={inputsList}
-          keyExtractor={this.keyExtractor}
-          numColumns={4}
-          renderItem={this.renderItem}
+        <Input
+          multiline
+          onChangeText={this.handleEnterMnemonic}
+          value={this.state.mnemonic}
+          style={styles.input}
         />
         <PrimaryButton
           label='Log in'
-          onPress={onSubmit}
+          onPress={onSubmit(this.state.mnemonic)}
         />
       </View>
     )
