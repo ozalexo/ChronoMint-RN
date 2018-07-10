@@ -50,11 +50,12 @@ module.exports = {
     ])
   },
   getProjectRoots () {
+    // Please note that order of roots is important
     return [
+      path.resolve(fs.realpathSync('node_modules/@chronobank/core')),
+      path.resolve(fs.realpathSync('node_modules/@chronobank/login')),
       __dirname,
       path.resolve(fs.realpathSync('node_modules/@chronobank/core-dependencies')),
-      path.resolve(fs.realpathSync('node_modules/@chronobank/core')),
-      path.resolve(fs.realpathSync('node_modules/@chronobank/login'))
     ]
   },
   getSourceExts: () => [ 'jsx' ],

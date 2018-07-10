@@ -27,16 +27,17 @@ class SelectNetworkContainer extends PureComponent<TSelectNetworkContainerProps,
   }
 
   render () {
-    return (<SelectNetwork
-      networks={this.props.networks}
-      onSelectNetwork={this.handleSelectNetwork}
-    />)
+    return (
+      <SelectNetwork
+        networks={this.props.networks}
+        onSelectNetwork={this.handleSelectNetwork}
+      />
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   const network = state.get(DUCK_NETWORK) || {}
-
   return {
     networks: network.networks
   }

@@ -44,7 +44,7 @@ export default class SetAccountPassword extends PureComponent<TSetAccountPasswor
       onSelectNetwork,
       onUseWallet,
     } = this.props
-
+    console.log(this.props)
     return (
       <View>
         { isCreatingNewWallet && (
@@ -114,18 +114,18 @@ class Header extends PureComponent<THeaderProps, {}> {
               style={styles.topBarButtonImage}
             />
             <Text style={styles.topBarButtonLabel}>
-              Production
-            </Text >
-          </TouchableOpacity >
+              'Production'
+            </Text>
+          </TouchableOpacity>
           <View style={styles.spacer} />
           <TouchableOpacity
             onPress={onSelectLanguage}
             style={styles.topBarButton}
           >
             <Text style={styles.topBarButtonLabel}>
-              EN-US
-            </Text >
-          </TouchableOpacity >
+              'EN-US'
+            </Text>
+          </TouchableOpacity>
         </View>
         <Image
           source={require('../images/ChronoWalletIcon.png')}

@@ -17,13 +17,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "@chronobank/core": "^1.0.0",
+    "@babel/runtime": "^7.0.0-beta.52",
+    "@chronobank/core": "*",
     "@chronobank/core-dependencies": "*",
-    "@chronobank/login": "^1.0.0",
+    "@chronobank/login": "*",
     "D": "^1.0.0",
     "assert": "^1.1.1",
     "asyncstorage-down": "^4.0.1",
     "axios": "^0.17.1",
+    "babel-runtime": "^6.26.0",
     "bignumber.js": "^4.1.0",
     "bitcoinjs-lib": "^3.3.2",
     "browserify-zlib": "~0.1.4",
@@ -41,7 +43,7 @@
     "promisify-node-callback": "^1.0.2",
     "querystring-es3": "~0.2.0",
     "react": "16.4.1",
-    "react-native": "v0.56.0-rc.3",
+    "react-native": "v0.56.0",
     "react-native-crypto": "^2.1.2",
     "react-native-device-info": "^0.14.0",
     "react-native-document-picker": "^2.1.0",
@@ -84,6 +86,10 @@
     "@babel/core": "^7.0.0-beta.52",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.52",
     "@babel/plugin-proposal-decorators": "^7.0.0-beta.52",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.52",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0-beta.52",
+    "@babel/plugin-syntax-export-default-from": "^7.0.0-beta.52",
+    "@babel/plugin-syntax-export-namespace-from": "^7.0.0-beta.52",
     "@babel/plugin-transform-exponentiation-operator": "^7.0.0-beta.52",
     "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.52",
     "@babel/plugin-transform-new-target": "^7.0.0-beta.52",
@@ -91,9 +97,8 @@
     "@babel/plugin-transform-runtime": "^7.0.0-beta.52",
     "@babel/preset-env": "^7.0.0-beta.52",
     "@babel/preset-flow": "^7.0.0-beta.52",
-    "babel-core": "^7.0.0-0",
     "@babel/preset-react": "^7.0.0-beta.52",
-    "@babel/runtime": "^7.0.0-beta.52",
+    "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.5",
     "babel-jest": "^23.2.0",
     "babel-plugin-functional-hmr": "^1.0.24",
@@ -150,10 +155,6 @@
       "__DEV__"
     ]
   },
-  "resolutions": {
-    "bn.js": "4.11.8",
-    "inherits": "2.0.3"
-  },
   "jest": {
     "preset": "react-native"
   },
@@ -161,5 +162,8 @@
     "packages": [
       "packages/**"
     ]
+  },
+  "resolutions": {
+    "inherits": "2.0.3"
   }
 }

@@ -26,7 +26,7 @@ export type TNetworkStatus = 'online' | 'offline'
 
 type TSelectNetworkProps = {
   networks: TNetwork[],
-  onSelectNetwork: (network: TNetwork) => () => void, 
+  onSelectNetwork: (network: TNetwork) => () => void,
 }
 
 type TNetworkItemProps = TNetwork & {
@@ -38,34 +38,51 @@ type TNetworkStatusProps = {
 }
 
 export default class SelectNetwork extends PureComponent<TSelectNetworkProps, {}> {
-  keyExtractor = ({ id }: TNetwork) => id.toString()
+  keyExtractor = ({ id }: TNetwork) => {
+    console.log('>keyExtractor id', id)
+    return id.toString()
+  }
 
-  renderNetworkItem = ({ item }: { item: TNetwork }) => (
-    <NetworkItem
-      {...item}
-      onPress={this.props.onSelectNetwork(item)}
-      status='online'
-    />
-  )
+  renderNetworkItem = ({ item }: { item: TNetwork }) => {
+    console.log('>renderNetworkItem item', item)
+    console.log('>renderNetworkItem this.props.onSelectNetwork', this.props.onSelectNetwork)
+    return (
+      <NetworkItem
+        {...item}
+        onPress={this.props.onSelectNetwork(item)}
+        status='online'
+      />
+    )
+  }
 
   render () {
-    const {
-      networks,
+    let {
+      networks
     } = this.props
-
+    if (!networks) {
+      networks = []
+    }
+    console.log('DATA FOR FLATLIST:')
+    console.log('data={networks}:', networks)
+    console.log('keyExtractor:', this.keyExtractor)
+    console.log('Separator:', Separator)
+    console.log('renderItem:', this.renderNetworkItem)
     return (
       <View style={styles.screenView}>
         <Text style={styles.title}>
-          Available Networks
+          {'Available Networks'}
         </Text>
-        <FlatList
-          data={networks}
-          ItemSeparatorComponent={Separator}
-          keyExtractor={this.keyExtractor}
-          ListFooterComponent={Separator}
-          ListHeaderComponent={Separator}
-          renderItem={this.renderNetworkItem}
-        />
+        {
+          networks.length &&
+            <FlatList
+              data={networks}
+              ItemSeparatorComponent={Separator}
+              keyExtractor={this.keyExtractor}
+              ListFooterComponent={Separator}
+              ListHeaderComponent={Separator}
+              renderItem={this.renderNetworkItem}
+            />
+        }
       </View>
     )
   }
