@@ -5,7 +5,7 @@ patch-package
 
  function minify(inputCode: string, inputMap: ?BabelSourceMap) {
    const result = uglify.minify(inputCode, {
--    mangle: {toplevel: false},
+-    mangle: {toplevel: true},
 +    mangle: {
 +      toplevel: true,
 +      safari10: true,
@@ -20,7 +20,7 @@ patch-package
 
  function minify(inputCode, inputMap) {
    const result = uglify.minify(inputCode, {
--    mangle: { toplevel: false },
+-    mangle: { toplevel: true },
 +    mangle: {
 +      toplevel: true,
 +      safari10: true,
@@ -35,7 +35,7 @@ patch-package
 
  function minify(inputCode: string, inputMap: ?BabelSourceMap) {
    const result = uglify.minify(inputCode, {
--    mangle: {toplevel: false},
+-    mangle: {toplevel: true},
 +    mangle: {
 +      toplevel: true,
 +      safari10: true,

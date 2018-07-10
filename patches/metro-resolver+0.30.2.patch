@@ -9,7 +9,7 @@ patch-package
  
  
  
-@@ -106,9 +107,30 @@ platform)
+@@ -92,9 +93,30 @@ platform)
      }
    }
  
@@ -34,10 +34,10 @@ patch-package
 +
    const allDirPaths = dirPaths.concat(extraPaths);
    for (let i = 0; i < allDirPaths.length; ++i) {
--    const realModuleName = context.redirectModulePath(allDirPaths[i]);
+-    const result = resolveFileOrDir(context, allDirPaths[i], platform);
 +    let realPath = allDirPaths[i];
 +    realPath = extractChronobankModulePath(realPath);
 +    const realModuleName = context.redirectModulePath(realPath);
-     const result = resolveFileOrDir(context, realModuleName, platform);
      if (result.type === 'resolved') {
        return result.resolution;
+     }
