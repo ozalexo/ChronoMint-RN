@@ -5,8 +5,34 @@
  * @flow
  */
 
-export default {
-  push: () => {},
-  reset: () => {},
-  goBack: () => {},
+class RouterClass {
+  navigator: any
+
+  setNavigator(navigator: any) {
+    this.navigator = navigator
+  }
+
+  push = (link: string) => {
+    console.log('LINK: ', link, this.navigator)
+
+    const screenLinks = {
+      '/login/create-account': 'SetAccountPassword'
+    }
+
+    this.navigator && this.navigator.push({
+      screen: screenLinks[link]
+    })
+  }
+  goBack = (params) => this.navigator && this.navigator.pop(params)
+  reset = (params) => this.navigator && this.navigator.resetTo(params)
+  toggleDrawer = (params) => this.navigator && this.navigator.toggleDrawer(params)
 }
+
+export const Router = new RouterClass()
+
+export const push = Router.push
+
+export const goBack = Router.goBack
+
+export const reset = Router.reset
+
