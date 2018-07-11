@@ -13,6 +13,7 @@ import createSensitiveStorage from 'redux-persist-sensitive-storage'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger as rCreateLogger } from 'redux-logger'
+import { reducer as formReducer } from 'redux-form/immutable'
 import { SESSION_DESTROY } from '../utils/globals'
 import { type TState } from '../redux/ducks'
 
