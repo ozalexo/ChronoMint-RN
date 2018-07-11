@@ -4,11 +4,15 @@
  *
  * @flow
  */
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 import colors from '../utils/colors'
 
-export default class Input extends Component {
+export type TInputProps = {
+  style?: any,
+}
+
+export default class Input extends PureComponent<TInputProps> {
   refInput = (input: any) => this.input = input
 
   input = {}
