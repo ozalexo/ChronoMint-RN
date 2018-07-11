@@ -14,7 +14,6 @@ export type TLoginWithMnemonicProps = {
   inputsList: Array<any>,
   onEnterWord: (wordIndex: number) => (word: string) => void,
   onSubmit: (mnemonic: string) => () => void,
-  refInput: (inputIndex: number) => (component: any) => void,
 }
 
 type TLoginWithMnemonicState = {
@@ -26,7 +25,7 @@ export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicP
     mnemonic: ""
   }
 
-  handleEnterMnemonic = (mnemonic) => {
+  handleEnterMnemonic = (mnemonic: string) => {
     this.setState({ mnemonic })
   }
 
