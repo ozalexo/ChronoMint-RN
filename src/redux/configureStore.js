@@ -28,6 +28,7 @@ const getNestedReducers = (ducks) => {
 }
 
 const appReducer = (reducers) => combineReducers({
+  form: formReducer,
   ...getNestedReducers(reducers)
 })
 
