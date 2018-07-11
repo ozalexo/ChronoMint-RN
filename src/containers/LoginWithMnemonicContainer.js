@@ -7,6 +7,7 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { reduxForm } from 'redux-form/immutable'
 import {
   onSubmitMnemonicLoginForm,
   onSubmitMnemonicLoginFormSuccess,
@@ -18,12 +19,16 @@ import LoginWithMnemonic from '../screens/LoginWithMnemonic'
 
 function mapDispatchToProps (dispatch) {
   return {
-    onSubmit: (mnemonic) => () => {
-      dispatch(onSubmitMnemonicLoginForm(mnemonic))
+    onSubmit: (values) => {
+      const confirmMnemonic = values.get('mnemonic')
+
+      dispatch(onSubmitMnemonicLoginForm(confirmMnemonic))
     },
     onSubmitSuccess: () => dispatch(onSubmitMnemonicLoginFormSuccess()),
     onSubmitFail: () => dispatch(onSubmitMnemonicLoginFormFail()),
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginWithMnemonic)
+const withForm = reduxForm({ form: FORM_MNEMONIC_LOGIN_PAGE })(LoginWithMnemonic)
+
+export default connect(null, mapDispatchToProps)(withForm)

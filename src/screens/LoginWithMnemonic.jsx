@@ -7,42 +7,31 @@
 
 import React, { PureComponent } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { Field } from 'redux-form/immutable'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 
 export type TLoginWithMnemonicProps = {
   inputsList: Array<any>,
   onEnterWord: (wordIndex: number) => (word: string) => void,
-  onSubmit: (mnemonic: string) => () => void,
+  handleSubmit: () => void
 }
 
-type TLoginWithMnemonicState = {
-  mnemonic: string
-}
-
-export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicProps, TLoginWithMnemonicState> {
-  state = {
-    mnemonic: ""
-  }
-
-  handleEnterMnemonic = (mnemonic: string) => {
-    this.setState({ mnemonic })
-  }
-
+export default class LoginWithMnemonic extends PureComponent<TLoginWithMnemonicProps> {
   render () {
-    const { inputsList, onSubmit } = this.props
+    const { inputsList, handleSubmit } = this.props
 
     return (
       <View style={styles.screenView}>
-        <Input
+        <Field
           multiline
-          onChangeText={this.handleEnterMnemonic}
-          value={this.state.mnemonic}
           style={styles.input}
+          name={'mnemonic'}
+          component={Input}
         />
         <PrimaryButton
           label='Log in'
-          onPress={onSubmit(this.state.mnemonic)}
+          onPress={handleSubmit}
         />
       </View>
     )
