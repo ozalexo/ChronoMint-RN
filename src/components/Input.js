@@ -10,6 +10,12 @@ import colors from '../utils/colors'
 
 export type TInputProps = {
   style?: any,
+  input?: {
+    onChange: (value: string) => void,
+    onBlur: () => void,
+    onFocus: () => void,
+    value?: string,
+  }
 }
 
 export default class Input extends PureComponent<TInputProps> {
@@ -20,7 +26,7 @@ export default class Input extends PureComponent<TInputProps> {
   focus = () => this.input.focus()
 
   render () {
-    const { style, ...restProps } = this.props
+    const { style, input, ...restProps } = this.props
 
     return (
       <TextInput
@@ -29,6 +35,10 @@ export default class Input extends PureComponent<TInputProps> {
           styles.input,
           style
         ]}
+        onChangeText={(input || {}).onChange}
+        onBlur={(input || {}).onBlur}
+        onFocus={(input || {}).onFocus}
+        value={(input || {}).value}
         ref={this.refInput}
         placeholderTextColor='#9997b2'
         underlineColorAndroid={colors.transparent}
