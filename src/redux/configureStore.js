@@ -5,7 +5,7 @@
  * @flow
  */
 
-import Immutable from 'immutable'
+import * as Immutable from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { createStore, applyMiddleware, compose, type Store } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist-immutable'
