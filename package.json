@@ -60,6 +60,7 @@
     "react-native-tcp": "olegdizus/react-native-tcp",
     "react-native-udp": "^2.1.0",
     "react-native-uuid": "^1.4.9",
+    "react-navigation": "^2.6.2",
     "react-redux": "^5.0.6",
     "readable-stream": "1.0.33",
     "redux": "^3.7.2",
