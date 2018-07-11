@@ -1,5 +1,6 @@
 package io.chronobank.chronomintapp;
 
+import android.app.Application;
 import android.support.annotation.Nullable;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -12,42 +13,50 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.peel.react.rnos.RNOSModule;
 import com.peel.react.TcpSocketsModule;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
-import com.reactnativenavigation.NavigationApplication;
-import com.rnfs.RNFSPackage;
 import com.tradle.react.UdpSocketsModule;
-
+import com.facebook.react.shell.MainReactPackage;
+import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends Application implements ReactApplication {
 
-  @Override
-  public boolean isDebug() {
-      // Make sure you are using BuildConfig from your own application
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+    @Override
+    public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
-  }
+    }
 
-  protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
+    @Override
+    protected List<ReactPackage> getPackages() {
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
           new RNI18nPackage(),
           new RandomBytesPackage(),
           new ReactNativeDocumentPicker(),
           new ReactNativeFingerprintScannerPackage(),
           new RNDeviceInfo(),
-          new RNFSPackage(),
           new RNOSModule(),
           new RNSensitiveInfoPackage()
-    );
+      );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
+    }
+  };
+
+  @Override
+  public ReactNativeHost getReactNativeHost() {
+    return mReactNativeHost;
   }
 
   @Override
-  public List<ReactPackage> createAdditionalReactPackages() {
-      return getPackages();
+  public void onCreate() {
+    super.onCreate();
+    SoLoader.init(this, /* native exopackage */ false);
   }
 
-  @Override
-  public String getJSMainModuleName() {
-    return "index";
-  }
 }

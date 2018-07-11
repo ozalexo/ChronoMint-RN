@@ -1,7 +1,7 @@
 package io.chronobank.chronomintapp;
 
-import com.reactnativenavigation.controllers.SplashActivity;
+import com.facebook.react.ReactActivity;
 
-public class MainActivity extends SplashActivity {
+public class MainActivity extends ReactActivity {
 
 }
