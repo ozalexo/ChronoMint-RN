@@ -17,4 +17,4 @@ console.ignoredYellowBox = [
   'Can\'t restore local session',
 ]
 
-require('./src/app.js')
+import './src/app.js'
