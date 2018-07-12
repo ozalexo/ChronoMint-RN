@@ -38,7 +38,7 @@ class EnterPrivateKeyContainer extends PureComponent<TEnterPrivateKeyContainerPr
     onPrivateKeyLogin(privateKey)
 
     navigator.push({
-      screen: 'SetAccountPassword',
+      screen: 'CreateAccount',
       title: 'Set Account Password',
       passProps: {
         privateKey: privateKey

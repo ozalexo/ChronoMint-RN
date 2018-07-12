@@ -51,7 +51,7 @@ export default function startAppRoot (root: string): Promise<void> {
     case 'login':
     default: return Navigation.startSingleScreenApp({
       screen: {
-        screen: 'SetAccountPassword',
+        screen: 'CreateAccount',
         navigatorStyle: {
           navBarHidden: true,
         },

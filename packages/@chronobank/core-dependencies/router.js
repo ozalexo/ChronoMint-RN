@@ -16,7 +16,7 @@ class RouterClass {
     console.log('LINK: ', link, this.navigator)
 
     const screenLinks = {
-      '/login/create-account': 'SetAccountPassword'
+      '/login/create-account': 'CreateAccount'
     }
 
     this.navigator && this.navigator.push({

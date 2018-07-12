@@ -47,7 +47,7 @@ export default class LoginScreenLayout extends PureComponent<TLoginScreenLayoutP
             source={require('../images/background.jpg')}
             style={[
               styles.backgroundImage,
-              (screenOptions || {}).screen === 'SetAccountPassword' ? styles.backgroundImageFull : {}
+              (screenOptions || {}).screen === 'CreateAccount' ? styles.backgroundImageFull : {}
             ]}
           />
           <View style={styles.screenContent}>

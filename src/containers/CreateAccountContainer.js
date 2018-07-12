@@ -8,7 +8,7 @@
 import React, { PureComponent } from 'react'
 import I18n from 'react-native-i18n'
 import isValid from '../utils/validators'
-import SetAccountPassword from '../screens/SetAccountPassword'
+import SetAccountPassword from '../screens/CreateAccount'
 import { Router } from '@chronobank/core-dependencies/router'
 
 let lastAccount = false
