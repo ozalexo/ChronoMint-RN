@@ -22,6 +22,13 @@ class RouterClass {
     this.navigator && this.navigator.push({
       screen: screenLinks[link]
     })
+
+    return {
+      type: 'router/PUSH',
+      payload: {
+        link
+      }
+    }
   }
   goBack = (params) => this.navigator && this.navigator.pop(params)
   reset = (params) => this.navigator && this.navigator.resetTo(params)
