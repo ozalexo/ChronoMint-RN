@@ -19,9 +19,9 @@
     "@babel/plugin-proposal-decorators": "^7.0.0-beta.52",
     "@babel/preset-env": "^7.0.0-beta.52",
     "@babel/runtime": "^7.0.0-beta.52",
-    "@chronobank/core": "^1.0.0",
+    "@chronobank/core": "*",
     "@chronobank/core-dependencies": "*",
-    "@chronobank/login": "^1.0.0",
+    "@chronobank/login": "*",
     "D": "^1.0.0",
     "assert": "^1.1.1",
     "asyncstorage-down": "^4.0.1",
@@ -56,6 +56,7 @@
     "react-native-randombytes": "^3.0.0",
     "react-native-segment-controller": "^1.0.0",
     "react-native-sensitive-info": "^5.1.0",
+    "react-native-splash-screen": "^3.1.0",
     "react-native-tab-view": "^1.0.2",
     "react-native-tcp": "olegdizus/react-native-tcp",
     "react-native-udp": "^2.1.0",
@@ -146,7 +147,8 @@
     ]
   },
   "resolutions": {
-    "inherits": "2.0.3"
+    "inherits": "2.0.3",
+    "eslint-scope": "3.7.1"
   },
   "jest": {
     "preset": "react-native"

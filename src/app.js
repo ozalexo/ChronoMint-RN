@@ -9,15 +9,27 @@ import './utils/i18n'
 import './utils/shim'
 import store, { injectReducer } from './redux/configureStore'
 import {
-  loginScreensStack,
-  walletScreensStack,
+  AuthStack,
+  WalletStack,
 } from './registerScreens'
+import { createSwitchNavigator } from 'react-navigation'
 
 // Listen for unhandled promise rejections
 window.onunhandledrejection = function (promise, reason) {
   // eslint-disable-next-line no-console
   console.log('%c window.onunhandledrejection', 'background: #222; color: red', promise, reason)
 }
+
+export default createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    Wallet: WalletStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+);
 
 let currentRoot = ''
 
@@ -30,12 +42,12 @@ export default function startAppRoot (root: string): Promise<void> {
 
   switch (root) {
     case 'wallet': {
-      walletScreensStack()
+      WalletStack()
       break
     }
     case 'login':
     default: {
-      loginScreensStack()
+      AuthStack()
     }
   }
   // switch (root) {
@@ -104,7 +116,8 @@ export default function startAppRoot (root: string): Promise<void> {
   // }
 }
 
-startAppRoot('login').then(() => {
-  injectReducer(require('./redux/ducks'))
-  require('./init')
-})
+startAppRoot('login')
+  .then(() => {
+    injectReducer(require('./redux/ducks'))
+    require('./init')
+  })

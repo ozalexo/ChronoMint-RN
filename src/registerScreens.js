@@ -6,7 +6,7 @@
  */
 
 //#region common imports
-import { createStackNavigator } from 'react-navigation'
+import { createDrawerNavigator } from 'react-navigation'
 //#endregion
 
 //#region Login imports
@@ -49,7 +49,46 @@ import WalletTemplatesTab from './containers/WalletTemplatesTabContainer'
 import WalletTokensTab from './containers/WalletTokensTabContainer'
 //#endregion
 
-const loginScreensStack = () => createStackNavigator(
+const MainMenuLeftDrawer = createDrawerNavigator(
+  {
+    Inbox: {
+      path: '/',
+      screen: InboxStack,
+    },
+    Drafts: {
+      path: '/sent',
+      screen: DraftsStack,
+    },
+  },
+  {
+    initialRouteName: 'Drafts',
+    contentOptions: {
+      activeTintColor: '#e91e63',
+    },
+  }
+)
+const SelectLanguageRightDrawer = createDrawerNavigator(
+  {
+    MainMenuLeftDrawer: {
+      screen: MainMenuLeftDrawer,
+    },
+  },
+  {
+    initialRouteName: 'Drafts',
+  {
+    navigationOptions: {
+    },
+    drawerPosition: 'right',
+    drawerWidth: Dimensions.get('window').width,
+    contentComponent: SelectLanguage,
+    drawerOpenRoute: 'RightSideMenu',
+    drawerCloseRoute: 'RightSideMenuClose',
+    drawerToggleRoute: 'RightSideMenuToggle',
+  },
+  }
+)
+
+const AuthStack = () => createDrawerNavigator(
   {
     AccountImportMethod: {
       screen: screenLayout(LoginScreenLayout)(AccountImportMethod)
@@ -90,8 +129,8 @@ const loginScreensStack = () => createStackNavigator(
     Drawer: {
       screen: Drawer
     },
-    EnterMnemonic: {
-      screen: screenLayout(LoginScreenLayout)(EnterMnemonic)
+    LoginWithMnemonic: {
+      screen: screenLayout(LoginScreenLayout)(LoginWithMnemonic)
     },
     EnterPin: {
       screen: screenLayout(LoginScreenLayout)(EnterPin)
@@ -104,9 +143,6 @@ const loginScreensStack = () => createStackNavigator(
     },
     SelectAccount: {
       screen: screenLayout(LoginScreenLayout)(SelectAccount)
-    },
-    SelectLanguage: {
-      screen: SelectLanguage
     },
     SelectNetwork: {
       screen: SelectNetwork
@@ -123,37 +159,41 @@ const loginScreensStack = () => createStackNavigator(
   }
 )
 
-const walletScreensStack = () => createStackNavigator({
-  ConfirmSend: {
-    screen: ConfirmSend
+const WalletStack = () => createDrawerNavigator(
+  {
+    ConfirmSend: {
+      screen: ConfirmSend
+    },
+    SelectToken: {
+      screen: SelectToken
+    },
+    Send: {
+      screen: Send
+    },
+    TransactionDetails: {
+      screen: TransactionDetails
+    },
+    Wallet: {
+      screen: Wallet
+    },
+    WalletOwnersTab: {
+      screen: WalletOwnersTab
+    },
+    WalletsList: {
+      screen: WalletsList
+    },
+    WalletTemplatesTab: {
+      screen: WalletTemplatesTab
+    },
+    WalletTokensTab: {
+      screen: WalletTokensTab
+    }
   },
-  SelectToken: {
-    screen: SelectToken
-  },
-  Send: {
-    screen: Send
-  },
-  TransactionDetails: {
-    screen: TransactionDetails
-  },
-  Wallet: {
-    screen: Wallet
-  },
-  WalletOwnersTab: {
-    screen: WalletOwnersTab
-  },
-  WalletsList: {
-    screen: WalletsList
-  },
-  WalletTemplatesTab: {
-    screen: WalletTemplatesTab
-  },
-  WalletTokensTab: {
-    screen: WalletTokensTab
-  }
-})
+  {
+    initialRouteName: 'WalletsList',
+  })
 
 export {
-  loginScreensStack,
-  walletScreensStack
+  AuthStack,
+  WalletStack
 }

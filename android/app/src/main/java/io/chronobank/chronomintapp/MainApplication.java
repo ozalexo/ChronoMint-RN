@@ -6,6 +6,7 @@ import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
           new RNI18nPackage(),
           new RandomBytesPackage(),
           new ReactNativeDocumentPicker(),

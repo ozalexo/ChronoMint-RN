@@ -9,6 +9,10 @@
 // Uncomment the following line and watch for network requests at "Network" tab of dev. tools
 // GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest
 
+/**
+ * Disable some of Yellow warnings
+ * TODO: this is deprecated syntax and must be replaced.
+ */
 // eslint-disable-next-line no-console
 console.ignoredYellowBox = [
   'Warning: componentWillMount',
@@ -17,4 +21,5 @@ console.ignoredYellowBox = [
   'Can\'t restore local session',
 ]
 
+// main entry point
 import './src/app.js'
