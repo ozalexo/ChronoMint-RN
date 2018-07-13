@@ -41,6 +41,7 @@ module.exports = {
     "functional-hmr",
     "transform-new-target",
     "transform-exponentiation-operator",
+    "@babel/plugin-syntax-nullish-coalescing-operator",
     [
       "babel-plugin-transform-builtin-extend",
       {
