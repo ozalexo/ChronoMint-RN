@@ -7,6 +7,8 @@
 
 //#region common imports
 import { createDrawerNavigator } from 'react-navigation'
+import { Dimensions } from 'react-native'
+import React from 'react'
 //#endregion
 
 //#region Login imports
@@ -47,17 +49,16 @@ import WalletOwnersTab from './containers/WalletOwnersTabContainer'
 import WalletsList from './containers/WalletsListContainer'
 import WalletTemplatesTab from './containers/WalletTemplatesTabContainer'
 import WalletTokensTab from './containers/WalletTokensTabContainer'
+import TestScreen from './screens/TestScreen'
 //#endregion
 
 const MainMenuLeftDrawer = createDrawerNavigator(
   {
     Inbox: {
-      path: '/',
-      screen: InboxStack,
+      screen: WalletTokensTab,
     },
     Drafts: {
-      path: '/sent',
-      screen: DraftsStack,
+      screen: WalletTemplatesTab,
     },
   },
   {
@@ -74,27 +75,24 @@ const SelectLanguageRightDrawer = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: 'Drafts',
-  {
-    navigationOptions: {
-    },
+    initialRouteName: 'MainMenuLeftDrawer',
+    navigationOptions: {},
     drawerPosition: 'right',
     drawerWidth: Dimensions.get('window').width,
     contentComponent: SelectLanguage,
     drawerOpenRoute: 'RightSideMenu',
     drawerCloseRoute: 'RightSideMenuClose',
     drawerToggleRoute: 'RightSideMenuToggle',
-  },
   }
 )
 
 const AuthStack = () => createDrawerNavigator(
   {
     AccountImportMethod: {
-      screen: screenLayout(LoginScreenLayout)(AccountImportMethod)
+      screen: () => screenLayout(LoginScreenLayout)(AccountImportMethod)
     },
     AccountPassword: {
-      screen:  screenLayout(LoginScreenLayout)(AccountPassword)
+      screen:  () => screenLayout(LoginScreenLayout)(AccountPassword)
     },
     Add2FAWallet: {
       screen: Add2FAWallet
@@ -121,7 +119,7 @@ const AuthStack = () => createDrawerNavigator(
       screen: AddWallet
     },
     ConfirmMnemonic: {
-      screen: screenLayout(LoginScreenLayout)(ConfirmMnemonic)
+      screen: () => screenLayout(LoginScreenLayout)(ConfirmMnemonic)
     },
     Download2FAApp: {
       screen: Download2FAApp
@@ -129,29 +127,27 @@ const AuthStack = () => createDrawerNavigator(
     Drawer: {
       screen: Drawer
     },
-    LoginWithMnemonic: {
-      screen: screenLayout(LoginScreenLayout)(LoginWithMnemonic)
-    },
+    // LoginWithMnemonic: {
+    //   screen: screenLayout(LoginScreenLayout)(LoginWithMnemonic)
+    // },
     EnterPin: {
-      screen: screenLayout(LoginScreenLayout)(EnterPin)
+      screen: () => screenLayout(LoginScreenLayout)(EnterPin)
     },
     EnterPrivateKey: {
-      screen: screenLayout(LoginScreenLayout)(EnterPrivateKey)
+      screen: () => screenLayout(LoginScreenLayout)(EnterPrivateKey)
     },
     GenerateMnemonic: {
-      screen: screenLayout(LoginScreenLayout)(GenerateMnemonic)
+      screen: () => screenLayout(LoginScreenLayout)(GenerateMnemonic)
     },
     SelectAccount: {
-      screen: screenLayout(LoginScreenLayout)(SelectAccount)
+      screen: () => screenLayout(LoginScreenLayout)(SelectAccount)
     },
     SelectNetwork: {
       screen: SelectNetwork
     },
-    SetAccountPassword: {
-      screen: SetAccountPassword
-    },
+    SetAccountPassword: TestScreen,
     WalletBackup: {
-      screen: screenLayout(LoginScreenLayout)(WalletBackup)
+      screen: () => screenLayout(LoginScreenLayout)(WalletBackup)
     }
   },
   {

@@ -22,4 +22,6 @@ console.ignoredYellowBox = [
 ]
 
 // main entry point
-import './src/app.js'
+import { AppRegistry } from 'react-native';
+import App from './src/app';
+AppRegistry.registerComponent('chronomintrn', () => App);
