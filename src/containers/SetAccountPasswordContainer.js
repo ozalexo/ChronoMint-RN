@@ -18,6 +18,7 @@ type TSetAccountPasswordContainerProps = {
   lastAccount: any,
   navigator: any,
   privateKey?: string,
+  navigationOptions: any
 }
 
 type TSetAccountPasswordContainerState = {
@@ -26,9 +27,17 @@ type TSetAccountPasswordContainerState = {
 }
 
 class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordContainerProps, TSetAccountPasswordContainerState> {
-  static navigatorStyle = {
-    navBarHidden: true
+
+  static navigationOptions = {
+    header: null
   }
+
+  // static navigationOptions = {
+  //   // headerLeft: <LeftNB />,
+  //   // headerRight: <RightNB />,
+  //   // headerBackground: <View style={{backgroundColor: '#242045', flex: 1}} />
+  //   title: 'Test Tiele'
+  // }
 
   state = {
     password: '',

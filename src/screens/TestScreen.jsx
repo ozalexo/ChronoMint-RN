@@ -6,9 +6,13 @@
  */
 
 import React, { PureComponent } from 'react'
-import { StyleSheet, View, TextInput, Platform } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 
-export default class TestScreen extends PureComponent<{}> {
+export default class TestScreen extends React.Component {
+
+  static navigationOptions = {
+    title: 'Lots of features here',
+  };
 
   render () {
     return (

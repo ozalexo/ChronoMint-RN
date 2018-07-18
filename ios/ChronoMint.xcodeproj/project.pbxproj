@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -32,8 +33,8 @@
 		9431C9884A9A4BEFAD284D51 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4ADDB85D864457088F36D71 /* libTcpSockets.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		AEB86ECC8765413199C2F211 /* libUdpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96204FCDB74D4417B1948B84 /* libUdpSockets.a */; };
-		F9E945462E3F4D2DAFCAD807 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C30DC55DA154AE59C5F0A2C /* libRNI18n.a */; };
 		E129B66A3E1E4BCAB0BFB78E /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F3C7D3CA6D4DD2BD38F16D /* libSplashScreen.a */; };
+		F9E945462E3F4D2DAFCAD807 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C30DC55DA154AE59C5F0A2C /* libRNI18n.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		1A90201C20FF5BDB00B06094 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B810446286C8499CBADB17D9 /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
 		};
 		1AFA41B5208749C7007B4750 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -434,15 +442,15 @@
 		99E8F613E9E2488F9018175F /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		9FC9EAFD67284DD68D9BEB12 /* libRNDocumentPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDocumentPicker.a; sourceTree = "<group>"; };
 		A4ADDB85D864457088F36D71 /* libTcpSockets.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libTcpSockets.a; sourceTree = "<group>"; };
+		A9F3C7D3CA6D4DD2BD38F16D /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B2836251CEEE4F0EA414F032 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
+		B810446286C8499CBADB17D9 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		BBFCC07E5B4B46EA83B842E0 /* Clear Sans Medium Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Clear Sans Medium Italic.ttf"; path = "../src/assets/fonts/Clear Sans Medium Italic.ttf"; sourceTree = "<group>"; };
 		BF14A84AAB0D41268C752325 /* Clear Sans Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Clear Sans Light.ttf"; path = "../src/assets/fonts/Clear Sans Light.ttf"; sourceTree = "<group>"; };
 		C9F2322AAB454649A0E1034A /* Clear Sans Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Clear Sans Medium.ttf"; path = "../src/assets/fonts/Clear Sans Medium.ttf"; sourceTree = "<group>"; };
 		E2D908F366544EF2961D68DD /* RNSensitiveInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSensitiveInfo.xcodeproj; path = "../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo.xcodeproj"; sourceTree = "<group>"; };
 		F9D3554DEB5541FD8BAE3AF6 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
-		B810446286C8499CBADB17D9 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; name = "SplashScreen.xcodeproj"; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		A9F3C7D3CA6D4DD2BD38F16D /* libSplashScreen.a */ = {isa = PBXFileReference; name = "libSplashScreen.a"; path = "libSplashScreen.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -479,7 +487,6 @@
 				3CBE9C1D74D5447B9F48DE1D /* libRNOS.a in Frameworks */,
 				F9E945462E3F4D2DAFCAD807 /* libRNI18n.a in Frameworks */,
 				90FC460102514B8B87AA0AFB /* libRNSensitiveInfo.a in Frameworks */,
-				B0F2DA71A3EC4AD5B10AB7D1 /* libRNRandomBytes.a in Frameworks */,
 				E129B66A3E1E4BCAB0BFB78E /* libSplashScreen.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -604,6 +611,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1A90201920FF5BDB00B06094 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A90201D20FF5BDB00B06094 /* libSplashScreen.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1AFA41B2208749C7007B4750 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +658,7 @@
 				5A178CC8282A487D90BBC7C5 /* libReactNativeLocalization.a */,
 				72FC89D8C392407B8DA6C4F1 /* libRNI18n-tvOS.a */,
 				451196FECA75466FA61AC5DF /* libRNSensitiveInfo.a */,
+				A9F3C7D3CA6D4DD2BD38F16D /* libSplashScreen.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -745,7 +761,6 @@
 				692FCC9C32C84641B9F46687 /* RNOS.xcodeproj */,
 				F9D3554DEB5541FD8BAE3AF6 /* RNI18n.xcodeproj */,
 				E2D908F366544EF2961D68DD /* RNSensitiveInfo.xcodeproj */,
-				D7A8CB8F6EA64B779F6D36AF /* RNRandomBytes.xcodeproj */,
 				B810446286C8499CBADB17D9 /* SplashScreen.xcodeproj */,
 			);
 			name = Libraries;
@@ -961,6 +976,10 @@
 					ProjectRef = E2D908F366544EF2961D68DD /* RNSensitiveInfo.xcodeproj */;
 				},
 				{
+					ProductGroup = 1A90201920FF5BDB00B06094 /* Products */;
+					ProjectRef = B810446286C8499CBADB17D9 /* SplashScreen.xcodeproj */;
+				},
+				{
 					ProductGroup = 7C86EE7220331D8000F0AA53 /* Products */;
 					ProjectRef = 906369BE987A40CCB4E0CA4C /* TcpSockets.xcodeproj */;
 				},
@@ -1032,6 +1051,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1A90201D20FF5BDB00B06094 /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = 1A90201C20FF5BDB00B06094 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1AFA41B6208749C7007B4750 /* libRNSensitiveInfo.a */ = {

@@ -33,7 +33,58 @@ type THeaderProps = {
   onSelectNetwork: () => void,
 }
 
+// class LeftNB extends PureComponent<{}> {
+//   render () {
+//     return (
+//       <TouchableOpacity
+//         onPress={() => {}}
+//         style={styles.topBarButton}
+//       >
+//         <Image
+//           source={require('../images/ios-gear-outline.png')}
+//           style={styles.topBarButtonImage}
+//         />
+//         <Text style={styles.topBarButtonLabel}>
+//           {'Production'}
+//         </Text>
+//       </TouchableOpacity>
+//     )
+//   }
+// }
+
+// class RightNB extends PureComponent<{}> {
+//   render () {
+//     return (
+//       <TouchableOpacity
+//         onPress={() => {}}
+//         style={styles.topBarButton}
+//       >
+//         <Text style={styles.topBarButtonLabel}>
+//           {'EN-US'}
+//         </Text>
+//       </TouchableOpacity>
+//     )
+//   }
+// }
+
+// class LeftNB extends PureComponent<{}> {
+//   render () {
+//     return (
+//       <Text>{'LEFT'}</Text>
+//     )
+//   }
+// }
+
+// class RightNB extends PureComponent<{}> {
+//   render () {
+//     return (
+//       <Text>{'RIGHT'}</Text>
+//     )
+//   }
+// }
+
 export default class SetAccountPassword extends PureComponent<TSetAccountPasswordProps, {}> {
+
   render () {
     const {
       isCreatingNewWallet,
