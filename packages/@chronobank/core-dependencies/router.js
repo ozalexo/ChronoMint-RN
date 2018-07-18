@@ -12,34 +12,27 @@ class RouterClass {
     this.navigator = navigator
   }
 
-  push = (link: string) => {
-    console.log('LINK: ', link, this.navigator)
-
-    const screenLinks = {
-      '/login/create-account': 'CreateAccount'
-    }
-
-    this.navigator && this.navigator.push({
-      screen: screenLinks[link]
-    })
+  push = (screen: string) => {
+    this.navigator && this.navigator.push({ screen })
 
     return {
       type: 'router/PUSH',
       payload: {
-        link
+        screen
       }
     }
   }
+  
   goBack = (params) => this.navigator && this.navigator.pop(params)
   reset = (params) => this.navigator && this.navigator.resetTo(params)
   toggleDrawer = (params) => this.navigator && this.navigator.toggleDrawer(params)
 }
 
-export const Router = new RouterClass()
+export const router = new RouterClass()
 
-export const push = Router.push
+export const push = router.push
 
-export const goBack = Router.goBack
+export const goBack = router.goBack
 
-export const reset = Router.reset
+export const reset = router.reset
 

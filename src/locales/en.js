@@ -181,7 +181,7 @@ export default {
     recoverUsingMnemonic: 'Recover using mnemonic',
     or: 'common.or'
   },
-  ImportAccount: {
+  LoginWithOptions: {
     title: 'Import Address',
     mnemonic: 'Mnemonic',
     privateKey: 'Private key',

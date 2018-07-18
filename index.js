@@ -5,16 +5,17 @@
  * @flow
  */
 
+import { YellowBox } from 'react-native'
 // FOR DEVELOPERS
 // Uncomment the following line and watch for network requests at "Network" tab of dev. tools
 // GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest
 
-// eslint-disable-next-line no-console
-console.ignoredYellowBox = [
-  'Warning: componentWillMount',
-  'Warning: componentWillReceiveProps',
-  'Warning: componentWillUpdate',
+YellowBox.ignoreWarnings([
   'Can\'t restore local session',
-]
+  'Module RNOS',
+  '_resolver',
+  'ContractsManager',
+  'DEPRECATED',
+])
 
 import './src/app.js'

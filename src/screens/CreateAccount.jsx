@@ -13,6 +13,9 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native'
+import {
+  Field
+} from 'redux-form/immutable'
 import I18n from 'react-native-i18n'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
@@ -23,9 +26,9 @@ export type TSetAccountPasswordProps = {
   onChangePassword: (password: string) => void,
   onChangePasswordConfirmation: (passwordConfirmation: string) => void,
   onDone: () => void,
+  navigateToSelectWallet: () => void,
   onSelectLanguage: () => void,
-  onSelectNetwork: () => void,
-  onUseWallet: () => void,
+  onSelectNetwork: () => void
 }
 
 type THeaderProps = {
@@ -33,29 +36,46 @@ type THeaderProps = {
   onSelectNetwork: () => void,
 }
 
-export default class SetAccountPassword extends PureComponent<TSetAccountPasswordProps, {}> {
+export default class CreateAccount extends PureComponent<TSetAccountPasswordProps, {}> {
   render () {
     const {
       isCreatingNewWallet,
       onChangePassword,
       onChangePasswordConfirmation,
       onDone,
+      navigateToSelectWallet,
       onSelectLanguage,
-      onSelectNetwork,
-      onUseWallet,
+      onSelectNetwork
     } = this.props
 
     return (
       <View>
-        { isCreatingNewWallet && (
-          <Header
-            onSelectLanguage={onSelectLanguage}
-            onSelectNetwork={onSelectNetwork}
-          />
-        ) }
-        <Input
+        <Header
+          onSelectLanguage={onSelectLanguage}
+          onSelectNetwork={onSelectNetwork}
+        />
+        <Text
+          style={styles.titleText}
+        >
+          Create New Account
+        </Text>
+        <Text
+          style={styles.subtitleText}
+        >
+          Created wallet will be encrypted using given password and stored in your browser's local storage.
+        </Text>
+        <Field
           autoCorrect={false}
+          component={Input}
+          name={'walletName'}
+          placeholder={'Wallet name'}
+          style={styles.input}
+        />
+        <Field
+          autoCorrect={false}
+          component={Input}
           onChangeText={onChangePassword}
+          name={'walletPassword'}
           placeholder={I18n.t('SetAccountPassword.password')}
           secureTextEntry
           style={styles.input}
@@ -63,30 +83,24 @@ export default class SetAccountPassword extends PureComponent<TSetAccountPasswor
         <Input
           autoCorrect={false}
           onChangeText={onChangePasswordConfirmation}
+          name={'walletConfirmPassword'}
           placeholder={I18n.t('SetAccountPassword.confirmPassword')}
           secureTextEntry
           style={styles.input}
         />
-        { isCreatingNewWallet ? (
-          <View>
-            <PrimaryButton
-              label={I18n.t('SetAccountPassword.createWallet').toUpperCase()}
-              onPress={onDone}
-            />
-            <Text style={styles.or}>
-              {I18n.t('SetAccountPassword.or')}
-            </Text>
-            <TextButton
-              label={I18n.t('SetAccountPassword.useExistingWallet')}
-              onPress={onUseWallet}
-            />
-          </View>
-        ) : (
+        <View>
           <PrimaryButton
-            label='Set password'
+            label={I18n.t('SetAccountPassword.createWallet').toUpperCase()}
             onPress={onDone}
           />
-        ) }
+          <Text style={styles.or}>
+            {I18n.t('SetAccountPassword.or')}
+          </Text>
+          <TextButton
+            label={I18n.t('SetAccountPassword.useExistingWallet')}
+            onPress={navigateToSelectWallet}
+          />
+          </View>
         <Text style={styles.copyright}>
           {I18n.t('SetAccountPassword.copyright')}
         </Text>
@@ -160,6 +174,19 @@ const styles = StyleSheet.create({
   logoText: {
     alignSelf: 'center',
     marginBottom: 30,
+  },
+  titleText: {
+    color: '#ffffff',
+    fontSize: 30,
+    fontWeight: '900',
+    paddingBottom: 10,
+    textAlign: 'center'
+  },
+  subtitleText: {
+    color: '#9997B2',
+    fontSize: 16,
+    paddingBottom: 10,
+    textAlign: 'center'
   },
   or: {
     alignSelf: 'center',

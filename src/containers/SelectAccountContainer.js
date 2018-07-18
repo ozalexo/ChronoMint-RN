@@ -5,46 +5,18 @@
  * @flow
  */
 
-import React, { PureComponent } from 'react'
-import I18n from 'react-native-i18n'
-import SelectAccount, { type TAccount } from '../screens/SelectAccount'
-import withLogin from '../components/withLogin'
+import { connect } from 'react-redux'
+import {
+  navigateToCreateAccount,
+  navigateToSelectImportMethod
+} from '@chronobank/login/redux/network/actions'
+import SelectAccount from '../screens/SelectAccount'
 
-type TSelectAccountContainerProps = {
-  navigator: any,
-  storedAccounts: any,
-}
-
-class SelectAccountContainer extends PureComponent<TSelectAccountContainerProps, {}> {
-  handleCreateWallet = () => {
-    this.props.navigator.resetTo({ screen: 'CreateAccount' })
-  }
-
-  handleImportAccount = () => {
-    this.props.navigator.push({
-      screen: 'AccountImportMethod',
-      title: I18n.t('ImportAccount.title')
-    })
-  }
-
-  handleSelectAccount = (account: TAccount) => () => {
-    this.props.navigator.push({
-      screen: 'AccountPassword',
-      title: 'Enter account password',
-      passProps: {
-        account
-      }
-    })
-  }
-
-  render () {
-    return (<SelectAccount
-      accounts={this.props.storedAccounts.toArray()}
-      onCreateWallet={this.handleCreateWallet}
-      onImportAccount={this.handleImportAccount}
-      onSelectAccount={this.handleSelectAccount}
-    />)
+function mapDispatchToProps (dispatch) {
+  return {
+    navigateToCreateAccount: () => dispatch(navigateToCreateAccount()),
+    navigateToSelectImportMethod: () => dispatch(navigateToSelectImportMethod())
   }
 }
 
-export default withLogin(SelectAccountContainer)
+export default connect(null, mapDispatchToProps)(SelectAccount)

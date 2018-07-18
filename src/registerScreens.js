@@ -13,7 +13,6 @@ import { type TState } from './redux/ducks'
 //#endregion
 
 //#region Login imports
-import AccountImportMethod from './containers/AccountImportMethodContainer'
 import AccountPassword from './containers/AccountPasswordContainer'
 import Add2FAWallet from './containers/Add2FAWalletContainer'
 import AddAdvancedWallet from './containers/AddAdvancedWalletContainer'
@@ -32,6 +31,7 @@ import EnterPrivateKey from './containers/EnterPrivateKeyContainer'
 import GenerateMnemonic from './containers/GenerateMnemonicContainer'
 import LoginScreenLayout from './components/LoginScreenLayout'
 import LoginWithMnemonic from './containers/LoginWithMnemonicContainer'
+import LoginWithOpions from './containers/LoginWithOptionsContainer'
 import screenLayout from './utils/screenLayout'
 import SelectAccount from './containers/SelectAccountContainer'
 import SelectLanguage from './containers/SelectLanguageContainer'
@@ -54,7 +54,11 @@ import WalletTokensTab from './containers/WalletTokensTabContainer'
 export default function registerScreens (store: TStore<TState, { type: string }>, Provider: TProvider<TState, { type: string }>) {
 
   //#region Login screens
-  Navigation.registerComponent('AccountImportMethod', () => screenLayout(LoginScreenLayout)(AccountImportMethod), store, Provider)
+  Navigation.registerComponent('/login/confirm-mnemonic', () => screenLayout(LoginScreenLayout)(ConfirmMnemonic), store, Provider)
+  Navigation.registerComponent('/login/create-account', () => screenLayout(LoginScreenLayout)(CreateAccount), store, Provider)
+  Navigation.registerComponent('/login/import-methods', () => screenLayout(LoginScreenLayout)(LoginWithOpions), store, Provider)
+  Navigation.registerComponent('/login/mnemonic-login', () => screenLayout(LoginScreenLayout)(LoginWithMnemonic), store, Provider)
+  Navigation.registerComponent('/login/select-account', () => screenLayout(LoginScreenLayout)(SelectAccount), store, Provider)
   Navigation.registerComponent('AccountPassword', () => screenLayout(LoginScreenLayout)(AccountPassword), store, Provider)
   Navigation.registerComponent('Add2FAWallet', () => Add2FAWallet, store, Provider)
   Navigation.registerComponent('AddAdvancedWallet', () => AddAdvancedWallet, store, Provider)
@@ -64,15 +68,11 @@ export default function registerScreens (store: TStore<TState, { type: string }>
   Navigation.registerComponent('AddTimeLockedWallet', () => AddTimeLockedWallet, store, Provider)
   Navigation.registerComponent('AddTokenToAdvancedWallet', () => AddTokenToAdvancedWallet, store, Provider)
   Navigation.registerComponent('AddWallet', () => AddWallet, store, Provider)
-  Navigation.registerComponent('ConfirmMnemonic', () => screenLayout(LoginScreenLayout)(ConfirmMnemonic), store, Provider)
-  Navigation.registerComponent('CreateAccount', () => screenLayout(LoginScreenLayout)(CreateAccount), store, Provider)
   Navigation.registerComponent('Download2FAApp', () => Download2FAApp, store, Provider)
   Navigation.registerComponent('Drawer', () => Drawer, store, Provider)
   Navigation.registerComponent('EnterPin', () => screenLayout(LoginScreenLayout)(EnterPin), store, Provider)
   Navigation.registerComponent('EnterPrivateKey', () => screenLayout(LoginScreenLayout)(EnterPrivateKey), store, Provider)
   Navigation.registerComponent('GenerateMnemonic', () => screenLayout(LoginScreenLayout)(GenerateMnemonic), store, Provider)
-  Navigation.registerComponent('LoginWithMnemonic', () => screenLayout(LoginScreenLayout)(LoginWithMnemonic), store, Provider)
-  Navigation.registerComponent('SelectAccount', () => screenLayout(LoginScreenLayout)(SelectAccount), store, Provider)
   Navigation.registerComponent('SelectLanguage', () => SelectLanguage, store, Provider)
   Navigation.registerComponent('SelectNetwork', () => SelectNetwork, store, Provider)
   //#endregion

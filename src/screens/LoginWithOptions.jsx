@@ -6,6 +6,7 @@
  */
 
 import React, { PureComponent } from 'react'
+import I18n from 'react-native-i18n'
 import {
   Image,
   StyleSheet,
@@ -13,46 +14,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import I18n from 'react-native-i18n'
 import TextButton from '../components/TextButton'
 
-type TAccountImportMethodProps = {
-  accountImportMethods: Array<TAccountImportMethod>,
-  onCreateWallet: () => void,
-  onSelectAccountImportMethod: (accountImportMethod: TAccountImportMethod) => () => void,
+type TLoginWithOptionsProps = {
+  accountImportMethods: Array<TMethodProps>,
+  navigateToMnemonicImportMethod: () => void,
+  onCreateWallet: () => void
 }
 
-export type TAccountImportMethod = {
-  id: string,
+type TMethodProps = {
   image: any,
   label: string,
-  screen: string,
-  title: string,
-}
-
-type TMethodProps = TAccountImportMethod & {
   onPress: () => void,
 }
 
-export default class SelectAccountImportMethod extends PureComponent<TAccountImportMethodProps, {}> {
-  renderMethod = (accountImportMethod: TAccountImportMethod) => (
-    <Method
-      key={accountImportMethod.id}
-      {...accountImportMethod}
-      onPress={this.props.onSelectAccountImportMethod(accountImportMethod)}
-    />
-  )
-
+export default class SelectAccountImportMethod extends PureComponent<TLoginWithOptionsProps, {}> {
   render () {
     const {
       accountImportMethods,
       onCreateWallet,
+      navigateToMnemonicImportMethod
     } = this.props
 
     return (
       <View>
         <View style={styles.buttons}>
-          {accountImportMethods.map(this.renderMethod)}
+          <Method
+            label={I18n.t('LoginWithOptions.mnemonic')}
+            image={require('../images/private-key.png')}
+            onPress={navigateToMnemonicImportMethod}
+          />
         </View>
 
         <Text style={styles.or}>
