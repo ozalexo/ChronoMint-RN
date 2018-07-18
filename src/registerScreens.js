@@ -8,6 +8,8 @@
 //#region common imports
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation'
 import { Dimensions } from 'react-native'
+import { Provider, connect } from 'react-redux'
+import store from './redux/configureStore'
 import React from 'react'
 //#endregion
 
@@ -29,7 +31,7 @@ import React from 'react'
 // import EnterPin from './containers/EnterPinContainer'
 // import EnterPrivateKey from './containers/EnterPrivateKeyContainer'
 // import GenerateMnemonic from './containers/GenerateMnemonicContainer'
-// import SelectAccount from './containers/SelectAccountContainer'
+import SelectAccountContainer from './containers/SelectAccountContainer'
 // import SelectLanguage from './containers/SelectLanguageContainer'
 // import SelectNetwork from './containers/SelectNetworkContainer'
 import SetAccountPasswordContainer from './containers/SetAccountPasswordContainer'
@@ -92,6 +94,13 @@ const AuthStack = createStackNavigator(
         const LayoutedScreen = screenLayout(LoginScreenLayout)(SetAccountPasswordContainer)
         return (<LayoutedScreen {...props} isCreatingNewWallet={true} />)
       }
+    },
+    SelectAccountContainer: {
+      screen: () => (
+        <Provider store={store}>
+          <SelectAccountContainer />
+        </Provider>
+      )
     }
   },
   {

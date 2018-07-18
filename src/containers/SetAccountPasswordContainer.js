@@ -9,6 +9,13 @@ import React, { PureComponent } from 'react'
 import I18n from 'react-native-i18n'
 import isValid from '../utils/validators'
 import SetAccountPassword from '../screens/SetAccountPassword'
+import { NavigationActions } from 'react-navigation'
+import type {
+  NavigationScreenProp,
+  NavigationState,
+  // NavigationStateRoute,
+  // NavigationEventSubscription,
+} from 'react-navigation';
 
 let lastAccount = false
 
@@ -16,7 +23,7 @@ type TSetAccountPasswordContainerProps = {
   generateMnemonic: () => void,
   isCreatingNewWallet?: boolean,
   lastAccount: any,
-  navigator: any,
+  navigation: NavigationScreenProp<NavigationState>,
   privateKey?: string,
   navigationOptions: any
 }
@@ -91,10 +98,10 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
   }
 
   handleUseWallet = () => {
-    this.props.navigator.push({
-      screen: 'SelectAccount',
-      title: I18n.t('SelectAccount.title')
-    })
+    this.props.navigation.navigate('SelectAccountContainer')
+    //   screen: 'SelectAccountContainer',
+    //   title: I18n.t('SelectAccount.title')
+    // })
   }
 
   handleWallet = () => {

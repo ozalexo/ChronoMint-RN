@@ -21,6 +21,12 @@ console.ignoredYellowBox = [
   'Can\'t restore local session',
 ]
 
+// Listen for unhandled promise rejections
+window.onunhandledrejection = function (promise, reason) {
+  // eslint-disable-next-line no-console
+  console.log('%c window.onunhandledrejection', 'background: #222; color: red', promise, reason)
+}
+
 // main entry point
 import { AppRegistry } from 'react-native';
 import App from './src/app';

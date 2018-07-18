@@ -8,6 +8,7 @@
 import React from 'react';
 import './utils/i18n'
 import './utils/shim'
+// import { Provider, connect } from 'react-redux'
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -17,10 +18,18 @@ import {
   View,
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
+// import {
+//   reduxifyNavigator,
+//   createReactNavigationReduxMiddleware,
+// } from 'react-navigation-redux-helpers';
 import {
   AuthStack,
   // WalletStack,
 } from './registerScreens'
+import store, { injectReducer } from './redux/configureStore'
+
+injectReducer(require('./redux/ducks'))
+require('./init')
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -122,17 +131,41 @@ const styles = StyleSheet.create({
 const AppStackExm = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStackExm = createStackNavigator({ SignIn: SignInScreen });
 
-export default createSwitchNavigator(
+const AppNavigator =  createSwitchNavigator(
   {
     App: AppStackExm,
     Auth: AuthStackExm,
-    Joy: AuthStack
+    Login: AuthStack
   },
   {
-    initialRouteName: 'Joy',
+    initialRouteName: 'Login',
   }
 );
 
+export default AppNavigator
+
+// const middleware = createReactNavigationReduxMiddleware(
+//   'root',
+//   state => state.nav
+// );
+
+// const AppWithNavigationState = reduxifyNavigator(RootNavigator, 'root');
+
+// const mapStateToProps = state => ({
+//   state: state.nav,
+// });
+
+// const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);
+
+// export default class App extends React.Component {
+//   render() {
+//     return (
+//       <Provider store={store}>
+//         <AppNavigator />
+//       </Provider>
+//     );
+//   }
+// }
 
 // // import { Provider } from 'react-redux'
 // import './utils/i18n'
@@ -143,12 +176,6 @@ export default createSwitchNavigator(
 //   WalletStack,
 // } from './registerScreens'
 // import { createSwitchNavigator } from 'react-navigation'
-
-// // Listen for unhandled promise rejections
-// window.onunhandledrejection = function (promise, reason) {
-//   // eslint-disable-next-line no-console
-//   console.log('%c window.onunhandledrejection', 'background: #222; color: red', promise, reason)
-// }
 
 // // injectReducer(require('./redux/ducks'))
 // // require('./init')
