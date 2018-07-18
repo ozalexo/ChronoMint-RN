@@ -8,7 +8,7 @@
 import React from 'react';
 import './utils/i18n'
 import './utils/shim'
-// import { Provider, connect } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -142,7 +142,13 @@ const AppNavigator =  createSwitchNavigator(
   }
 );
 
-export default AppNavigator
+const Prov = () => (
+  <Provider store={store}>
+    <AppNavigator />
+  </Provider>
+)
+
+export default Prov
 
 // const middleware = createReactNavigationReduxMiddleware(
 //   'root',

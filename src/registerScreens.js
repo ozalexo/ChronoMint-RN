@@ -92,15 +92,18 @@ const AuthStack = createStackNavigator(
     SetAccountPassword: {
       screen: (props) => {
         const LayoutedScreen = screenLayout(LoginScreenLayout)(SetAccountPasswordContainer)
-        return (<LayoutedScreen {...props} isCreatingNewWallet={true} />)
+        return (
+          <LayoutedScreen {...props} isCreatingNewWallet={true} />
+        )
       }
     },
     SelectAccountContainer: {
-      screen: () => (
-        <Provider store={store}>
-          <SelectAccountContainer />
-        </Provider>
-      )
+      screen: () => {
+        const LayoutedScreen = screenLayout(LoginScreenLayout)(SelectAccountContainer)
+        return (
+          <LayoutedScreen />
+        )
+      }
     }
   },
   {
