@@ -14,6 +14,7 @@ import * as market from '@chronobank/core/redux/market'
 import * as multisigWallet from '@chronobank/core/redux/multisigWallet'
 import * as notifier from '@chronobank/core/redux/notifier'
 import * as operations from '@chronobank/core/redux/operations'
+import * as persistAccount from '@chronobank/core/redux/persistAccount'
 import * as rewards from '@chronobank/core/redux/rewards'
 import * as session from '@chronobank/core/redux/session'
 import * as settings from '@chronobank/core/redux/settings'
@@ -37,6 +38,7 @@ export {
   network,
   notifier,
   operations,
+  persistAccount,
   rewards,
   sensitive,
   session,
