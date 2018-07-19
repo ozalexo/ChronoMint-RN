@@ -19,6 +19,7 @@ import TextButton from '../components/TextButton'
 type TLoginWithOptionsProps = {
   accountImportMethods: Array<TMethodProps>,
   navigateToMnemonicImportMethod: () => void,
+  initImportMethodsPage: () => void,
   onCreateWallet: () => void
 }
 
@@ -28,7 +29,11 @@ type TMethodProps = {
   onPress: () => void,
 }
 
-export default class SelectAccountImportMethod extends PureComponent<TLoginWithOptionsProps, {}> {
+export default class LoginWithOptions extends PureComponent<TLoginWithOptionsProps, {}> {
+  componentDidMount() {
+    this.props.initImportMethodsPage()
+  }
+
   render () {
     const {
       accountImportMethods,

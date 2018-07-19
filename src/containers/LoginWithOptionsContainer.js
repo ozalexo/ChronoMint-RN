@@ -8,6 +8,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
+  initImportMethodsPage,
   navigateToCreateAccount,
   navigateToMnemonicImportMethod,
   navigateToSelectImportMethod
@@ -39,6 +40,7 @@ function mapDispatchToProps (dispatch) {
   return {
     navigateToCreateAccount: () => dispatch(navigateToCreateAccount()),
     navigateToSelectImportMethod: () => dispatch(navigateToSelectImportMethod()),
+    initImportMethodsPage: () => dispatch(initImportMethodsPage()),
     navigateToMnemonicImportMethod: () => dispatch(navigateToMnemonicImportMethod())
   }
 }
