@@ -38,7 +38,8 @@ function mapStateToProps () {
 function mapDispatchToProps (dispatch) {
   return {
     navigateToCreateAccount: () => dispatch(navigateToCreateAccount()),
-    navigateToSelectImportMethod: () => dispatch(navigateToSelectImportMethod())
+    navigateToSelectImportMethod: () => dispatch(navigateToSelectImportMethod()),
+    navigateToMnemonicImportMethod: () => dispatch(navigateToMnemonicImportMethod())
   }
 }
 
