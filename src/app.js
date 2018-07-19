@@ -24,7 +24,8 @@ import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 // } from 'react-navigation-redux-helpers';
 import {
   AuthStack,
-  // WalletStack,
+  WalletStack,
+  LanguageDrawer
 } from './registerScreens'
 import store, { injectReducer } from './redux/configureStore'
 
@@ -135,7 +136,7 @@ const AppNavigator =  createSwitchNavigator(
   {
     App: AppStackExm,
     Auth: AuthStackExm,
-    Login: AuthStack
+    Login: LanguageDrawer
   },
   {
     initialRouteName: 'Login',

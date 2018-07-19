@@ -51,18 +51,6 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
     passwordConfirmation: ''
   }
 
-  handleSelectNetwork = () => {
-    this.props.navigator.push({
-      screen: 'SelectNetwork'
-    })
-  }
-
-  handleSelectLanguage = () => {
-    this.props.navigator.push({
-      screen: 'SelectLanguage'
-    })
-  }
-
   handleChangePassword = (password: string) => {
     this.setState({ password })
   }
@@ -140,8 +128,8 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
         onChangePassword={this.handleChangePassword}
         onChangePasswordConfirmation={this.handleChangePasswordConfirmation}
         onDone={this.handleDone}
-        onSelectLanguage={this.handleSelectLanguage}
-        onSelectNetwork={this.handleSelectNetwork}
+        onSelectLanguage={this.props.navigation.toggleLanguageDrawer}
+        onSelectNetwork={this.props.navigation.toggleMainMenuDrawer}
         onUseWallet={this.handleUseWallet}
       />
     )

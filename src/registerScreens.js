@@ -6,10 +6,13 @@
  */
 
 //#region common imports
-import { createDrawerNavigator, createStackNavigator } from 'react-navigation'
+import {
+  createDrawerNavigator,
+  createStackNavigator,
+  DrawerActions
+} from 'react-navigation'
 import { Dimensions } from 'react-native'
 import { Provider, connect } from 'react-redux'
-import store from './redux/configureStore'
 import React from 'react'
 //#endregion
 
@@ -26,13 +29,13 @@ import React from 'react'
 // import AddWallet from './containers/AddWalletContainer'
 // import ConfirmMnemonic from './containers/ConfirmMnemonicContainer'
 // import Download2FAApp from './containers/Download2FAAppContainer'
-// import Drawer from './containers/DrawerContainer'
+import DrawerContainer from './containers/DrawerContainer'
 // import EnterMnemonic from './containers/EnterMnemonicContainer'
 // import EnterPin from './containers/EnterPinContainer'
 // import EnterPrivateKey from './containers/EnterPrivateKeyContainer'
 // import GenerateMnemonic from './containers/GenerateMnemonicContainer'
 import SelectAccountContainer from './containers/SelectAccountContainer'
-// import SelectLanguage from './containers/SelectLanguageContainer'
+import SelectLanguageContainer from './containers/SelectLanguageContainer'
 // import SelectNetwork from './containers/SelectNetworkContainer'
 import SetAccountPasswordContainer from './containers/SetAccountPasswordContainer'
 // import WalletBackup from './containers/WalletBackupContainer'
@@ -48,7 +51,7 @@ import LoginScreenLayout from './components/LoginScreenLayout'
 // import TransactionDetails from './screens/TransactionDetails'
 // import Wallet from './containers/WalletContainer'
 // import WalletOwnersTab from './containers/WalletOwnersTabContainer'
-// import WalletsList from './containers/WalletsListContainer'
+import WalletsList from './containers/WalletsListContainer'
 // import WalletTemplatesTab from './containers/WalletTemplatesTabContainer'
 // import WalletTokensTab from './containers/WalletTokensTabContainer'
 //#endregion
@@ -89,7 +92,7 @@ import LoginScreenLayout from './components/LoginScreenLayout'
 
 const AuthStack = createStackNavigator(
   {
-    SetAccountPassword: {
+    SetAccountPasswordContainer: {
       screen: (props) => {
         const LayoutedScreen = screenLayout(LoginScreenLayout)(SetAccountPasswordContainer)
         return (
@@ -107,20 +110,54 @@ const AuthStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'SetAccountPassword',
+    initialRouteName: 'SetAccountPasswordContainer',
     headerMode: 'none'
   }
 )
 
-// const WalletStack = () => createDrawerNavigator(
-//   {
-//     WalletsList: WalletsList
-//   },
-//   {
-//     initialRouteName: 'WalletsList',
-//   })
+const WalletStack = () => createDrawerNavigator(
+  {
+    WalletsList
+  },
+  {
+    initialRouteName: 'WalletsList',
+  }
+)
+
+const MainMenuDrawer = createDrawerNavigator(
+  {
+    AuthStack
+  },
+  {
+    getCustomActionCreators: (route, stateKey) => {
+      // console.log('inner: ' + stateKey);
+      return {
+        toggleMainMenuDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+      };
+    },
+    drawerPosition: 'left',
+    contentComponent: (props) => (<DrawerContainer {...props} />)
+  }
+)
+
+const LanguageDrawer = createDrawerNavigator(
+  {
+    MainMenuDrawer
+  },
+  {
+    getCustomActionCreators: (route, stateKey) => {
+      return {
+        toggleLanguageDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+      };
+    },
+    drawerPosition: 'right',
+    // drawerWidth: Dimensions.get('window').width,
+    contentComponent: (props) => <SelectLanguageContainer {...props} />,
+  }
+)
 
 export {
   AuthStack,
-  // WalletStack
+  LanguageDrawer,
+  WalletStack
 }
