@@ -28,6 +28,7 @@ import Download2FAApp from './containers/Download2FAAppContainer'
 import Drawer from './containers/DrawerContainer'
 import EnterPin from './containers/EnterPinContainer'
 import EnterPrivateKey from './containers/EnterPrivateKeyContainer'
+import GenerateWallet from './containers/GenerateWallet'
 import GenerateMnemonic from './containers/GenerateMnemonicContainer'
 import LoginScreenLayout from './components/LoginScreenLayout'
 import LoginWithMnemonic from './containers/LoginWithMnemonicContainer'
@@ -59,6 +60,7 @@ export default function registerScreens (store: TStore<TState, { type: string }>
   Navigation.registerComponent('/login/import-methods', () => screenLayout(LoginScreenLayout)(LoginWithOpions), store, Provider)
   Navigation.registerComponent('/login/mnemonic-login', () => screenLayout(LoginScreenLayout)(LoginWithMnemonic), store, Provider)
   Navigation.registerComponent('/login/select-account', () => screenLayout(LoginScreenLayout)(SelectAccount), store, Provider)
+  Navigation.registerComponent('/login/download-wallet', () => screenLayout(LoginScreenLayout)(GenerateWallet), store, Provider)
   Navigation.registerComponent('AccountPassword', () => screenLayout(LoginScreenLayout)(AccountPassword), store, Provider)
   Navigation.registerComponent('Add2FAWallet', () => Add2FAWallet, store, Provider)
   Navigation.registerComponent('AddAdvancedWallet', () => AddAdvancedWallet, store, Provider)
