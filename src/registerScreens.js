@@ -93,6 +93,9 @@ import WalletsList from './containers/WalletsListContainer'
 const AuthStack = createStackNavigator(
   {
     SetAccountPasswordContainer: {
+      navigationOptions: () => ({
+        header: null
+      }),
       screen: (props) => {
         const LayoutedScreen = screenLayout(LoginScreenLayout)(SetAccountPasswordContainer)
         return (
@@ -101,6 +104,11 @@ const AuthStack = createStackNavigator(
       }
     },
     SelectAccountContainer: {
+      navigationOptions: () => ({
+        title: 'Screen',
+        headerBackTitle: 'BackBu',
+        headerTransparent: true,
+      }),
       screen: () => {
         const LayoutedScreen = screenLayout(LoginScreenLayout)(SelectAccountContainer)
         return (
@@ -111,7 +119,7 @@ const AuthStack = createStackNavigator(
   },
   {
     initialRouteName: 'SetAccountPasswordContainer',
-    headerMode: 'none'
+    // headerMode: 'screen'
   }
 )
 
@@ -152,7 +160,7 @@ const LanguageDrawer = createDrawerNavigator(
     },
     drawerPosition: 'right',
     // drawerWidth: Dimensions.get('window').width,
-    contentComponent: (props) => <SelectLanguageContainer {...props} />,
+    contentComponent: (props) => <SelectLanguageContainer {...props} />
   }
 )
 

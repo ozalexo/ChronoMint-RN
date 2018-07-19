@@ -140,6 +140,9 @@ const AppNavigator =  createSwitchNavigator(
   },
   {
     initialRouteName: 'Login',
+    navigationOptions: {
+      headerTransparent: true,
+    },
   }
 );
 

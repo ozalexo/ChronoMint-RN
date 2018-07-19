@@ -16,6 +16,19 @@ type TSelectAccountContainerProps = {
 }
 
 class SelectAccountContainer extends PureComponent<TSelectAccountContainerProps, {}> {
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerLeft: (
+        <Button
+          onPress={navigation.goBack()}
+          title="+1"
+          color="#fff"
+        />
+      ),
+    };
+  };
+
   handleCreateWallet = () => {
     this.props.navigator.resetTo({ screen: 'SetAccountPassword' })
   }
