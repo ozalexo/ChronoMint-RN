@@ -9,7 +9,15 @@ import React, { PureComponent } from 'react'
 import I18n from 'react-native-i18n'
 import isValid from '../utils/validators'
 import SetAccountPassword from '../screens/SetAccountPassword'
+import SplashScreen from 'react-native-splash-screen'
 import { NavigationActions } from 'react-navigation'
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native'
 import type {
   NavigationScreenProp,
   NavigationState,
@@ -36,7 +44,8 @@ type TSetAccountPasswordContainerState = {
 class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordContainerProps, TSetAccountPasswordContainerState> {
 
   static navigationOptions = {
-    header: null
+    // header: null,
+    headerLeft: <Text>BBB</Text>
   }
 
   // static navigationOptions = {
@@ -50,6 +59,12 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
     password: '',
     passwordConfirmation: ''
   }
+
+    componentDidMount() {
+    	// do stuff while splash screen is shown
+        // After having done stuff (such as async tasks) hide the splash screen
+        SplashScreen.hide();
+    }
 
   handleChangePassword = (password: string) => {
     this.setState({ password })
