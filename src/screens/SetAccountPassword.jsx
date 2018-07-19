@@ -6,12 +6,14 @@
  */
 
 import React, { PureComponent } from 'react'
+
 import {
-  StyleSheet,
   Image,
+  StatusBar,
+  StyleSheet,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import Input from '../components/Input'
@@ -98,6 +100,7 @@ export default class SetAccountPassword extends PureComponent<TSetAccountPasswor
 
     return (
       <View>
+        <StatusBar barStyle="light-content"/>
         { isCreatingNewWallet && (
           <Header
             onSelectLanguage={onSelectLanguage}
