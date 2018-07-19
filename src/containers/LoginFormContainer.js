@@ -8,7 +8,7 @@
 import React, { PureComponent } from 'react'
 import I18n from 'react-native-i18n'
 import isValid from '../utils/validators'
-import AccountPassword from '../screens/AccountPassword'
+import LoginForm from '../screens/LoginForm'
 import withLogin from '../components/withLogin'
 
 export type TAccount = {
@@ -16,7 +16,7 @@ export type TAccount = {
   address: string,
 }
 
-export type TAccountPasswordContainerProps = {
+export type TLoginFormContainerProps = {
   account: {
     address: string,
     encryptedPrivateKey: string,
@@ -26,11 +26,11 @@ export type TAccountPasswordContainerProps = {
   onPasswordLogin: ({ encryptedPrivateKey: string, passwordHash: string }, password: string) => Promise<void>,
 }
 
-type TAccountPasswordContainerState = {
+type TLoginFormContainerState = {
   password: string,
 }
 
-class AccountPasswordContainer extends PureComponent<TAccountPasswordContainerProps, TAccountPasswordContainerState> {
+class AccountPasswordContainer extends PureComponent<TLoginFormContainerProps, TLoginFormContainerState> {
   static navigatorStyle = {
     navBarHidden: true
   }
@@ -65,7 +65,7 @@ class AccountPasswordContainer extends PureComponent<TAccountPasswordContainerPr
   }
 
   render () {
-    return (<AccountPassword
+    return (<LoginForm
       account={{
         ...this.props.account,
         image: require('../images/profile-circle-small.png')

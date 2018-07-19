@@ -13,7 +13,7 @@ import { type TState } from './redux/ducks'
 //#endregion
 
 //#region Login imports
-import AccountPassword from './containers/AccountPasswordContainer'
+import LoginForm from './containers/LoginFormContainer'
 import Add2FAWallet from './containers/Add2FAWalletContainer'
 import AddAdvancedWallet from './containers/AddAdvancedWalletContainer'
 import AddEthereumWallet from './containers/AddEthereumWalletContainer'
@@ -61,7 +61,7 @@ export default function registerScreens (store: TStore<TState, { type: string }>
   Navigation.registerComponent('/login/mnemonic-login', () => screenLayout(LoginScreenLayout)(LoginWithMnemonic), store, Provider)
   Navigation.registerComponent('/login/select-account', () => screenLayout(LoginScreenLayout)(SelectAccount), store, Provider)
   Navigation.registerComponent('/login/download-wallet', () => screenLayout(LoginScreenLayout)(GenerateWallet), store, Provider)
-  Navigation.registerComponent('AccountPassword', () => screenLayout(LoginScreenLayout)(AccountPassword), store, Provider)
+  Navigation.registerComponent('/login', () => screenLayout(LoginScreenLayout)(LoginForm), store, Provider)
   Navigation.registerComponent('Add2FAWallet', () => Add2FAWallet, store, Provider)
   Navigation.registerComponent('AddAdvancedWallet', () => AddAdvancedWallet, store, Provider)
   Navigation.registerComponent('AddEthereumWallet', () => AddEthereumWallet, store, Provider)

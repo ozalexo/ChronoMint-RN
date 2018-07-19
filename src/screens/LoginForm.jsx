@@ -13,13 +13,13 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
-import { type TAccount } from '../containers/AccountPasswordContainer'
+import { type TAccount } from '../containers/LoginFormContainer'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
 
-export type TAccountPasswordProps = {
+export type TLoginFormProps = {
   account: TAccount,
   onChangePassword: (password: string) => void,
   onLogin: () => Promise<void>,
@@ -28,7 +28,7 @@ export type TAccountPasswordProps = {
 
 type TAccountItemProps = TAccount
 
-export default class AccountPassword extends PureComponent<TAccountPasswordProps, {}> {
+export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
   render () {
     const {
       account,
