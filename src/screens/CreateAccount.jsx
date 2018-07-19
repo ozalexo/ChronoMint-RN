@@ -25,7 +25,7 @@ export type TSetAccountPasswordProps = {
   isCreatingNewWallet?: boolean,
   onChangePassword: (password: string) => void,
   onChangePasswordConfirmation: (passwordConfirmation: string) => void,
-  onDone: () => void,
+  handleSubmit: () => void,
   navigateToSelectWallet: () => void,
   onSelectLanguage: () => void,
   onSelectNetwork: () => void
@@ -42,7 +42,7 @@ export default class CreateAccount extends PureComponent<TSetAccountPasswordProp
       isCreatingNewWallet,
       onChangePassword,
       onChangePasswordConfirmation,
-      onDone,
+      handleSubmit,
       navigateToSelectWallet,
       onSelectLanguage,
       onSelectNetwork
@@ -74,16 +74,15 @@ export default class CreateAccount extends PureComponent<TSetAccountPasswordProp
         <Field
           autoCorrect={false}
           component={Input}
-          onChangeText={onChangePassword}
-          name={'walletPassword'}
+          name={'password'}
           placeholder={I18n.t('SetAccountPassword.password')}
           secureTextEntry
           style={styles.input}
         />
-        <Input
+        <Field
           autoCorrect={false}
-          onChangeText={onChangePasswordConfirmation}
-          name={'walletConfirmPassword'}
+          component={Input}
+          name={'confirmPassword'}
           placeholder={I18n.t('SetAccountPassword.confirmPassword')}
           secureTextEntry
           style={styles.input}
@@ -91,7 +90,7 @@ export default class CreateAccount extends PureComponent<TSetAccountPasswordProp
         <View>
           <PrimaryButton
             label={I18n.t('SetAccountPassword.createWallet').toUpperCase()}
-            onPress={onDone}
+            onPress={handleSubmit}
           />
           <Text style={styles.or}>
             {I18n.t('SetAccountPassword.or')}
