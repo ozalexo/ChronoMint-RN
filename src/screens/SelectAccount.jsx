@@ -27,7 +27,7 @@ export type TAccount = {
 
 type TSelectAccountProps = {
   accounts: Array<TAccount>,
-  onCreateWallet: () => void,
+  navigateToCreateAccount: () => void,
   navigateToSelectImportMethod: () => void,
   onSelectAccount: (account: TAccount) => () => void,
   navigator: any
@@ -57,7 +57,7 @@ export default class SelectAccount extends PureComponent<TSelectAccountProps, {}
   render () {
     const {
       accounts,
-      onCreateWallet,
+      navigateToCreateAccount,
       navigateToSelectImportMethod
     } = this.props
 
@@ -81,7 +81,7 @@ export default class SelectAccount extends PureComponent<TSelectAccountProps, {}
         </Text>
         <TextButton
           label={I18n.t('SelectAccount.createNew')}
-          onPress={onCreateWallet}
+          onPress={navigateToCreateAccount}
         />
       </View>
     )
