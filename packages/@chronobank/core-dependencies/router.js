@@ -9,6 +9,8 @@ class RouterClass {
   navigator: any
 
   setNavigator(navigator: any) {
+    if (this.navigator) return
+
     this.navigator = navigator
   }
 
