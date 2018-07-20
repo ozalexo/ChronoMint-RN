@@ -15,7 +15,7 @@ import AppNavigator from './navigation/AppNavigator'
 import startPreparations from './init'
 import store, { injectReducer } from './redux/configureStore'
 
-class App extends React.Component<{}, {}> {
+class ChronoMintApp extends React.Component<{}, {}> {
   constructor (props: any) {
     super(props)
     // Prepare everything before hiding SplashScreen
@@ -38,4 +38,4 @@ class App extends React.Component<{}, {}> {
   }
 }
 
-export default App
+export default ChronoMintApp

@@ -6,7 +6,7 @@
  */
 
 import {
-  StyleSheet,
+  StyleSheet
 } from 'react-native'
 import colors from '../../utils/colors'
 

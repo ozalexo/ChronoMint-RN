@@ -93,9 +93,6 @@ const AuthStack = createStackNavigator(
     SelectNetworkContainer,
     WalletBackupContainer,
     '/login/confirm-mnemonic': {
-      // navigationOptions: () => ({
-      //   header: null
-      // }),
       screen: () => {
         const LayoutedScreen = screenLayout(LoginScreenLayout)(ConfirmMnemonicContainer)
         return (
@@ -104,9 +101,10 @@ const AuthStack = createStackNavigator(
       }
     },
     SetAccountPasswordContainer: {
-      // navigationOptions: () => ({
-      //   header: null
-      // }),
+      navigationOptions: () => ({
+        title: 'Screen1',
+        headerTransparent: true
+      }),
       screen: (props) => {
         const LayoutedScreen = screenLayout(LoginScreenLayout)(SetAccountPasswordContainer)
         return (
@@ -116,8 +114,7 @@ const AuthStack = createStackNavigator(
     },
     SelectAccountContainer: {
       navigationOptions: () => ({
-        title: 'Screen',
-        headerBackTitle: 'BackBu',
+        title: 'Screen2',
         headerTransparent: true
       }),
       screen: () => {
@@ -129,7 +126,11 @@ const AuthStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'SetAccountPasswordContainer'
+    initialRouteName: 'SetAccountPasswordContainer',
+    navigationOptions: () => ({
+      headerMode: 'screen',
+      headerTransparent: true
+    })
   }
 )
 
@@ -146,9 +147,15 @@ const MainMenuDrawer = createDrawerNavigator(
     contentComponent: (props) => <DrawerContainer {...props} />,
     getCustomActionCreators: (route, stateKey) => {
       return {
-        toggleMainMenuDrawer: () => DrawerActions.toggleDrawer({ key: stateKey })
+        toggleMainMenuDrawer: () => {
+          console.log('### MAIN DRAWER')
+          DrawerActions.toggleDrawer({ key: stateKey })
+        }
       }
-    }
+    },
+    navigationOptions: () => ({
+      headerTransparent: true
+    })
   }
 )
 
@@ -166,17 +173,15 @@ const LoginStack = createDrawerNavigator(
     contentComponent: (props) => <SelectLanguageContainer {...props} />,
     getCustomActionCreators: (route, stateKey) => {
       return {
-        toggleLanguageDrawer: () => DrawerActions.toggleDrawer({ key: stateKey })
+        toggleLanguageDrawer: () => {
+          console.log('### LANG DRAWER')
+          DrawerActions.toggleDrawer({ key: stateKey })
+        }
       }
     },
-    navigationOptions: {
-      // header: null,
+    navigationOptions: () => ({
       headerTransparent: true
-    }
-    // navigationOptions: () => ({
-    //   // header: null,
-    //   headerTransparent: true
-    // })
+    })
   }
 )
 

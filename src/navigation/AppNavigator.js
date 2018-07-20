@@ -23,7 +23,10 @@ const AppNavigator = createSwitchNavigator(
     WalletStack
   },
   {
-    initialRouteName: 'LoginStack'
+    initialRouteName: 'LoginStack',
+    navigationOptions: {
+      headerTransparent: true
+    }
   }
 )
 

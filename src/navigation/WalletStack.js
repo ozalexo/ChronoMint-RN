@@ -63,7 +63,7 @@ const WalletStack = createDrawerNavigator(
     contentComponent: (props) => <DrawerContainer {...props} />,
     getCustomActionCreators: (route, stateKey) => {
       return {
-        toggleMainMenuDrawer: () => DrawerActions.toggleDrawer({ key: stateKey })
+        toggleMainMenuWalletDrawer: () => DrawerActions.toggleDrawer({ key: stateKey })
       }
     },
     navigationOptions: {

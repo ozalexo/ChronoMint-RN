@@ -7,20 +7,15 @@
 
 import React, { PureComponent } from 'react'
 import I18n from 'react-native-i18n'
-import isValid from '../utils/validators'
-import SetAccountPassword from '../screens/SetAccountPassword'
-import { NavigationActions } from 'react-navigation'
 import {
-  StyleSheet,
-  Image,
-  Text,
-  View,
-  TouchableOpacity
+  Text
 } from 'react-native'
 import type {
   NavigationScreenProp,
   NavigationState
-} from 'react-navigation';
+} from 'react-navigation'
+import isValid from '../utils/validators'
+import SetAccountPassword, { HL } from '../screens/SetAccountPassword'
 
 let lastAccount = false
 
@@ -39,11 +34,25 @@ type TSetAccountPasswordContainerState = {
 }
 
 class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordContainerProps, TSetAccountPasswordContainerState> {
+    static navigationOptions = {
+      title: 'Screen3',
+      headerTransparent: true
+    }
 
-  static navigationOptions = {
-    // header: null,
-    headerLeft: <Text>BBB</Text>
-  }
+    // static navigationOptions = () => ({
+    //   title: 'Screen3',
+    //   headerTransparent: true
+    // })
+
+  // static navigationOptions = {
+  //   // console.log('SetAccountPassword!!!!!!!!!!!!!GETTING: ', navigation, navigationOptions)
+  //   // return {
+  //     // ...navigationOp÷tions,
+  //   headerLeft: <HL />,
+  //   headerTitle: <Text style={{color: 'red'}}>TEdtHeader</Text>,
+  //   headerTransparent: true
+  //   // }
+  // }
 
   state = {
     password: '',
@@ -62,7 +71,7 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
     const {
       mnemonic,
       privateKey,
-      navigator
+      navigation
     } = this.props
 
     const { password, passwordConfirmation } = this.state
@@ -74,14 +83,16 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
       return this.addError(I18n.t('SetAccountPassword.invalidPassword'))
     }
 
-    navigator.push({
-      screen: 'WalletBackup',
-      passProps: {
-        mnemonic,
-        privateKey,
-        password
-      }
-    })
+    this.props.navigation.navigate('WalletBackup')
+    // TODO: pass props to WalletBackup
+    // navigator.push({
+    //   screen: 'WalletBackup',
+    //   passProps: {
+    //     mnemonic,
+    //     privateKey,
+    //     password
+    //   }
+    // })
   }
 
   handleUseWallet = () => {
@@ -92,9 +103,7 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
   }
 
   handleWallet = () => {
-    this.props.navigator.push({
-      screen: 'WalletsList'
-    })
+    this.props.navigation.navigate('WalletsList')
   }
 
   handleLastAccount = () => {
@@ -120,7 +129,6 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
     if (this.props.lastAccount) {
       this.handleLastAccount()
     }
-
     return (
       <SetAccountPassword
         isCreatingNewWallet={this.props.isCreatingNewWallet}
@@ -130,6 +138,7 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
         onSelectLanguage={this.props.navigation.toggleLanguageDrawer}
         onSelectNetwork={this.props.navigation.toggleMainMenuDrawer}
         onUseWallet={this.handleUseWallet}
+        navigation={this.props.navigation}
       />
     )
   }

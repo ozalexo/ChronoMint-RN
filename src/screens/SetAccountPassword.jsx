@@ -5,20 +5,20 @@
  * @flow
  */
 
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Component } from 'react'
 
 import {
   Image,
   StatusBar,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 import TextButton from '../components/TextButton'
+import styles from './styles/SetAccountPasswordStyles'
 
 export type TSetAccountPasswordProps = {
   isCreatingNewWallet?: boolean,
@@ -28,6 +28,7 @@ export type TSetAccountPasswordProps = {
   onSelectLanguage: () => void,
   onSelectNetwork: () => void,
   onUseWallet: () => void,
+  navigation: any
 }
 
 type THeaderProps = {
@@ -85,7 +86,39 @@ type THeaderProps = {
 //   }
 // }
 
-export default class SetAccountPassword extends PureComponent<TSetAccountPasswordProps, {}> {
+export class HL extends PureComponent<{}> {
+  render () {
+    return (
+      <TouchableOpacity
+        onPress={() => { console.log('>>> TAP PROD 1') }}
+        style={styles.topBarButton}
+      >
+        <Image
+          source={require('../images/ios-gear-outline.png')}
+          style={styles.topBarButtonImage}
+        />
+        <Text style={[styles.topBarButtonLabel, {color: 'yellow'}]}>
+          Production
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+}
+
+export default class SetAccountPassword extends Component<TSetAccountPasswordProps, {}> {
+    static navigationOptions = {
+      title: 'Screen4',
+      headerTransparent: true
+    }
+  // static navigationOptions = {
+  //   // console.log('SetAccountPassword!!!!!!!!!!!!!GETTING: ', navigation, navigationOptions)
+  //   // return {
+  //     // ...navigationOp÷tions,
+  //     headerLeft: <HL />,
+  //     headerTitle: <Text style={{color: 'red'}}>TEdtHeader</Text>,
+  //     headerTransparent: true
+  //   // }
+  // }
 
   render () {
     const {
@@ -95,13 +128,13 @@ export default class SetAccountPassword extends PureComponent<TSetAccountPasswor
       onDone,
       onSelectLanguage,
       onSelectNetwork,
-      onUseWallet,
+      onUseWallet
     } = this.props
 
     return (
       <View>
-        <StatusBar barStyle="light-content"/>
-        { isCreatingNewWallet && (
+        <StatusBar barStyle='light-content' />
+        { false && (
           <Header
             onSelectLanguage={onSelectLanguage}
             onSelectNetwork={onSelectNetwork}
@@ -153,14 +186,14 @@ class Header extends PureComponent<THeaderProps, {}> {
   render () {
     const {
       onSelectLanguage,
-      onSelectNetwork,
+      onSelectNetwork
     } = this.props
 
     return (
       <View>
         <View style={styles.topBarActions}>
           <TouchableOpacity
-            onPress={onSelectNetwork}
+            onPress={() => { console.log('>>> TAP PROD'); onSelectNetwork() }}
             style={styles.topBarButton}
           >
             <Image
@@ -169,17 +202,17 @@ class Header extends PureComponent<THeaderProps, {}> {
             />
             <Text style={styles.topBarButtonLabel}>
               Production
-            </Text >
-          </TouchableOpacity >
+            </Text>
+          </TouchableOpacity>
           <View style={styles.spacer} />
           <TouchableOpacity
-            onPress={onSelectLanguage}
+            onPress={() => { console.log('>>> TAP LANG'); onSelectLanguage() }}
             style={styles.topBarButton}
           >
             <Text style={styles.topBarButtonLabel}>
               EN-US
-            </Text >
-          </TouchableOpacity >
+            </Text>
+          </TouchableOpacity>
         </View>
         <Image
           source={require('../images/ChronoWalletIcon.png')}
@@ -193,50 +226,3 @@ class Header extends PureComponent<THeaderProps, {}> {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  copyright: {
-    alignSelf: 'center',
-    color: '#9997B2',
-    fontSize: 12,
-    marginVertical: 30,
-    textAlign: 'center',
-  },
-  input: {
-    margin: 20,
-    textAlign: 'center',
-  },
-  logo: {
-    alignSelf: 'center',
-    marginBottom: 20,
-    marginTop: -20,
-  },
-  logoText: {
-    alignSelf: 'center',
-    marginBottom: 30,
-  },
-  or: {
-    alignSelf: 'center',
-    color: '#A3A3CC',
-    fontSize: 16,
-  },
-  spacer: {
-    flex: 1,
-  },
-  topBarActions: {
-    flexDirection: 'row',
-    margin: 20,
-    top: -44,
-  },
-  topBarButton: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  topBarButtonImage: {
-    marginRight: 10,
-    tintColor: '#ffffff',
-  },
-  topBarButtonLabel: {
-    color: '#FFFFFF',
-  },
-})
