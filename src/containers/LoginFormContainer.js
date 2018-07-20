@@ -5,76 +5,59 @@
  * @flow
  */
 
-import React, { PureComponent } from 'react'
-import I18n from 'react-native-i18n'
-import isValid from '../utils/validators'
+import { connect } from 'react-redux'
+import { reduxForm } from 'redux-form/immutable'
+import {
+  isTestRPC,
+} from '@chronobank/login/network/settings'
+import {
+  onSubmitLoginForm,
+  onSubmitLoginFormFail,
+  initLoginPage,
+  navigateToSelectWallet,
+  initAccountsSignature,
+  DUCK_NETWORK,
+  FORM_LOGIN_PAGE,
+} from '@chronobank/login/redux/network/actions'
 import LoginForm from '../screens/LoginForm'
-import withLogin from '../components/withLogin'
+
+function mapStateToProps (state) {
+  console.log({ network: state.get('network') })
+  const network = state.get(DUCK_NETWORK)
+  console.log('NETWORK: ', network)
+  console.log('PERSIST ACCOUNT: ', state.get('persistAccount'))
+  const selectedWallet = state.get('persistAccount')?.selectedWallet
+
+  return {
+    selectedWallet: selectedWallet,
+    isLoginSubmitting: network?.isLoginSubmitting,
+    selectedNetworkId: network?.selectedNetworkId,
+    selectedProvider: network?.selectedProviderId,
+    selectedAccount: network?.selectedAccount,
+    accounts: network?.accounts,
+    isTestRPC: network && isTestRPC(network?.selectedProviderId, network?.selectedNetworkId),
+  }
+}
+
+function mapDispatchToProps (dispatch: (() => any) => any) {
+  return {
+    onSubmit: async (values) => {
+      const password = values.get('password')
+
+      await dispatch(onSubmitLoginForm(password))
+    },
+    onSubmitFail: (errors, dispatch, submitErrors) => dispatch(onSubmitLoginFormFail(errors, dispatch, submitErrors)),
+    initLoginPage: async () => dispatch(initLoginPage()),
+    navigateToSelectWallet: () => dispatch(navigateToSelectWallet()),
+    initAccountsSignature: () => dispatch(initAccountsSignature()),
+  }
+}
 
 export type TAccount = {
   image: any,
   address: string,
 }
 
-export type TLoginFormContainerProps = {
-  account: {
-    address: string,
-    encryptedPrivateKey: string,
-    passwordHash: string,
-  },
-  navigator: any,
-  onPasswordLogin: ({ encryptedPrivateKey: string, passwordHash: string }, password: string) => Promise<void>,
-}
-
-type TLoginFormContainerState = {
-  password: string,
-}
-
-class AccountPasswordContainer extends PureComponent<TLoginFormContainerProps, TLoginFormContainerState> {
-  static navigatorStyle = {
-    navBarHidden: true
-  }
-
-  state = {
-    password: ''
-  }
-
-  handleChangePassword = (password: string) => {
-    this.setState({ password })
-  }
-
-  handleLogin = async () => {
-    const { password } = this.state
-
-    if (!isValid.password(password)) {
-      this.addError(I18n.t('AccountPassword.invalidPasswordError'))
-    }
-
-    await this.props.onPasswordLogin(this.props.account, password)
-  }
-
-  handleUseWallet = () => {
-    this.props.navigator.push({
-      screen: 'SelectAccount',
-      title: 'Select account'
-    })
-  }
-
-  addError = (error: string) => {
-    alert(error)
-  }
-
-  render () {
-    return (<LoginForm
-      account={{
-        ...this.props.account,
-        image: require('../images/profile-circle-small.png')
-      }}
-      onChangePassword={this.handleChangePassword}
-      onLogin={this.handleLogin}
-      onUseWallet={this.handleUseWallet}
-    />)
-  }
-}
-
-export default withLogin(AccountPasswordContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  reduxForm({ form: FORM_LOGIN_PAGE })(LoginForm)
+)
