@@ -29,8 +29,6 @@ export type TLoginFormProps = {
   navigator: any
 }
 
-type TAccountItemProps = TAccount
-
 export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
   // This code pass navigator prop to router. Without it router can't
   // perform navigation actions.
@@ -50,7 +48,19 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
     return (
       <View>
         <Separator style={styles.separator} />
-        <AccountItem {...account} />
+          <View style={styles.item}>
+            <Image
+              source={image}
+              style={styles.itemImage}
+            />
+            <Text style={styles.address}>
+              {address}
+            </Text>
+            <Image
+              source={require('../images/chevron-right.png')}
+              style={styles.chevron}
+            />
+          </View>
         <Separator style={styles.separator} />
         <Input
           autoCorrect={false}
@@ -73,28 +83,6 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
         <Text style={styles.copyright}>
           {I18n.t('copyright')}
         </Text>
-      </View>
-    )
-  }
-}
-
-class AccountItem extends PureComponent<TAccountItemProps, {}> {
-  render () {
-    const { image, address } = this.props
-
-    return (
-      <View style={styles.item}>
-        <Image
-          source={image}
-          style={styles.itemImage}
-        />
-        <Text style={styles.address}>
-          {address}
-        </Text>
-        <Image
-          source={require('../images/chevron-right.png')}
-          style={styles.chevron}
-        />
       </View>
     )
   }
