@@ -13,6 +13,8 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
+// TODO: Remove it if navigation methods is passing to router in other place
+import { router } from '@chronobank/core-dependencies/router'
 import { type TAccount } from '../containers/LoginFormContainer'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
@@ -24,11 +26,19 @@ export type TLoginFormProps = {
   onChangePassword: (password: string) => void,
   onLogin: () => Promise<void>,
   onUseWallet: () => void,
+  navigator: any
 }
 
 type TAccountItemProps = TAccount
 
 export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
+  // This code pass navigator prop to router. Without it router can't
+  // perform navigation actions.
+  // TODO: Remove if navigation methods is passing to router in other place
+  componentDidMount () {
+    router.setNavigator(this.props.navigator)
+  }
+
   render () {
     const {
       account,

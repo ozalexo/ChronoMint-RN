@@ -15,6 +15,8 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
+// TODO: Remove if navigation methods is passed to router in other place
+import { router } from '@chronobank/core-dependencies/router'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
@@ -28,6 +30,7 @@ type TSelectAccountProps = {
   onCreateWallet: () => void,
   navigateToSelectImportMethod: () => void,
   onSelectAccount: (account: TAccount) => () => void,
+  navigator: any
 }
 
 type TAccountProps = TAccount & {
@@ -35,6 +38,13 @@ type TAccountProps = TAccount & {
 }
 
 export default class SelectAccount extends PureComponent<TSelectAccountProps, {}> {
+  // This code pass navigator prop to router. Without it router can't
+  // perform navigation actions.
+  // TODO: Remove if navigation methods is passed to router in other place
+  componentDidMount () {
+    router.setNavigator(this.props.navigator)
+  }
+
   keyExtractor = ({ address }: TAccount) => address
 
   renderItem = ({ item }: { item: TAccount }) => (
