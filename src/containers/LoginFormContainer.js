@@ -22,10 +22,8 @@ import {
 import LoginForm from '../screens/LoginForm'
 
 function mapStateToProps (state) {
-  console.log({ network: state.get('network') })
   const network = state.get(DUCK_NETWORK)
-  console.log('NETWORK: ', network)
-  console.log('PERSIST ACCOUNT: ', state.get('persistAccount'))
+
   const selectedWallet = state.get('persistAccount')?.selectedWallet
 
   return {
