@@ -9,6 +9,5 @@ import { AppRegistry } from 'react-native'
 import App from './src/App'
 
 AppRegistry.registerComponent('chronomintrn', () => {
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> registerComponent')
   return App
 })
