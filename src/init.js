@@ -13,17 +13,21 @@ import web3Provider from '@chronobank/login/network/Web3Provider'
 import store from './redux/configureStore'
 window.web3 = Web3
 
-networkService.connectStore(store)
+const startPreparations = () => {
+  networkService.connectStore(store)
 
-store
-  .dispatch(bootstrap())
-  .then(() => {
-    networkService.selectProvider(2)
-    networkService.selectNetwork(4)
-    const web3 = new Web3()
-    web3Provider.setWeb3(web3)
-    const providerUrl = networkService.getProviderURL()
-    const statusEngine = web3Utils.createStatusEngine(providerUrl)
-    web3Provider.setProvider(statusEngine)
-    web3Provider.resolve()
-  })
+  store
+    .dispatch(bootstrap())
+    .then(() => {
+      networkService.selectProvider(2)
+      networkService.selectNetwork(4)
+      const web3 = new Web3()
+      web3Provider.setWeb3(web3)
+      const providerUrl = networkService.getProviderURL()
+      const statusEngine = web3Utils.createStatusEngine(providerUrl)
+      web3Provider.setProvider(statusEngine)
+      web3Provider.resolve()
+    })
+}
+
+export default startPreparations

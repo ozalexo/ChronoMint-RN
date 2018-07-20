@@ -30,7 +30,7 @@ import {
   ltcProvider,
 } from '@chronobank/login/network/BitcoinProvider'
 import { nemProvider } from '@chronobank/login/network/NemProvider'
-import startAppRoot from '../app'
+// import startAppRoot from '../app'
 import {
   addAccount,
   DUCK_SENSITIVE,
@@ -126,7 +126,7 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
 
         this.props.login(this.props.selectedAccount)
 
-        startAppRoot('wallet')
+        // startAppRoot('wallet')
 
         this.props.setLastAccount(this.props.selectedAccount)
       }
