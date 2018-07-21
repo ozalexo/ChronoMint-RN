@@ -12,7 +12,7 @@ import {
   DrawerActions
 } from 'react-navigation'
 import LoginStack from './LoginStack'
-import DrawerContainer from '../containers/DrawerContainer'
+import SelectNetworkContainer from '../containers/SelectNetworkContainer'
 // #endregion
 
 /**
@@ -27,7 +27,7 @@ const DrawerLeft = createDrawerNavigator(
   {
     drawerPosition: 'left',
     contentComponent: (props) => (
-      <DrawerContainer {...props} />
+      <SelectNetworkContainer {...props} />
     ),
     getCustomActionCreators: (route, stateKey) => {
       return {
