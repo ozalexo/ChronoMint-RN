@@ -31,73 +31,19 @@ export type TSetAccountPasswordProps = {
   navigation: any
 }
 
-type THeaderProps = {
-  onSelectLanguage: () => void,
-  onSelectNetwork: () => void,
-}
-
-// class LeftNB extends PureComponent<{}> {
-//   render () {
-//     return (
-//       <TouchableOpacity
-//         onPress={() => {}}
-//         style={styles.topBarButton}
-//       >
-//         <Image
-//           source={require('../images/ios-gear-outline.png')}
-//           style={styles.topBarButtonImage}
-//         />
-//         <Text style={styles.topBarButtonLabel}>
-//           {'Production'}
-//         </Text>
-//       </TouchableOpacity>
-//     )
-//   }
-// }
-
-// class RightNB extends PureComponent<{}> {
-//   render () {
-//     return (
-//       <TouchableOpacity
-//         onPress={() => {}}
-//         style={styles.topBarButton}
-//       >
-//         <Text style={styles.topBarButtonLabel}>
-//           {'EN-US'}
-//         </Text>
-//       </TouchableOpacity>
-//     )
-//   }
-// }
-
-// class LeftNB extends PureComponent<{}> {
-//   render () {
-//     return (
-//       <Text>{'LEFT'}</Text>
-//     )
-//   }
-// }
-
-// class RightNB extends PureComponent<{}> {
-//   render () {
-//     return (
-//       <Text>{'RIGHT'}</Text>
-//     )
-//   }
-// }
-
-export class HL extends PureComponent<{}> {
+// Left header button (main menu)
+export class HL extends PureComponent<{ toggleDrawer: () => {} }> {
   render () {
     return (
       <TouchableOpacity
-        onPress={() => { console.log('>>> TAP PROD 1') }}
+        onPress={this.props.toggleDrawer}
         style={styles.topBarButton}
       >
         <Image
           source={require('../images/ios-gear-outline.png')}
           style={styles.topBarButtonImage}
         />
-        <Text style={[styles.topBarButtonLabel, {color: 'yellow'}]}>
+        <Text style={styles.topBarButtonLabel}>
           Production
         </Text>
       </TouchableOpacity>
@@ -105,19 +51,26 @@ export class HL extends PureComponent<{}> {
   }
 }
 
+// Right header button (switch language)
+export class HR extends PureComponent<{ toggleDrawer: () => {} }> {
+  render () {
+    return (
+      <TouchableOpacity
+        onPress={this.props.toggleDrawer}
+        style={styles.topBarButton}
+      >
+        <Text style={styles.topBarButtonLabel}>
+          EN-US
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+}
+
 export default class SetAccountPassword extends Component<TSetAccountPasswordProps, {}> {
-    static navigationOptions = {
-      title: 'Screen4',
-      headerTransparent: true
-    }
   // static navigationOptions = {
-  //   // console.log('SetAccountPassword!!!!!!!!!!!!!GETTING: ', navigation, navigationOptions)
-  //   // return {
-  //     // ...navigationOp÷tions,
-  //     headerLeft: <HL />,
-  //     headerTitle: <Text style={{color: 'red'}}>TEdtHeader</Text>,
-  //     headerTransparent: true
-  //   // }
+  //   title: 'Screen4',
+  //   headerTransparent: true
   // }
 
   render () {
@@ -126,20 +79,22 @@ export default class SetAccountPassword extends Component<TSetAccountPasswordPro
       onChangePassword,
       onChangePasswordConfirmation,
       onDone,
-      onSelectLanguage,
-      onSelectNetwork,
+      // onSelectLanguage,
+      // onSelectNetwork,
       onUseWallet
     } = this.props
 
     return (
       <View>
         <StatusBar barStyle='light-content' />
-        { false && (
-          <Header
-            onSelectLanguage={onSelectLanguage}
-            onSelectNetwork={onSelectNetwork}
-          />
-        ) }
+        <Image
+          source={require('../images/ChronoWalletIcon.png')}
+          style={styles.logo}
+        />
+        <Image
+          source={require('../images/ChronoWalletText.png')}
+          style={styles.logoText}
+        />
         <Input
           autoCorrect={false}
           onChangeText={onChangePassword}
@@ -177,51 +132,6 @@ export default class SetAccountPassword extends Component<TSetAccountPasswordPro
         <Text style={styles.copyright}>
           {I18n.t('SetAccountPassword.copyright')}
         </Text>
-      </View>
-    )
-  }
-}
-
-class Header extends PureComponent<THeaderProps, {}> {
-  render () {
-    const {
-      onSelectLanguage,
-      onSelectNetwork
-    } = this.props
-
-    return (
-      <View>
-        <View style={styles.topBarActions}>
-          <TouchableOpacity
-            onPress={() => { console.log('>>> TAP PROD'); onSelectNetwork() }}
-            style={styles.topBarButton}
-          >
-            <Image
-              source={require('../images/ios-gear-outline.png')}
-              style={styles.topBarButtonImage}
-            />
-            <Text style={styles.topBarButtonLabel}>
-              Production
-            </Text>
-          </TouchableOpacity>
-          <View style={styles.spacer} />
-          <TouchableOpacity
-            onPress={() => { console.log('>>> TAP LANG'); onSelectLanguage() }}
-            style={styles.topBarButton}
-          >
-            <Text style={styles.topBarButtonLabel}>
-              EN-US
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Image
-          source={require('../images/ChronoWalletIcon.png')}
-          style={styles.logo}
-        />
-        <Image
-          source={require('../images/ChronoWalletText.png')}
-          style={styles.logoText}
-        />
       </View>
     )
   }

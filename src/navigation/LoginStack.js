@@ -8,9 +8,9 @@
 // #region imports
 import React from 'react'
 import {
-  createDrawerNavigator,
+  // createDrawerNavigator,
   createStackNavigator,
-  DrawerActions
+  // DrawerActions
 } from 'react-navigation'
 // #endregion
 
@@ -32,14 +32,15 @@ import EnterPinContainer from '../containers/EnterPinContainer'
 import EnterPrivateKeyContainer from '../containers/EnterPrivateKeyContainer'
 import GenerateMnemonicContainer from '../containers/GenerateMnemonicContainer'
 import SelectAccountContainer from '../containers/SelectAccountContainer'
-import SelectLanguageContainer from '../containers/SelectLanguageContainer'
+// import SelectLanguageContainer from '../containers/SelectLanguageContainer'
 import SelectNetworkContainer from '../containers/SelectNetworkContainer'
 import SetAccountPasswordContainer from '../containers/SetAccountPasswordContainer'
+import { HL, HR } from '../screens/SetAccountPassword'
 import WalletBackupContainer from '../containers/WalletBackupContainer'
 // #endregion
 
 // #region MainMenu Drawer
-import DrawerContainer from '../containers/DrawerContainer'
+// import DrawerContainer from '../containers/DrawerContainer'
 // #endregion
 
 // #region additional imports
@@ -70,10 +71,18 @@ import screenLayout from '../utils/screenLayout'
 // Navigation.registerComponent('SelectLanguage', () => SelectLanguage, store, Provider)
 // Navigation.registerComponent('SelectNetwork', () => SelectNetwork, store, Provider)
 
+// #region Login-only utils
+const getLayoutedScreen = (component, extraProps) => {
+  const LayoutedScreen = screenLayout(LoginScreenLayout)(component)
+  const componentProps = {...component.props, ...extraProps}
+  return <LayoutedScreen {...componentProps} />
+}
+// #endregion
+
 /**
  * Authentication stack: all login-related screens and switching to Wallet stack.
 */
-const AuthStack = createStackNavigator(
+const LoginStack = createStackNavigator(
   {
     AccountImportMethodContainer,
     AccountPasswordContainer,
@@ -93,96 +102,93 @@ const AuthStack = createStackNavigator(
     SelectNetworkContainer,
     WalletBackupContainer,
     '/login/confirm-mnemonic': {
-      screen: () => {
-        const LayoutedScreen = screenLayout(LoginScreenLayout)(ConfirmMnemonicContainer)
-        return (
-          <LayoutedScreen />
-        )
+      screen: (props) => {
+        return getLayoutedScreen(ConfirmMnemonicContainer, { ...props })
       }
     },
     SetAccountPasswordContainer: {
-      navigationOptions: () => ({
-        title: 'Screen1',
-        headerTransparent: true
+      navigationOptions: ({ navigation }) => ({
+        headerLeft: <HL toggleDrawer={navigation.toggleMainMenuDrawer} />,
+        headerRight: <HR toggleDrawer={navigation.toggleLanguageDrawer} />,
+        headerLeftContainerStyle: { paddingLeft: 20 },
+        headerRightContainerStyle: { paddingRight: 20 }
       }),
       screen: (props) => {
-        const LayoutedScreen = screenLayout(LoginScreenLayout)(SetAccountPasswordContainer)
-        return (
-          <LayoutedScreen {...props} isCreatingNewWallet />
-        )
+        return getLayoutedScreen(SetAccountPasswordContainer, { ...props, isCreatingNewWallet: true })
       }
     },
     SelectAccountContainer: {
       navigationOptions: () => ({
-        title: 'Screen2',
-        headerTransparent: true
+        // title: 'Screen2',
+        // headerTransparent: true
       }),
-      screen: () => {
-        const LayoutedScreen = screenLayout(LoginScreenLayout)(SelectAccountContainer)
-        return (
-          <LayoutedScreen />
-        )
+      screen: (props) => {
+        return getLayoutedScreen(SelectAccountContainer, { ...props })
       }
     }
   },
   {
     initialRouteName: 'SetAccountPasswordContainer',
-    navigationOptions: () => ({
-      headerMode: 'screen',
-      headerTransparent: true
+    navigationOptions: ({ navigation, screenProps }) => ({
+      headerTransparent: true,
+      headerTintColor: 'white'
     })
+    // navigationOptions: () => ({
+    //   headerMode: 'screen',
+    //   // headerTransparent: true
+    // })
   }
 )
 
-/**
- * MainMenu (left drawer)
-*/
-const MainMenuDrawer = createDrawerNavigator(
-  {
-    AuthStack
-  },
-  // $FlowExpectedError getCustomActionCreators does not exist yet in .flow
-  {
-    drawerPosition: 'left',
-    contentComponent: (props) => <DrawerContainer {...props} />,
-    getCustomActionCreators: (route, stateKey) => {
-      return {
-        toggleMainMenuDrawer: () => {
-          console.log('### MAIN DRAWER')
-          DrawerActions.toggleDrawer({ key: stateKey })
-        }
-      }
-    },
-    navigationOptions: () => ({
-      headerTransparent: true
-    })
-  }
-)
+// /**
+//  * MainMenu (left drawer)
+// */
+// const MainMenuDrawer = createDrawerNavigator(
+//   {
+//     AuthStack
+//   },
+//   // $FlowExpectedError getCustomActionCreators does not exist yet in .flow
+//   {
+//     drawerPosition: 'left',
+//     contentComponent: (props) => <DrawerContainer {...props} />,
+//     getCustomActionCreators: (route, stateKey) => {
+//       return {
+//         toggleMainMenuDrawer: () => {
+//           console.log('### MAIN DRAWER', route, stateKey)
+//           DrawerActions.toggleDrawer({ key: stateKey })
+//         }
+//       }
+//     },
+//     navigationOptions: () => ({
+//       headerTransparent: true
+//     })
+//   }
+// )
 
-/**
- * Root Login stack
-*/
-const LoginStack = createDrawerNavigator(
-  {
-    MainMenuDrawer
-  },
-  // $FlowExpectedError getCustomActionCreators does not exist yet in .flow
-  {
-    drawerPosition: 'right',
-    // drawerWidth: Dimensions.get('window').width,
-    contentComponent: (props) => <SelectLanguageContainer {...props} />,
-    getCustomActionCreators: (route, stateKey) => {
-      return {
-        toggleLanguageDrawer: () => {
-          console.log('### LANG DRAWER')
-          DrawerActions.toggleDrawer({ key: stateKey })
-        }
-      }
-    },
-    navigationOptions: () => ({
-      headerTransparent: true
-    })
-  }
-)
+// /**
+//  * Root Login stack
+// */
+// const LoginStack = createDrawerNavigator(
+//   {
+//     MainMenuDrawer
+//   },
+//   // $FlowExpectedError getCustomActionCreators does not exist yet in .flow
+//   {
+//     drawerPosition: 'right',
+//     // drawerWidth: Dimensions.get('window').width,
+//     contentComponent: (props) => <SelectLanguageContainer {...props} />,
+//     getCustomActionCreators: (route, stateKey) => {
+//       return {
+//         toggleLanguageDrawer: () => {
+//           console.log('### LANG DRAWER')
+//           DrawerActions.toggleDrawer({ key: stateKey })
+//         }
+//       }
+//     },
+//     navigationOptions: {
+//       headerTransparent: true
+//     }
+//   }
+// )
 
 export default LoginStack

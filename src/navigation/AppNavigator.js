@@ -10,23 +10,21 @@ import {
   createSwitchNavigator
 } from 'react-navigation'
 import WalletStack from './WalletStack'
-import LoginStack from './LoginStack'
+import DrawerRight from './DrawerRight'
 // #endregion
 
 /**
- * Root stack of the application.
+ * Root stack of the application (this is entry point for cold app start).
  * Switch between Login and Wallet stacks.
+ * Each stack starts from Drawer's stack which contains stack of screens
  */
 const AppNavigator = createSwitchNavigator(
   {
-    LoginStack,
+    LoginStack: DrawerRight,
     WalletStack
   },
   {
-    initialRouteName: 'LoginStack',
-    navigationOptions: {
-      headerTransparent: true
-    }
+    initialRouteName: 'LoginStack'
   }
 )
 
