@@ -12,26 +12,25 @@ import type {
   NavigationState
 } from 'react-navigation'
 import isValid from '../utils/validators'
-import SetAccountPassword from '../screens/SetAccountPassword'
+import StartScreen from '../screens/StartScreen'
 
 let lastAccount = false
 
-type TSetAccountPasswordContainerProps = {
+type TStartScreenContainerProps = {
   generateMnemonic: () => void,
-  isCreatingNewWallet?: boolean,
-  mnemonic: any,
   lastAccount: any,
+  mnemonic: any,
   navigation: NavigationScreenProp<NavigationState>,
   privateKey?: string,
   navigationOptions: any
 }
 
-type TSetAccountPasswordContainerState = {
+type TStartScreenContainerState = {
   password: string,
   passwordConfirmation: string,
 }
 
-class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordContainerProps, TSetAccountPasswordContainerState> {
+class StartScreenContainer extends PureComponent<TStartScreenContainerProps, TStartScreenContainerState> {
   state = {
     password: '',
     passwordConfirmation: ''
@@ -52,10 +51,7 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
       navigation
     } = this.props
 
-    const {
-      password,
-      passwordConfirmation
-    } = this.state
+    const { password, passwordConfirmation } = this.state
 
     if (password !== passwordConfirmation) {
       return this.addError(I18n.t('SetAccountPassword.mismatchPasswords'))
@@ -65,8 +61,6 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
     }
 
     navigation.navigate('WalletBackup', {
-      usePinProtection: false,
-      isCreatingNewWallet: false,
       mnemonic,
       privateKey,
       password
@@ -74,7 +68,9 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
   }
 
   handleUseWallet = () => {
-    this.props.navigation.navigate('SelectAccountContainer')
+    this.props.navigation.navigate('SelectAccountContainer', {
+      title: I18n.t('SelectAccount.title')
+    })
   }
 
   handleWallet = () => {
@@ -102,8 +98,7 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
       this.handleLastAccount()
     }
     return (
-      <SetAccountPassword
-        isCreatingNewWallet={this.props.isCreatingNewWallet}
+      <StartScreen
         onChangePassword={this.handleChangePassword}
         onChangePasswordConfirmation={this.handleChangePasswordConfirmation}
         onDone={this.handleDone}
@@ -116,4 +111,4 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
   }
 }
 
-export default SetAccountPasswordContainer
+export default StartScreenContainer

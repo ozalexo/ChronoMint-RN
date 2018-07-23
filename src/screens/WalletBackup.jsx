@@ -6,8 +6,13 @@
  */
 
 import React from 'react'
-import { StyleSheet, Switch, Text, View } from 'react-native'
+import {
+  Switch,
+  Text,
+  View
+} from 'react-native'
 import I18n from 'react-native-i18n'
+import styles from './styles/WalletBackupStyles'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
@@ -21,20 +26,20 @@ type TWalletBackupProps = {
 
 class WalletBackup extends React.Component<TWalletBackupProps, {}> {
   render () {
-    const { 
+    const {
       onDone,
       onLater,
       onSwitchUsePinProtection,
-      usePinProtection,
+      usePinProtection
     } = this.props
 
     const strings = {
-      title: I18n.t('WalletBackup.title'),
-      subtitle: I18n.t('WalletBackup.subtitle'),
-      usePinProtection: I18n.t('WalletBackup.usePinProtection'),
+      backupLater: I18n.t('WalletBackup.later'),
       backupWallet: I18n.t('WalletBackup.backupWallet').toUpperCase(),
       or: I18n.t('WalletBackup.or'),
-      backupLater: I18n.t('WalletBackup.later'),
+      subtitle: I18n.t('WalletBackup.subtitle'),
+      title: I18n.t('WalletBackup.title'),
+      usePinProtection: I18n.t('WalletBackup.usePinProtection')
     }
 
     return (
@@ -75,38 +80,3 @@ class WalletBackup extends React.Component<TWalletBackupProps, {}> {
 }
 
 export default WalletBackup
-
-const styles = StyleSheet.create({
-  or: {
-    alignSelf: 'center',
-    color: '#A3A3CC',
-    fontSize: 16,
-  },
-  separator: {
-    backgroundColor: '#424066',
-  },
-  subtitle: {
-    color: '#A3A3CC',
-    fontSize: 16,
-    marginBottom: 30,
-    marginHorizontal: 20,
-    textAlign: 'center',
-  },
-  switchRow: {
-    flexDirection: 'row',
-    margin: 20,
-  },
-  switchRowLabel: {
-    color: '#6EE289',
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '900',
-  },
-  title: {
-    color: 'white',
-    fontSize: 25,
-    fontWeight: '900',
-    margin: 20,
-    textAlign: 'center',
-  },
-})

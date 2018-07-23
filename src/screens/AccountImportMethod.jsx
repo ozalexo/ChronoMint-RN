@@ -11,23 +11,23 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import TextButton from '../components/TextButton'
-
-type TAccountImportMethodProps = {
-  accountImportMethods: Array<TAccountImportMethod>,
-  onCreateWallet: () => void,
-  onSelectAccountImportMethod: (accountImportMethod: TAccountImportMethod) => () => void,
-}
 
 export type TAccountImportMethod = {
   id: string,
   image: any,
   label: string,
   screen: string,
-  title: string,
+  title: string
+}
+
+type TAccountImportMethodProps = {
+  accountImportMethods: TAccountImportMethod[],
+  onCreateWallet: () => void,
+  onSelectAccountImportMethod: (accountImportMethod: TAccountImportMethod) => () => void,
 }
 
 type TMethodProps = TAccountImportMethod & {
@@ -46,7 +46,7 @@ export default class SelectAccountImportMethod extends PureComponent<TAccountImp
   render () {
     const {
       accountImportMethods,
-      onCreateWallet,
+      onCreateWallet
     } = this.props
 
     return (
@@ -72,7 +72,7 @@ class Method extends PureComponent<TMethodProps> {
     const {
       image,
       label,
-      onPress,
+      onPress
     } = this.props
 
     return (
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 30,
+    marginVertical: 30
   },
   item: {
     alignItems: 'center',
@@ -107,20 +107,20 @@ const styles = StyleSheet.create({
     height: 105,
     justifyContent: 'center',
     margin: 5,
-    width: 105,
+    width: 105
   },
   itemImage: {
     height: 48,
-    width: 48,
+    width: 48
   },
   itemLabel: {
     color: 'white',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '700'
   },
   or: {
     alignSelf: 'center',
     color: '#A3A3CC',
-    fontSize: 16,
-  },
+    fontSize: 16
+  }
 })

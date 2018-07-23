@@ -12,6 +12,7 @@
     "precommit": "lint-staged",
     "prepare": "patch-package",
     "start:logredux": "cross-env REDUX_LOGGER=1 node node_modules/react-native/local-cli/cli.js start",
+    "start:lognav": "cross-env REACT_NAV_LOGGING=true node node_modules/react-native/local-cli/cli.js start",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "BABEL_ENV=test jest"
   },

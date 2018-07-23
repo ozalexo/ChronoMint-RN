@@ -32,7 +32,11 @@ class ChronoMintApp extends React.Component<{}, {}> {
   render () {
     return (
       <Provider store={store}>
-        <AppNavigator />
+        <AppNavigator
+          onNavigationStateChange={(prevState, currentState) => {
+            console.log(prevState, currentState)
+          }}
+        />
       </Provider>
     )
   }

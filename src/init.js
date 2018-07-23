@@ -17,7 +17,9 @@ const startPreparations = () => {
   networkService.connectStore(store)
 
   store
-    .dispatch(bootstrap())
+    .dispatch(
+      bootstrap(true, false)
+    )
     .then(() => {
       networkService.selectProvider(2)
       networkService.selectNetwork(4)

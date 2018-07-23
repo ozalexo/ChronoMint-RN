@@ -19,7 +19,7 @@ export default class EnterPrivateKey extends PureComponent<TEnterPrivateKeyProps
   render () {
     const {
       onChangePrivateKey,
-      onDone,
+      onDone
     } = this.props
 
     return (
@@ -39,6 +39,6 @@ export default class EnterPrivateKey extends PureComponent<TEnterPrivateKeyProps
 
 const styles = StyleSheet.create({
   screenView: {
-    margin: 20,
-  },
+    margin: 20
+  }
 })

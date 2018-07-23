@@ -7,6 +7,7 @@
 
 // #region imports
 import React from 'react'
+import I18n from 'react-native-i18n'
 import {
   createStackNavigator
 } from 'react-navigation'
@@ -32,13 +33,14 @@ import GenerateMnemonicContainer from '../containers/GenerateMnemonicContainer'
 import SelectAccountContainer from '../containers/SelectAccountContainer'
 import SelectNetworkContainer from '../containers/SelectNetworkContainer'
 import SetAccountPasswordContainer from '../containers/SetAccountPasswordContainer'
-import { HL, HR } from '../screens/SetAccountPassword'
+import StartScreenContainer from '../containers/StartScreenContainer'
 import WalletBackupContainer from '../containers/WalletBackupContainer'
 // #endregion
 
 // #region additional imports
 import LoginScreenLayout from '../components/LoginScreenLayout'
 import screenLayout from '../utils/screenLayout'
+import { HL, HR } from '../screens/StartScreen'
 // #endregion
 
 // Navigation.registerComponent('/login/confirm-mnemonic', () => screenLayout(LoginScreenLayout)(ConfirmMnemonic), store, Provider)
@@ -77,7 +79,6 @@ const getLayoutedScreen = (component, extraProps) => {
 */
 const LoginStack = createStackNavigator(
   {
-    AccountImportMethodContainer,
     AccountPasswordContainer,
     Add2FAWalletContainer,
     AddAdvancedWalletContainer,
@@ -88,18 +89,68 @@ const LoginStack = createStackNavigator(
     AddTokenToAdvancedWalletContainer,
     AddWalletContainer,
     Download2FAAppContainer,
-    EnterMnemonicContainer,
     EnterPinContainer,
-    EnterPrivateKeyContainer,
     GenerateMnemonicContainer,
     SelectNetworkContainer,
-    WalletBackupContainer,
     '/login/confirm-mnemonic': {
       screen: (props) => {
         return getLayoutedScreen(ConfirmMnemonicContainer, { ...props })
       }
     },
-    SetAccountPasswordContainer: {
+    'WalletBackup': {
+      screen: (props) => {
+        return getLayoutedScreen(WalletBackupContainer, { ...props })
+      }
+    },
+    'AccountImportMethod': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Add an existing account'
+      }),
+      screen: (props) => {
+        return getLayoutedScreen(AccountImportMethodContainer, { ...props })
+      }
+    },
+    'EnterMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Enter mnemonic key'
+      }),
+      screen: (props) => {
+        return getLayoutedScreen(EnterMnemonicContainer, { ...props })
+      }
+    },
+    'EnterPrivateKey': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Enter private key'
+      }),
+      screen: (props) => {
+        return getLayoutedScreen(EnterPrivateKeyContainer, { ...props })
+      }
+    },
+    'GenerateMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title:  I18n.t('GenerateMnemonic.title')
+      }),
+      screen: (props) => {
+        return getLayoutedScreen(GenerateMnemonicContainer, { ...props })
+      }
+    },
+    'SetAccountPassword': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'New password'
+      }),
+      screen: (props) => {
+        return getLayoutedScreen(SetAccountPasswordContainer, { ...props })
+      }
+    },
+    'EnterPin': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Enter PIN'
+      }),
+      screen: (props) => {
+        return getLayoutedScreen(EnterPinContainer, { ...props })
+      }
+    },
+    'StartScreen': {
       navigationOptions: ({ navigation }) => ({
         headerLeft: <HL toggleDrawer={navigation.toggleMainMenuDrawer} />,
         headerRight: <HR toggleDrawer={navigation.toggleLanguageDrawer} />,
@@ -107,19 +158,24 @@ const LoginStack = createStackNavigator(
         headerRightContainerStyle: { paddingRight: 20 }
       }),
       screen: (props) => {
-        return getLayoutedScreen(SetAccountPasswordContainer, { ...props, isCreatingNewWallet: true })
+        return getLayoutedScreen(StartScreenContainer, { ...props })
       }
     },
-    SelectAccountContainer: {
+    'SelectAccountContainer': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'My accounts',
+        headerBackTitle: null
+      }),
       screen: (props) => {
         return getLayoutedScreen(SelectAccountContainer, { ...props })
       }
     }
   },
   {
-    initialRouteName: 'SetAccountPasswordContainer',
+    initialRouteName: 'StartScreen',
     navigationOptions: ({ navigation, screenProps }) => ({
       headerTransparent: true,
+      headerBackTitle: null,
       headerTintColor: 'white'
     })
   }

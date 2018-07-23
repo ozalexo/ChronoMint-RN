@@ -10,13 +10,18 @@ import { Alert } from 'react-native'
 import type { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import Web3 from 'web3'
+import { withNavigation } from 'react-navigation'
 import { createDecipher, createHash } from 'crypto'
 import { login } from '@chronobank/core/redux/session/actions'
+import type {
+  NavigationScreenProp,
+  NavigationState
+} from 'react-navigation'
 import {
   addError,
   clearErrors,
   DUCK_NETWORK,
-  loading,
+  loading
 } from '@chronobank/login/redux/network/actions'
 import networkService from '@chronobank/login/network/NetworkService'
 import mnemonicProvider from '@chronobank/login/network/mnemonicProvider'
@@ -27,7 +32,7 @@ import {
   bccProvider,
   btcProvider,
   btgProvider,
-  ltcProvider,
+  ltcProvider
 } from '@chronobank/login/network/BitcoinProvider'
 import { nemProvider } from '@chronobank/login/network/NemProvider'
 // import startAppRoot from '../app'
@@ -55,7 +60,7 @@ type TLoginHOCProps = {
   loadAccounts: () => void,
   loading: () => void,
   login (account: any): void,
-  navigator: any,
+  navigation: NavigationScreenProp<NavigationState>,
   onSetUsePinProtection: (value: boolean) => void,
   setLastAccount: (address: string) => void,
   selectAccount: (account: any) => void,
@@ -93,14 +98,18 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
     loginSetup = async ({ ethereum, btc, bcc, btg, ltc, nem }): Promise<void> => {
       const web3 = new Web3()
       const eProvider = ethereum.getProvider()
-
+      console.log('1')
       web3Provider.setWeb3(web3)
+       console.log('2')
       web3Provider.setProvider(eProvider)
+       console.log('3')
       web3Provider.reinit(web3, eProvider)
-
+       console.log('4')
       try {
-        await this.props.loadAccounts()
-        await this.props.selectAccount(this.props.accounts[ 0 ])
+        // await this.props.loadAccounts()
+        console.log('5')
+        // await this.props.selectAccount(this.props.accounts[ 0 ])
+        console.log('6')
         ethereumProvider.setEngine(ethereum, nem)
         bccProvider.setEngine(bcc)
         btcProvider.setEngine(btc)
@@ -108,11 +117,13 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
         ltcProvider.setEngine(ltc)
         nemProvider.setEngine(nem)
       } catch (e) {
+        console.log('100 ERROR')
         this.props.addError(e.message)
       }
     }
 
     onLogin = async (): Promise<void> => {
+      console.log(this.props)
       this.props.clearErrors()
 
       const isPassed = await this.props.checkNetwork()
@@ -127,6 +138,7 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
         this.props.login(this.props.selectedAccount)
 
         // startAppRoot('wallet')
+        this.props.navigation.navigate('WalletsList')
 
         this.props.setLastAccount(this.props.selectedAccount)
       }
@@ -148,17 +160,25 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
       return { mnemonic, privateKey }
     }
 
-    onPrivateKeyLogin = async (privateKey: string): Promise<void> => {
+    onPrivateKeyLogin = async (privateKey: string, callback?: (err: any, result: any) => {}): Promise<void> => {
       this.props.loading()
       this.props.clearErrors()
 
       try {
         const providerSettings = networkService.getProviderSettings()
         const provider = privateKeyProvider.getPrivateKeyProvider(privateKey, providerSettings)
-
+        console.log('Waiting for the loginSetup...')
         await this.loginSetup(provider)
+        console.log('Done: loginSetup...')
+        if (callback) {
+          console.log('Calling callback')
+          callback(null, 'OK')
+        }
       } catch (e) {
         this.props.addError(e.message)
+        if (callback) {
+          callback(e)
+        }
       }
     }
 
@@ -291,7 +311,7 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
   return connect(
     mapStateToProps,
     mapDispatchToProps
-  )(LoginHOC)
+  )(withNavigation(LoginHOC))
 }
 
 function mapStateToProps (state: any) {

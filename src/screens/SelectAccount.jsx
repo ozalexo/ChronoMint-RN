@@ -12,7 +12,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import PrimaryButton from '../components/PrimaryButton'
@@ -48,7 +48,7 @@ export default class SelectAccount extends PureComponent<TSelectAccountProps, {}
     const {
       accounts,
       onCreateWallet,
-      onImportAccount,
+      onImportAccount
     } = this.props
 
     return (
@@ -82,7 +82,7 @@ class Account extends PureComponent<TAccountProps, {}> {
   render () {
     const {
       address,
-      onPress,
+      onPress
     } = this.props
     return (
       <TouchableOpacity
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     color: '#A3A3CC',
     flex: 1,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '700'
   },
   chevron: {
     alignSelf: 'center',
@@ -122,24 +122,24 @@ const styles = StyleSheet.create({
     tintColor: 'rgba(255, 255, 255, 0.25)',
   },
   container: {
-    margin: 10,
+    margin: 10
   },
   item: {
     flexDirection: 'row',
-    marginVertical: 20,
+    marginVertical: 20
   },
   itemImage: {
     borderRadius: 20,
     height: 40,
     marginRight: 20,
-    width: 40,
+    width: 40
   },
   or: {
     alignSelf: 'center',
     color: '#A3A3CC',
-    fontSize: 16,
+    fontSize: 16
   },
   separator: {
     backgroundColor: '#424066',
-  },
+  }
 })

@@ -6,11 +6,15 @@
  */
 
 import React, { PureComponent } from 'react'
+import type {
+  NavigationScreenProp,
+  NavigationState
+} from 'react-navigation'
 import EnterPrivateKey from '../screens/EnterPrivateKey'
 import withLogin, { type TWithLoginProps } from '../components/withLogin'
 
 export type TEnterPrivateKeyContainerProps = TWithLoginProps & {
-  navigator: any,
+  navigation: NavigationScreenProp<NavigationState>
 }
 
 type TEnterPrivateKeyContainerState = {
@@ -28,29 +32,35 @@ class EnterPrivateKeyContainer extends PureComponent<TEnterPrivateKeyContainerPr
 
   handleDone = (): void => {
     const {
-      navigator,
-      onPrivateKeyLogin
-    } = this.props
-    const {
       privateKey
     } = this.state
 
-    onPrivateKeyLogin(privateKey)
-
-    navigator.push({
-      screen: 'SetAccountPassword',
-      title: 'Set Account Password',
-      passProps: {
-        privateKey: privateKey
+    this.props.onPrivateKeyLogin(privateKey, (err, res) => {
+      if (!err) {
+        this.props.navigation.navigate('SetAccountPassword', {
+          isCreatingNewWallet: false,
+          title: 'Set Account Password',
+          privateKey
+        })
       }
     })
+
+    // navigator.push({
+    //   screen: 'SetAccountPassword',
+    //   title: 'Set Account Password',
+    //   passProps: {
+    //     privateKey: privateKey
+    //   }
+    // })
   }
 
   render () {
-    return (<EnterPrivateKey
-      onChangePrivateKey={this.handleChangePrivateKey}
-      onDone={this.handleDone}
-    />)
+    return (
+      <EnterPrivateKey
+        onChangePrivateKey={this.handleChangePrivateKey}
+        onDone={this.handleDone}
+      />
+    )
   }
 }
 

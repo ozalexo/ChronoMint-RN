@@ -6,38 +6,41 @@
  */
 
 import React, { PureComponent } from 'react'
-import I18n from 'react-native-i18n'
+import type {
+  NavigationScreenProp,
+  NavigationState
+} from 'react-navigation'
 import SelectAccount, { type TAccount } from '../screens/SelectAccount'
 import withLogin from '../components/withLogin'
 
 type TSelectAccountContainerProps = {
-  navigator: any,
+  navigation: NavigationScreenProp<NavigationState>,
   storedAccounts: any,
 }
 
 class SelectAccountContainer extends PureComponent<TSelectAccountContainerProps, {}> {
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: (
-        <Button
-          onPress={navigation.goBack()}
-          title="+1"
-          color="#fff"
-        />
-      ),
-    };
-  };
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     headerLeft: (
+  //       <Button
+  //         onPress={navigation.goBack()}
+  //         title='+1'
+  //         color='#fff'
+  //       />
+  //     )
+  //   }
+  // }
 
   handleCreateWallet = () => {
-    this.props.navigator.resetTo({ screen: 'SetAccountPassword' })
+    this.props.navigation.navigate('SetAccountPassword')
   }
 
   handleImportAccount = () => {
-    this.props.navigator.push({
-      screen: 'AccountImportMethod',
-      title: I18n.t('ImportAccount.title')
-    })
+    this.props.navigation.navigate('AccountImportMethod')
+    // this.props.navigator.push({
+    //   screen: 'AccountImportMethod',
+    //   title: I18n.t('ImportAccount.title')
+    // })
   }
 
   handleSelectAccount = (account: TAccount) => () => {

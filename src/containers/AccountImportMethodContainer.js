@@ -7,38 +7,39 @@
 
 import React, { PureComponent } from 'react'
 import I18n from 'react-native-i18n'
+import type {
+  NavigationScreenProp,
+  NavigationState
+} from 'react-navigation'
 import AccountImportMethod, { type TAccountImportMethod } from '../screens/AccountImportMethod'
 
 type TAccountImportMethodContainerProps = {
-  navigator: any,
+  navigation: NavigationScreenProp<NavigationState>
 }
 
 class AccountImportMethodContainer extends PureComponent<TAccountImportMethodContainerProps, {}> {
   handleCreateWallet = () => {
-    this.props.navigator.push({
-      screen: 'SetAccountPassword'
-    })
+    this.props.navigation.navigate('SetAccountPassword')
   }
 
   handleSelectAccountImportMethod = ({ screen, title }: TAccountImportMethod) => () => {
-    this.props.navigator.push({
-      screen,
-      title
-    })
+    this.props.navigation.navigate(screen, { title })
   }
 
   render () {
-    return (<AccountImportMethod
-      accountImportMethods={accountImportMethods}
-      onCreateWallet={this.handleCreateWallet}
-      onSelectAccountImportMethod={this.handleSelectAccountImportMethod}
-    />)
+    return (
+      <AccountImportMethod
+        accountImportMethods={accountImportMethods}
+        onCreateWallet={this.handleCreateWallet}
+        onSelectAccountImportMethod={this.handleSelectAccountImportMethod}
+      />
+    )
   }
 }
 
 export default AccountImportMethodContainer
 
-const accountImportMethods: Array<TAccountImportMethod> = [
+const accountImportMethods: TAccountImportMethod[] = [
   {
     id: 'mnemonic',
     screen: 'EnterMnemonic',
