@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
+import { Field } from 'redux-form/immutable'
 // TODO: Remove it if navigation methods is passing to router in other place
 import { router } from '@chronobank/core-dependencies/router'
 import { type TAccount } from '../containers/LoginFormContainer'
@@ -63,7 +64,9 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
             />
           </View>
         <Separator style={styles.separator} />
-        <Input
+        <Field
+          component={Input}
+          name={'password'}
           autoCorrect={false}
           onChangeText={onChangePassword}
           placeholder={I18n.t('SetAccountPassword.password')}
