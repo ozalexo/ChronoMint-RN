@@ -26,7 +26,7 @@ import AccountEntryModel from '@chronobank/core/models/wallet/persistAccount/Acc
 export type TLoginFormProps = {
   selectedWallet: AccountEntryModel,
   onChangePassword: (password: string) => void,
-  onLogin: () => Promise<void>,
+  handleSubmit: () => void,
   onUseWallet: () => void,
   navigator: any
 }
@@ -41,9 +41,9 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
 
   render () {
     const {
+      handleSubmit,
       selectedWallet,
       onChangePassword,
-      onLogin,
       onUseWallet,
     } = this.props
 
@@ -51,10 +51,12 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
       <View>
         <Separator style={styles.separator} />
           <View style={styles.item}>
-            <Image
+            { selectedWallet?.profile?.avatar ? (
+              <Image
                 source={selectedWallet ?.profile ?.avatar}
                 style={styles.itemImage}
               />
+            ) : null}
             <Text style={styles.address}>
               {selectedWallet?.name}
             </Text>
@@ -75,7 +77,7 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
         />
         <PrimaryButton
           label={I18n.t('AccountPassword.login').toUpperCase()}
-          onPress={onLogin}
+          onPress={handleSubmit}
         />
         <Text style={styles.or}>
           {I18n.t('or')}
