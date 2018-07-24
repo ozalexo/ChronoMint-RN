@@ -22,12 +22,8 @@ import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
 import AccountEntryModel from '@chronobank/core/models/wallet/persistAccount/AccountEntryModel'
 
-const sw: typeof AccountEntryModel = {}
-
-sw.profi
-
 export type TLoginFormProps = {
-  selectedWallet: typeof AccountEntryModel,
+  selectedWallet: AccountEntryModel,
   onChangePassword: (password: string) => void,
   onLogin: () => Promise<void>,
   onUseWallet: () => void,
@@ -44,24 +40,22 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
 
   render () {
     const {
-      account,
       selectedWallet,
       onChangePassword,
       onLogin,
       onUseWallet,
     } = this.props
 
-    selectedWallet.profu
     return (
       <View>
         <Separator style={styles.separator} />
           <View style={styles.item}>
             <Image
-              source={selectedWallet?.image}
+              source={selectedWallet?.profile?.avatar}
               style={styles.itemImage}
             />
             <Text style={styles.address}>
-              {selectedWallet?.address}
+              {selectedWallet?.name}
             </Text>
             <Image
               source={require('../images/chevron-right.png')}
@@ -137,4 +131,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
 })
-
