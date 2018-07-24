@@ -26,7 +26,6 @@ function mapStateToProps (state) {
 
   const selectedWallet = state.get('persistAccount')?.selectedWallet
 
-  console.log({ selectedWallet })
   return {
     selectedWallet: selectedWallet,
     isLoginSubmitting: network?.isLoginSubmitting,
