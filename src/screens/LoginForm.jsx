@@ -52,9 +52,9 @@ export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
         <Separator style={styles.separator} />
           <View style={styles.item}>
             <Image
-              source={selectedWallet?.profile?.avatar}
-              style={styles.itemImage}
-            />
+                source={selectedWallet ?.profile ?.avatar}
+                style={styles.itemImage}
+              />
             <Text style={styles.address}>
               {selectedWallet?.name}
             </Text>
