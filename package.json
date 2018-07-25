@@ -76,7 +76,7 @@
     "reselect": "^3.0.1",
     "socket.io-client": "^2.0.4",
     "sockjs-client": "prsn/sockjs-client",
-    "stream-browserify": "olegdizus/stream-browserify",
+    "stream-browserify": "^2.0.1",
     "string_decoder": "~0.10.25",
     "timers-browserify": "^1.0.1",
     "tty-browserify": "0.0.0",
