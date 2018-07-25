@@ -98,18 +98,12 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
     loginSetup = async ({ ethereum, btc, bcc, btg, ltc, nem }): Promise<void> => {
       const web3 = new Web3()
       const eProvider = ethereum.getProvider()
-      console.log('1')
       web3Provider.setWeb3(web3)
-       console.log('2')
       web3Provider.setProvider(eProvider)
-       console.log('3')
       web3Provider.reinit(web3, eProvider)
-       console.log('4')
       try {
-        // await this.props.loadAccounts()
-        console.log('5')
-        // await this.props.selectAccount(this.props.accounts[ 0 ])
-        console.log('6')
+        await this.props.loadAccounts()
+        await this.props.selectAccount(this.props.accounts[ 0 ])
         ethereumProvider.setEngine(ethereum, nem)
         bccProvider.setEngine(bcc)
         btcProvider.setEngine(btc)
@@ -117,13 +111,11 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
         ltcProvider.setEngine(ltc)
         nemProvider.setEngine(nem)
       } catch (e) {
-        console.log('100 ERROR')
         this.props.addError(e.message)
       }
     }
 
     onLogin = async (): Promise<void> => {
-      console.log(this.props)
       this.props.clearErrors()
 
       const isPassed = await this.props.checkNetwork()
@@ -138,7 +130,7 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
         this.props.login(this.props.selectedAccount)
 
         // startAppRoot('wallet')
-        this.props.navigation.navigate('WalletsList')
+        this.props.navigation.navigate('AppStack')
 
         this.props.setLastAccount(this.props.selectedAccount)
       }
@@ -167,11 +159,8 @@ export default function withLogin (Screen: ComponentType<any>): ComponentType<an
       try {
         const providerSettings = networkService.getProviderSettings()
         const provider = privateKeyProvider.getPrivateKeyProvider(privateKey, providerSettings)
-        console.log('Waiting for the loginSetup...')
         await this.loginSetup(provider)
-        console.log('Done: loginSetup...')
         if (callback) {
-          console.log('Calling callback')
           callback(null, 'OK')
         }
       } catch (e) {

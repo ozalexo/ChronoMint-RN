@@ -20,8 +20,8 @@ import DrawerRight from './DrawerRight'
  */
 const AppNavigator = createSwitchNavigator(
   {
-    LoginStack: DrawerRight,
-    WalletStack
+    'LoginStack': DrawerRight,
+    'AppStack': WalletStack
   },
   {
     initialRouteName: 'LoginStack'
