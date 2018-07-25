@@ -39,10 +39,12 @@ module.exports = {
       '@babel/plugin-proposal-decorators',
       { legacy: true }
     ],
+
     '@babel/plugin-proposal-class-properties',
     'functional-hmr',
     'transform-new-target',
     'transform-exponentiation-operator',
+    '@babel/plugin-syntax-nullish-coalescing-operator',
     [
       'babel-plugin-transform-builtin-extend',
       {
