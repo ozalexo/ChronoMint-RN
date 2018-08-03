@@ -6,7 +6,7 @@
  */
 
 import { default as Core } from '@chronobank/core/redux/ducks'
-import * as network from '@chronobank/login/redux/network/'
+import network from '@chronobank/login/redux/network/reducer'
 import * as sensitive from './sensitive'
 
 import { type TStateSensitive } from './sensitive/reducer'
