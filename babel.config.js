@@ -28,9 +28,7 @@ module.exports = {
       '@babel/plugin-transform-runtime',
       {
         helpers: false,
-        polyfill: false,
-        regenerator: true,
-        moduleName: '@babel/runtime'
+        regenerator: true
       }
     ],
     '@babel/plugin-proposal-export-default-from',

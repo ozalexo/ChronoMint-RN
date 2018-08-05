@@ -57,7 +57,7 @@
     "react-native-randombytes": "^3.0.0",
     "react-native-segment-controller": "^1.0.0",
     "react-native-sensitive-info": "^5.1.0",
-    "react-native-splash-screen": "^3.1.0",
+    "react-native-splash-screen": "^3.1.1",
     "react-native-tab-view": "^1.0.2",
     "react-native-tcp": "olegdizus/react-native-tcp",
     "react-native-udp": "^2.1.0",
