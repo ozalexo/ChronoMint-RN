@@ -1,4 +1,7 @@
 {
   "name": "@chronobank/core-dependencies",
-  "version": "0.9.3"
+  "version": "0.9.3",
+  "dependencies":{
+    "jsan": "^3.1.10"
+  }
 }

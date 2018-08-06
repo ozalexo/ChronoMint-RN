@@ -4,7 +4,7 @@
  *
  * @flow
  */
-import React from 'react'
+import React, { PureComponent, type Node} from 'react'
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -13,7 +13,14 @@ import {
   ScrollView
 } from 'react-native'
 
-export default class LoginScreenLayout extends React.Component {
+export type TLoginScreenLayoutProps = {
+  children: Node,
+  screenOptions?: {
+    screen?: string
+  }
+}
+
+export default class LoginScreenLayout extends PureComponent<TLoginScreenLayoutProps> {
   static navigatorStyle = {
     navBarTextColor: '#FFFFFF',
     navBarTextFontSize: 16,
@@ -24,6 +31,11 @@ export default class LoginScreenLayout extends React.Component {
   }
 
   render () {
+    const {
+      children,
+      screenOptions
+    } = this.props
+
     return (
       <KeyboardAvoidingView
         behavior='padding'
@@ -35,11 +47,11 @@ export default class LoginScreenLayout extends React.Component {
             source={require('../images/background.jpg')}
             style={[
               styles.backgroundImage,
-              this.props.screenOptions.screen === 'SetAccountPassword' ? styles.backgroundImageFull : {}
+              (screenOptions || {}).screen === 'CreateAccount' ? styles.backgroundImageFull : {}
             ]}
           />
           <View style={styles.screenContent}>
-            {this.props.children}
+            {children}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

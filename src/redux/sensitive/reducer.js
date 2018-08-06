@@ -6,7 +6,7 @@
  */
 
 /* eslint-disable import/prefer-default-export */
-import Immutable from 'immutable'
+import * as Immutable from 'immutable'
 import { types } from './actions'
 
 export type TStoredAccount = {

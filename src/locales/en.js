@@ -24,7 +24,7 @@ export default {
   ChangeLanguage: {
     language: 'Language'
   },
-  EnterMnemonic: {
+  LoginWithMnemonic: {
     title: 'Mnemonic key',
     subtitle: 'Enter mnemonic key:',
     mnemonic: 'Mnemonic key',
@@ -181,7 +181,7 @@ export default {
     recoverUsingMnemonic: 'Recover using mnemonic',
     or: 'common.or'
   },
-  ImportAccount: {
+  LoginWithOptions: {
     title: 'Import Address',
     mnemonic: 'Mnemonic',
     privateKey: 'Private key',

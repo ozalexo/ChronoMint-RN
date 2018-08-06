@@ -5,62 +5,18 @@
  * @flow
  */
 
-import React, { PureComponent } from 'react'
-import type {
-  NavigationScreenProp,
-  NavigationState
-} from 'react-navigation'
-import SelectAccount, { type TAccount } from '../screens/SelectAccount'
-import withLogin from '../components/withLogin'
+import { connect } from 'react-redux'
+import {
+  navigateToCreateAccount,
+  navigateToSelectImportMethod
+} from '@chronobank/login/redux/network/actions'
+import SelectAccount from '../screens/SelectAccount'
 
-type TSelectAccountContainerProps = {
-  navigation: NavigationScreenProp<NavigationState>,
-  storedAccounts: any,
-}
-
-class SelectAccountContainer extends PureComponent<TSelectAccountContainerProps, {}> {
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     headerLeft: (
-  //       <Button
-  //         onPress={navigation.goBack()}
-  //         title='+1'
-  //         color='#fff'
-  //       />
-  //     )
-  //   }
-  // }
-
-  handleCreateWallet = () => {
-    this.props.navigation.navigate('SetAccountPassword')
-  }
-
-  handleImportAccount = () => {
-    this.props.navigation.navigate('AccountImportMethod')
-    // this.props.navigator.push({
-    //   screen: 'AccountImportMethod',
-    //   title: I18n.t('ImportAccount.title')
-    // })
-  }
-
-  handleSelectAccount = (account: TAccount) => () => {
-    this.props.navigator.push({
-      screen: 'AccountPassword',
-      title: 'Enter account password',
-      passProps: {
-        account
-      }
-    })
-  }
-
-  render () {
-    return (<SelectAccount
-      accounts={this.props.storedAccounts.toArray()}
-      onCreateWallet={this.handleCreateWallet}
-      onImportAccount={this.handleImportAccount}
-      onSelectAccount={this.handleSelectAccount}
-    />)
+function mapDispatchToProps (dispatch) {
+  return {
+    navigateToCreateAccount: () => dispatch(navigateToCreateAccount()),
+    navigateToSelectImportMethod: () => dispatch(navigateToSelectImportMethod())
   }
 }
 
-export default withLogin(SelectAccountContainer)
+export default connect(null, mapDispatchToProps)(SelectAccount)

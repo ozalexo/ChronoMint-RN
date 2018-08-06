@@ -7,7 +7,7 @@
 import DeviceInfo from 'react-native-device-info'
 
 export default function salt (data: string) {
-  const uniqueId = DeviceInfo.getUniqueID
+  const uniqueId = DeviceInfo.getUniqueID()
 
   return `${data}${uniqueId}`
 }

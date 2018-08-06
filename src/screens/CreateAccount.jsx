@@ -5,8 +5,7 @@
  * @flow
  */
 
-import React, { PureComponent, Component } from 'react'
-
+import React, { PureComponent } from 'react'
 import {
   Image,
   StatusBar,
@@ -14,10 +13,9 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-import type {
-  NavigationScreenProp,
-  NavigationState
-} from 'react-navigation'
+import {
+  Field
+} from 'redux-form/immutable'
 import I18n from 'react-native-i18n'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
@@ -27,30 +25,63 @@ import styles from './styles/SetAccountPasswordStyles'
 export type TSetAccountPasswordProps = {
   onChangePassword: (password: string) => void,
   onChangePasswordConfirmation: (passwordConfirmation: string) => void,
-  onDone: () => void,
-  navigation: NavigationScreenProp<NavigationState>,
+  handleSubmit: () => void,
+  navigateToSelectWallet: () => void,
+  onSelectLanguage: () => void,
+  onSelectNetwork: () => void
 }
 
-export default class SetAccountPassword extends Component<TSetAccountPasswordProps, {}> {
+type THeaderProps = {
+  onSelectLanguage: () => void,
+  onSelectNetwork: () => void,
+}
+
+export default class CreateAccount extends PureComponent<TSetAccountPasswordProps, {}> {
   render () {
     const {
       onChangePassword,
       onChangePasswordConfirmation,
-      onDone
+      handleSubmit,
+      navigateToSelectWallet,
+      onSelectLanguage,
+      onSelectNetwork
     } = this.props
 
     return (
       <View>
-        <Input
+        <Header
+          onSelectLanguage={onSelectLanguage}
+          onSelectNetwork={onSelectNetwork}
+        />
+        <Text
+          style={styles.titleText}
+        >
+          Create New Account
+        </Text>
+        <Text
+          style={styles.subtitleText}
+        >
+          Created wallet will be encrypted using given password and stored in your browser's local storage.
+        </Text>
+        <Field
           autoCorrect={false}
-          onChangeText={onChangePassword}
+          component={Input}
+          name={'walletName'}
+          placeholder={'Wallet name'}
+          style={styles.input}
+        />
+        <Field
+          autoCorrect={false}
+          component={Input}
+          name={'password'}
           placeholder={I18n.t('SetAccountPassword.password')}
           secureTextEntry
           style={styles.input}
         />
-        <Input
+        <Field
           autoCorrect={false}
-          onChangeText={onChangePasswordConfirmation}
+          component={Input}
+          name={'confirmPassword'}
           placeholder={I18n.t('SetAccountPassword.confirmPassword')}
           secureTextEntry
           style={styles.input}

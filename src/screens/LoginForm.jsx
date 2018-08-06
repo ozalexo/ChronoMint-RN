@@ -13,36 +13,62 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
-import { type TAccount } from '../containers/AccountPasswordContainer'
+import { Field } from 'redux-form/immutable'
+// TODO: Remove it if navigation methods is passing to router in other place
+import { router } from '@chronobank/core-dependencies/router'
+import { type TAccount } from '../containers/LoginFormContainer'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
+import AccountEntryModel from '@chronobank/core/models/wallet/persistAccount/AccountEntryModel'
 
-export type TAccountPasswordProps = {
-  account: TAccount,
+export type TLoginFormProps = {
+  selectedWallet: AccountEntryModel,
   onChangePassword: (password: string) => void,
-  onLogin: () => Promise<void>,
+  handleSubmit: () => void,
   onUseWallet: () => void,
+  navigator: any
 }
 
-type TAccountItemProps = TAccount
+export default class LoginForm extends PureComponent<TLoginFormProps, {}> {
+  // This code pass navigator prop to router. Without it router can't
+  // perform navigation actions.
+  // TODO: Remove if navigation methods is passing to router in other place
+  componentDidMount () {
+    router.setNavigator(this.props.navigator)
+  }
 
-export default class AccountPassword extends PureComponent<TAccountPasswordProps, {}> {
   render () {
     const {
-      account,
+      handleSubmit,
+      selectedWallet,
       onChangePassword,
-      onLogin,
       onUseWallet,
     } = this.props
-    
+
     return (
       <View>
         <Separator style={styles.separator} />
-        <AccountItem {...account} />
+          <View style={styles.item}>
+            { selectedWallet?.profile?.avatar ? (
+              <Image
+                source={selectedWallet ?.profile ?.avatar}
+                style={styles.itemImage}
+              />
+            ) : null}
+            <Text style={styles.address}>
+              {selectedWallet?.name}
+            </Text>
+            <Image
+              source={require('../images/chevron-right.png')}
+              style={styles.chevron}
+            />
+          </View>
         <Separator style={styles.separator} />
-        <Input
+        <Field
+          component={Input}
+          name={'password'}
           autoCorrect={false}
           onChangeText={onChangePassword}
           placeholder={I18n.t('SetAccountPassword.password')}
@@ -51,7 +77,7 @@ export default class AccountPassword extends PureComponent<TAccountPasswordProps
         />
         <PrimaryButton
           label={I18n.t('AccountPassword.login').toUpperCase()}
-          onPress={onLogin}
+          onPress={handleSubmit}
         />
         <Text style={styles.or}>
           {I18n.t('or')}
@@ -63,28 +89,6 @@ export default class AccountPassword extends PureComponent<TAccountPasswordProps
         <Text style={styles.copyright}>
           {I18n.t('copyright')}
         </Text>
-      </View>
-    )
-  }
-}
-
-class AccountItem extends PureComponent<TAccountItemProps, {}> {
-  render () {
-    const { image, address } = this.props
-
-    return (
-      <View style={styles.item}>
-        <Image
-          source={image}
-          style={styles.itemImage}
-        />
-        <Text style={styles.address}>
-          {address}
-        </Text>
-        <Image
-          source={require('../images/chevron-right.png')}
-          style={styles.chevron}
-        />
       </View>
     )
   }
@@ -132,4 +136,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
 })
-

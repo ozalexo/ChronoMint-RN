@@ -44,14 +44,6 @@ class EnterPrivateKeyContainer extends PureComponent<TEnterPrivateKeyContainerPr
         })
       }
     })
-
-    // navigator.push({
-    //   screen: 'SetAccountPassword',
-    //   title: 'Set Account Password',
-    //   passProps: {
-    //     privateKey: privateKey
-    //   }
-    // })
   }
 
   render () {

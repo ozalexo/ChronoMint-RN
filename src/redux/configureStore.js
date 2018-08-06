@@ -5,7 +5,7 @@
  * @flow
  */
 
-import Immutable from 'immutable'
+import * as Immutable from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { createStore, applyMiddleware, compose, type Store } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist-immutable'
@@ -13,8 +13,10 @@ import createSensitiveStorage from 'redux-persist-sensitive-storage'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger as rCreateLogger } from 'redux-logger'
+import { reducer as formReducer } from 'redux-form/immutable'
 import { SESSION_DESTROY } from '../utils/globals'
 import { type TState } from '../redux/ducks'
+import transformer from '@chronobank/core-dependencies/serialize'
 
 const getNestedReducers = (ducks) => {
   let reducers = {}
@@ -27,6 +29,7 @@ const getNestedReducers = (ducks) => {
 }
 
 const appReducer = (reducers) => combineReducers({
+  form: formReducer,
   ...getNestedReducers(reducers)
 })
 
@@ -87,12 +90,14 @@ export const injectReducer = (ducks: {}) => {
   store.replaceReducer(appReducer(ducks))
 }
 
-persistStore(store,
-  {
-    storage: createSensitiveStorage({
-      keychainService: 'ChronoMint',
-      sharedPreferencesName: 'ChronoMint'
-    }),
-    whitelist: ['sensitive']
-  }
-)
+const persistorConfig = {
+  storage: createSensitiveStorage({
+    keychainService: 'ChronoMint',
+    sharedPreferencesName: 'ChronoMint'
+  }),
+  key: 'root',
+  whitelist: ['multisigWallet', 'mainWallet', 'persistAccount'],
+  transforms: [transformer()],
+}
+
+persistStore(store, persistorConfig)
