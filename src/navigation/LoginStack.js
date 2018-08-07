@@ -35,11 +35,6 @@ import SelectNetworkContainer from '../containers/SelectNetworkContainer'
 import CreateAccountContainer from '../containers/CreateAccountContainer'
 import StartScreenContainer from '../containers/StartScreenContainer'
 import WalletBackupContainer from '../containers/WalletBackupContainer'
-// #endregion
-
-// #region additional imports
-import LoginScreenLayout from '../components/LoginScreenLayout'
-import screenLayout from '../utils/screenLayout'
 import { HL, HR } from '../screens/StartScreen'
 // #endregion
 
@@ -65,14 +60,6 @@ import { HL, HR } from '../screens/StartScreen'
 // Navigation.registerComponent('GenerateMnemonic', () => screenLayout(LoginScreenLayout)(GenerateMnemonic), store, Provider)
 // Navigation.registerComponent('SelectLanguage', () => SelectLanguage, store, Provider)
 // Navigation.registerComponent('SelectNetwork', () => SelectNetwork, store, Provider)
-
-// #region Login-only utils
-const getLayoutedScreen = (component, extraProps) => {
-  const LayoutedScreen = screenLayout(LoginScreenLayout)(component)
-  const componentProps = {...component.props, ...extraProps}
-  return <LayoutedScreen {...componentProps} />
-}
-// #endregion
 
 /**
  * Authentication stack: all login-related screens and switching to Wallet stack.
