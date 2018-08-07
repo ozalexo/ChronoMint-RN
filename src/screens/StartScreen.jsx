@@ -22,6 +22,7 @@ import I18n from 'react-native-i18n'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 import TextButton from '../components/TextButton'
+import LoginLayout from '../components/LoginLayout'
 import styles from './styles/StartScreenStyles'
 
 export type TStartScreenProps = {
@@ -80,7 +81,7 @@ export default class StartScreen extends Component<TStartScreenProps, {}> {
     } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <StatusBar barStyle='light-content' />
         <Image
           source={require('../images/ChronoWalletIcon.png')}
@@ -118,7 +119,7 @@ export default class StartScreen extends Component<TStartScreenProps, {}> {
         <Text style={styles.copyright}>
           {I18n.t('SetAccountPassword.copyright')}
         </Text>
-      </View>
+      </LoginLayout>
     )
   }
 }

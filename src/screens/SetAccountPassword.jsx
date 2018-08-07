@@ -19,6 +19,7 @@ import I18n from 'react-native-i18n'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 import styles from './styles/SetAccountPasswordStyles'
+import LoginLayout from '../components/LoginLayout'
 
 export type TSetAccountPasswordProps = {
   onChangePassword: (password: string) => void,
@@ -36,7 +37,7 @@ export default class SetAccountPassword extends PureComponent<TSetAccountPasswor
     } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <Input
           autoCorrect={false}
           onChangeText={onChangePassword}
@@ -58,7 +59,7 @@ export default class SetAccountPassword extends PureComponent<TSetAccountPasswor
         <Text style={styles.copyright}>
           {I18n.t('SetAccountPassword.copyright')}
         </Text>
-      </View>
+      </LoginLayout>
     )
   }
 }

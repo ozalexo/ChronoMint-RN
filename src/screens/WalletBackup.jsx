@@ -16,6 +16,7 @@ import styles from './styles/WalletBackupStyles'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
+import LoginLayout from '../components/LoginLayout'
 
 type TWalletBackupProps = {
   onDone: () => void,
@@ -43,7 +44,7 @@ class WalletBackup extends React.Component<TWalletBackupProps, {}> {
     }
 
     return (
-      <View>
+      <LoginLayout>
         <Text style={styles.title}>
           { strings.title }
         </Text>
@@ -74,7 +75,7 @@ class WalletBackup extends React.Component<TWalletBackupProps, {}> {
           label={strings.backupLater}
           onPress={onLater}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }

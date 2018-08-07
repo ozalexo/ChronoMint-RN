@@ -18,6 +18,7 @@ import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TAccountPasswordProps = {
   account: TAccount,
@@ -38,7 +39,7 @@ export default class AccountPassword extends PureComponent<TAccountPasswordProps
     } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <Separator style={styles.separator} />
         <AccountItem {...account} />
         <Separator style={styles.separator} />
@@ -63,7 +64,7 @@ export default class AccountPassword extends PureComponent<TAccountPasswordProps
         <Text style={styles.copyright}>
           {I18n.t('copyright')}
         </Text>
-      </View>
+      </LoginLayout>
     )
   }
 }

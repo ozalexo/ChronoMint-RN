@@ -15,6 +15,7 @@ import {
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import TextButton from '../components/TextButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TAccountImportMethod = {
   id: string,
@@ -50,7 +51,7 @@ export default class SelectAccountImportMethod extends PureComponent<TAccountImp
     } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <View style={styles.buttons}>
           {accountImportMethods.map(this.renderMethod)}
         </View>
@@ -62,7 +63,7 @@ export default class SelectAccountImportMethod extends PureComponent<TAccountImp
           label='Create new wallet'
           onPress={onCreateWallet}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }
