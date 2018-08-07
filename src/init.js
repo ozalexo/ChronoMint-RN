@@ -5,30 +5,22 @@
  * @flow
  */
 
-import Web3 from 'web3'
 import { bootstrap } from '@chronobank/core/redux/session/actions'
-import networkService from '@chronobank/login/network/NetworkService'
-import web3Utils from '@chronobank/login/network/Web3Utils'
-import web3Provider from '@chronobank/login/network/Web3Provider'
 import store from './redux/configureStore'
-window.web3 = Web3
 
 const startPreparations = () => {
-  networkService.connectStore(store)
-
   store
-    .dispatch(
-      bootstrap(true, false)
-    )
-    .then(() => {
+    .dispatch((dispatch, getState) => {
+      dispatch({ type: '@appinit/INIT_LOGIN_SERVICES' })
+      return Promise.resolve(dispatch)
+    })
+    .then((dispatch) => {
+      // Now action bootstrap returns networkService instance. We do not need to import it here in this module
+      return Promise.resolve(dispatch(bootstrap(false, false, false)))
+    })
+    .then((networkService) => {
       networkService.selectProvider(2)
       networkService.selectNetwork(4)
-      const web3 = new Web3()
-      web3Provider.setWeb3(web3)
-      const providerUrl = networkService.getProviderURL()
-      const statusEngine = web3Utils.createStatusEngine(providerUrl)
-      web3Provider.setProvider(statusEngine)
-      web3Provider.resolve()
     })
 }
 

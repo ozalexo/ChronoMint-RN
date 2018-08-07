@@ -8,6 +8,4 @@
 import { AppRegistry } from 'react-native'
 import App from './src/App'
 
-AppRegistry.registerComponent('chronomintrn', () => {
-  return App
-})
+AppRegistry.registerComponent('chronomintrn', () => App)
