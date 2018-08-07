@@ -10,16 +10,14 @@ import { Provider } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
 import './utils/i18n'
 import './utils/shim'
-import * as ducks from './redux/ducks'
 import AppNavigator from './navigation/AppNavigator'
 import startPreparations from './init'
-import store, { injectReducer } from './redux/configureStore'
+import store from './redux/configureStore'
 
 class ChronoMintApp extends React.Component<{}, {}> {
   constructor (props: any) {
     super(props)
     // Prepare everything before hiding SplashScreen
-    injectReducer(ducks)
     startPreparations()
   }
 
