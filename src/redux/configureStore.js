@@ -5,7 +5,7 @@
  * @flow
  */
 
-import Immutable from 'immutable'
+import { Map } from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist-immutable'
@@ -31,7 +31,7 @@ const ServiceMiddleware = (store) => (next) => (action) => {
 }
 
 const configureStore = () => {
-  const initialState = new Immutable.Map()
+  const initialState = new Map()
 
   const appReducer = combineReducers({
     ...coreReducers,
@@ -82,7 +82,7 @@ const configureStore = () => {
 
   return createStoreWithMiddleware(
     (state, action) =>
-      appReducer(action.type === SESSION_DESTROY ? new Immutable.Map() : state, action),
+      appReducer(action.type === SESSION_DESTROY ? new Map() : state, action),
     initialState
   )
 }
