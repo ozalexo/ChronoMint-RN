@@ -35,36 +35,8 @@ import SelectNetworkContainer from '../containers/SelectNetworkContainer'
 import CreateAccountContainer from '../containers/CreateAccountContainer'
 import StartScreenContainer from '../containers/StartScreenContainer'
 import WalletBackupContainer from '../containers/WalletBackupContainer'
-// #endregion
-
-// #region additional imports
-import LoginScreenLayout from '../components/LoginScreenLayout'
-import screenLayout from '../utils/screenLayout'
 import { HL, HR } from '../screens/StartScreen'
 // #endregion
-
-// Navigation.registerComponent('/login/confirm-mnemonic', () => screenLayout(LoginScreenLayout)(ConfirmMnemonic), store, Provider)
-// Navigation.registerComponent('/login/create-account', () => screenLayout(LoginScreenLayout)(CreateAccount), store, Provider)
-// Navigation.registerComponent('/login/import-methods', () => screenLayout(LoginScreenLayout)(LoginWithOpions), store, Provider)
-// Navigation.registerComponent('/login/mnemonic-login', () => screenLayout(LoginScreenLayout)(LoginWithMnemonic), store, Provider)
-// Navigation.registerComponent('/login/select-account', () => screenLayout(LoginScreenLayout)(SelectAccount), store, Provider)
-// Navigation.registerComponent('/login/download-wallet', () => screenLayout(LoginScreenLayout)(GenerateWallet), store, Provider)
-// Navigation.registerComponent('/login', () => screenLayout(LoginScreenLayout)(LoginForm), store, Provider)
-// Navigation.registerComponent('Add2FAWallet', () => Add2FAWallet, store, Provider)
-// Navigation.registerComponent('AddAdvancedWallet', () => AddAdvancedWallet, store, Provider)
-// Navigation.registerComponent('AddEthereumWallet', () => AddEthereumWallet, store, Provider)
-// Navigation.registerComponent('AddMultiSignatureWallet', () => AddMultiSigWallet, store, Provider)
-// Navigation.registerComponent('AddStandardWallet', () => AddStandardWallet, store, Provider)
-// Navigation.registerComponent('AddTimeLockedWallet', () => AddTimeLockedWallet, store, Provider)
-// Navigation.registerComponent('AddTokenToAdvancedWallet', () => AddTokenToAdvancedWallet, store, Provider)
-// Navigation.registerComponent('AddWallet', () => AddWallet, store, Provider)
-// Navigation.registerComponent('Download2FAApp', () => Download2FAApp, store, Provider)
-// Navigation.registerComponent('Drawer', () => Drawer, store, Provider)
-// Navigation.registerComponent('EnterPin', () => screenLayout(LoginScreenLayout)(EnterPin), store, Provider)
-// Navigation.registerComponent('EnterPrivateKey', () => screenLayout(LoginScreenLayout)(EnterPrivateKey), store, Provider)
-// Navigation.registerComponent('GenerateMnemonic', () => screenLayout(LoginScreenLayout)(GenerateMnemonic), store, Provider)
-// Navigation.registerComponent('SelectLanguage', () => SelectLanguage, store, Provider)
-// Navigation.registerComponent('SelectNetwork', () => SelectNetwork, store, Provider)
 
 // #region Login-only utils
 const getLayoutedScreen = (component, extraProps) => {
