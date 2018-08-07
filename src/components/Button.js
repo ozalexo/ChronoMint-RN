@@ -29,7 +29,7 @@ const LeftSection = (props: LeftSectionProps) => {
 
   return (
     <View style={styles.leftSection}>
-      {icon && <Icon source={icon} />}
+      <Icon source={icon} />
     </View>
   )
 }
