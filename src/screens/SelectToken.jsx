@@ -72,7 +72,7 @@ export default class SelectToken extends PureComponent<TSelectTokenProps, TSelec
             ]}
           >
             {
-              rowData.amount.toFixed(2)
+              rowData.amount?.toFixed(2)
             }
           </Text>
         </View>
