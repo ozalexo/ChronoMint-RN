@@ -15,10 +15,9 @@ import OwnerModel from '@chronobank/core/models/wallet/OwnerModel'
 import OwnerCollection from '@chronobank/core/models/wallet/OwnerCollection'
 import MultisigWalletPendingTxModel from '@chronobank/core/models/wallet/MultisigWalletPendingTxModel'
 import TxExecModel from '@chronobank/core/models/TxExecModel'
-import MultisigWalletPendingTxCollection from '@chronobank/core/models/wallet/MultisigWalletPendingTxCollection'
 import AddressModel from '@chronobank/core/models/wallet/AddressModel'
 import AddressesCollection from '@chronobank/core/models/wallet/AddressesCollection'
-import MultisigWalletModel from '@chronobank/core/models/wallet/MultisigWalletModel'
+import MultisigEthWalletModel from '@chronobank/core/models/wallet/MultisigEthWalletModel'
 import MultisigWalletCollection from '@chronobank/core/models/wallet/MultisigWalletCollection'
 import DerivedWalletModel from '@chronobank/core/models/wallet/DerivedWalletModel'
 import AllowanceCollection from '@chronobank/core/models/wallet/AllowanceCollection'
@@ -67,10 +66,9 @@ function serialize (Immutable, refs) {
       if (value instanceof OwnerCollection) return refer(value, 'OwnerCollection', 'toObject', refs)
       if (value instanceof TxExecModel) return refer(value, 'TxExecModel', 'toObject', refs)
       if (value instanceof MultisigWalletPendingTxModel) return refer(value, 'MultisigWalletPendingTxModel', 'toObject', refs)
-      if (value instanceof MultisigWalletPendingTxCollection) return refer(value, 'MultisigWalletPendingTxCollection', 'toObject', refs)
       if (value instanceof AddressModel) return refer(value, 'AddressModel', 'toObject', refs)
       if (value instanceof AddressesCollection) return refer(value, 'AddressesCollection', 'toObject', refs)
-      if (value instanceof MultisigWalletModel) return refer(value, 'MultisigWalletModel', 'toObject', refs)
+      if (value instanceof MultisigEthWalletModel) return refer(value, 'MultisigEthWalletModel', 'toObject', refs)
       if (value instanceof DerivedWalletModel) return refer(value, 'DerivedWalletModel', 'toObject', refs)
       if (value instanceof MultisigWalletCollection) return refer(value, 'MultisigWalletCollection', 'toObject', refs)
       if (value instanceof AllowanceModel) return refer(value, 'AllowanceModel', 'toObject', refs)
@@ -114,14 +112,14 @@ function serialize (Immutable, refs) {
             return new TxExecModel(data)
           case 'MultisigWalletPendingTxModel':
             return new MultisigWalletPendingTxModel(data)
-          case 'MultisigWalletPendingTxCollection':
-            return new MultisigWalletPendingTxCollection(data)
+          case 'MultisigWalletPendingTxModel':
+            return new MultisigWalletPendingTxModel(data)
           case 'AddressModel':
             return new AddressModel(data)
           case 'AddressesCollection':
             return new AddressesCollection(data)
-          case 'MultisigWalletModel':
-            return new MultisigWalletModel(data)
+          case 'MultisigEthWalletModel':
+            return new MultisigEthWalletModel(data)
           case 'DerivedWalletModel':
             return new DerivedWalletModel(data)
           case 'MultisigWalletCollection':

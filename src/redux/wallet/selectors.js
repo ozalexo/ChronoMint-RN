@@ -166,14 +166,14 @@ export const selectMultisigWalletAdresses = createSelector(
     selectMultisigTimeLockedWallets,
   ],
   (
-    activeMultisigWallets: MultisigWalletModel[],
-    timeLockedMultisigWallets: MultisigWalletModel[],
+    activeMultisigWallets: MultisigEthWalletModel[],
+    timeLockedMultisigWallets: MultisigEthWalletModel[],
   ): any[] =>
     [...activeMultisigWallets,...timeLockedMultisigWallets]
-      .filter ( (multisigWalletModel: MultisigWalletModel) =>
+      .filter ( (multisigWalletModel: MultisigEthWalletModel) =>
         multisigWalletModel.address()
       )
-      .map( (multisigWalletModel: MultisigWalletModel) => {
+      .map( (multisigWalletModel: MultisigEthWalletModel) => {
         const address: string = multisigWalletModel.address() || '' // Empty string only for Flowtype. All empty adresses filtered above.
         const jsWallet = Object.create(null)
         const addrObj = Object.create(null)
@@ -796,11 +796,11 @@ export const makeGetWalletInfoByBockchainAndAddress = (blockchain: string, addre
 
         const multisigActiveWalletsList: string[] = multisigWallet
           .activeWallets()
-          .map( (multiWallet: MultisigWalletModel) => multiWallet.address())
+          .map( (multiWallet: MultisigEthWalletModel) => multiWallet.address())
 
         const multisigTimeLockedWalletsList: string[] = multisigWallet
           .timeLockedWallets()
-          .map( (multiWallet: MultisigWalletModel) => multiWallet.address())
+          .map( (multiWallet: MultisigEthWalletModel) => multiWallet.address())
 
         if (mainAddressesList && mainAddressesList.length) {
           isMainWalletFound = mainAddressesList && mainAddressesList.includes(address)
@@ -996,11 +996,11 @@ export const makeGetWalletTransactionsByBlockchainAndAddress = (blockchain: stri
 
         const multisigActiveWalletsList: string[] = multisigWallet
           .activeWallets()
-          .map( (multiWallet: MultisigWalletModel) => multiWallet.address())
+          .map( (multiWallet: MultisigEthWalletModel) => multiWallet.address())
 
         const multisigTimeLockedWalletsList: string[] = multisigWallet
           .timeLockedWallets()
-          .map( (multiWallet: MultisigWalletModel) => multiWallet.address())
+          .map( (multiWallet: MultisigEthWalletModel) => multiWallet.address())
 
         if (mainAddressesList && mainAddressesList.length) {
           isMainWalletFound = mainAddressesList && mainAddressesList.includes(address)

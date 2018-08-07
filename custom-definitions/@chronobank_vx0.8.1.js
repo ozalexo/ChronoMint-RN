@@ -33,7 +33,7 @@ import BalanceModel from 'models/tokens/BalanceModel'
 import BalancesCollection from 'models/tokens/BalancesCollection'
 import BlacklistModel from 'models/tokens/BlacklistModel'
 import FeeModel from 'models/tokens/FeeModel'
-import MultisigWalletPendingTxCollection from 'models/wallet/MultisigWalletPendingTxCollection'
+import MultisigWalletPendingTxModel from 'models/wallet/MultisigWalletPendingTxModel'
 import OwnerCollection from 'models/wallet/OwnerCollection'
 import OwnerModel from 'models/wallet/OwnerModel'
 import TokenModel from 'models/tokens/TokenModel'
@@ -971,8 +971,8 @@ declare module 'models/wallet/MultisigWalletCollection' {
   }
 }
 
-declare module 'models/wallet/MultisigWalletModel' {
-  declare export default class MultisigWalletModel extends AbstractFetchingModel {
+declare module 'models/wallet/MultisigEthWalletModel' {
+  declare export default class MultisigEthWalletModel extends AbstractFetchingModel {
     address (): ?string;
     addresses (value: AddressesCollection): AddressesCollection;
     balance (balance: BalanceModel): BalancesCollection;
@@ -982,7 +982,7 @@ declare module 'models/wallet/MultisigWalletModel' {
     owners (): ?OwnerCollection; 
     ownersArray (): OwnerModel[];
     pendingCount (): number;
-    pendingTxList (value: any): MultisigWalletPendingTxCollection; // TODO
+    pendingTxList (value: any): MultisigWalletPendingTxModel; // TODO
     releaseTime (): Date;
     requiredSignatures (): number;
     transactions (value: TxModel): TransactionsCollection;
@@ -1011,12 +1011,12 @@ declare module 'models/wallet/MultisigWalletModel' {
   }
 }
 
-// declare module '@chronobank/src/models/wallet/MultisigWalletModel.spec' {
+// declare module '@chronobank/src/models/wallet/MultisigEthWalletModel.spec' {
 //   declare export default any;
 // }
 
-declare module '@chronobank/src/models/wallet/MultisigWalletPendingTxCollection' {
-  declare export default class MultisigWalletPendingTxCollection extends AbstractFetchingCollection {}
+declare module '@chronobank/src/models/wallet/MultisigWalletPendingTxModel' {
+  declare export default class MultisigWalletPendingTxModel extends AbstractFetchingCollection {}
 }
 
 // declare module '@chronobank/src/models/wallet/MultisigWalletPendingTxModel' {
@@ -2129,12 +2129,12 @@ declare module '@chronobank/src/models/wallet/MainWalletModel.js' {
 declare module 'models/wallet/MultisigWalletCollection.js' {
   declare export default $Exports<'MultisigWalletCollection'>;
 }
-declare module 'models/wallet/MultisigWalletModel.js' {
-  declare export default $Exports<'MultisigWalletModel'>;
+declare module 'models/wallet/MultisigEthWalletModel.js' {
+  declare export default $Exports<'MultisigEthWalletModel'>;
 }
 
-declare module '@chronobank/src/models/wallet/MultisigWalletPendingTxCollection.js' {
-  declare export default $Exports<'MultisigWalletPendingTxCollection'>;
+declare module '@chronobank/src/models/wallet/MultisigWalletPendingTxModel.js' {
+  declare export default $Exports<'MultisigWalletPendingTxModel'>;
 }
 // declare module '@chronobank/src/models/wallet/MultisigWalletPendingTxModel.js' {
 //   declare export default $Exports<'@chronobank/src/models/wallet/MultisigWalletPendingTxModel'>;
