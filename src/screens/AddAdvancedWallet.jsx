@@ -33,7 +33,7 @@ export default class AddAdvancedWallet extends PureComponent<TAddAdvancedWalletP
 
   renderItem = ({ item }: { item: TToken }) => <Token {...item} />
 
-  render () {  
+  render () {
     const { onAddNewToken, tokens } = this.props
 
     return (

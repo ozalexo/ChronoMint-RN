@@ -5,13 +5,10 @@
  * @flow
  */
 
-import React, { PureComponent, Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import {
-  Image,
-  StatusBar,
   Text,
-  TouchableOpacity,
   View
 } from 'react-native'
 import type {
@@ -21,7 +18,6 @@ import type {
 import I18n from 'react-native-i18n'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
-import TextButton from '../components/TextButton'
 import styles from './styles/SetAccountPasswordStyles'
 
 export type TSetAccountPasswordProps = {
@@ -31,7 +27,7 @@ export type TSetAccountPasswordProps = {
   navigation: NavigationScreenProp<NavigationState>,
 }
 
-export default class SetAccountPassword extends Component<TSetAccountPasswordProps, {}> {
+export default class SetAccountPassword extends PureComponent<TSetAccountPasswordProps, {}> {
   render () {
     const {
       onChangePassword,
