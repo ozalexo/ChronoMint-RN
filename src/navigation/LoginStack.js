@@ -14,8 +14,8 @@ import {
 // #endregion
 
 // #region screens' imports
-import AccountImportMethodContainer from '../containers/AccountImportMethodContainer'
-import AccountPasswordContainer from '../containers/AccountPasswordContainer'
+import LoginWithOptionsContainer from '../containers/LoginWithOptionsContainer'
+import LoginFormContainer from '../containers/LoginFormContainer'
 import Add2FAWalletContainer from '../containers/Add2FAWalletContainer'
 import AddAdvancedWalletContainer from '../containers/AddAdvancedWalletContainer'
 import AddEthereumWalletContainer from '../containers/AddEthereumWalletContainer'
@@ -26,13 +26,13 @@ import AddTokenToAdvancedWalletContainer from '../containers/AddTokenToAdvancedW
 import AddWalletContainer from '../containers/AddWalletContainer'
 import ConfirmMnemonicContainer from '../containers/ConfirmMnemonicContainer'
 import Download2FAAppContainer from '../containers/Download2FAAppContainer'
-import EnterMnemonicContainer from '../containers/EnterMnemonicContainer'
+import LoginWithMnemonicContainer from '../containers/LoginWithMnemonicContainer'
 import EnterPinContainer from '../containers/EnterPinContainer'
 import EnterPrivateKeyContainer from '../containers/EnterPrivateKeyContainer'
 import GenerateMnemonicContainer from '../containers/GenerateMnemonicContainer'
 import SelectAccountContainer from '../containers/SelectAccountContainer'
 import SelectNetworkContainer from '../containers/SelectNetworkContainer'
-import SetAccountPasswordContainer from '../containers/SetAccountPasswordContainer'
+import CreateAccountContainer from '../containers/CreateAccountContainer'
 import StartScreenContainer from '../containers/StartScreenContainer'
 import WalletBackupContainer from '../containers/WalletBackupContainer'
 // #endregion
@@ -79,7 +79,7 @@ const getLayoutedScreen = (component, extraProps) => {
 */
 const LoginStack = createStackNavigator(
   {
-    AccountPasswordContainer,
+    LoginFormContainer,
     Add2FAWalletContainer,
     AddAdvancedWalletContainer,
     AddEthereumWalletContainer,
@@ -107,7 +107,7 @@ const LoginStack = createStackNavigator(
         title: 'Add an existing account'
       }),
       screen: (props) => {
-        return getLayoutedScreen(AccountImportMethodContainer, { ...props })
+        return getLayoutedScreen(LoginWithOptionsContainer, { ...props })
       }
     },
     'EnterMnemonic': {
@@ -115,7 +115,7 @@ const LoginStack = createStackNavigator(
         title: 'Enter mnemonic key'
       }),
       screen: (props) => {
-        return getLayoutedScreen(EnterMnemonicContainer, { ...props })
+        return getLayoutedScreen(LoginWithMnemonicContainer, { ...props })
       }
     },
     'EnterPrivateKey': {
@@ -139,7 +139,7 @@ const LoginStack = createStackNavigator(
         title: 'New password'
       }),
       screen: (props) => {
-        return getLayoutedScreen(SetAccountPasswordContainer, { ...props })
+        return getLayoutedScreen(CreateAccountContainer, { ...props })
       }
     },
     'EnterPin': {
@@ -172,7 +172,7 @@ const LoginStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'StartScreen',
+    initialRouteName: 'LoginFormContainer',
     navigationOptions: ({ navigation, screenProps }) => ({
       headerTransparent: true,
       headerBackTitle: null,
