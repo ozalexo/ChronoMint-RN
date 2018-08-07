@@ -9,11 +9,9 @@ import com.facebook.react.ReactApplication;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.peel.react.rnos.RNOSModule;
 import com.peel.react.TcpSocketsModule;
-import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.tradle.react.UdpSocketsModule;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -33,11 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SplashScreenReactPackage(),
+          new SplashScreenReactPackage(),
           new RNI18nPackage(),
           new RandomBytesPackage(),
-          new ReactNativeDocumentPicker(),
-          new ReactNativeFingerprintScannerPackage(),
           new RNDeviceInfo(),
           new RNOSModule(),
           new RNSensitiveInfoPackage()

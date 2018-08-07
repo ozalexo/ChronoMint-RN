@@ -151,8 +151,6 @@ dependencies {
     compile project(':react-native-splash-screen')
     compile project(':react-native-randombytes')
     compile project(':react-native-device-info')
-    compile project(':react-native-document-picker')
-    compile project(':react-native-fingerprint-scanner')
     compile project(':react-native-i18n')
     compile project(':react-native-os')
     compile project(':react-native-randombytes')
