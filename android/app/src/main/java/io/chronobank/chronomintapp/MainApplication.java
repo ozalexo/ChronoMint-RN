@@ -12,7 +12,6 @@ import com.facebook.react.ReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.peel.react.rnos.RNOSModule;
 import com.peel.react.TcpSocketsModule;
-import com.reactnativenavigation.NavigationApplication;
 import com.tradle.react.UdpSocketsModule;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -32,11 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SplashScreenReactPackage(),
+          new SplashScreenReactPackage(),
           new RNI18nPackage(),
           new RandomBytesPackage(),
-          new ReactNativeDocumentPicker(),
-          new ReactNativeFingerprintScannerPackage(),
           new RNDeviceInfo(),
           new RNOSModule(),
           new RNSensitiveInfoPackage()
