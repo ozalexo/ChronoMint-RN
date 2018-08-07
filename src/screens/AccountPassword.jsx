@@ -36,7 +36,7 @@ export default class AccountPassword extends PureComponent<TAccountPasswordProps
       onLogin,
       onUseWallet,
     } = this.props
-    
+
     return (
       <View>
         <Separator style={styles.separator} />

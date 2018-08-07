@@ -33,7 +33,7 @@ export default class SelectToken extends PureComponent<TSelectTokenProps, TSelec
       .map( (token) => {
         const symbol = Object.keys(token)[0]
         const amount = token[symbol].amount
-        return { 
+        return {
           symbol,
           amount,
         }
@@ -66,8 +66,8 @@ export default class SelectToken extends PureComponent<TSelectTokenProps, TSelec
 
           <Text
             style={[
-              styles.tokenSelectorLabel, 
-              styles.amountColumn, 
+              styles.tokenSelectorLabel,
+              styles.amountColumn,
               notEnoughAmount,
             ]}
           >
