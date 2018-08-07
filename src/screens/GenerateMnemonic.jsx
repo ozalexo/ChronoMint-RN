@@ -9,6 +9,7 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import I18n from 'react-native-i18n'
 import PrimaryButton from '../components/PrimaryButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TGenerateMnemonicProps = {
   mnemonic: string,
@@ -34,7 +35,7 @@ export default class GenerateMnemonic extends PureComponent<TGenerateMnemonicPro
     } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <Text style={styles.description}>
           {I18n.t('GenerateMnemonic.description')}
         </Text>
@@ -54,7 +55,7 @@ export default class GenerateMnemonic extends PureComponent<TGenerateMnemonicPro
           style={styles.primaryButton}
           onPress={onConfirm}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }

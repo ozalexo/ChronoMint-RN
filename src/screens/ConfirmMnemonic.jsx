@@ -15,6 +15,7 @@ import {
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import PrimaryButton from '../components/PrimaryButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TConfirmMnemonicProps = {
   onDone: () => Promise<void>,
@@ -40,7 +41,7 @@ export default class ConfirmMnemonic extends PureComponent<TConfirmMnemonicProps
     const { mnemonic, words, onDone } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <View style={styles.mnemonicContainer}>
           <Text style={styles.mnemonic}>
             {mnemonic}
@@ -60,7 +61,7 @@ export default class ConfirmMnemonic extends PureComponent<TConfirmMnemonicProps
           label={I18n.t('ConfirmMnemonic.done').toUpperCase()}
           onPress={onDone}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }

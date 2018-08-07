@@ -6,9 +6,9 @@
  */
 
 import React, { PureComponent } from 'react'
-import { StyleSheet, View } from 'react-native'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TEnterPrivateKeyProps = {
   onChangePrivateKey: (privateKey: string) => void,
@@ -23,7 +23,7 @@ export default class EnterPrivateKey extends PureComponent<TEnterPrivateKeyProps
     } = this.props
 
     return (
-      <View style={styles.screenView}>
+      <LoginLayout>
         <Input
           label='Private key'
           onChangeText={onChangePrivateKey}
@@ -32,13 +32,7 @@ export default class EnterPrivateKey extends PureComponent<TEnterPrivateKeyProps
           label='Add account'
           onPress={onDone}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  screenView: {
-    margin: 20
-  }
-})

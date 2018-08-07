@@ -11,13 +11,13 @@ import {
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  View
+  TouchableOpacity
 } from 'react-native'
 import I18n from 'react-native-i18n'
 import PrimaryButton from '../components/PrimaryButton'
 import Separator from '../components/Separator'
 import TextButton from '../components/TextButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TAccount = {
   address: string,
@@ -52,7 +52,7 @@ export default class SelectAccount extends PureComponent<TSelectAccountProps, {}
     } = this.props
 
     return (
-      <View>
+      <LoginLayout>
         <FlatList
           data={accounts}
           ItemSeparatorComponent={CustomizedSeparator}
@@ -73,7 +73,7 @@ export default class SelectAccount extends PureComponent<TSelectAccountProps, {}
           label={I18n.t('SelectAccount.createNew')}
           onPress={onCreateWallet}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }

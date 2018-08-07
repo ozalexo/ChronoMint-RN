@@ -6,9 +6,10 @@
  */
 
 import React, { PureComponent } from 'react'
-import { StyleSheet, FlatList, View } from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import Input from '../components/Input'
 import PrimaryButton from '../components/PrimaryButton'
+import LoginLayout from '../components/LoginLayout'
 
 export type TEnterMnemonicProps = {
   inputsList: Array<any>,
@@ -36,7 +37,7 @@ export default class EnterMnemonic extends PureComponent<TEnterMnemonicProps, {}
     const { inputsList, onLogin } = this.props
 
     return (
-      <View style={styles.screenView}>
+      <LoginLayout>
         <FlatList
           data={inputsList}
           keyExtractor={this.keyExtractor}
@@ -47,7 +48,7 @@ export default class EnterMnemonic extends PureComponent<TEnterMnemonicProps, {}
           label='Log in'
           onPress={onLogin}
         />
-      </View>
+      </LoginLayout>
     )
   }
 }
@@ -57,10 +58,5 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 5,
     marginTop: 20,
-  },
-  screenView: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: 60,
   },
 })

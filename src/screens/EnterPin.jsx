@@ -7,6 +7,7 @@
 
 import React, { PureComponent } from 'react'
 import { StyleSheet, View, TextInput, Platform } from 'react-native'
+import LoginLayout from '../components/LoginLayout';
 
 export type TEnterPinProps = {
   onChangePin: (pin: string) => void,
@@ -33,7 +34,7 @@ export default class EnterPin extends PureComponent<TEnterPinProps, {}> {
       onChangePin,
     } = this.props
     return (
-      <View style={styles.container}>
+      <LoginLayout>
         {
           Array(pinDigitsTotalCount).fill(1).map(this.renderPinDigit)
         }
@@ -44,17 +45,12 @@ export default class EnterPin extends PureComponent<TEnterPinProps, {}> {
           onChangeText={onChangePin}
           keyboardAppearance='dark'
         />
-      </View>
+      </LoginLayout>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: 60,
-  },
   pinDigit: {
     margin: 10,
     width: 20,
