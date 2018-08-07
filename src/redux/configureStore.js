@@ -5,7 +5,7 @@
  * @flow
  */
 
-import * as Immutable from 'immutable'
+import { Map } from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist-immutable'
@@ -15,14 +15,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import coreReducers from '@chronobank/core/redux/ducks'
 import network from '@chronobank/login/redux/network/reducer'
-import { reducer as formReducer } from 'redux-form/immutable'
 import NetworkService from '@chronobank/login/network/NetworkService'
 import ProfileService from '@chronobank/login/network/ProfileService'
 import { DUCK_PERSIST_ACCOUNT } from '@chronobank/core/redux/persistAccount/constants'
 import { DUCK_WALLETS } from '@chronobank/core/redux/wallets/constants'
-import { DUCK_ETH_MULTISIG_WALLET } from '@chronobank/core/redux/multisigWallet/constants'
-import { DUCK_MAIN_WALLET } from '@chronobank/core/redux/mainWallet/constants'
-import transformer from '@chronobank/core-dependencies/serialize'
 import ducks from './ducks'
 import { SESSION_DESTROY } from '../utils/globals'
 
@@ -35,13 +31,12 @@ const ServiceMiddleware = (store) => (next) => (action) => {
 }
 
 const configureStore = () => {
-  const initialState = new Immutable.Map()
+  const initialState = new Map()
 
   const appReducer = combineReducers({
     ...coreReducers,
     ...ducks,
-    network,
-    form: formReducer
+    network
   })
 
   const composeEnhancers = __DEV__ ? composeWithDevTools({ realtime: true }) : compose
@@ -87,7 +82,7 @@ const configureStore = () => {
 
   return createStoreWithMiddleware(
     (state, action) =>
-      appReducer(action.type === SESSION_DESTROY ? new Immutable.Map() : state, action),
+      appReducer(action.type === SESSION_DESTROY ? new Map() : state, action),
     initialState
   )
 }
@@ -95,20 +90,12 @@ const configureStore = () => {
 const store = configureStore()
 export default store
 
-const persistorConfig = {
-  storage: createSensitiveStorage({
-    keychainService: 'ChronoMint',
-    sharedPreferencesName: 'ChronoMint'
-  }),
-  key: 'root',
-  whitelist: [
-    'multisigWallet',
-    DUCK_MAIN_WALLET,
-    DUCK_ETH_MULTISIG_WALLET,
-    DUCK_PERSIST_ACCOUNT,
-    DUCK_WALLETS
-  ],
-  transforms: [transformer()],
-}
-
-persistStore(store, persistorConfig)
+persistStore(store,
+  {
+    storage: createSensitiveStorage({
+      keychainService: 'ChronoMint',
+      sharedPreferencesName: 'ChronoMint'
+    }),
+    whitelist: [DUCK_PERSIST_ACCOUNT, DUCK_WALLETS]
+  }
+)
