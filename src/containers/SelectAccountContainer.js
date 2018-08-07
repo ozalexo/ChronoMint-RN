@@ -6,61 +6,54 @@
  */
 
 import React, { PureComponent } from 'react'
+import { type Dispatch } from 'redux'
+import { connect } from 'react-redux'
 import type {
   NavigationScreenProp,
   NavigationState
 } from 'react-navigation'
 import SelectAccount, { type TAccount } from '../screens/SelectAccount'
-import withLogin from '../components/withLogin'
+import {
+  initImportMethodsPage
+} from '@chronobank/login/redux/network/actions'
 
 type TSelectAccountContainerProps = {
   navigation: NavigationScreenProp<NavigationState>,
   storedAccounts: any,
+  initImportMethodsPage(): void
 }
 
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  initImportMethodsPage: () => dispatch(initImportMethodsPage())
+})
+
 class SelectAccountContainer extends PureComponent<TSelectAccountContainerProps, {}> {
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     headerLeft: (
-  //       <Button
-  //         onPress={navigation.goBack()}
-  //         title='+1'
-  //         color='#fff'
-  //       />
-  //     )
-  //   }
-  // }
 
   handleCreateWallet = () => {
     this.props.navigation.navigate('SetAccountPassword')
   }
 
   handleImportAccount = () => {
+    this.props.initImportMethodsPage()
     this.props.navigation.navigate('AccountImportMethod')
-    // this.props.navigator.push({
-    //   screen: 'AccountImportMethod',
-    //   title: I18n.t('ImportAccount.title')
-    // })
   }
 
   handleSelectAccount = (account: TAccount) => () => {
-    this.props.navigator.push({
-      screen: 'AccountPassword',
-      title: 'Enter account password',
-      passProps: {
-        account
-      }
-    })
+    this.props.navigation.navigate('AccountPassword', { account })
   }
 
   render () {
-    return (<SelectAccount
-      accounts={this.props.storedAccounts.toArray()}
-      onCreateWallet={this.handleCreateWallet}
-      onImportAccount={this.handleImportAccount}
-      onSelectAccount={this.handleSelectAccount}
-    />)
+    const accountList = this.props.storedAccounts
+    const accounts = accountList ? accountList.toArray() : []
+    return (
+      <SelectAccount
+        accounts={accounts}
+        onCreateWallet={this.handleCreateWallet}
+        onImportAccount={this.handleImportAccount}
+        onSelectAccount={this.handleSelectAccount}
+      />
+    )
   }
 }
 
-export default withLogin(SelectAccountContainer)
+export default connect(null, mapDispatchToProps)(SelectAccountContainer)

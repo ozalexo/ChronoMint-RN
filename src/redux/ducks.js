@@ -5,18 +5,10 @@
  * @flow
  */
 
-import { default as Core } from '@chronobank/core/redux/ducks'
-import network from '@chronobank/login/redux/network/reducer'
-import * as sensitive from './sensitive'
+import sensitive from './sensitive/reducer'
 
-import { type TStateSensitive } from './sensitive/reducer'
-
-export default {
-  network,
-  sensitive,
-  ...Core
+const appReducers = {
+  sensitive
 }
 
-export type TState = {} | {
-  sensitive: TStateSensitive
-}
+export default appReducers
