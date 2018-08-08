@@ -54,28 +54,31 @@ class EnterPrivateKeyContainer extends PureComponent<TEnterPrivateKeyContainerPr
     } = this.state
 
     const address = getAddressByPrivateKey(privateKey)
-    this.props.fetchPersonInfo([address])
-      .then(res => {
-        // TODO: need to check that res.status is equal 200 etc. Or it is better to check right in fetchPersonInfo.
-        return res.data
+
+    const onSuccess = (personInfo) => {
+      const profile = personInfo[0]
+      const accountProfile = profile && profile.userName
+        ? new AccountProfileModel(profile)
+        : null
+      this.props.personInfoFetchSuccess(accountProfile)
+      this.props.navigation.navigate('SetAccountPassword', {
+        isCreatingNewWallet: false,
+        title: 'Set Account Password',
+        privateKey,
+        accountProfile
       })
-      .then((personInfo) => {
-        this.props.personInfoFetchSuccess(personInfo)
-        const profile = personInfo[0]
-        const accountProfile = profile && profile.userName
-          ? new AccountProfileModel(profile)
-          : null
-        this.props.navigation.navigate('SetAccountPassword', {
-          isCreatingNewWallet: false,
-          title: 'Set Account Password',
-          privateKey,
-          accountProfile
-        })
-      })
-      .catch((error) => {
-        // TODO: need to handle it somehow. Right now we will just stay on this screen.
-        this.props.personInfoFetchFail(error)
-      })
+    }
+
+    const onError = (error) => {
+      if (error && (!error.code || error.code !== 'FETCHING_IN_PROGRESS')) {
+        console.log('Error: failed to get profile info')
+      }
+      // TODO: need to handle it somehow. Right now we will just stay on this screen.
+    }
+
+    this.props.fetchPersonInfo([address], onSuccess)
+      .then(onSuccess)
+      .catch(onError)
   }
 
   render () {
