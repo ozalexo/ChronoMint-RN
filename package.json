@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/runtime": "^7.0.0-beta.54",
     "@chronobank/core": "*",
+    "@chronobank/auth": "*",
     "@chronobank/core-dependencies": "*",
     "@chronobank/login": "*",
     "D": "^1.0.0",
