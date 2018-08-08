@@ -1,0 +1,7 @@
+{
+  "name": "@chronobank/auth",
+  "version": "1.0.0",
+  "dependencies": {
+    "redux-actions": "2.6.1"
+  }
+}

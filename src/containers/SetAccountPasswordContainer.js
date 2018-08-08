@@ -17,13 +17,15 @@ import SetAccountPassword from '../screens/SetAccountPassword'
 let lastAccount = false
 
 type TSetAccountPasswordContainerProps = {
-  generateMnemonic: () => void,
+  accountProfile: any,
   isCreatingNewWallet?: boolean,
-  mnemonic: any,
   lastAccount: any,
+  mnemonic: any,
   navigation: NavigationScreenProp<NavigationState>,
+  navigationOptions: any,
+  privateKey: string,
   privateKey?: string,
-  navigationOptions: any
+  generateMnemonic: () => void
 }
 
 type TSetAccountPasswordContainerState = {
@@ -63,6 +65,17 @@ class SetAccountPasswordContainer extends PureComponent<TSetAccountPasswordConta
     if (!isValid.password(password) || !isValid.password(passwordConfirmation)) {
       return this.addError(I18n.t('SetAccountPassword.invalidPassword'))
     }
+
+    let wallet = dispatch(PersistAccountActions.createAccount({
+      name: '', // name. Not used in RN
+      password,
+      mnemonic,
+      privateKey,
+      numberOfAccounts: 0, // Good.
+    }))
+
+    dispatch(PersistAccountActions.accountAdd(wallet))
+    dispatch(PersistAccountActions.accountSelect(wallet))
 
     navigation.navigate('WalletBackup', {
       usePinProtection: false,

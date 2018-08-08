@@ -15,6 +15,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createLogger } from 'redux-logger'
 import coreReducers from '@chronobank/core/redux/ducks'
 import network from '@chronobank/login/redux/network/reducer'
+import auth from '@chronobank/auth/reducers'
 import NetworkService from '@chronobank/login/network/NetworkService'
 import ProfileService from '@chronobank/login/network/ProfileService'
 import { DUCK_PERSIST_ACCOUNT } from '@chronobank/core/redux/persistAccount/constants'
@@ -36,7 +37,8 @@ const configureStore = () => {
   const appReducer = combineReducers({
     ...coreReducers,
     ...ducks,
-    network
+    network,
+    auth
   })
 
   const composeEnhancers = __DEV__ ? composeWithDevTools({ realtime: true }) : compose

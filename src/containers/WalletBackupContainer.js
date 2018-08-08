@@ -6,20 +6,27 @@
  */
 
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import type {
   NavigationScreenProp,
   NavigationState
 } from 'react-navigation'
-import withLogin, { type TWithLoginProps } from '../components/withLogin'
+import type { Dispatch } from 'redux'
+import { login } from '@chronobank/core/redux/session/actions'
 import WalletBackup from '../screens/WalletBackup'
 
-type TWalletBackupContainerProps = TWithLoginProps & {
+type TWalletBackupContainerProps = {
   isCreatingNewWallet?: boolean,
   mnemonic: string,
   privateKey?: string,
   navigation: NavigationScreenProp<NavigationState>,
   password: string,
+  login(account: any): void,
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  login: (account) => dispatch(login(account, false))
+})
 
 class WalletBackupContainer extends PureComponent<TWalletBackupContainerProps, {}> {
   handleDone = () => {
@@ -51,7 +58,7 @@ class WalletBackupContainer extends PureComponent<TWalletBackupContainerProps, {
       })
     }
 
-    onLogin()
+    this.login()
   }
 
   render () {
@@ -66,4 +73,4 @@ class WalletBackupContainer extends PureComponent<TWalletBackupContainerProps, {
   }
 }
 
-export default withLogin(WalletBackupContainer)
+export default connect(null, mapDispatchToProps)(WalletBackupContainer)
