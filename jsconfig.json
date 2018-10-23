@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react-native",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
+    "baseUrl": "."
   },
   "exclude": [
     "node_modules"

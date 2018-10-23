@@ -3,7 +3,6 @@
  * Licensed under the AGPL Version 3 license.
  *
  * @format
- * @flow
  */
 
 import React, { Component } from 'react'

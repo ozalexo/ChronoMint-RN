@@ -52,7 +52,6 @@ module.exports = {
   getProjectRoots () {
     return [
       __dirname,
-      path.resolve(fs.realpathSync('node_modules/@chronobank/core-dependencies')),
       path.resolve(fs.realpathSync('node_modules/@chronobank/core')),
       path.resolve(fs.realpathSync('node_modules/@chronobank/login'))
     ]

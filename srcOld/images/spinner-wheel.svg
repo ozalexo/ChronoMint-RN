@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="80px" height="80px" viewBox="0 0 80 80" enable-background="new 0 0 80 80" xml:space="preserve">
-<path fill="#FFFFFF" d="M0,40c0,22.091,17.909,40,40,40s40-17.909,40-40S62.091,0,40,0l0,0v8c17.645,0,32,14.355,32,32
-	S57.645,72,40,72S8,57.645,8,40H0z"/>
-	<animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 0 0;360 0 0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform>
-</svg>

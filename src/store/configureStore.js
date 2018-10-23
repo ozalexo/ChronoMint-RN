@@ -5,13 +5,10 @@
 
 import { applyMiddleware, compose, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/logOnly'
-import { connectRouter } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
 import { persistStore } from 'redux-persist'
 import getMiddlewares from './middlewares'
 import rootReducer from './rootReducer'
-
-const initialState = {}
+import initialState from './initialState'
 
 const configureStore = () => {
   const isDevelopmentEnv = process.env.NODE_ENV === 'development'
@@ -19,23 +16,21 @@ const configureStore = () => {
     ? composeWithDevTools({ realtime: true })
     : compose
 
-  const history = createBrowserHistory()
-
-  const middleware = getMiddlewares(history)
+  const middleware = getMiddlewares()
 
   const createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(...middleware)
   )(createStore)
 
   const store = createStoreWithMiddleware(
-    connectRouter(history)(rootReducer),
-    initialState,
+    rootReducer,
+    initialState
   )
 
   const persistor = persistStore(store)
 
   store.persistor = persistor
-  return { store, history, persistor }
+  return { store, persistor }
 }
 
 export default configureStore

@@ -54,7 +54,3 @@ buck-out/
 
 google-play-api-secret.json
 .vscode
-
-# Flow-typed
-#
-flow-typed
