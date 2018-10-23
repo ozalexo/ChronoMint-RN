@@ -2,97 +2,51 @@
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
  *
+ * @format
  * @flow
  */
-import { Navigation } from 'react-native-navigation'
-import { Provider } from 'react-redux'
-import './utils/i18n'
-import './utils/shim'
-import store, { injectReducer } from './redux/configureStore'
-import registerScreens from './registerScreens'
 
-// Listen for unhandled promise rejections
-window.onunhandledrejection = function (promise, reason) {
-  // eslint-disable-next-line no-console
-  console.log('%c window.onunhandledrejection', 'background: #222; color: red', promise, reason)
-}
+import React, { Component } from 'react'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 
-registerScreens(store, Provider)
+const instructions = Platform.select({
+  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+  android:
+    'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu'
+})
 
-let currentRoot = ''
-
-export default function startAppRoot (root: string): Promise<void> {
-  if (currentRoot === root) return
-
-  currentRoot = root
-
-  switch (root) {
-    case 'wallet': return Navigation.startSingleScreenApp({
-      screen: {
-        screen: 'WalletsList',
-      },
-      appStyle: {
-        disabledBackGesture: true,
-        hideBackButtonTitle: true,
-        navBarBackgroundColor: '#614DBA',
-        navBarButtonColor: '#FFFFFF',
-        navBarTextColor: '#BDB2FF',
-        screenBackgroundColor: '#242045',
-        statusBarTextColorScheme: 'light',
-      },
-      drawer: {
-        left: {
-          screen: 'Drawer',
-        },
-        animationType: 'parallax',
-        disableOpenGesture: true,
-      },
-    })
-    case 'login':
-    default: return Navigation.startSingleScreenApp({
-      screen: {
-        screen: 'SetAccountPassword',
-        navigatorStyle: {
-          navBarHidden: true,
-        },
-      },
-      passProps: {
-        isCreatingNewWallet: true,
-      },
-      appStyle: {
-        disabledBackGesture: true,
-        drawUnderNavBar: true,
-        hideBackButtonTitle: true,
-        navBarButtonColor: '#FFFFFF',
-        navBarNoBorder: true,
-        navBarTextColor: '#BDB2FF',
-        navBarTextFontSize: 16,
-        navBarTranslucent: true,
-        navBarTransparent: true,
-        screenBackgroundColor: '#242045',
-        statusBarTextColorScheme: 'light',
-        topBarElevationShadowEnabled: false,
-      },
-      drawer: {
-        left: {
-          screen: 'SelectNetwork',
-        },
-        right: {
-          screen: 'SelectLanguage',
-        },
-        animationType: 'parallax',
-        disableOpenGesture: true,
-        style: {
-          drawerShadow: false,
-          leftDrawerWidth: 75,
-          rightDrawerWidth: 75,
-        },
-      },
-    })
+export default class App extends Component {
+  render () {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.instructions}>To get started, edit App.js. Test fat arrow:</Text>
+        <Text style={styles.instructions}>{instructions}</Text>
+      </View>
+    )
   }
 }
 
-startAppRoot('login').then(() => {
-  injectReducer(require('./redux/ducks'))
-  require('./init')
+module.hot.accept(() => {
+  console.log('APP changed')
+})
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5
+  }
 })
