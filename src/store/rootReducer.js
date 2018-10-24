@@ -7,9 +7,9 @@ import { combineReducers } from 'redux'
 
 import { DUCK_MARKET } from '@chronobank/market/redux/constants'
 import marketReducer from '@chronobank/market/redux/reducers'
-import coreReducers from '@chronobank/core/redux/reducers'
+// import coreReducers from '@chronobank/core/redux/reducers'
 
 export default combineReducers({
-  [DUCK_MARKET]: marketReducer,
-  ...coreReducers
+  [DUCK_MARKET]: marketReducer
+  // ...coreReducers
 })
