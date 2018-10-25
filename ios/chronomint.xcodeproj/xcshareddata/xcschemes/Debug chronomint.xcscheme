@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "chronomint.app"
+               BuildableName = "ChronoMint.app"
                BlueprintName = "chronomint"
-               ReferencedContainer = "container:chronomint.xcodeproj">
+               ReferencedContainer = "container:ChronoMint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "chronomintTests.xctest"
                BlueprintName = "chronomintTests"
-               ReferencedContainer = "container:chronomint.xcodeproj">
+               ReferencedContainer = "container:ChronoMint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -63,7 +63,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "chronomintTests.xctest"
                BlueprintName = "chronomintTests"
-               ReferencedContainer = "container:chronomint.xcodeproj">
+               ReferencedContainer = "container:ChronoMint.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "chronomint.app"
+            BuildableName = "ChronoMint.app"
             BlueprintName = "chronomint"
-            ReferencedContainer = "container:chronomint.xcodeproj">
+            ReferencedContainer = "container:ChronoMint.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "chronomint.app"
+            BuildableName = "ChronoMint.app"
             BlueprintName = "chronomint"
-            ReferencedContainer = "container:chronomint.xcodeproj">
+            ReferencedContainer = "container:ChronoMint.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "chronomint.app"
+            BuildableName = "ChronoMint.app"
             BlueprintName = "chronomint"
-            ReferencedContainer = "container:chronomint.xcodeproj">
+            ReferencedContainer = "container:ChronoMint.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
