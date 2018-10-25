@@ -1,5 +1,7 @@
 {
   "name": "chronomint",
+  "author": "chronobank",
+  "license": "AGPL-3.0",
   "version": "0.0.1",
   "private": true,
   "scripts": {
