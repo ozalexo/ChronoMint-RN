@@ -62,10 +62,12 @@ Recommended software:
     ```
 7. "Solve" one of [known issues](https://github.com/react-native-community/react-native-releases/blob/master/CHANGELOG.md#known-issues) (using XCode 10 and `react-native init`)
     ```bash
-    cd node_modules/react-native
-    scripts/ios-install-third-party.sh
-    cd third-party/glog-0.3.5/
+    ROOT_PWD=$(pwd)
+    cd ./node_modules/react-native
+    ./scripts/ios-install-third-party.sh
+    cd ./third-party/glog-0.3.5/
     ../../scripts/ios-configure-glog.sh
+    cd $ROOT_PWD
     ```
     Note: this operation is automated by postinstall command in package.json and ./scripts/postinstall.sh
 
@@ -193,6 +195,9 @@ Recommended software:
 
 * https://medium.com/handlebar-labs/how-to-add-a-splash-screen-to-a-react-native-app-ios-and-android-30a3cec835ae
 * https://github.com/crazycodeboy/react-native-splash-screen
+* For Android we need to modify third-party react-native-* packages according to [](https://developer.android.com/studio/build/dependencies?utm_source=android-studio#dependency_configurations)
+* Please find details [here](./PATCHPACKAGE.md)
+
 
 ### Solved/Not solved issues
 - [x] iOS: [XCode 10 and third-party dependencies](https://github.com/react-native-community/react-native-releases/blob/master/CHANGELOG.md#known-issues)
@@ -208,7 +213,7 @@ Recommended software:
     ![screenshot 2018-10-26 at 01 45 37](https://user-images.githubusercontent.com/661889/47534744-35574680-d8c1-11e8-8b72-6c83b23654d9.png)
     Solved by reconfigure Babel and add `--reset-cache` option to Storybook's launch command.  
     Also see https://github.com/facebook/react-native/issues/21048
-- [ ] XCode build error
+- [x] XCode build error
     ![screenshot 2018-10-26 at 02 13 38](https://user-images.githubusercontent.com/661889/47535632-08a52e00-d8c5-11e8-8f18-fea7ecab5087.png)
     Solved with:
     * File -> Project Settings... -> Advanced
