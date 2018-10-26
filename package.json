@@ -2,10 +2,12 @@
   "name": "chronomint",
   "version": "0.0.1",
   "private": true,
+  "author": "chronobank",
+  "license": "AGPL-3.0",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall" : "./scripts/postinstall.sh",
+    "postinstall": "bash -c './scripts/postinstall.sh' && yarn patch-package",
     "storybook": "storybook start -p 7007 --skip-packager | react-native start --reset-cache --projectRoot storybook"
   },
   "dependencies": {
@@ -45,6 +47,8 @@
     "babel-runtime": "^6.26.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
+    "patch-package": "^5.1.1",
+    "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.6.2",
     "react-dom": "16.6.0-alpha.8af6728",
     "react-test-renderer": "16.6.0-alpha.8af6728"
