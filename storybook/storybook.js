@@ -20,5 +20,5 @@ class StorybookUIHMRRoot extends Component {
   }
 }
 
-AppRegistry.registerComponent('chronomint', () => StorybookUIHMRRoot);
+AppRegistry.registerComponent('ChronoMint', () => StorybookUIHMRRoot);
 export default StorybookUIHMRRoot;
