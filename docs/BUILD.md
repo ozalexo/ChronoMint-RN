@@ -158,38 +158,7 @@ Recommended software:
 
 ### Intergating [StoryBook](https://github.com/storybooks/storybook)
 
-1. Add new development dependency:
-    ```bash
-    yarn add -D @storybook/cli
-    ```
-2. Initialize [StoryBook](https://github.com/storybooks/storybook)
-    ```bash
-    ./node_modules/.bin/getstorybook
-    ```
-3. Modify `package.json` to get it work right  
-    Replace
-    ```json
-    "storybook": "storybook start -p 7007"
-    ```
-    to
-    ```json
-    "storybook": "storybook start -p 7007 --skip-packager | react-native start --reset-cache --projectRoot storybook"
-    ```
-4. Now we can launch it
-    * Terminal 1:
-        ```bash
-        yarn run storybook
-        ```
-    * Terminal 2 (or just lauch the App via XCode/Android Studio):
-        ```bash
-        react-native run-ios
-        ```
-        or/and
-        ```bash
-        react-native run-android
-        ```
-5. Should looks like this
-    ![screenshot 2018-10-26 at 02 23 28](https://user-images.githubusercontent.com/661889/47535871-2626c780-d8c6-11e8-8082-04cbcc917068.png)
+See [STORYBOOK.md](./STORYBOOK.md)
 
 ### SplashScreen
 
