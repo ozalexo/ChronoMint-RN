@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PrimaryButton from '../../../../src/components/PrimaryButton';
-console.log('PrimaryButton', PrimaryButton)
 export default Button = ({ onPress, label }) => {
   return (
     <PrimaryButton onPress={onPress} label='Test label' />
@@ -10,7 +9,7 @@ export default Button = ({ onPress, label }) => {
 
 Button.defaultProps = {
   label: 'Test label',
-  onPress: () => {},
+  onPress: () => { },
 };
 
 Button.propTypes = {
