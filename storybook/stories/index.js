@@ -8,7 +8,9 @@ import { linkTo } from '@storybook/addon-links';
 import Button from './Button';
 import CenterView from './CenterView';
 import Welcome from './Welcome';
+import Separator from './Separator';
 import TextButton from './Buttons/TextButton';
+import PrimaryButton from './Buttons/PrimaryButton';
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -20,6 +22,7 @@ storiesOf('Components/Buttons', module)
   } })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('TextButton', TextButton)
+  .add('PrimaryButton', PrimaryButton)
   .add('with text1', () => (
     <Button onPress={action('clicked-text')}>
       <Text>Hello Button</Text>
@@ -31,19 +34,10 @@ storiesOf('Components/Buttons', module)
     </Button>
   ));
 
-storiesOf('Components/Inputs', module)
+storiesOf('Components/Separator', module)
   .addParameters({ options: {
     hierarchySeparator: /\//,
     hierarchyRootSeparator: /\|/,
   } })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('with text2', () => (
-    <Button onPress={action('clicked-text')}>
-      <Text>Hello Button</Text>
-    </Button>
-  ))
-  .add('with some emoji', () => (
-    <Button onPress={action('clicked-emoji')}>
-      <Text>😀 😎 👍 💯</Text>
-    </Button>
-  ));
+  .add('Separator', Separator)
