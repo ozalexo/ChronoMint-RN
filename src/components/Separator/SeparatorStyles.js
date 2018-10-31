@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native'
-import colors from '../../utils/colors';
+import colors from '../../common/colors';
 
 export default StyleSheet.create({
     separator: {
@@ -11,3 +11,4 @@ export default StyleSheet.create({
       alignSelf: 'stretch'
     }
   })
+  
