@@ -5,6 +5,7 @@
 
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
+import PropTypes from 'prop-types'
 import styles from './TextButtonStyles'
 
 export default class TextButton extends React.Component {
@@ -27,3 +28,9 @@ export default class TextButton extends React.Component {
     )
   }
 }
+
+TextButton.propTypes ={
+  onPress: PropTypes.func,
+  label: PropTypes.string,
+  style: PropTypes.object,
+};

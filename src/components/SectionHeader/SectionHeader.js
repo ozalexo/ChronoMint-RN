@@ -5,17 +5,11 @@
  * @flow
  */
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import type { StyleObj } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import styles from './SectionHeaderStyles';
+import { View, Text } from 'react-native'
+import PropTypes from 'prop-types'
+import styles from './SectionHeaderStyles'
 
-type SectionHeaderProps = {
-  title: string,
-  isDark?: boolean,
-  style?: StyleObj,
-}
-
-export default class SectionHeader extends React.Component<SectionHeaderProps, void> {
+export default class SectionHeader extends React.Component {
   render () {
     const { title, isDark = false, style } = this.props
 
@@ -36,3 +30,10 @@ export default class SectionHeader extends React.Component<SectionHeaderProps, v
     )
   }
 }
+
+SectionHeader.propTypes = {
+  title: PropTypes.string,
+  isDark: PropTypes.bool,
+  style: PropTypes.object,
+};
+
