@@ -4438,9 +4438,11 @@ dom-converter@~0.2:
     utila "~0.4"
 
 dom-helpers@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
-  integrity sha512-2Sm+JaYn74OiTM2wHvxJOo3roiq/h25Yi69Fqk269cNUwIXsCvATB6CRSFC9Am/20G2b28hGv/+7NiWydIrPvg==
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
+  integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
 
 dom-serializer@0:
   version "0.1.0"
@@ -4628,9 +4630,9 @@ entities@~1.1.1:
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
 envinfo@^5.7.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-5.11.0.tgz#0eb97683e4225c93ce029e4be3c90acd0c4b09d4"
-  integrity sha512-NnWUQbKHZSG5rJSUn18+K6l1gh8jG67xQR1gt9v1rcHf2MEOPKAMzk37Ii/Va9MHWJ/RlLCzPFU/TXvlQydp6Q==
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-5.11.1.tgz#a1c2cb55196931b2ac6d4110fa7f0003697ad9df"
+  integrity sha512-rmEr5fZLYYSRCj3kDhriz6ju/oMgEzC92MwF3mggFba2EMjK+CUE13MQo17Ua2CDT+KFFPAGFosodUoL/wxjug==
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
@@ -6064,6 +6066,11 @@ hyphenate-style-name@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
   integrity sha1-MRYKNpMK2vH8BMYHT360FGXU7Es=
+
+i18n-js@3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.0.11.tgz#f9e96bdb641c5b9d6be12759d7c422089987ef02"
+  integrity sha512-v7dG3kYJTQTyox3NqDabPDE/ZotWntyMI9kh4cYi+XlCSnsIR+KBTS2opPyObL8WndnklcLzbNU92FP/mLge3Q==
 
 iconv-lite@0.4.23:
   version "0.4.23"
@@ -9360,6 +9367,13 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-i18n@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/react-native-i18n/-/react-native-i18n-2.0.15.tgz#09b5a9836116fa7dbd0054c46e2d1014c1ef3c65"
+  integrity sha512-V8VwUP0TLda3oJvgt5tdnFaOV7WXPhTjCTLO7sXI3C2SHggSbD4bCUryMzNJhesimJidH21V2Owvj4zAylHoQQ==
+  dependencies:
+    i18n-js "3.0.11"
+
 react-native-safe-area-view@0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.11.0.tgz#4f3dda43c2bace37965e7c6aef5fc83d4f19d174"
@@ -9397,9 +9411,9 @@ react-native-tab-view@^1.0.0:
     prop-types "^15.6.1"
 
 react-native-web@^0.9.5:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.9.5.tgz#3ecc28a2cd508608802230d2b6a243c78d2e66d1"
-  integrity sha512-3D0uzJGv15JWYcSgMS9H/g5oqKjitaulba4xKEuf3TXz2ikVfB6O2VhZQJYJmHM0LAZZhDDX8KgfNG0GIL3ZQg==
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.9.6.tgz#d51073963582b76775bcdff328aeee0fca807c99"
+  integrity sha512-i0tN/UCLNgsoFkoJOxCtW92L07A5XIJe6p2tlqF3/gdgBL4HK5m63fhc1Ywr1OoU/YJ59/Dnwz1VE/lak5ar3w==
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
