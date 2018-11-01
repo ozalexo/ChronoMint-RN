@@ -34,6 +34,5 @@ export default class SectionHeader extends React.Component {
 SectionHeader.propTypes = {
   title: PropTypes.string,
   isDark: PropTypes.bool,
-  style: PropTypes.object,
 };
 

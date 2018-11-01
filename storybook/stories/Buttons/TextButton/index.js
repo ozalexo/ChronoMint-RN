@@ -15,5 +15,4 @@ Button.defaultProps = {
 
 Button.propTypes = {
   children: PropTypes.node,
-  onPress: PropTypes.func,
 };

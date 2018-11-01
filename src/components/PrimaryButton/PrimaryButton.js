@@ -30,5 +30,4 @@ export default class PrimaryButton extends React.Component {
 
 PrimaryButton.propTypes ={
   label: PropTypes.string,
-  style: PropTypes.object,
 };

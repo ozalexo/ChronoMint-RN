@@ -28,11 +28,6 @@ storiesOf('Components/Buttons', module)
   .add('TextButton', TextButton)
   .add('PrimaryButton', PrimaryButton)
   .add('Button', Button)  
-  .add('with some emoji', () => (
-    <Button onPress={action('clicked-emoji')}>
-      <Text>😀 😎 👍 💯</Text>
-    </Button>
-  ));
 
 storiesOf('Components/Separator', module)
   .addParameters({
