@@ -3,8 +3,7 @@ import { TextInput, StyleSheet } from 'react-native';
 export default StyleSheet.create({
     input: {
       borderBottomWidth: StyleSheet.hairlineWidth,
-      width: '80%',
-      minWidth: 100,
+      width: '100%',
       alignItems: 'center',
       borderBottomColor: '#9997B2',
       paddingVertical: 10,

@@ -5,6 +5,7 @@
 
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
+import PropTypes from 'prop-types'
 import styles from './PrimaryButtonStyles'
 
 export default class PrimaryButton extends React.Component {
@@ -26,3 +27,8 @@ export default class PrimaryButton extends React.Component {
     )
   }
 }
+
+PrimaryButton.propTypes ={
+  label: PropTypes.string,
+  style: PropTypes.object,
+};

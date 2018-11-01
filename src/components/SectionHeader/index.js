@@ -3,5 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import SectionHeader from './SectionHeader';
-export default SectionHeader;
+export default from './SectionHeader';
