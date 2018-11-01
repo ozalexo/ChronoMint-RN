@@ -15,7 +15,7 @@ export default class TextButton extends React.Component {
       <TouchableOpacity
         style={[
           styles.container,
-          style
+          style,
         ]}
         onPress={onPress}
         {...restProps}

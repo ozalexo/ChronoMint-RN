@@ -27,6 +27,14 @@
 | [Yarn](https://yarnpkg.com)                             | 1.10.1          |
 | [React Native](https://facebook.github.io/react-native) | 0.57.4          |
 
+NPM global packages
+
+* To be able to use command `react-native run-ios` with real device NPM package `ios-deploy` must be installed globally
+    ```
+    yarn global add ios-deploy
+    ```
+
+
 Recommended software:
 * [iTerm2](https://www.iterm2.com/) (better than default Terminal)
 * [GitKraken](https://www.gitkraken.com/) (sometimes it is useful)

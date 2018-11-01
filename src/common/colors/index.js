@@ -3,6 +3,9 @@
  * Licensed under the AGPL Version 3 license.
  */
 
+// Got this color from prototype https://test.chronobank.io/iOS/ (element '<head>')
+export const backgroundColor = '#242045'
+
 export default {
   activeBlue: '#5F4CBA',
   mainGrey: '#333333', // duplicated foreground, according to style-guide
@@ -10,6 +13,7 @@ export default {
   greySubLight: '#BFBFBF',
 
   background: '#FBFBFE',
+  backgroundColor,
   backgroundLight: '#FFFFFF',
   backgroundDark: '#CCCCDF',
   backgroundDim: 'rgba(255, 255, 255, .1)',

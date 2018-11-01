@@ -8,11 +8,11 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   container: {
     padding: 20,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   label: {
     color: '#ffffff',
     fontWeight: '900',
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 })

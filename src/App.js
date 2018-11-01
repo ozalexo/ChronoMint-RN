@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, StatusBar} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import DefaultImageBackground from './common/ImageBackground'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -25,15 +26,17 @@ export default class App extends Component<Props> {
 
   render () {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          barStyle='light-content'
-          backgroundColor='#2A2950'
-        />
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <DefaultImageBackground>
+        <View style={styles.container}>
+          <StatusBar
+            barStyle='light-content'
+            backgroundColor='#2A2950'
+          />
+          <Text style={styles.welcome}>Welcome to React Native!</Text>
+          <Text style={styles.instructions}>To get started, edit App.js</Text>
+          <Text style={styles.instructions}>{instructions}</Text>
+        </View>
+      </DefaultImageBackground>
     );
   }
 }
@@ -43,7 +46,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2A2950',
   },
   welcome: {
     fontSize: 20,
