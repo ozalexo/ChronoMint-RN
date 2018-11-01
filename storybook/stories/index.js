@@ -67,3 +67,4 @@ storiesOf('Components/Section Header', module)
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('SectionHeader', SectionHeader)
+  

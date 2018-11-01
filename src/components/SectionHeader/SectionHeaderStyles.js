@@ -20,3 +20,4 @@ export default StyleSheet.create({
       borderBottomColor: '#C7C7CC'
     }
   })
+  
