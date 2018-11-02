@@ -11,11 +11,12 @@ const Button = ({ onPress, label }) => {
 Button.defaultProps = {
   label: 'Test label',
   onPress: () => {},
-};
+}
 
 Button.propTypes = {
   children: PropTypes.node,
   onPress: PropTypes.func,
+  label: PropTypes.string,
 }
 
 export default Button

@@ -2,7 +2,7 @@
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
  *
- * @flow
+ * 
  */
 import * as React from 'react'
 import { View, Text } from 'react-native'
@@ -15,14 +15,14 @@ export default class SectionHeader extends React.Component {
 
     if (isDark) {
       return (
-        <Text style={[ styles.titleDark, style ]}>
+        <Text style={[styles.titleDark, style]}>
           {title.toUpperCase()}
         </Text>
       )
     }
 
     return (
-      <View style={[ styles.container, style ]}>
+      <View style={[styles.container, style]}>
         <Text style={styles.title}>
           {title.toUpperCase()}
         </Text>
@@ -34,5 +34,5 @@ export default class SectionHeader extends React.Component {
 SectionHeader.propTypes = {
   title: PropTypes.string,
   isDark: PropTypes.bool,
-};
+}
 

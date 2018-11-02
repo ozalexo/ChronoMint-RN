@@ -5,34 +5,34 @@
  */
 
 import {
-    StyleSheet,
+  StyleSheet,
 } from 'react-native'
 import colors from '../../common/colors'
 
 export default StyleSheet.create({
-    feeSliderContainer: {
-        marginHorizontal: 20,
-        marginVertical: 30,
-    },
-    feeSliderLabel: {
-        bottom: -8,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    feeSliderLabelText: {
-        color: colors.foreground,
-        fontSize: 16,
-    },
-    feeSliderDetailsContainer: {
-        flexDirection: 'column',
-    },
-    feeSliderDetails: {
-        color: colors.foreground,
-        fontSize: 14,
-        fontWeight: '200',
-        marginTop: 8,
-    },
-    feeSliderDetailsBold: {
-        fontWeight: '700',
-    },
+  feeSliderContainer: {
+    marginHorizontal: 20,
+    marginVertical: 30,
+  },
+  feeSliderLabel: {
+    bottom: -8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  feeSliderLabelText: {
+    color: colors.foreground,
+    fontSize: 16,
+  },
+  feeSliderDetailsContainer: {
+    flexDirection: 'column',
+  },
+  feeSliderDetails: {
+    color: colors.foreground,
+    fontSize: 14,
+    fontWeight: '200',
+    marginTop: 8,
+  },
+  feeSliderDetailsBold: {
+    fontWeight: '700',
+  },
 })

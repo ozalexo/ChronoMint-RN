@@ -44,7 +44,7 @@ const Label = (props) => {
     </Text>
   )
 }
-Label.propTypes ={
+Label.propTypes = {
   label: PropTypes.string,
   isDark: PropTypes.bool
 }

@@ -2,7 +2,7 @@
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
  *
- * @flow
+ * 
  */
 import React from 'react'
 import { View, Text } from 'react-native'
@@ -13,7 +13,7 @@ import styles from './FetchingIndicatorStyles'
 export const STATUS = {
   'FETCHING': 'FETCHING',
   'SYNCING': 'SYNCING',
-  'SYNCED': 'SYNCED'
+  'SYNCED': 'SYNCED',
 }
 
 const FetchingIndicator = (props) => {
@@ -22,7 +22,7 @@ const FetchingIndicator = (props) => {
   const bulletStyle = {
     [STATUS.FETCHING]: styles.bulletFetching,
     [STATUS.SYNCING]: styles.bulletSyncing,
-    [STATUS.SYNCED]: styles.bulletSynced
+    [STATUS.SYNCED]: styles.bulletSynced,
   }[status]
 
   return (
@@ -33,16 +33,16 @@ const FetchingIndicator = (props) => {
   )
 }
 
-FetchingIndicator.propTypes ={
-    status: PropTypes.oneOf(['FETCHING', 'SYNCING', 'SYNCED']),
-    style: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.object
-      ]),
+FetchingIndicator.propTypes = {
+  status: PropTypes.oneOf(['FETCHING', 'SYNCING', 'SYNCED']),
+  style: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object,
+  ]),
 }
 
 FetchingIndicator.defaultProps = {
-  status: STATUS.FETCHING
+  status: STATUS.FETCHING,
 }
 
 export default FetchingIndicator

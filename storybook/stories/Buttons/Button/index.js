@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../../../src/components/Button'
 
-export default ButtonStory = ({ label, icon, isDark, isDisabled, handlePress, iconPosition }) => {
+const ButtonStory = ({ label, icon, isDark, isDisabled, handlePress, iconPosition }) => {
   return (
     <Button
-      label={'Test Label'}
+      label={label}
       icon={icon}
       isDark={isDark}
       isDisabled={isDisabled}
@@ -36,3 +36,5 @@ ButtonStory.propTypes = {
   ]),
   iconPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
 }
+
+export default ButtonStory

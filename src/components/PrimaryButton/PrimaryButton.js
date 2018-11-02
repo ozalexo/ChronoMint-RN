@@ -16,7 +16,7 @@ export default class PrimaryButton extends React.Component {
       <TouchableOpacity
         style={[
           styles.container,
-          style
+          style,
         ]}
         {...restProps}
       >
@@ -28,6 +28,6 @@ export default class PrimaryButton extends React.Component {
   }
 }
 
-PrimaryButton.propTypes ={
+PrimaryButton.propTypes = {
   label: PropTypes.string,
 };

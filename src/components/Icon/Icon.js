@@ -2,7 +2,7 @@
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
  *
- * @flow
+ * 
  */
 import React from 'react'
 import { View, Image } from 'react-native'
@@ -12,7 +12,7 @@ const Icon = ({ source, style }) => (
   <View
     style={[
       styles.container,
-      style
+      style,
     ]}
   >
     <Image

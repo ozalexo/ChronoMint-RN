@@ -5,4 +5,4 @@ export default {
     alignItems: 'center',
     backgroundColor: '#5F4CBA',
   },
-};
+}

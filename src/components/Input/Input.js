@@ -2,7 +2,7 @@
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
  *
- * @flow
+ * 
  */
 import React, { Component } from 'react'
 import { TextInput } from 'react-native'
@@ -24,7 +24,7 @@ export default class Input extends Component {
         {...restProps}
         style={[
           styles.input,
-          style
+          style,
         ]}
         ref={this.refInput}
         placeholderTextColor='#9997b2'

@@ -29,7 +29,7 @@ export default class TextButton extends React.Component {
   }
 }
 
-TextButton.propTypes ={
+TextButton.propTypes = {
   onPress: PropTypes.func,
   label: PropTypes.string,
-};
+}

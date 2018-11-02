@@ -3,17 +3,18 @@
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
  *
- * @flow
+ * 
  */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, TouchableOpacity, Text } from 'react-native'
 import styles from './CheckboxStyles'
+import { checkbox_checked, checkbox } from '../../images'
 
 const checkboxIcon = (isChecked) => {
   return isChecked
-    ? require('../../images/checkbox-checked.png')
-    : require('../../images/checkbox.png')
+    ? checkbox_checked
+    : checkbox
 }
 
 const Checkbox = ({ label, isDark, isChecked, onPress }) => (
@@ -35,10 +36,10 @@ const Checkbox = ({ label, isDark, isChecked, onPress }) => (
 )
 
 Checkbox.propTypes = {
-    label: PropTypes.string,
-    isDark: PropTypes.bool,
-    isChecked: PropTypes.bool,
-    onPress: PropTypes.func,
+  label: PropTypes.string,
+  isDark: PropTypes.bool,
+  isChecked: PropTypes.bool,
+  onPress: PropTypes.func,
 }
 
 export default Checkbox

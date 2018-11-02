@@ -17,6 +17,7 @@ import Cautions from './Cautions'
 import Checkbox from './Checkbox'
 import FeeSlider from './FeeSlider'
 import FetchingIndicator from './FetchingIndicator'
+import Label from './Label'
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -26,11 +27,11 @@ storiesOf('Components/Buttons', module)
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('TextButton', () => <TextButton label="Test Label" />)
-  .add('PrimaryButton', () => <PrimaryButton label="Primary test label" />)
+  .add('TextButton', () => <TextButton label='Test Label' />)
+  .add('PrimaryButton', () => <PrimaryButton label='Primary test label' />)
   .add('Button', Button)
 
 storiesOf('Components/Separator', module)
@@ -38,7 +39,7 @@ storiesOf('Components/Separator', module)
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('Separator', Separator)
@@ -48,7 +49,7 @@ storiesOf('Components/Inputs', module)
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('Input', Input)
@@ -58,18 +59,18 @@ storiesOf('Components/Section Header', module)
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('SectionHeader title 1', () => <SectionHeader title="First title" />)
-  .add('SectionHeader title 2', () => <SectionHeader title="SECOND title" />)
+  .add('SectionHeader title 1', () => <SectionHeader title='First title' />)
+  .add('SectionHeader title 2', () => <SectionHeader title='SECOND title' />)
 
 storiesOf('Components/Cautions', module)
   .addParameters({
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('Cautions', Cautions)
@@ -79,7 +80,7 @@ storiesOf('Components/Checkboxes', module)
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('Checkbox', () => (
@@ -93,7 +94,7 @@ storiesOf('Components/Fee Slider', module)
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('FeeSlider', () => (
@@ -109,19 +110,34 @@ storiesOf('Components/Fee Slider', module)
     />
   ))
 
-  storiesOf('Components/Fetching Indicators', module)
+storiesOf('Components/Fetching Indicators', module)
   .addParameters({
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
-    }
+    },
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('FetchingIndicator FETCHING', () => (
-    <FetchingIndicator status="FETCHING" />
+    <FetchingIndicator status='FETCHING' />
   ))
   .add('FetchingIndicator SYNCING', () => (
-    <FetchingIndicator status="SYNCING" />
-  ))  .add('FetchingIndicator SYNCED', () => (
-    <FetchingIndicator status="SYNCED" />
+    <FetchingIndicator status='SYNCING' />
+  )).add('FetchingIndicator SYNCED', () => (
+    <FetchingIndicator status='SYNCED' />
+  ))
+
+storiesOf('Components/Labels', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .add('Label 1', () => (
+    <Label labelTextAlign='left' labelType='currencyColored' text='FIRST LABEL' />
+  ))
+  .add('Label 2', () => (
+    <Label labelTextAlign='right' text='SECOND LABEL' />
   ))
