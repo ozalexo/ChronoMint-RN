@@ -11,8 +11,7 @@ import {
 } from 'react-native'
 
 export default class ImageBackground extends React.Component {
-  setNativeProps (props: Object) {
-    // Work-around flow
+  setNativeProps (props) {
     const viewRef = this.viewRef
     if (viewRef) {
       ensureComponentIsNative(viewRef)

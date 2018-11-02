@@ -10,7 +10,11 @@ module.exports = {
     ecmaVersion: 7,
     sourceType: 'module',
     // parserOptions is a hack for ESLint error 'Please use `export @dec class` instead'
-    ecmaFeatures: { legacyDecorators: true },
+    ecmaFeatures: {
+      legacyDecorators: true,
+      spread: true,
+      jsx: true,
+    },
   },
   settings: {
     'import/resolver': 'react-native',
