@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { View, Text } from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { View, Text } from 'react-native'
 
 export default class Welcome extends React.Component {
   styles = {
@@ -29,7 +29,7 @@ export default class Welcome extends React.Component {
     }
   };
 
-  render() {
+  render () {
     return (
       <View style={this.styles.wrapper}>
         <Text style={this.styles.header}>Welcome to React Native Storybook</Text>

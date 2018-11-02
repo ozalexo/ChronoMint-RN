@@ -4,17 +4,11 @@
  */
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
-import Icon from './Icon'
+import Icon from '../Icon'
+import PropTypes from 'prop-types'
 import styles from './ButtonStyles'
 
-type IconPosition = 'left' | 'right' | 'top' | 'bottom'
-
-type LeftSectionProps = {
-  icon?: number,
-  iconPosition?: IconPosition
-}
-
-const LeftSection = (props: LeftSectionProps) => {
+const LeftSection = (props) => {
   const { icon, iconPosition } = props
 
   if (!icon) {
@@ -32,12 +26,12 @@ const LeftSection = (props: LeftSectionProps) => {
   )
 }
 
-type LabelProps = {
-  label?: string,
-  isDark?: boolean
+LeftSection.propTypes = {
+  icon: PropTypes.number,
+  iconPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
 }
 
-const Label = (props: LabelProps) => {
+const Label = (props) => {
   const { label, isDark } = props
 
   if (!label) {
@@ -50,19 +44,13 @@ const Label = (props: LabelProps) => {
     </Text>
   )
 }
-
-type ButtonProps = {
-  label?: string,
-  icon?: number,
-  isDark?: boolean,
-  isDisabled?: boolean,
-  onPress?: (event: MouseEvent) => void,
-  style?: {} | number,
-  iconPosition?: IconPosition
+Label.propTypes = {
+  label: PropTypes.string,
+  isDark: PropTypes.bool
 }
 
-class Button extends React.Component<ButtonProps, {}> {
-  handlePress = (event: MouseEvent) => {
+export default class Button extends React.Component {
+  handlePress = (event) => {
     const { isDisabled, onPress } = this.props
 
     if (isDisabled) {
@@ -92,4 +80,15 @@ class Button extends React.Component<ButtonProps, {}> {
   }
 }
 
-export default Button
+Button.propTypes = {
+  label: PropTypes.string,
+  icon: PropTypes.number,
+  isDark: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  handlePress: PropTypes.func,
+  style: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+  ]),
+  iconPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+}

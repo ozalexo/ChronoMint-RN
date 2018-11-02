@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import TextButton from '../../../../src/components/TextButton'
+import PrimaryButton from '../../../../src/components/PrimaryButton'
 
 const Button = ({ onPress, label }) => {
   return (
-    <TextButton onPress={onPress} label={label} />
+    <PrimaryButton onPress={onPress} label={label} />
   )
 }
 
 Button.defaultProps = {
   label: 'Test label',
-  onPress: () => {},
+  onPress: () => { },
 }
 
 Button.propTypes = {
