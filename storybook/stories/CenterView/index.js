@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
 import style from './style'
-import DefaultImageBackground from './common/DefaultImageBackground'
+import DefaultImageBackground from '../../../src/common/ImageBackground'
 
 export default function CenterView ({ children }) {
   return (

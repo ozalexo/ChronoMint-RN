@@ -79,11 +79,9 @@ storiesOf('Components/Section Header', module)
     }
   })
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('Checkbox', () => {
-    <Checkbox label='Dark Checked' isDark isChecked/>
-  })
-  .add('Checkbox 1', Checkbox)
-  .add('Checkbox 2', () => {
-    <Checkbox label='Light Unchecked' />
-  })
+  .add('Checkbox', () => (
+    <Checkbox label='Dark Checked' isDark isChecked onPress={action('clicked-checkbox')}/>
+  ))
+  .add('Checkbox 1', () => <Checkbox />)
+  .add('Checkbox 2', () => <Checkbox label='Light Unchecked' />)
   
