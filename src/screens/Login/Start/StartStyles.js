@@ -4,15 +4,11 @@
  */
 
 import { StyleSheet } from 'react-native'
+import { Header } from 'react-navigation'
 
 export default StyleSheet.create({
   container: {
-    padding: 20,
-    alignSelf: 'center',
-  },
-  label: {
-    color: '#ffffff',
-    fontWeight: '900',
-    fontSize: 16,
+    marginTop: Header.HEIGHT,
+    backgroundColor: 'red',
   },
 })

@@ -3,4 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export StarPageContainer from './StarPageContainer'
+export default from './DrawerNetwork'

@@ -9,13 +9,13 @@ module.exports = function (api) {
     '@babel/plugin-transform-runtime',
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-syntax-nullish-coalescing-operator',
-    '@babel/plugin-transform-exponentiation-operator'
+    '@babel/plugin-transform-exponentiation-operator',
   ]
 
   return {
     presets,
     plugins,
-    sourceMaps: true
+    sourceMaps: true,
   }
 }
 
