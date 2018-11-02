@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native'
-import colors from '../../common/colors';
+import colors from '../../common/colors'
 
 export default StyleSheet.create({
     separator: {

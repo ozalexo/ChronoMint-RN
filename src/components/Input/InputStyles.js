@@ -1,4 +1,4 @@
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     input: {

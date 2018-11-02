@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 import Button from '../../../../src/components/Button'
 
 export default ButtonStory = ({ label, icon, isDark, isDisabled, handlePress, iconPosition }) => {

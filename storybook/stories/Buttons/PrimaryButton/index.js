@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import PrimaryButton from '../../../../src/components/PrimaryButton';
+import React from 'react'
+import PropTypes from 'prop-types'
+import PrimaryButton from '../../../../src/components/PrimaryButton'
+
 export default Button = ({ onPress, label }) => {
   return (
-    <PrimaryButton onPress={onPress} label='Test label' />
+    <PrimaryButton onPress={onPress} label={label} />
   )
 }
 
