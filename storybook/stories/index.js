@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react-native'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 
+import { wallet } from '../../src/images'
 import CenterView from './CenterView'
 import Welcome from './Welcome'
 import Separator from './Separator'
@@ -20,6 +21,8 @@ import Label from './Label'
 import LabeledItem from './LabeledItem'
 import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
+import WalletAlert from './WalletAlert'
+import WalletOwner from './WalletOwner'
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
@@ -212,3 +215,29 @@ storiesOf('Components/Transaction icons', module)
       mode='big'
     />
   ))
+
+storiesOf('Components/Wallet', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .add('Wallet Alert 1', () => <WalletAlert />)
+  .add('Wallet Alert 2', () => (
+    <WalletAlert title="Test title from prop" >
+      <Text>Check 1</Text>
+      <Text>Check 2</Text>
+      <Text>Check 3</Text>
+    </WalletAlert>
+  ))
+  .add('Wallet Owner 1', WalletOwner)
+  //have problms with render
+  .add('Wallet Owner 2', () => {
+    <WalletOwner
+      address='Test prop address'
+      id='Test prop id'
+      name='Test prop name'
+    />
+  })
