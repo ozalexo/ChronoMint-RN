@@ -18,6 +18,8 @@ import FeeSlider from './FeeSlider'
 import FetchingIndicator from './FetchingIndicator'
 import Label from './Label'
 import LabeledItem from './LabeledItem'
+import ListItem from './ListItem'
+import TransactionIcon from './TranscationIcon'
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
@@ -162,4 +164,51 @@ storiesOf('Components/Labeled items', module)
   ))
   .add('Labeled Item 2', () => (
     <LabeledItem labelTextAlign='right' labelAlign="bottom" labelText='SECOND LABEL ITEM' />
+  ))
+
+storiesOf('Components/List items', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .add('List item 1', () => (
+    <ListItem
+      value='Test value'
+      title='Test title'
+      isDark
+    />
+  ))
+  .add('List item 2', () => (
+    <ListItem
+      icon={1}
+      value='Second Test value'
+      hasArrow
+      title='Second Test title'
+    />
+  ))
+
+storiesOf('Components/Transaction icons', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .add('Transaction icon 1', () => (
+    <TransactionIcon
+      confirmations={2}
+      type='sending'
+      mode='small'
+    />
+  ))
+  .add('Transaction icon 2', () => (
+    <TransactionIcon
+      confirmations={3}
+      type='receiving'
+      mode='big'
+    />
   ))

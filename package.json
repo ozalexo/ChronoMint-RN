@@ -68,6 +68,7 @@
     "eslint-plugin-react": "^7.11.1",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
+    "moment": "^2.22.2",
     "patch-package": "^5.1.1",
     "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.6.2",
