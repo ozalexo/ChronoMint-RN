@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text } from 'react-native'
-
 import { storiesOf } from '@storybook/react-native'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
@@ -18,9 +17,10 @@ import Checkbox from './Checkbox'
 import FeeSlider from './FeeSlider'
 import FetchingIndicator from './FetchingIndicator'
 import Label from './Label'
+import LabeledItem from './LabeledItem'
 
 storiesOf('Welcome', module)
-  .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+  .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
 
 storiesOf('Components/Buttons', module)
   .addParameters({
@@ -140,4 +140,26 @@ storiesOf('Components/Labels', module)
   ))
   .add('Label 2', () => (
     <Label labelTextAlign='right' text='SECOND LABEL' />
+  ))
+
+storiesOf('Components/Labeled items', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .add('Labeled Item 1', () => (
+    <LabeledItem labelTextAlign='left' labelAlign="top" labelType='currencyColored' labelText='FIRST LABEL'>
+      <Text>
+        Check1
+        <Text>
+          Check2
+        </Text>
+      </Text>
+    </LabeledItem>
+  ))
+  .add('Labeled Item 2', () => (
+    <LabeledItem labelTextAlign='right' labelAlign="bottom" labelText='SECOND LABEL ITEM' />
   ))
