@@ -1,7 +1,6 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
  */
 
 import React, { PureComponent } from 'react'
@@ -36,9 +35,7 @@ export default class TransactionsList extends PureComponent {
 
   renderItem = (item) => <TransactionItem {...item} navigator={this.props.navigator} />
 
-  // eslint-disable-next-line complexity
   render () {
-
     const {
       transactions,
       mainWalletTransactionLoadingStatus,

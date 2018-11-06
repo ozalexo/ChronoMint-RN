@@ -1,9 +1,8 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
- * 
  */
+
 import * as React from 'react'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'

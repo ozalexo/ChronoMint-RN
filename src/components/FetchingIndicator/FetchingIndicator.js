@@ -1,13 +1,13 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
- * 
  */
+
 import React from 'react'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import I18n from 'react-native-i18n'
+import textConstants from '../../locales/en'
+// import I18n from 'react-native-i18n'
 import styles from './FetchingIndicatorStyles'
 
 export const STATUS = {
@@ -28,7 +28,7 @@ const FetchingIndicator = (props) => {
   return (
     <View style={[styles.container, style]} >
       <View style={[styles.bullet, bulletStyle]} />
-      <Text style={styles.label}>{I18n.t(['FetchingIndicator', status])}</Text>
+      <Text style={styles.label}>{textConstants.FetchingIndicator[status]}</Text>
     </View>
   )
 }

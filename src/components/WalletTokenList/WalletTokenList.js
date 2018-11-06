@@ -1,14 +1,12 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
  */
 
 import * as React from 'react'
 import {
   Text,
 } from 'react-native'
-import styles from './WalletTokensListStyles'
 
 const WalletTokensList = (tokens) => {
 
@@ -32,7 +30,7 @@ const WalletTokensList = (tokens) => {
   tokensStrings = tokensStrings && tokensStrings.join(', ')
 
   return (
-    <Text style={styles.tokens}>
+    <Text>
       {tokensStrings || ''}
     </Text>
   )

@@ -4,7 +4,12 @@ import LabeledItem from '../../../src/components/LabeledItem'
 
 export default function StoryLabeledItem ({ children, labelAlign, labelTextAlign, labelType, labelText }) {
   return (
-    <LabeledItem labelAlign={labelAlign} labelTextAlign={labelTextAlign} labelType={labelType} labelText={labelText}>
+    <LabeledItem
+      labelAlign={labelAlign}
+      labelTextAlign={labelTextAlign}
+      labelType={labelType}
+      labelText={labelText}
+    >
       {children}
     </LabeledItem>
   )

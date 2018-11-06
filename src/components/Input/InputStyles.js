@@ -9,7 +9,7 @@ export default StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     color: '#9997B2',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     fontSize: 16,
   },
 })

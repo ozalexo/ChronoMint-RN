@@ -1,9 +1,8 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
- * 
  */
+
 import React, { Component } from 'react'
 import { TextInput } from 'react-native'
 import colors from '../../common/colors'

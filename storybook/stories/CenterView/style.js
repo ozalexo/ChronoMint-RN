@@ -3,6 +3,6 @@ export default {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5F4CBA',
+    backgroundColor: '#242045',
   },
 }

@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react-native'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 
-import { wallet } from '../../src/images'
 import CenterView from './CenterView'
 import Welcome from './Welcome'
 import Separator from './Separator'
@@ -24,6 +23,8 @@ import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import WalletOwner from './WalletOwner'
 
+const confirmations = [0, 1, 2, 3, 4]
+
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
 
@@ -34,41 +35,56 @@ storiesOf('Components/Buttons', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('TextButton', () => <TextButton label='Test Label' />)
-  .add('PrimaryButton', () => <PrimaryButton label='Primary test label' />)
-  .add('Button', Button)
+  .add('PrimaryButton', () => <PrimaryButton label='Primary label' />)
+  .add('Button', () => <Button label='Button label' />)
 
-storiesOf('Components/Separator', module)
+storiesOf('Components/Different', module)
   .addParameters({
     options: {
       hierarchySeparator: /\//,
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('Separator', Separator)
-
-storiesOf('Components/Inputs', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('Input', Input)
-
-storiesOf('Components/Section Header', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Separator', () => <Separator />)
   .add('SectionHeader title 1', () => <SectionHeader title='First title' />)
   .add('SectionHeader title 2', () => <SectionHeader title='SECOND title' />)
+  .add('FetchingIndicators', () => (
+    <React.Fragment>
+      <FetchingIndicator status='FETCHING' />
+      <FetchingIndicator status='SYNCING' />
+      <FetchingIndicator status='SYNCED' />
+    </React.Fragment>
+  ))
+
+storiesOf('Inputs/Input', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Normal Input', () => <Input />)
+  .add('Error Input', () => <Input style={{ color: 'red', borderBottomColor: 'red' }} />)
+
+storiesOf('Inputs/Checkboxes', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Checkboxes', () => (
+    <React.Fragment>
+      <Checkbox label='Dark Checked' isDark isChecked onPress={action('clicked-checkbox')} />
+      <Checkbox label='Light Unchecked' />
+      <Checkbox />
+    </React.Fragment>
+  ))
 
 storiesOf('Components/Cautions', module)
   .addParameters({
@@ -77,22 +93,8 @@ storiesOf('Components/Cautions', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Cautions', Cautions)
-
-storiesOf('Components/Checkboxes', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('Checkbox', () => (
-    <Checkbox label='Dark Checked' isDark isChecked onPress={action('clicked-checkbox')} />
-  ))
-  .add('Checkbox 1', () => <Checkbox />)
-  .add('Checkbox 2', () => <Checkbox label='Light Unchecked' />)
 
 storiesOf('Components/Fee Slider', module)
   .addParameters({
@@ -101,7 +103,7 @@ storiesOf('Components/Fee Slider', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('FeeSlider', () => (
     <FeeSlider
       tokenSymbol='ETH'
@@ -115,23 +117,6 @@ storiesOf('Components/Fee Slider', module)
     />
   ))
 
-storiesOf('Components/Fetching Indicators', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('FetchingIndicator FETCHING', () => (
-    <FetchingIndicator status='FETCHING' />
-  ))
-  .add('FetchingIndicator SYNCING', () => (
-    <FetchingIndicator status='SYNCING' />
-  )).add('FetchingIndicator SYNCED', () => (
-    <FetchingIndicator status='SYNCED' />
-  ))
-
 storiesOf('Components/Labels', module)
   .addParameters({
     options: {
@@ -139,22 +124,13 @@ storiesOf('Components/Labels', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('Label 1', () => (
-    <Label labelTextAlign='left' labelType='currencyColored' text='FIRST LABEL' />
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Labels', () => (
+    <React.Fragment>
+      <Label labelTextAlign='left' labelType='currencyColored' text='FIRST LABEL' />
+      <Label labelTextAlign='right' text='SECOND LABEL' />
+    </React.Fragment>
   ))
-  .add('Label 2', () => (
-    <Label labelTextAlign='right' text='SECOND LABEL' />
-  ))
-
-storiesOf('Components/Labeled items', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .add('Labeled Item 1', () => (
     <LabeledItem labelTextAlign='left' labelAlign="top" labelType='currencyColored' labelText='FIRST LABEL'>
       <Text>
@@ -176,7 +152,7 @@ storiesOf('Components/List items', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('List item 1', () => (
     <ListItem
       value='Test value'
@@ -200,20 +176,54 @@ storiesOf('Components/Transaction icons', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('Transaction icon 1', () => (
-    <TransactionIcon
-      confirmations={2}
-      type='sending'
-      mode='small'
-    />
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Small Sending Icons', () => (
+    <React.Fragment>
+      {confirmations.map((confirmNumber) =>
+        <TransactionIcon
+          key={confirmNumber}
+          confirmations={confirmNumber}
+          type='sending'
+          mode='small'
+        />
+      )}
+    </React.Fragment>
   ))
-  .add('Transaction icon 2', () => (
-    <TransactionIcon
-      confirmations={3}
-      type='receiving'
-      mode='big'
-    />
+  .add('Big Sending Icons', () => (
+    <React.Fragment>
+      {confirmations.map((confirmNumber) =>
+        <TransactionIcon
+          key={confirmNumber}
+          confirmations={confirmNumber}
+          type='sending'
+          mode='big'
+        />
+      )}
+    </React.Fragment>
+  ))
+  .add('Small Receiving Icons', () => (
+    <React.Fragment>
+      {confirmations.map((confirmNumber) =>
+        <TransactionIcon
+          key={confirmNumber}
+          confirmations={confirmNumber}
+          type='receiving'
+          mode='small'
+        />
+      )}
+    </React.Fragment>
+  ))
+  .add('Big Receiving Icons', () => (
+    <React.Fragment>
+      {confirmations.map((confirmNumber) =>
+        <TransactionIcon
+          key={confirmNumber}
+          confirmations={confirmNumber}
+          type='receiving'
+          mode='big'
+        />
+      )}
+    </React.Fragment>
   ))
 
 storiesOf('Components/Wallet', module)
@@ -223,7 +233,7 @@ storiesOf('Components/Wallet', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Wallet Alert 1', () => <WalletAlert />)
   .add('Wallet Alert 2', () => (
     <WalletAlert title="Test title from prop" >
