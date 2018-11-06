@@ -12,9 +12,11 @@ export default function StoryFeeSlider ({
   minimumValue,
   step,
   handleValueChange,
+  style,
 }) {
   return (
     <FeeSlider
+      style={style}
       tokenSymbol={tokenSymbol}
       selectedCurrency={selectedCurrency}
       value={value}
@@ -26,18 +28,6 @@ export default function StoryFeeSlider ({
       handleValueChange={handleValueChange}
     />
   )
-}
-
-StoryFeeSlider.defaultProps = {
-  tokenSymbol: 'ETH',
-  selectedCurrency: 'USD',
-  value: 1,
-  calculatedFeeValue: 1,
-  calculatedFeeValueInSelectedCurrency: 1,
-  maximumValue: 10,
-  minimumValue: 0,
-  step: 0.5,
-  handleValueChange: () => { },
 }
 
 StoryFeeSlider.propTypes = {

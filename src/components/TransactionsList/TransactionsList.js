@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native'
 import I18n from 'react-native-i18n'
+import textConstants from '../../locales/en'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import Separator from '../Separator'
@@ -33,7 +34,7 @@ export default class TransactionsList extends PureComponent {
   keyExtractor = (item, index) =>
     '' + item.address + '_' + item.blockNumber + '_' + index
 
-  renderItem = (item) => <TransactionItem {...item.item} navigator={this.props.navigator} />
+  renderItem = (item) => <TransactionItem {...item} navigator={this.props.navigator} />
 
 
   render () {
@@ -183,13 +184,13 @@ class TransactionItem extends PureComponent {
       symbol,
       type,
       amount,
-    } = this.props
+    } = this.props.item
 
     const transactionStyle = type === 'sending'
       ? styles.sending
       : styles.receiving
 
-    const tType = I18n.t(`TransactionsList.${type}`)
+    const tType = textConstants.TransactionsList[type]
 
     return (
       <TouchableWithoutFeedback
@@ -225,9 +226,11 @@ class TransactionItem extends PureComponent {
 }
 
 TransactionItem.propTypes = {
-  address: PropTypes.string,
-  amount: PropTypes.number,
-  confirmations: PropTypes.number,
-  symbol: PropTypes.string,
-  type: PropTypes.oneOf(['receiving', 'sending']),
+  item: PropTypes.shape({
+    address: PropTypes.string,
+    amount: PropTypes.number,
+    confirmations: PropTypes.number,
+    symbol: PropTypes.string,
+    type: PropTypes.oneOf(['receiving', 'sending']),
+  }),
 }

@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react'
 import { TextInput } from 'react-native'
+import PropTypes from 'prop-types'
 import colors from '../../common/colors'
 import styles from './InputStyles'
 
@@ -16,20 +17,30 @@ export default class Input extends Component {
   focus = () => this.input.focus()
 
   render () {
-    const { style, ...restProps } = this.props
-
+    const { error, style, ...restProps } = this.props
+    let responseStyles = {}
+    if (error === true) {
+      responseStyles = styles.error
+    } else if (error === false) {
+      responseStyles = styles.success
+    }
     return (
       <TextInput
         {...restProps}
         style={[
           styles.input,
+          responseStyles,
           style,
         ]}
         ref={this.refInput}
-        placeholderTextColor='#9997b2'
+        placeholderTextColor={error ? 'red' : '#9997b2'}
         underlineColorAndroid={colors.transparent}
         keyboardAppearance='dark'
       />
     )
   }
+}
+
+Input.propTypes = {
+  error: PropTypes.bool,
 }

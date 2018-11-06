@@ -5,11 +5,19 @@ export default StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     width: '100%',
     alignItems: 'center',
-    borderBottomColor: '#9997B2',
     paddingVertical: 10,
     paddingHorizontal: 5,
+    borderBottomColor: '#9997B2',
     color: '#9997B2',
     backgroundColor: 'transparent',
     fontSize: 16,
+  },
+  success: {
+    borderBottomColor: 'green',
+    color: 'green',
+  },
+  error: {
+    borderBottomColor: 'red',
+    color: 'red',
   },
 })

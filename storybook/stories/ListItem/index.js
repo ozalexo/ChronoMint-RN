@@ -14,16 +14,6 @@ export default function StoryListItem ({ icon, value, hasArrow, title, isDark, o
     />
   )
 }
-
-StoryListItem.defaultProps = {
-  icon: 1,
-  value: 'Check value',
-  hasArrow: false,
-  title: 'Check title',
-  isDark: false,
-  onPress: () => { },
-}
-
 StoryListItem.propTypes = {
   icon: PropTypes.number,
   value: PropTypes.string,

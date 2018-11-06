@@ -27,6 +27,7 @@ const FeeSliderTitle = () => (
 )
 
 const FeeSlider = ({
+  style,
   tokenSymbol,
   selectedCurrency,
   value = 1,
@@ -47,7 +48,7 @@ const FeeSlider = ({
     ('≈' + [selectedCurrency, calculatedFeeValueInSelectedCurrency.toFixed(2)].join(' ')) || ''
 
   return (
-    <View style={styles.feeSliderContainer}>
+    <View style={[styles.feeSliderContainer, style]}>
       <FeeSliderTitle />
       <Slider
         maximumValue={maximumValue}

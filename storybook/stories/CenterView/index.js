@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
-import style from './style'
+import styles from './style'
 import DefaultImageBackground from '../../../src/common/ImageBackground'
 
-export default function CenterView ({ children }) {
+export default function CenterView ({ children, style }) {
   return (
-    <DefaultImageBackground>
-      <View style={style.main}>{children}</View>
+    <DefaultImageBackground style={style}>
+      <View style={styles.main}>{children}</View>
     </DefaultImageBackground>
   )
 }

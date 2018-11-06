@@ -21,7 +21,11 @@ export default function StoryTransactionsList ({
 }
 
 StoryTransactionsList.defaultProps = {
-  mainWalletTransactionLoadingStatus: false,
+  mainWalletTransactionLoadingStatus: {
+    isFetched: true,
+    isFetching: false,
+    isInited: true,
+  },
   latestTransactionDate: '1541506809717',
   transactions: [
     {
