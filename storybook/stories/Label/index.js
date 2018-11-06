@@ -6,12 +6,6 @@ export default function StoryLabel ({ labelTextAlign, labelType, text }) {
   return <Label labelTextAlign={labelTextAlign} labelType={labelType} text={text} />;
 }
 
-StoryLabel.defaultProps = {
-  labelTextAlign: 'left',
-  labelType: 'currencyColored',
-  text: 'TEST',
-}
-
 StoryLabel.propTypes = {
   labelTextAlign: PropTypes.oneOf(['left', 'right']),
   labelType: PropTypes.oneOf(['currencyColored']),

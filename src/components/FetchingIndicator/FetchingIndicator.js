@@ -7,7 +7,6 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import textConstants from '../../locales/en'
-// import I18n from 'react-native-i18n'
 import styles from './FetchingIndicatorStyles'
 
 export const STATUS = {

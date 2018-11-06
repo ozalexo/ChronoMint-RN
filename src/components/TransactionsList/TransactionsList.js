@@ -33,7 +33,8 @@ export default class TransactionsList extends PureComponent {
   keyExtractor = (item, index) =>
     '' + item.address + '_' + item.blockNumber + '_' + index
 
-  renderItem = (item) => <TransactionItem {...item} navigator={this.props.navigator} />
+  renderItem = (item) => <TransactionItem {...item.item} navigator={this.props.navigator} />
+
 
   render () {
     const {
@@ -43,7 +44,7 @@ export default class TransactionsList extends PureComponent {
       refreshTransactionsList,
     } = this.props
 
-    const lastTransactionDate: string = latestTransactionDate
+    const lastTransactionDate = latestTransactionDate
       && moment(latestTransactionDate).format('DD MMMM YYYY')
       || 'No date info available'
 

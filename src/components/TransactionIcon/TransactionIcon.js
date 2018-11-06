@@ -32,14 +32,14 @@ import {
 } from '../../images'
 
 const transIcons = {
-  'sending': [
+  sending: [
     sending_0_circle_small,
     sending_25_circle_small,
     sending_50_circle_small,
     sending_75_circle_small,
     sending_100_circle_small,
   ],
-  'receiving': [
+  receiving: [
     receiving_0_circle_small,
     receiving_25_circle_small,
     receiving_50_circle_small,
@@ -49,14 +49,14 @@ const transIcons = {
 }
 
 const transBigIcons = {
-  'sending': [
+  sending: [
     sending_0_circle_big,
     sending_25_circle_big,
     sending_50_circle_big,
     sending_75_circle_big,
     sending_100_circle_big,
   ],
-  'receiving': [
+  receiving: [
     receiving_0_circle_big,
     receiving_25_circle_big,
     receiving_50_circle_big,

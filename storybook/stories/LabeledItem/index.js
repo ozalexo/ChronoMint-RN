@@ -15,13 +15,6 @@ export default function StoryLabeledItem ({ children, labelAlign, labelTextAlign
   )
 }
 
-StoryLabeledItem.defaultProps = {
-  labelAlign: 'left',
-  labelTextAlign: 'left',
-  labelType: 'currencyColored',
-  labelText: 'Test Label',
-}
-
 StoryLabeledItem.propTypes = {
   labelAlign: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
   labelTextAlign: PropTypes.oneOf(['left', 'right']),

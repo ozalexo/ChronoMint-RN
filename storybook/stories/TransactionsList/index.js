@@ -21,19 +21,21 @@ export default function StoryTransactionsList ({
 }
 
 StoryTransactionsList.defaultProps = {
+  mainWalletTransactionLoadingStatus: false,
+  latestTransactionDate: '1541506809717',
   transactions: [
     {
       address: 'test address',
       amount: 0.001,
       confirmations: 0,
-      symbol: 'test symbol',
+      symbol: 'BCC',
       type: 'sending',
     },
     {
       address: 'test address',
       amount: 100,
       confirmations: 1,
-      symbol: 'test symbol',
+      symbol: 'WAVES',
       type: 'sending',
     },
     {
@@ -42,23 +44,23 @@ StoryTransactionsList.defaultProps = {
       confirmations: 2,
       symbol: 'BTC',
       type: 'receiving',
-    },    {
+    }, {
       address: 'test address',
       amount: 0.001,
       confirmations: 3,
-      symbol: 'test symbol',
+      symbol: 'LHT',
       type: 'sending',
     },
     {
       address: 'second test address',
       amount: 45,
       confirmations: 4,
-      symbol: 'second test symbol',
+      symbol: 'LTC',
       type: 'receiving',
-    },    {
+    }, {
       address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
       amount: 0.001,
-      confirmations: 5,
+      confirmations: 4,
       symbol: 'ETH',
       type: 'sending',
     },

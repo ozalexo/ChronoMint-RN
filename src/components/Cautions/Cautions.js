@@ -5,7 +5,6 @@
 
 import * as React from 'react'
 import { View, Image, Text } from 'react-native'
-// import I18n from 'react-native-i18n'
 import textConstants from '../../locales/en'
 import PropTypes from 'prop-types'
 import styles from './CautionsStyles'
@@ -23,19 +22,24 @@ CautionItem.propTypes = {
   text: PropTypes.string,
 }
 
-const Cautions = () => (
-  <View style={styles.container}>
-    <Image
-      style={styles.image}
-      source={alert}
-  />
-    <View style={styles.list}>
-      <CautionItem text={textConstants.Cautions.keepItSafe} />
-      <CautionItem text={textConstants.Cautions.makeBackup} />
-      <CautionItem text={textConstants.Cautions.dontShare} />
-      <CautionItem text={textConstants.Cautions.dontLose} />
+const Cautions = (props) => {
+  const { caution } = props
+
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.image}
+        source={alert}
+      />
+      <View style={styles.list}>
+        <CautionItem text={textConstants.Cautions[caution]} />
+      </View>
     </View>
-  </View>
-)
+  )
+}
+
+Cautions.propTypes = {
+  caution: PropTypes.oneOf(['keepItSafe', 'makeBackup', 'dontShare', 'dontLose']),
+}
 
 export default Cautions

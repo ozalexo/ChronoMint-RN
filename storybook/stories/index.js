@@ -22,8 +22,60 @@ import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import WalletOwner from './WalletOwner'
+import TransactionsList from './TransactionsList'
 
 const confirmations = [0, 1, 2, 3, 4]
+const cautionsList = ['keepItSafe', 'makeBackup', 'dontShare', 'dontLose']
+const transactionsList = [
+  {
+    address: 'test address',
+    amount: 0.001,
+    confirmations: 0,
+    symbol: 'BCC',
+    type: 'sending',
+    mode: 'small',
+  },
+  {
+    address: 'test address',
+    amount: 100,
+    confirmations: 1,
+    symbol: 'WAVES',
+    type: 'sending',
+    mode: 'small',
+  },
+  {
+    address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
+    amount: 99,
+    confirmations: 2,
+    symbol: 'BTC',
+    type: 'receiving',
+    mode: 'small',
+  },
+  {
+    address: 'test address',
+    amount: 0.001,
+    confirmations: 3,
+    symbol: 'LHT',
+    type: 'sending',
+    mode: 'small',
+  },
+  {
+    address: 'second test address',
+    amount: 45,
+    confirmations: 4,
+    symbol: 'LTC',
+    type: 'receiving',
+    mode: 'small',
+  },
+  {
+    address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
+    amount: 0.001,
+    confirmations: 4,
+    symbol: 'ETH',
+    type: 'receiving',
+    mode: 'small',
+  },
+]
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
@@ -94,7 +146,16 @@ storiesOf('Components/Cautions', module)
     },
   })
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('Cautions', Cautions)
+  .add('Cautions', () => (
+    <React.Fragment>
+      {cautionsList.map((caution) =>
+        <Cautions
+          key={caution}
+          caution={caution}
+        />
+      )}
+    </React.Fragment>
+  ))
 
 storiesOf('Components/Fee Slider', module)
   .addParameters({
@@ -127,12 +188,12 @@ storiesOf('Components/Labels', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Labels', () => (
     <React.Fragment>
-      <Label labelTextAlign='left' labelType='currencyColored' text='FIRST LABEL' />
-      <Label labelTextAlign='right' text='SECOND LABEL' />
+      <Label labelTextAlign='left' labelType='currencyColored' text='Currency colored left aligned label' />
+      <Label labelTextAlign='right' text='Pure right aligned label' />
     </React.Fragment>
   ))
   .add('Labeled Item 1', () => (
-    <LabeledItem labelTextAlign='left' labelAlign="top" labelType='currencyColored' labelText='FIRST LABEL'>
+    <LabeledItem labelTextAlign='left' labelAlign="top" labelType='currencyColored' labelText='Top left currency colored labeled item'>
       <Text>
         Check1
         <Text>
@@ -142,7 +203,7 @@ storiesOf('Components/Labels', module)
     </LabeledItem>
   ))
   .add('Labeled Item 2', () => (
-    <LabeledItem labelTextAlign='right' labelAlign="bottom" labelText='SECOND LABEL ITEM' />
+    <LabeledItem labelTextAlign='right' labelAlign="bottom" labelText='Pure right bottom label' />
   ))
 
 storiesOf('Components/List items', module)
@@ -251,3 +312,15 @@ storiesOf('Components/Wallet', module)
       name='Test prop name'
     />
   })
+
+storiesOf('Components/Transactions List', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Transactions List', () => (
+    <TransactionsList mainWalletTransactionLoadingStatus={{ isFetched: true, isFetching: false, isInited: true }} latestTransactionDate={new Date()} transactions={transactionsList} />
+  ))

@@ -7,12 +7,9 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    width: 280,
     minHeight: 45,
     borderRadius: 50,
     backgroundColor: '#614DBA',
-    paddingVertical: 14,
-    marginHorizontal: 20,
     marginTop: 40,
     marginBottom: 30,
     alignItems: 'center',
@@ -22,6 +19,8 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '900',
+    paddingVertical: 14,
+    marginHorizontal: 20,
     lineHeight: 20,
     textTransform: 'uppercase',
   },

@@ -11,6 +11,7 @@ export default StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginHorizontal: 16,
   },
   list: {
