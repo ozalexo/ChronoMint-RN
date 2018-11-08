@@ -22,7 +22,11 @@ export default class SectionHeader extends React.Component {
 
     return (
       <View style={[styles.container, style]}>
-        <Text style={styles.title}>
+        <Text 
+          numberOfLines={1}
+          ellipsizeMode='tail'
+          style={styles.title}
+        >
           {title.toUpperCase()}
         </Text>
       </View>
@@ -34,4 +38,3 @@ SectionHeader.propTypes = {
   title: PropTypes.string,
   isDark: PropTypes.bool,
 }
-

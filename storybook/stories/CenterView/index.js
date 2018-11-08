@@ -4,9 +4,9 @@ import { View } from 'react-native'
 import styles from './style'
 import DefaultImageBackground from '../../../src/common/ImageBackground'
 
-export default function CenterView ({ children, style }) {
+export default function CenterView ({ children }) {
   return (
-    <DefaultImageBackground style={style}>
+    <DefaultImageBackground>
       <View style={styles.main}>{children}</View>
     </DefaultImageBackground>
   )

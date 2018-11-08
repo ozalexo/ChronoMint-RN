@@ -79,9 +79,10 @@ class TransactionIcon extends PureComponent {
   }
 
   render () {
-    const { type, confirmations, mode } = this.props
+    const { type, confirmations, mode, style } = this.props
     return (
       <Image
+        style={style}
         source={TransactionIcon.getTIcon(type, confirmations, mode)}
       />
     )

@@ -12,6 +12,8 @@ export default {
   greySub: '#808080',
   greySubLight: '#BFBFBF',
 
+  placeHolder: '#9997b2',
+
   background: '#FBFBFE',
   backgroundColor,
   backgroundLight: '#FFFFFF',
