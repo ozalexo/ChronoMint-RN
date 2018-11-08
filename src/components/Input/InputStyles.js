@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../common/colors';
 
 export default StyleSheet.create({
   input: {
@@ -7,17 +8,17 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 5,
-    borderBottomColor: '#9997B2',
-    color: '#9997B2',
-    backgroundColor: 'transparent',
+    borderBottomColor: colors.dustygray,
+    color: colors.dustygray,
+    backgroundColor: colors.transparent,
     fontSize: 16,
   },
   success: {
-    borderBottomColor: 'green',
-    color: 'green',
+    borderBottomColor: colors.success,
+    color: colors.success,
   },
   error: {
-    borderBottomColor: 'red',
-    color: 'red',
+    borderBottomColor: colors.error,
+    color: colors.error,
   },
 })

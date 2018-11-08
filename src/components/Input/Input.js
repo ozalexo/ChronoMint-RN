@@ -33,7 +33,7 @@ export default class Input extends Component {
           style,
         ]}
         ref={this.refInput}
-        placeholderTextColor={colors.placeHolder}
+        placeholderTextColor={colors.dustygray}
         underlineColorAndroid={colors.transparent}
         keyboardAppearance='dark'
       />

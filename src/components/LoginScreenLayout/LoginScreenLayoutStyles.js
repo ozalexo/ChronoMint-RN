@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native'
+import {backgroundColor} from '../../common/colors'
 
 export default StyleSheet.create({
   keyboardView: {
     flexGrow: 1,
   },
   screenView: {
-    backgroundColor: '#242045',
+    backgroundColor,
   },
   screenContent: {
     paddingTop: 64,

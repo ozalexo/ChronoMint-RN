@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './FeeSliderStyles'
+import colors from '../../common/colors';
 
 /**
  * Title on top of slider: Slow <-> Fast.
@@ -52,7 +53,7 @@ const FeeSlider = ({
       <FeeSliderTitle />
       <Slider
         maximumValue={maximumValue}
-        minimumTrackTintColor='#786AB7'
+        minimumTrackTintColor={colors.lightpurple}
         minimumValue={minimumValue}
         step={step}
         value={value}

@@ -4,24 +4,22 @@
  */
 
 import { StyleSheet } from 'react-native'
+import colors from '../../common/colors'
 
 export default StyleSheet.create({
   container: {
     minHeight: 45,
     borderRadius: 50,
-    backgroundColor: '#614DBA',
-    marginTop: 40,
-    marginBottom: 30,
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: {
-    color: '#ffffff',
+    color: colors.light,
     fontSize: 16,
     fontWeight: '900',
     paddingVertical: 14,
     marginHorizontal: 20,
     lineHeight: 20,
-    textTransform: 'uppercase',
   },
 })

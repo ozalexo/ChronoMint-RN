@@ -10,7 +10,7 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   defaultText: {
     color: colors.mainGrey,
@@ -19,8 +19,7 @@ export default StyleSheet.create({
     lineHeight: 19,
   },
   currencyText: {
-    // color: colors.activeBlue,
-    color: colors.green,
+    color: colors.activeBlue,
     fontSize: 22,
     lineHeight: 26,
   },

@@ -4,6 +4,7 @@
  */
 
 import { StyleSheet } from 'react-native'
+import colors from '../../common/colors'
 
 export default StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   label: {
-    color: '#ffffff',
+    color: colors.light,
     fontWeight: '900',
     textAlign: 'center',
     fontSize: 16,

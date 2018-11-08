@@ -10,7 +10,7 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   address: {
-    color: '#7F7F7F',
+    color: colors.foregroundLighter,
     fontSize: 12,
     fontWeight: '200',
   },
