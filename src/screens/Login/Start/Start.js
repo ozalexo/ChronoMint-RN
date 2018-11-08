@@ -5,7 +5,10 @@
 
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import DismissKeyboard from 'dismissKeyboard'
 import {
+  TouchableWithoutFeedback,
+  Keyboard,
   Image,
   KeyboardAvoidingView,
   Text,
@@ -39,63 +42,71 @@ export default class Start extends PureComponent {
   }
 
   renderCreateAccountForm = () => (
-    <View style={{flex: 1, flexDirection: 'column'}}>
-      <Input
-        autoCorrect={false}
-        onChangeText={this.props.onChangePassword}
-        placeholder={PASSWORD_PLACEHOLDER}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Input
-        autoCorrect={false}
-        onChangeText={this.props.onChangePasswordConfirmation}
-        placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
-        secureTextEntry
-        style={styles.input}
-      />
-      <PrimaryButton
-        label={CREATE_WALLET_BUTTON_LABEL}
-        onPress={this.props.onDone}
-      />
-      <Text style={styles.orText}>
-        {
-          'or'
-        }
-      </Text>
-      <TextButton
-        label={USE_EXISTING_WALLET_BUTTON_LABEL}
-        onPress={this.props.navigateToImportWallet}
-      />
+    <View style={{flex: 1, flexDirection: 'row', backgroundColor: 'yellow', paddingHorizontal: 20}}>
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'green'}}>
+        <Input
+          autoCorrect={false}
+          onChangeText={this.props.onChangePassword}
+          placeholder={PASSWORD_PLACEHOLDER}
+          secureTextEntry
+          style={styles.input}
+          onBlur={() => console.log("focus 1 lost") }
+        />
+        <Input
+          autoCorrect={false}
+          onChangeText={this.props.onChangePasswordConfirmation}
+          placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+          secureTextEntry
+          style={styles.input}
+          onBlur={() => console.log("focus 2 lost") }
+        />
+        <PrimaryButton
+          label={CREATE_WALLET_BUTTON_LABEL}
+          onPress={this.props.onDone}
+        />
+        <Text style={styles.orText}>
+          {
+            'or'
+          }
+        </Text>
+        <TextButton
+          label={USE_EXISTING_WALLET_BUTTON_LABEL}
+          onPress={this.props.navigateToImportWallet}
+        />
+      </View>
     </View>
   )
 
   render () {
     return (
-      <KeyboardAvoidingView
-        behavior='padding'
-        style={styles.container}
-        contentContainerStyle={styles.container}
-      >
-        <Image
-          source={ChronoWalletIcon}
-          style={styles.logo}
-        />
-        <Image
-          source={ChronoWalletText}
-          style={styles.logoText}
-        />
-        {
-          this.props.accounts
-            ? this.renderAccountsList()
-            : this.renderCreateAccountForm()
-        }
-        <Text style={styles.copyright}>
-          {
-            COPYRIGHT
-          }
-        </Text>
-      </KeyboardAvoidingView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <React.Fragment>
+          <KeyboardAvoidingView
+            behavior='padding'
+            style={styles.container}
+            contentContainerStyle={styles.container}
+          >
+            <Image
+              source={ChronoWalletIcon}
+              style={styles.logo}
+            />
+            <Image
+              source={ChronoWalletText}
+              style={styles.logoText}
+            />
+            {
+              this.props.accounts
+                ? this.renderAccountsList()
+                : this.renderCreateAccountForm()
+            }
+          </KeyboardAvoidingView>
+          <Text style={styles.copyright}>
+            {
+              COPYRIGHT
+            }
+          </Text>
+        </React.Fragment>
+      </TouchableWithoutFeedback>
     )
   }
 }

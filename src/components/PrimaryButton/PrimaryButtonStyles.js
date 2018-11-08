@@ -21,5 +21,6 @@ export default StyleSheet.create({
     paddingVertical: 14,
     marginHorizontal: 20,
     lineHeight: 20,
+    textTransform: 'uppercase',
   },
 })

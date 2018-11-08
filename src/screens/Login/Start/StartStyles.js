@@ -26,7 +26,7 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    margin: 20,
+    marginTop: 20,
     textAlign: 'center',
   },
   orText: {
