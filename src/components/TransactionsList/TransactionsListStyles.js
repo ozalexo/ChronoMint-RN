@@ -12,6 +12,13 @@ export default StyleSheet.create({
   item: {
     paddingVertical: 16,
     paddingHorizontal: 24,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  leftPart: {
+    flexShrink: 1,
     flexDirection: 'row',
   },
   itemText: {

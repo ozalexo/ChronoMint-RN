@@ -3,7 +3,7 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import React, { PureComponent } from 'react'
+import React, {PureComponent} from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -22,7 +22,7 @@ import styles from './TransactionsListStyles'
 
 export default class TransactionsList extends PureComponent {
 
-  componentDidMount () {
+  componentDidMount() {
     const trLoadingStatus = this.props.mainWalletTransactionLoadingStatus
     if (!trLoadingStatus.isFetching &&
       !trLoadingStatus.isInited
@@ -37,7 +37,7 @@ export default class TransactionsList extends PureComponent {
   renderItem = (item) => <TransactionItem {...item} navigator={this.props.navigator} />
 
 
-  render () {
+  render() {
     const {
       transactions,
       mainWalletTransactionLoadingStatus,
@@ -140,13 +140,13 @@ class TransactionItem extends PureComponent {
 
   static getFormattedBalance = (amount, symbol, type) => {
     const isAmountTooSmall = amount > 0 && amount < 0.01
-    let format = isAmountTooSmall ? '%u%n+' : '%u%n '
+    let format = isAmountTooSmall ? '%u%n+' : '%u%n  '
     format = [
       (type === 'sending' ? '-' : '+'),
       format,
     ].join(' ')
 
-    return I18n.toCurrency(amount, { precision: 2, unit: ` ${symbol} `, format })
+    return I18n.toCurrency(amount, {precision: 2, unit: ` ${symbol} `, format})
 
   }
 
@@ -163,7 +163,7 @@ class TransactionItem extends PureComponent {
     } = props.item
   }
 
-  render () {
+  render() {
     const {
       address,
       confirmations,
@@ -183,23 +183,25 @@ class TransactionItem extends PureComponent {
         onPress={() => this.goToTx(this.props)}
       >
         <View style={styles.item}>
-          <TransactionIcon
-            type={type}
-            confirmations={confirmations}
-          />
-          <Text
-            style={styles.itemText}
-            ellipsizeMode='middle'
-            numberOfLines={2}
-          >
-            {
-              tType
-            }
-            {'\n'}
-            {
-              address
-            }
-          </Text>
+          <View style={styles.leftPart}>
+            <TransactionIcon
+              type={type}
+              confirmations={confirmations}
+            />
+            <Text
+              style={styles.itemText}
+              ellipsizeMode='middle'
+              numberOfLines={2}
+            >
+              {
+                tType
+              }
+              {'\n'}
+              {
+                address
+              }
+            </Text>
+          </View>
           <Text style={transactionStyle}>
             {
               TransactionItem.getFormattedBalance(amount, symbol, type)

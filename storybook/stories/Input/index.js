@@ -8,5 +8,5 @@ export default function StoryInput({onChangeText, style, error, ...restProps}) {
 
 StoryInput.propTypes = {
   onChangeText: PropTypes.func,
-  error: PropTypes.bool,
+  error: PropTypes.string,
 }

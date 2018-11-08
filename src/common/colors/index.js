@@ -21,7 +21,6 @@ export default {
   ghost: '#C7C7CC',
 
   background: '#FBFBFE',
-  backgroundColor,
   backgroundLight: '#FFFFFF',
   backgroundDark: '#CCCCDF',
   backgroundDim: 'rgba(255, 255, 255, .1)',

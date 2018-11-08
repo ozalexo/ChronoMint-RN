@@ -27,7 +27,7 @@ const confirmations = [0, 1, 2, 3, 4]
 const transactionsList = [
   {
     address: 'test address',
-    amount: 0.001,
+    amount: 0.000000001,
     confirmations: 0,
     symbol: 'BCC',
     type: 'sending',
@@ -122,9 +122,8 @@ storiesOf('Components/Inputs', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Input', () => (
     <StoryWrapper>
-      <Input placeholder='Default Input' />
-      <Input placeholder='Error Input' error={true} />
-      <Input placeholder='Success Input' error={false} />
+      <Input style={{width: '100%'}} placeholder='Default Input' />
+      <Input style={{width: '100%'}} placeholder='Error Input' error='Input cant be empty' />
     </StoryWrapper>
   ))
   .add('Checkboxes', () => (
@@ -134,29 +133,6 @@ storiesOf('Components/Inputs', module)
       <Checkbox label='Light Checked' isChecked onPress={action('clicked-checkbox')} />
       <Checkbox label='Light Unchecked' onPress={action('clicked-checkbox')} />
     </StoryWrapper>
-  ))
-
-
-storiesOf('Components/Fee Slider', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('FeeSlider', () => (
-    <FeeSlider
-      style={{backgroundColor: 'white'}}
-      tokenSymbol='ETH'
-      selectedCurrency='USD'
-      value={1}
-      calculatedFeeValue={0.5}
-      calculatedFeeValueInSelectedCurrency={0.5}
-      maximumValue={10}
-      minimumValue={0}
-      step={0.5}
-    />
   ))
 
 storiesOf('Components/Labels', module)
@@ -331,6 +307,31 @@ storiesOf('Complex Components/Wallet', module)
       <Text>Check 2</Text>
       <Text>Check 3</Text>
     </WalletAlert>
+  ))
+
+
+
+
+storiesOf('Complex Components/Fee Slider', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('FeeSlider', () => (
+    <FeeSlider
+      style={{backgroundColor: 'white'}}
+      tokenSymbol='ETH'
+      selectedCurrency='USD'
+      value={1}
+      calculatedFeeValue={0.5}
+      calculatedFeeValueInSelectedCurrency={0.5}
+      maximumValue={10}
+      minimumValue={0}
+      step={0.5}
+    />
   ))
 
 storiesOf('Complex Components/Transactions List', module)

@@ -37,7 +37,7 @@ const FeeSlider = ({
   maximumValue = 1.9,
   minimumValue = 0.1,
   step = 0.1,
-  handleValueChange = () => { }, // [AO] Do nothing by default
+  handleValueChange = () => {}, // [AO] Do nothing by default
 }) => {
   const tokenInfo = tokenSymbol &&
     calculatedFeeValue &&
@@ -54,6 +54,7 @@ const FeeSlider = ({
       <Slider
         maximumValue={maximumValue}
         minimumTrackTintColor={colors.lightpurple}
+        thumbTintColor={colors.lightpurple}
         minimumValue={minimumValue}
         step={step}
         value={value}

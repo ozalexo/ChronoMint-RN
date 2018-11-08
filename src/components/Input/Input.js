@@ -36,7 +36,7 @@ export default class Input extends Component {
     const { error, style, ...restProps } = this.props
     const errorStyle = error
       ? styles.error
-      : styles.success
+      : null
 
     return (
       <View style={style}>

@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   defaultText: {
-    color: colors.mainGrey,
+    color: colors.greySubLight,
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 19,
