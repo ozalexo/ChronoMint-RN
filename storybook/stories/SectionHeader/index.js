@@ -6,10 +6,6 @@ export default function StorySectionHeader ({ title }) {
   return <SectionHeader title={title} />
 }
 
-StorySectionHeader.defaultProps = {
-  title: 'Test Title',
-}
-
 StorySectionHeader.propTypes = {
   title: PropTypes.string,
 }

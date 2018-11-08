@@ -12,12 +12,6 @@ export default function StoryTransactionIcon ({ confirmations, type, mode }) {
   )
 }
 
-StoryTransactionIcon.defaultProps = {
-  confirmations: 2,
-  type: 'sending',
-  mode: 'small',
-}
-
 StoryTransactionIcon.propTypes = {
   confirmations: PropTypes.number,
   type: PropTypes.oneOf(['receiving', 'sending']),

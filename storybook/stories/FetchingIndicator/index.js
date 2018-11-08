@@ -6,10 +6,6 @@ export default function StoryFetchingIndicator ({ status }) {
   return <FetchingIndicator status={status} />;
 }
 
-StoryFetchingIndicator.defaultProps = {
-  status: 'FETCHING',
-}
-
 StoryFetchingIndicator.propTypes = {
   status: PropTypes.oneOf(['FETCHING', 'SYNCING', 'SYNCED']),
   style: PropTypes.oneOfType([

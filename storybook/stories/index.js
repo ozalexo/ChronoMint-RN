@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text } from 'react-native'
-import { storiesOf } from '@storybook/react-native'
-import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
+import {Text, View} from 'react-native'
+import {storiesOf} from '@storybook/react-native'
+import {action} from '@storybook/addon-actions'
+import {linkTo} from '@storybook/addon-links'
 
 import CenterView from './CenterView'
 import Welcome from './Welcome'
@@ -20,6 +20,7 @@ import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import TransactionsList from './TransactionsList'
+import styles from './styles';
 
 const confirmations = [0, 1, 2, 3, 4]
 const transactionsList = [
@@ -110,7 +111,7 @@ storiesOf('Components/Different', module)
     </React.Fragment>
   ))
 
-storiesOf('Inputs/Input', module)
+storiesOf('Components/Inputs', module)
   .addParameters({
     options: {
       hierarchySeparator: /\//,
@@ -118,25 +119,25 @@ storiesOf('Inputs/Input', module)
     },
   })
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('Normal Input', () => <Input />)
-  .add('Error Input', () => <Input error={true} />)
-  .add('Success Input', () => <Input error={false} />)
-
-storiesOf('Inputs/Checkboxes', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
-  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+  .add('Input', () => (
+    <React.Fragment>
+      <Text>Usual Input</Text>
+      <Input />
+      <Text>Error Input</Text>
+      <Input error={true} />
+      <Text>Success Input</Text>
+      <Input error={false} />
+    </React.Fragment>
+  ))
   .add('Checkboxes', () => (
     <React.Fragment>
       <Checkbox label='Dark Checked' isDark isChecked onPress={action('clicked-checkbox')} />
-      <Checkbox label='Light Unchecked' />
-      <Checkbox />
+      <Checkbox label='Dark Unchecked' isDark onPress={action('clicked-checkbox')} />
+      <Checkbox label='Light Checked' isChecked onPress={action('clicked-checkbox')} />
+      <Checkbox label='Light Unchecked' onPress={action('clicked-checkbox')} />
     </React.Fragment>
   ))
+
 
 storiesOf('Components/Fee Slider', module)
   .addParameters({
@@ -148,7 +149,7 @@ storiesOf('Components/Fee Slider', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('FeeSlider', () => (
     <FeeSlider
-      style={{ backgroundColor: 'white' }}
+      style={{backgroundColor: 'white'}}
       tokenSymbol='ETH'
       selectedCurrency='USD'
       value={1}
@@ -240,48 +241,56 @@ storiesOf('Components/Transaction icons', module)
     },
   })
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('Sending Icons', () => (
-    <React.Fragment>
-      {confirmations.map((confirmNumber) =>
-        <TransactionIcon
-          key={confirmNumber}
-          confirmations={confirmNumber}
-          type='sending'
-          mode='small'
-        />
-      )}
-      {confirmations.map((confirmNumber) =>
-        <TransactionIcon
-          key={confirmNumber}
-          confirmations={confirmNumber}
-          type='sending'
-          mode='big'
-        />
-      )}
-    </React.Fragment>
+  .add('Small Icons', () => (
+    <View style={styles.iconsContainer}>
+      <View style={styles.iconsBlock}>
+        {confirmations.map((confirmNumber) =>
+          <TransactionIcon
+            key={confirmNumber}
+            confirmations={confirmNumber}
+            type='sending'
+            mode='small'
+          />
+        )}
+      </View>
+      <View style={styles.iconsBlock}>
+        {confirmations.map((confirmNumber) =>
+          <TransactionIcon
+            key={confirmNumber}
+            confirmations={confirmNumber}
+            type='receiving'
+            mode='small'
+          />
+        )}
+      </View>
+    </View>
   ))
-  .add('Receiving Icons', () => (
-    <React.Fragment>
-      {confirmations.map((confirmNumber) =>
-        <TransactionIcon
-          key={confirmNumber}
-          confirmations={confirmNumber}
-          type='receiving'
-          mode='small'
-        />
-      )}
-      {confirmations.map((confirmNumber) =>
-        <TransactionIcon
-          key={confirmNumber}
-          confirmations={confirmNumber}
-          type='receiving'
-          mode='big'
-        />
-      )}
-    </React.Fragment>
+  .add('Big Icons', () => (
+    <View style={styles.iconsContainer}>
+      <View style={styles.iconsBlock}>
+        {confirmations.map((confirmNumber) =>
+          <TransactionIcon
+            key={confirmNumber}
+            confirmations={confirmNumber}
+            type='receiving'
+            mode='big'
+          />
+        )}
+      </View>
+      <View style={styles.iconsBlock}>
+        {confirmations.map((confirmNumber) =>
+          <TransactionIcon
+            key={confirmNumber}
+            confirmations={confirmNumber}
+            type='sending'
+            mode='big'
+          />
+        )}
+      </View>
+    </View>
   ))
 
-storiesOf('Components/Wallet', module)
+storiesOf('Complex Components/Wallet', module)
   .addParameters({
     options: {
       hierarchySeparator: /\//,
@@ -289,16 +298,40 @@ storiesOf('Components/Wallet', module)
     },
   })
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('Wallet Alert', () => <WalletAlert />)
+  .add('Wallet Alert', () => <WalletAlert title="Empty Wallet Alert"/>)
   .add('Wallet Alert With children', () => (
-    <WalletAlert title="Test title from prop" >
+    <WalletAlert
+      title="Test title from prop"
+      actions={
+        [
+          {
+            id: 1,
+            isMain: true,
+            title: 'Main test title',
+            onPress: () => { },
+          },
+          {
+            id: 2,
+            isMain: false,
+            title: 'First test title',
+            onPress: () => { },
+          },
+          {
+            id: 3,
+            isMain: false,
+            title: 'This is very long title for testing purposes ECgludvYJsDsyCMvZC3Vx0YEtu1mtS3RXKgBVHXNyUA9vwxaT5SKvJuICG1x2DpSM7HxHVa8CGTLHXWGIVMPRuVJsN0mTPXJP0qowaLdKkLSCnKTMbRhPv7KgeW8jOM5n8fOIrzCTJ9UNWx3RM4uJt35WYMe2IW2Qw5DKnwCTenbt5Byc1LbLYOX9ubb9azS8R79NwX5ZUu3EIEIjqoXmlwIKRZqb0Ug0KtHfqPeUA6xeAwK1quPGjGtqqjuwtH',
+            onPress: () => { },
+          },
+        ]
+      }
+    >
       <Text>Check 1</Text>
       <Text>Check 2</Text>
       <Text>Check 3</Text>
     </WalletAlert>
   ))
 
-storiesOf('Components/Transactions List', module)
+storiesOf('Complex Components/Transactions List', module)
   .addParameters({
     options: {
       hierarchySeparator: /\//,
@@ -308,7 +341,7 @@ storiesOf('Components/Transactions List', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Transactions List', () => (
     <TransactionsList
-      mainWalletTransactionLoadingStatus={{ isFetched: true, isFetching: false, isInited: true }}
+      mainWalletTransactionLoadingStatus={{isFetched: true, isFetching: false, isInited: true}}
       latestTransactionDate={new Date()}
       transactions={transactionsList}
     />

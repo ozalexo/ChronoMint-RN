@@ -20,58 +20,6 @@ export default function StoryTransactionsList ({
   )
 }
 
-StoryTransactionsList.defaultProps = {
-  mainWalletTransactionLoadingStatus: {
-    isFetched: true,
-    isFetching: false,
-    isInited: true,
-  },
-  latestTransactionDate: '1541506809717',
-  transactions: [
-    {
-      address: 'test address',
-      amount: 0.001,
-      confirmations: 0,
-      symbol: 'BCC',
-      type: 'sending',
-    },
-    {
-      address: 'test address',
-      amount: 100,
-      confirmations: 1,
-      symbol: 'WAVES',
-      type: 'sending',
-    },
-    {
-      address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
-      amount: 99,
-      confirmations: 2,
-      symbol: 'BTC',
-      type: 'receiving',
-    }, {
-      address: 'test address',
-      amount: 0.001,
-      confirmations: 3,
-      symbol: 'LHT',
-      type: 'sending',
-    },
-    {
-      address: 'second test address',
-      amount: 45,
-      confirmations: 4,
-      symbol: 'LTC',
-      type: 'receiving',
-    }, {
-      address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
-      amount: 0.001,
-      confirmations: 4,
-      symbol: 'ETH',
-      type: 'sending',
-    },
-  ],
-  refreshTransactionsList: () => { },
-}
-
 StoryTransactionsList.propTypes = {
   transactions: PropTypes.arrayOf(
     PropTypes.shape({

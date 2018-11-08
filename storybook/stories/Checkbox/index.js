@@ -6,13 +6,6 @@ export default function StoryCheckbox ({ label, isDark, isChecked, onPress }) {
   return <Checkbox label={label} isDark={isDark} isChecked={isChecked} onPress={onPress} />;
 }
 
-StoryCheckbox.defaultProps = {
-  label: 'Text label',
-  isDark: true,
-  isChecked: false,
-  onPress: () => { },
-}
-
 StoryCheckbox.propTypes = {
   label: PropTypes.string,
   isDark: PropTypes.bool,

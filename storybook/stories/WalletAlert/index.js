@@ -2,42 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import WalletAlert from '../../../src/components/WalletAlert'
 
-export default function StoryWalletAlert ({ actions, title, children, style, contentContainerStyle }) {
+export default function StoryWalletAlert({actions, title, children, style, contentContainerStyle}) {
   return (
     <WalletAlert
       actions={actions}
       title={title}
+      style={style}
+      contentContainerStyle={contentContainerStyle}
     >
       {children}
     </WalletAlert>
   )
-}
-
-StoryWalletAlert.defaultProps = {
-  contentContainerStyle: null,
-  style: null,
-  children: null,
-  actions: [
-    {
-      id: 1,
-      isMain: true,
-      title: 'Main test title',
-      onPress: () => { },
-    },
-    {
-      id: 2,
-      isMain: false,
-      title: 'First test title',
-      onPress: () => { },
-    },
-    {
-      id: 3,
-      isMain: false,
-      title: 'This is very long title for testing purposes ECgludvYJsDsyCMvZC3Vx0YEtu1mtS3RXKgBVHXNyUA9vwxaT5SKvJuICG1x2DpSM7HxHVa8CGTLHXWGIVMPRuVJsN0mTPXJP0qowaLdKkLSCnKTMbRhPv7KgeW8jOM5n8fOIrzCTJ9UNWx3RM4uJt35WYMe2IW2Qw5DKnwCTenbt5Byc1LbLYOX9ubb9azS8R79NwX5ZUu3EIEIjqoXmlwIKRZqb0Ug0KtHfqPeUA6xeAwK1quPGjGtqqjuwtH',
-      onPress: () => { },
-    },
-  ],
-  title: 'Test Title',
 }
 
 StoryWalletAlert.propTypes = {

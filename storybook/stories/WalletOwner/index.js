@@ -14,14 +14,6 @@ export default function StoryWalletOwner ({ address, id, image, name, onSelectOw
   )
 }
 
-StoryWalletOwner.defaultProps = {
-  address: 'Test address',
-  id: 'Test id',
-  image: null,
-  name: 'Test name',
-  onSelectOwner: () => { },
-}
-
 StoryWalletOwner.propTypes = {
   address: PropTypes.string,
   id: PropTypes.string,

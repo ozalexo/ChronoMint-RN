@@ -160,21 +160,22 @@ class TransactionItem extends PureComponent {
       symbol,
       txDate,
       type,
-    } = props
-
-    props.navigator.push({
-      screen: 'TransactionDetails',
-      passProps: {
-        address,
-        amount,
-        blockNumber,
-        confirmations,
-        fee,
-        symbol,
-        txDate,
-        type,
-      },
-    })
+    } = props.item
+    
+    // commented untill TransactionDetails screen
+    // props.navigator.push({
+    //   screen: 'TransactionDetails',
+    //   passProps: {
+    //     address,
+    //     amount,
+    //     blockNumber,
+    //     confirmations,
+    //     fee,
+    //     symbol,
+    //     txDate,
+    //     type,
+    //   },
+    // })
   }
 
   render () {
