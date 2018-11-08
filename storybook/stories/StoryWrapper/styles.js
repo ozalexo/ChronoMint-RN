@@ -2,8 +2,9 @@ import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
   wrapper: {
+    height: '100%',
     width: '100%',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 })
