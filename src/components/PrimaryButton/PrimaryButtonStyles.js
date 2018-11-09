@@ -8,7 +8,7 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   container: {
-    minHeight: 45,
+    minHeight: 44,
     borderRadius: 50,
     backgroundColor: colors.primary,
     alignItems: 'center',
