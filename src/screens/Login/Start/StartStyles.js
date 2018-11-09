@@ -5,10 +5,11 @@
 
 import { StyleSheet } from 'react-native'
 import { Header } from 'react-navigation'
+import colors from '../../../common/colors'
 
 export default StyleSheet.create({
   container: {
     marginTop: Header.HEIGHT,
-    backgroundColor: 'red',
+    backgroundColor: colors.red,
   },
 })
