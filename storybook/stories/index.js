@@ -5,8 +5,14 @@ import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 import StoryProvider from './StoryProvider'
 
+//Screens
+import ImportMethod from './ImportMethod'
+
+//Wrappers
 import StoryWrapper from './StoryWrapper'
 import CenterView from './CenterView'
+import ScreenWrapper from './ScreenWrapper'
+//Components
 import Welcome from './Welcome'
 import Separator from './Separator'
 import Input from './Input'
@@ -361,3 +367,14 @@ storiesOf('Screens/Login', module)
   .add('Start Screen', () => (
     <ScreenStart />
   ))
+  
+
+storiesOf('Screens', module)
+.addParameters({
+  options: {
+    hierarchySeparator: /\//,
+    hierarchyRootSeparator: /\|/,
+  },
+})
+.addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
+.add('ImportMethod', () => <ImportMethod />)
