@@ -1,8 +1,6 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
- * 
  */
 
 import {
@@ -12,17 +10,16 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   defaultText: {
-    color: colors.mainGrey,
+    color: colors.greySubLight,
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 19,
   },
   currencyText: {
-    // color: colors.activeBlue,
-    color: colors.green,
+    color: colors.activeBlue,
     fontSize: 22,
     lineHeight: 26,
   },

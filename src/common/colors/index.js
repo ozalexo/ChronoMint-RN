@@ -12,8 +12,15 @@ export default {
   greySub: '#808080',
   greySubLight: '#BFBFBF',
 
+  dustygray: '#9997b2',
+  lightpurple: '#786AB7',
+  success: 'green',
+  error: 'red',
+  light: '#FFFFFF',
+  sectionHeaderContainer: '#efeff3',
+  ghost: '#C7C7CC',
+
   background: '#FBFBFE',
-  backgroundColor,
   backgroundLight: '#FFFFFF',
   backgroundDark: '#CCCCDF',
   backgroundDim: 'rgba(255, 255, 255, .1)',

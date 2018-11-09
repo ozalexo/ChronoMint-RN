@@ -1,15 +1,25 @@
-import { StyleSheet } from 'react-native'
+import {StyleSheet} from 'react-native'
+import colors from '../../common/colors'
 
 export default StyleSheet.create({
+  inputWrapper: {
+    width: '100%',
+  },
   input: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     width: '100%',
+    alignSelf: 'stretch',
     alignItems: 'center',
-    borderBottomColor: '#9997B2',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    color: '#9997B2',
-    backgroundColor: '#ffffff',
+    height: 44,
+    borderBottomColor: colors.dustygray,
+    color: colors.dustygray,
     fontSize: 16,
+  },
+  error: {
+    borderBottomColor: colors.error,
+  },
+  errorText: {
+    color: colors.error,
+    textAlign: 'center',
   },
 })

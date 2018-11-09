@@ -1,7 +1,6 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
  */
 
 import * as React from 'react'
@@ -9,9 +8,11 @@ import {
   Slider,
   Text,
   View,
+  Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './FeeSliderStyles'
+import colors from '../../common/colors'
 
 /**
  * Title on top of slider: Slow <-> Fast.
@@ -28,6 +29,7 @@ const FeeSliderTitle = () => (
 )
 
 const FeeSlider = ({
+  style,
   tokenSymbol,
   selectedCurrency,
   value = 1,
@@ -36,7 +38,7 @@ const FeeSlider = ({
   maximumValue = 1.9,
   minimumValue = 0.1,
   step = 0.1,
-  handleValueChange = () => { }, // [AO] Do nothing by default
+  handleValueChange = () => {}, // [AO] Do nothing by default
 }) => {
   const tokenInfo = tokenSymbol &&
     calculatedFeeValue &&
@@ -47,12 +49,15 @@ const FeeSlider = ({
     calculatedFeeValueInSelectedCurrency &&
     ('≈' + [selectedCurrency, calculatedFeeValueInSelectedCurrency.toFixed(2)].join(' ')) || ''
 
+  const thumbColor = Platform.OS === 'ios' ? colors.white : colors.lightpurple
+
   return (
-    <View style={styles.feeSliderContainer}>
+    <View style={[styles.feeSliderContainer, style]}>
       <FeeSliderTitle />
       <Slider
         maximumValue={maximumValue}
-        minimumTrackTintColor='#786AB7'
+        minimumTrackTintColor={colors.lightpurple}
+        thumbTintColor={thumbColor}
         minimumValue={minimumValue}
         step={step}
         value={value}

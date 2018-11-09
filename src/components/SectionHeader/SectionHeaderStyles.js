@@ -9,14 +9,14 @@ export default StyleSheet.create({
     fontWeight: '900',
   },
   container: {
-    backgroundColor: '#EFEFF3',
+    backgroundColor: colors.sectionHeaderContainer,
     paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 6,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
-    borderTopColor: '#C7C7CC',
-    borderBottomColor: '#C7C7CC',
+    borderTopColor: colors.ghost,
+    borderBottomColor: colors.ghost,
   }
 })

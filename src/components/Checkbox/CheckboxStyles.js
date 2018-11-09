@@ -10,10 +10,10 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   label: {
-    color: colors.foreground,
+    color: colors.primaryLight,
   },
   labelDark: {
-    color: colors.backgroundLight,
+    color: colors.primaryDarkest,
   },
   checkboxContainer: {
     marginRight: 8

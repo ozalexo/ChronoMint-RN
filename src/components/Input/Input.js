@@ -1,11 +1,15 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
- * 
  */
+
 import React, { Component } from 'react'
-import { TextInput } from 'react-native'
+import {
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
+import PropTypes from 'prop-types'
 import colors from '../../common/colors'
 import styles from './InputStyles'
 
@@ -16,21 +20,47 @@ export default class Input extends Component {
 
   focus = () => this.input.focus()
 
+  renderErrorText = () => (
+    <Text
+      style={styles.errorText}
+      ellipsizeMode='tail'
+      numberOfLines={1}
+    >
+      {
+        this.props.error
+      }
+    </Text>
+  )
+
   render () {
-    const { style, ...restProps } = this.props
+    const { error, style, ...restProps } = this.props
+    const errorStyle = error
+      ? styles.error
+      : null
 
     return (
-      <TextInput
-        {...restProps}
-        style={[
-          styles.input,
-          style,
-        ]}
-        ref={this.refInput}
-        placeholderTextColor='#9997b2'
-        underlineColorAndroid={colors.transparent}
-        keyboardAppearance='dark'
-      />
+      <View style={[styles.inputWrapper, style]}>
+        <TextInput
+          {...restProps}
+          style={[
+            styles.input,
+            errorStyle,
+          ]}
+          ref={this.refInput}
+          placeholderTextColor={colors.dustygray}
+          underlineColorAndroid={colors.transparent}
+          keyboardAppearance='dark'
+        />
+        {
+          error
+            ? this.renderErrorText()
+            : null
+        }
+      </View>
     )
   }
+}
+
+Input.propTypes = {
+  error: PropTypes.string,
 }
