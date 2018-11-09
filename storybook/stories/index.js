@@ -1,8 +1,8 @@
 import React from 'react'
-import {Text, View} from 'react-native'
-import {storiesOf} from '@storybook/react-native'
-import {action} from '@storybook/addon-actions'
-import {linkTo} from '@storybook/addon-links'
+import { Text, View } from 'react-native'
+import { storiesOf } from '@storybook/react-native'
+import { action } from '@storybook/addon-actions'
+import { linkTo } from '@storybook/addon-links'
 
 import StoryWrapper from './StoryWrapper'
 import CenterView from './CenterView'
@@ -220,7 +220,7 @@ storiesOf('Components/Transaction icons', module)
       <View style={styles.iconsBlock}>
         {confirmations.map((confirmNumber) =>
           <TransactionIcon
-            style={{marginVertical: 10}}
+            style={{ marginVertical: 10 }}
             key={confirmNumber}
             confirmations={confirmNumber}
             type='sending'
@@ -231,7 +231,7 @@ storiesOf('Components/Transaction icons', module)
       <View style={styles.iconsBlock}>
         {confirmations.map((confirmNumber) =>
           <TransactionIcon
-            style={{marginVertical: 10}}
+            style={{ marginVertical: 10 }}
             key={confirmNumber}
             confirmations={confirmNumber}
             type='receiving'
@@ -246,7 +246,7 @@ storiesOf('Components/Transaction icons', module)
       <View style={styles.iconsBlock}>
         {confirmations.map((confirmNumber) =>
           <TransactionIcon
-            style={{marginVertical: 10}}
+            style={{ marginVertical: 10 }}
             key={confirmNumber}
             confirmations={confirmNumber}
             type='receiving'
@@ -257,7 +257,7 @@ storiesOf('Components/Transaction icons', module)
       <View style={styles.iconsBlock}>
         {confirmations.map((confirmNumber) =>
           <TransactionIcon
-            style={{marginVertical: 10}}
+            style={{ marginVertical: 10 }}
             key={confirmNumber}
             confirmations={confirmNumber}
             type='sending'
@@ -286,19 +286,19 @@ storiesOf('Complex Components/Wallet', module)
             id: 1,
             isMain: true,
             title: 'Main test title',
-            onPress: () => {},
+            onPress: () => { },
           },
           {
             id: 2,
             isMain: false,
             title: 'First test title',
-            onPress: () => {},
+            onPress: () => { },
           },
           {
             id: 3,
             isMain: false,
             title: 'This is very long title for testing purposes ECgludvYJsDsyCMvZC3Vx0YEtu1mtS3RXKgBVHXNyUA9vwxaT5SKvJuICG1x2DpSM7HxHVa8CGTLHXWGIVMPRuVJsN0mTPXJP0qowaLdKkLSCnKTMbRhPv7KgeW8jOM5n8fOIrzCTJ9UNWx3RM4uJt35WYMe2IW2Qw5DKnwCTenbt5Byc1LbLYOX9ubb9azS8R79NwX5ZUu3EIEIjqoXmlwIKRZqb0Ug0KtHfqPeUA6xeAwK1quPGjGtqqjuwtH',
-            onPress: () => {},
+            onPress: () => { },
           },
         ]
       }
@@ -322,7 +322,7 @@ storiesOf('Complex Components/Fee Slider', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('FeeSlider', () => (
     <FeeSlider
-      style={{backgroundColor: 'white'}}
+      style={{ backgroundColor: 'white' }}
       tokenSymbol='ETH'
       selectedCurrency='USD'
       value={1}
@@ -344,7 +344,7 @@ storiesOf('Complex Components/Transactions List', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Transactions List', () => (
     <TransactionsList
-      mainWalletTransactionLoadingStatus={{isFetched: true, isFetching: false, isInited: true}}
+      mainWalletTransactionLoadingStatus={{ isFetched: true, isFetching: false, isInited: true }}
       latestTransactionDate={new Date()}
       transactions={transactionsList}
     />
