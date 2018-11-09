@@ -18,7 +18,7 @@ export default class DefaultImageBackground extends React.Component {
       <ImageBackground
         source={background}
         style={styles.backgroundImage}
-        resizeMode='contain'
+        resizeMode='stretch'
       >
         {children}
       </ImageBackground>
@@ -29,7 +29,8 @@ export default class DefaultImageBackground extends React.Component {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    width: '100%',
+    resizeMode: 'cover',
+    alignSelf: 'stretch',
     height: null,
     backgroundColor,
   },
