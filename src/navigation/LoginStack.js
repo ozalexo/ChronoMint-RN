@@ -7,12 +7,16 @@ import React from 'react'
 import {
   createStackNavigator,
 } from 'react-navigation'
+import AccountImportMethod from '../screens/AccountImportMethod'
 import Start from '../screens/Login/Start'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
 
 const LoginStack = createStackNavigator(
   {
+    'AccountImportMethod': {
+      screen: AccountImportMethod,
+    },
     'Start': {
       navigationOptions: ({ navigation }) => ({
         headerLeft: <HeaderNetworkSelect toggleDrawer={navigation.toggleNetworkDrawer} />,
@@ -28,7 +32,7 @@ const LoginStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Start',
+    initialRouteName: 'AccountImportMethod',
     navigationOptions: () => ({
       headerTransparent: true,
       headerBackTitle: null,
