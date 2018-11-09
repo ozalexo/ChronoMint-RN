@@ -9,6 +9,7 @@ import {
   HeaderBackButton,
 } from 'react-navigation'
 import ImportMethod from '../screens/ImportMethod'
+import EnterPrivateKey from '../screens/EnterPrivateKey'
 import Start from '../screens/Login/Start'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
@@ -31,9 +32,16 @@ const LoginStack = createStackNavigator(
       }),
       screen: ImportMethod,
     },
+    'EnterPrivateKey': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Enter Private Key',
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+      }),
+      screen: EnterPrivateKey,
+    },
   },
   {
-    initialRouteName: 'Start',
+    initialRouteName: 'EnterPrivateKey',
     headerLayoutPreset: 'center',
     navigationOptions: () => ({
       headerTransparent: true,
