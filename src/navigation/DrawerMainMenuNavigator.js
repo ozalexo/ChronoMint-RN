@@ -27,6 +27,10 @@ const DrawerMainMenuNavigator = createDrawerNavigator(
     },
     navigationOptions: {
       headerTransparent: true,
+      headerForceInset: { top: 'never' },
+      headerStyle: {
+        marginTop: 0,
+      },
     },
   }
 )

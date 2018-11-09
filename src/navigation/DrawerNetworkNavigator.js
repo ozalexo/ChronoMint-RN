@@ -25,6 +25,13 @@ const DrawerNetworkNavigator = createDrawerNavigator(
           DrawerActions.toggleDrawer({ key: stateKey }),
       }
     },
+    navigationOptions: {
+      headerTransparent: true,
+      headerForceInset: { top: 'never' },
+      headerStyle: {
+        marginTop: 0,
+      },
+    },
   }
 )
 
