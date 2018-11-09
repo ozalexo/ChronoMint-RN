@@ -6,21 +6,15 @@
 import React from 'react'
 import {
   createStackNavigator,
+  HeaderBackButton,
 } from 'react-navigation'
-import AccountImportMethod from '../screens/AccountImportMethod'
+import ImportMethod from '../screens/ImportMethod'
 import Start from '../screens/Login/Start'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
-import NavHeader from '../components/NavHeader'
 
 const LoginStack = createStackNavigator(
   {
-    'AccountImportMethod': {
-      navigationOptions: ({ navigation }) => ({
-        header: <NavHeader goBack={navigation.goBack} Title={'Add an existing account'} />,
-      }),
-      screen: AccountImportMethod,
-    },
     'Start': {
       navigationOptions: ({ navigation }) => ({
         headerLeft: <HeaderNetworkSelect toggleDrawer={navigation.toggleNetworkDrawer} />,
@@ -30,9 +24,17 @@ const LoginStack = createStackNavigator(
       }),
       screen: Start,
     },
+    'ImportMethod': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Add an existing account',
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+      }),
+      screen: ImportMethod,
+    },
   },
   {
-    initialRouteName: 'AccountImportMethod',
+    initialRouteName: 'Start',
+    headerLayoutPreset: 'center',
     navigationOptions: () => ({
       headerTransparent: true,
       headerBackTitle: null,

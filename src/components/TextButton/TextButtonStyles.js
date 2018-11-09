@@ -9,7 +9,6 @@ import colors from '../../common/colors'
 export default StyleSheet.create({
   container: {
     minHeight: 10,
-    paddingVertical: 10,
     alignSelf: 'center',
   },
   label: {

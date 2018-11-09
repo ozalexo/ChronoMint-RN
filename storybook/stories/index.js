@@ -4,8 +4,14 @@ import { storiesOf } from '@storybook/react-native'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 
+//Screens
+import ImportMethod from './ImportMethod'
+
+//Wrappers
 import StoryWrapper from './StoryWrapper'
 import CenterView from './CenterView'
+import ScreenWrapper from './ScreenWrapper'
+//Components
 import Welcome from './Welcome'
 import Separator from './Separator'
 import Input from './Input'
@@ -21,7 +27,7 @@ import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import TransactionsList from './TransactionsList'
-import styles from './styles';
+import styles from './styles'
 
 const confirmations = [0, 1, 2, 3, 4]
 const transactionsList = [
@@ -349,3 +355,15 @@ storiesOf('Complex Components/Transactions List', module)
       transactions={transactionsList}
     />
   ))
+
+  
+
+storiesOf('Screens', module)
+.addParameters({
+  options: {
+    hierarchySeparator: /\//,
+    hierarchyRootSeparator: /\|/,
+  },
+})
+.addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
+.add('ImportMethod', () => <ImportMethod />)
