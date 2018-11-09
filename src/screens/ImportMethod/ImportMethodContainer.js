@@ -5,34 +5,34 @@
 
 import React, { PureComponent } from 'react'
 import textConstants from '../../locales/en'
-import AccountImportMethod from './AccountImportMethod'
+import ImportMethod from './ImportMethod'
 import {mnemonic, private_key} from '../../images'
 
-class AccountImportMethodContainer extends PureComponent {
+class ImportMethodContainer extends PureComponent {
   handleCreateWallet = () => {
     const {navigate} = this.props.navigation
     navigate('SetAccountPassword')
   }
 
-  handleSelectAccountImportMethod = ({ screen, title }) => () => {
+  handleSelectImportMethod = ({ screen, title }) => () => {
     const { navigate } = this.props.navigation
     navigate(screen)
   }
 
   render() {
     return (
-      <AccountImportMethod
-        accountImportMethods={accountImportMethods}
+      <ImportMethod
+        ImportMethods={ImportMethods}
         onCreateWallet={this.handleCreateWallet}
-        onSelectAccountImportMethod={this.handleSelectAccountImportMethod}
+        onSelectImportMethod={this.handleSelectImportMethod}
       />
     )
   }
 }
 
-export default AccountImportMethodContainer
+export default ImportMethodContainer
 
-const accountImportMethods= [
+const ImportMethods= [
   {
     id: 'mnemonic',
     screen: 'EnterMnemonic',

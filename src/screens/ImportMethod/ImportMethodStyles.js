@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native'
+import {Header} from 'react-navigation'
 import colors from '../../common/colors'
+
 
 export default StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 30,
+    marginTop: Header.HEIGHT + 30,
   },
   item: {
     alignItems: 'center',
@@ -26,6 +28,7 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
   or: {
+    marginVertical: 20,
     alignSelf: 'center',
     color: colors.darkpurple,
     fontSize: 16,
