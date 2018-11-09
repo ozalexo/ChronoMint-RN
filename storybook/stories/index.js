@@ -7,6 +7,7 @@ import StoryProvider from './StoryProvider'
 
 //Screens
 import ImportMethod from './ImportMethod'
+import EnterPrivateKey from './EnterPrivateKey'
 
 //Wrappers
 import StoryWrapper from './StoryWrapper'
@@ -370,11 +371,12 @@ storiesOf('Screens/Login', module)
   
 
 storiesOf('Screens', module)
-.addParameters({
-  options: {
-    hierarchySeparator: /\//,
-    hierarchyRootSeparator: /\|/,
-  },
-})
-.addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
-.add('ImportMethod', () => <ImportMethod />)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
+  .add('ImportMethod', () => <ImportMethod />)
+  .add('EnterPrivateKey', () => <EnterPrivateKey />)
