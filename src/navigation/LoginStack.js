@@ -11,10 +11,14 @@ import AccountImportMethod from '../screens/AccountImportMethod'
 import Start from '../screens/Login/Start'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
+import NavHeader from '../components/NavHeader'
 
 const LoginStack = createStackNavigator(
   {
     'AccountImportMethod': {
+      navigationOptions: ({ navigation }) => ({
+        header: <NavHeader goBack={navigation.goBack} Title={'Add an existing account'} />,
+      }),
       screen: AccountImportMethod,
     },
     'Start': {
