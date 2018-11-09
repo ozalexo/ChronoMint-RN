@@ -39,7 +39,7 @@ export default class Input extends Component {
       : null
 
     return (
-      <View style={style}>
+      <View style={[styles.inputWrapper, style]}>
         <TextInput
           {...restProps}
           style={[
@@ -47,7 +47,7 @@ export default class Input extends Component {
             errorStyle,
           ]}
           ref={this.refInput}
-          placeholderTextColor='#9997b2'
+          placeholderTextColor={colors.dustygray}
           underlineColorAndroid={colors.transparent}
           keyboardAppearance='dark'
         />

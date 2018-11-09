@@ -8,10 +8,11 @@ import {
   Slider,
   Text,
   View,
+  Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './FeeSliderStyles'
-import colors from '../../common/colors';
+import colors from '../../common/colors'
 
 /**
  * Title on top of slider: Slow <-> Fast.
@@ -48,13 +49,15 @@ const FeeSlider = ({
     calculatedFeeValueInSelectedCurrency &&
     ('≈' + [selectedCurrency, calculatedFeeValueInSelectedCurrency.toFixed(2)].join(' ')) || ''
 
+  const thumbColor = Platform.OS === 'ios' ? colors.white : colors.lightpurple
+
   return (
     <View style={[styles.feeSliderContainer, style]}>
       <FeeSliderTitle />
       <Slider
         maximumValue={maximumValue}
         minimumTrackTintColor={colors.lightpurple}
-        thumbTintColor={colors.lightpurple}
+        thumbTintColor={thumbColor}
         minimumValue={minimumValue}
         step={step}
         value={value}
