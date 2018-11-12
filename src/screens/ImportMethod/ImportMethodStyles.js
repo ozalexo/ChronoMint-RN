@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import {Header} from 'react-navigation'
+import {headerHeight} from '../../common/constants/screens'
 import colors from '../../common/colors'
 
 
@@ -7,7 +7,7 @@ export default StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: Header.HEIGHT + 30,
+    marginTop: headerHeight + 30,
   },
   item: {
     alignItems: 'center',

@@ -22,7 +22,7 @@ class ImportMethodContainer extends PureComponent {
   render() {
     return (
       <ImportMethod
-        ImportMethods={ImportMethods}
+        importMethodList={importMethodList}
         onCreateWallet={this.handleCreateWallet}
         onSelectImportMethod={this.handleSelectImportMethod}
       />
@@ -32,7 +32,7 @@ class ImportMethodContainer extends PureComponent {
 
 export default ImportMethodContainer
 
-const ImportMethods= [
+const importMethodList= [
   {
     id: 'mnemonic',
     screen: 'EnterMnemonic',

@@ -39,13 +39,11 @@ export default StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  primaryButton: {
-    marginBottom: 20,
-  },
   orText: {
     alignSelf: 'center',
     color: colors.textOnPurple,
     fontSize: 16,
+    marginVertical: 20,
   },
   kavContainer: {
     flex: 1,

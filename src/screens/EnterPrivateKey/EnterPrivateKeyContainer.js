@@ -4,7 +4,6 @@
  */
 
 import React, { PureComponent } from 'react'
-import { Alert } from 'react-native'
 import EnterPrivateKey from './EnterPrivateKey'
 
 class EnterPrivateKeyContainer extends PureComponent {
@@ -25,6 +24,7 @@ class EnterPrivateKeyContainer extends PureComponent {
     if (privateKey.length <= 6) {
       this.setState({ error: 'Password is too small' })
     } else {
+      this.setState({ error: '' })
       navigate('SetAccountPassword')
     }
   }

@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native'
-import {Header} from 'react-navigation'
+import {headerHeight} from '../../common/constants/screens'
 
 export default StyleSheet.create({
   screenView: {
-    alignSelf: 'center',
-    width: '80%',
-    marginTop: Header.HEIGHT + 20,
+    marginTop: headerHeight + 20,
     marginBottom: 20,
+    flex: 1,
+    flexDirection: 'column',
+    paddingHorizontal: 20,
   },
 })
