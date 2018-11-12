@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import textConstants from '../../locales/en'
 import PropTypes from 'prop-types'
+import textConstants from '../../locales/en'
 import TextButton from '../../components/TextButton'
 import styles from './ImportMethodStyles'
 
@@ -42,24 +42,24 @@ Method.propTypes = {
 }
 
 export default class ImportMethod extends PureComponent {
-  renderMethod = (ImportMethod) => (
+  renderMethod = (importMethod) => (
     <Method
-      key={ImportMethod.id}
-      {...ImportMethod}
-      onPress={this.props.onSelectImportMethod(ImportMethod)}
+      key={importMethod.id}
+      {...importMethod}
+      onPress={this.props.onSelectImportMethod(importMethod)}
     />
   )
 
   render() {
     const {
-      ImportMethods,
+      importMethodList,
       onCreateWallet,
     } = this.props
 
     return (
       <View>
         <View style={styles.buttons}>
-          {ImportMethods.map(this.renderMethod)}
+          {importMethodList.map(this.renderMethod)}
         </View>
         <Text style={styles.or}>
           {textConstants.or}
@@ -74,7 +74,7 @@ export default class ImportMethod extends PureComponent {
 }
 
 ImportMethod.propTypes = {
-  ImportMethods: PropTypes.arrayOf(
+  importMethodList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
       label: PropTypes.string,
