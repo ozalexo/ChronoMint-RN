@@ -93,7 +93,7 @@ export default class Start extends PureComponent {
     // Default header heights: ios = 64, android = 56
     const keyboardVerticalOffset = Platform.OS === 'ios'
       ? -20
-      : 20
+      : 0
 
     return (
       <TouchableWithoutFeedback
