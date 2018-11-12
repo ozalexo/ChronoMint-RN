@@ -26,7 +26,16 @@ const DrawerLanguageNavigator = createDrawerNavigator(
           DrawerActions.toggleDrawer({ key: stateKey }),
       }
     },
-  }
+    navigationOptions: {
+      headerTransparent: true,
+      headerForceInset: {
+        top: 'never',
+      },
+      headerStyle: {
+        marginTop: 0,
+      },
+    },
+  },
 )
 
 export default DrawerLanguageNavigator

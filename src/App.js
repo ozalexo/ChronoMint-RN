@@ -4,6 +4,7 @@
  */
 
 import React, {Component} from 'react'
+import { SafeAreaView } from 'react-native'
 import { Provider } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
 import {
@@ -12,6 +13,7 @@ import {
 import DefaultImageBackground from './common/ImageBackground'
 import RootNavigator from './navigation/RootNavigator'
 import store from './store/createStore'
+import styles from './AppStyles'
 
 export default class App extends Component {
   componentDidMount () {
@@ -21,10 +23,12 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <DefaultImageBackground>
-          <StatusBar barStyle='light-content' />
-          <RootNavigator />
-        </DefaultImageBackground>
+        <SafeAreaView style={styles.safeArea}>
+          <DefaultImageBackground>
+            <StatusBar barStyle='light-content' />
+            <RootNavigator />
+          </DefaultImageBackground>
+        </SafeAreaView>
       </Provider>
     )
   }

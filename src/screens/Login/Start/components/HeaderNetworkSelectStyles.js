@@ -9,8 +9,6 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   topBarActions: {
     flexDirection: 'row',
-    margin: 20,
-    top: -44,
   },
   topBarButton: {
     alignItems: 'center',

@@ -4,11 +4,51 @@
  */
 
 import { StyleSheet } from 'react-native'
-import { Header } from 'react-navigation'
+import colors from '../../../common/colors/index'
 
 export default StyleSheet.create({
   container: {
-    marginTop: Header.HEIGHT,
-    backgroundColor: 'red',
+    // TODO: to investigate a "magic" with this 20
+    marginTop: 20,
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'column',
+    alignSelf: 'stretch',
+  },
+  logo: {
+    marginBottom: 20,
+    alignSelf: 'center',
+  },
+  logoText: {
+    // Default header heights: ios = 64, android = 56
+    marginBottom: 64,
+    alignSelf: 'center',
+  },
+  copyright: {
+    alignSelf: 'center',
+    color: colors.dustygray,
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  inputsContainer: {
+    paddingHorizontal: 20,
+    flex: 1,
+    alignSelf: 'stretch',
+  },
+  input: {
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  primaryButton: {
+    marginBottom: 20,
+  },
+  orText: {
+    alignSelf: 'center',
+    color: colors.textOnPurple,
+    fontSize: 16,
+  },
+  kavContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
   },
 })

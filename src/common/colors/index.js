@@ -19,6 +19,7 @@ export default {
   light: '#FFFFFF',
   sectionHeaderContainer: '#efeff3',
   ghost: '#C7C7CC',
+  textOnPurple: '#A3A3CC',
 
   background: '#FBFBFE',
   backgroundLight: '#FFFFFF',
@@ -50,5 +51,5 @@ export default {
   ethColor: '#161240',
   time: '#4a8fb9',
 
-  transparent: 'transparent'
+  transparent: 'transparent',
 }

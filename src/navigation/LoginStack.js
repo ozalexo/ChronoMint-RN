@@ -19,6 +19,10 @@ const LoginStack = createStackNavigator(
         headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
         headerLeftContainerStyle: { paddingLeft: 20 },
         headerRightContainerStyle: { paddingRight: 20 },
+        headerForceInset: { top: 'never' },
+        headerStyle: {
+          height: 44,
+        },
       }),
       screen: Start,
     },

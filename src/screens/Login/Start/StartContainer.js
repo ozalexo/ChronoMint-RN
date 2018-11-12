@@ -8,7 +8,7 @@ import Start from './Start'
 
 const mapStateToProps = (ownState, ownProps) => {
   return {
-    
+    accounts: null,
   }
 }
 
