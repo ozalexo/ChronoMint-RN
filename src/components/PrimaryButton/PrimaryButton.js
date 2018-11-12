@@ -10,8 +10,10 @@ import styles from './PrimaryButtonStyles'
 
 export default class PrimaryButton extends React.Component {
   render () {
-    const { style, label, ...restProps } = this.props
-
+    const { style, label, upperCase = false, ...restProps } = this.props
+    const buttonLabel = upperCase
+      ? label && label.toUpperCase()
+      : label
     return (
       <TouchableOpacity
         style={[
@@ -20,8 +22,10 @@ export default class PrimaryButton extends React.Component {
         ]}
         {...restProps}
       >
-        <Text style={styles.label}>
-          {label}
+        <Text style={styles.buttonTextLabel}>
+          {
+            buttonLabel
+          }
         </Text>
       </TouchableOpacity>
     )
@@ -30,4 +34,5 @@ export default class PrimaryButton extends React.Component {
 
 PrimaryButton.propTypes = {
   label: PropTypes.string,
-};
+  upperCase: PropTypes.bool,
+}

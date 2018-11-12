@@ -27,7 +27,7 @@ export default class Input extends Component {
       numberOfLines={1}
     >
       {
-        this.props.error
+        this.props.error || ''
       }
     </Text>
   )
@@ -52,9 +52,7 @@ export default class Input extends Component {
           keyboardAppearance='dark'
         />
         {
-          error
-            ? this.renderErrorText()
-            : null
+          this.renderErrorText()
         }
       </View>
     )

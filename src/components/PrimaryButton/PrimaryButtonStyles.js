@@ -14,13 +14,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  label: {
+  buttonTextLabel: {
     color: colors.light,
     fontSize: 16,
     fontWeight: '900',
     paddingVertical: 14,
     marginHorizontal: 20,
     lineHeight: 20,
-    textTransform: 'uppercase',
   },
 })

@@ -21,7 +21,11 @@ const LoginStack = createStackNavigator(
         headerRightContainerStyle: { paddingRight: 20 },
         headerTransparent: true,
         headerForceInset: { top: 'never' },
+        headerContainerStyle: {
+          marginBottom: 20,
+        },
         headerStyle: {
+          height: 44,
           marginTop: 0,
         },
       }),

@@ -3,6 +3,8 @@ import { Text, View } from 'react-native'
 import { storiesOf } from '@storybook/react-native'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
+import { Provider } from 'react-redux'
+import store from '../../src/store/createStore'
 
 import StoryWrapper from './StoryWrapper'
 import CenterView from './CenterView'
@@ -21,7 +23,9 @@ import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import TransactionsList from './TransactionsList'
-import styles from './styles';
+import ScreenStart from './ScreenStart'
+
+import styles from './styles'
 
 const confirmations = [0, 1, 2, 3, 4]
 const transactionsList = [
@@ -309,9 +313,6 @@ storiesOf('Complex Components/Wallet', module)
     </WalletAlert>
   ))
 
-
-
-
 storiesOf('Complex Components/Fee Slider', module)
   .addParameters({
     options: {
@@ -348,4 +349,24 @@ storiesOf('Complex Components/Transactions List', module)
       latestTransactionDate={new Date()}
       transactions={transactionsList}
     />
+  ))
+
+const StoryProvider = ({ story }) => {
+  return (
+    <Provider store={store}>
+      {story}
+    </Provider>
+  )
+}
+
+storiesOf('Screens/Login', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((story) => <StoryProvider story={story()} />)
+  .add('Start Screen', () => (
+    <ScreenStart />
   ))

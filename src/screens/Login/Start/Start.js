@@ -5,13 +5,13 @@
 
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import DismissKeyboard from 'dismissKeyboard'
 import {
-  TouchableWithoutFeedback,
-  Keyboard,
   Image,
+  Keyboard,
   KeyboardAvoidingView,
+  Platform,
   Text,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native'
 import styles from './StartStyles'
@@ -35,78 +35,101 @@ export default class Start extends PureComponent {
     accounts: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
     })),
+    passwordError: PropTypes.string,
+    confirmPasswordError: PropTypes.string,
     navigateToImportWallet: PropTypes.func,
     onChangePassword: PropTypes.func,
     onChangePasswordConfirmation: PropTypes.func,
     onDone: PropTypes.func,
   }
 
-  renderCreateAccountForm = () => (
-    <View style={{flex: 1, flexDirection: 'row', backgroundColor: 'yellow', paddingHorizontal: 20}}>
-      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'green'}}>
-        <Input
-          autoCorrect={false}
-          onChangeText={this.props.onChangePassword}
-          placeholder={PASSWORD_PLACEHOLDER}
-          secureTextEntry
-          style={styles.input}
-          onBlur={() => console.log("focus 1 lost") }
-        />
-        <Input
-          autoCorrect={false}
-          onChangeText={this.props.onChangePasswordConfirmation}
-          placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
-          secureTextEntry
-          style={styles.input}
-          onBlur={() => console.log("focus 2 lost") }
-        />
-        <PrimaryButton
-          label={CREATE_WALLET_BUTTON_LABEL}
-          onPress={this.props.onDone}
-        />
-        <Text style={styles.orText}>
-          {
-            'or'
-          }
-        </Text>
-        <TextButton
-          label={USE_EXISTING_WALLET_BUTTON_LABEL}
-          onPress={this.props.navigateToImportWallet}
-        />
-      </View>
-    </View>
+  renderAccountsList = () => (
+    <React.Fragment>
+      <Text>Under construction</Text>
+    </React.Fragment>
   )
 
+  renderCreateAccountForm = () => (
+    <React.Fragment>
+      <Input
+        autoCorrect={false}
+        onChangeText={this.props.onChangePassword}
+        placeholder={PASSWORD_PLACEHOLDER}
+        secureTextEntry
+        style={styles.input}
+        error={this.props.passwordError}
+      />
+      <Input
+        autoCorrect={false}
+        onChangeText={this.props.onChangePasswordConfirmation}
+        placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+        secureTextEntry
+        style={styles.input}
+        error={this.props.confirmPasswordError}
+      />
+      <PrimaryButton
+        label={CREATE_WALLET_BUTTON_LABEL}
+        onPress={this.props.onDone}
+        style={styles.primaryButton}
+        upperCase
+      />
+      <Text style={styles.orText}>
+        {
+          'or'
+        }
+      </Text>
+      <TextButton
+        label={USE_EXISTING_WALLET_BUTTON_LABEL}
+        onPress={this.props.navigateToImportWallet}
+      />
+    </React.Fragment>
+  )
+
+  handleKeyboardDismiss = () => Keyboard.dismiss()
+
   render () {
+    // TODO: [AO] constants below were adjusted manually
+    // Need to investigate the reasons and setup precise values
+    // Default header heights: ios = 64, android = 56
+    const keyboardVerticalOffset = Platform.OS === 'ios'
+      ? -20
+      : 20
+
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <React.Fragment>
+      <TouchableWithoutFeedback
+        onPress={this.handleKeyboardDismiss}
+      >
+        <View style={styles.kavContainer}>
           <KeyboardAvoidingView
-            behavior='padding'
+            behavior='position'
             style={styles.container}
             contentContainerStyle={styles.container}
+            keyboardVerticalOffset={keyboardVerticalOffset}
           >
-            <Image
-              source={ChronoWalletIcon}
-              style={styles.logo}
-            />
-            <Image
-              source={ChronoWalletText}
-              style={styles.logoText}
-            />
-            {
-              this.props.accounts
-                ? this.renderAccountsList()
-                : this.renderCreateAccountForm()
-            }
+            <View {...this.props} style={styles.inputsContainer}>
+              <Image
+                source={ChronoWalletIcon}
+                style={styles.logo}
+              />
+              <Image
+                source={ChronoWalletText}
+                style={styles.logoText}
+              />
+              {
+                this.props.accounts
+                  ? this.renderAccountsList()
+                  : this.renderCreateAccountForm()
+              }
+            </View>
           </KeyboardAvoidingView>
           <Text style={styles.copyright}>
             {
               COPYRIGHT
             }
           </Text>
-        </React.Fragment>
+        </View>
       </TouchableWithoutFeedback>
     )
+
   }
 }
