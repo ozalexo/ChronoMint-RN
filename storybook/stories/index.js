@@ -3,8 +3,7 @@ import { Text, View } from 'react-native'
 import { storiesOf } from '@storybook/react-native'
 import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
-import { Provider } from 'react-redux'
-import store from '../../src/store/createStore'
+import StoryProvider from './StoryProvider'
 
 import StoryWrapper from './StoryWrapper'
 import CenterView from './CenterView'
@@ -350,14 +349,6 @@ storiesOf('Complex Components/Transactions List', module)
       transactions={transactionsList}
     />
   ))
-
-const StoryProvider = ({ story }) => {
-  return (
-    <Provider store={store}>
-      {story}
-    </Provider>
-  )
-}
 
 storiesOf('Screens/Login', module)
   .addParameters({
