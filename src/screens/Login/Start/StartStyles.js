@@ -39,7 +39,7 @@ export default StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  primaryButon: {
+  primaryButton: {
     marginBottom: 20,
   },
   orText: {

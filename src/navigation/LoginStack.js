@@ -11,6 +11,7 @@ import {
 import ImportMethod from '../screens/ImportMethod'
 import EnterPrivateKey from '../screens/EnterPrivateKey'
 import Start from '../screens/Login/Start'
+import WalletList from '../screens/Wallet/WalletList'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
 
@@ -43,9 +44,16 @@ const LoginStack = createStackNavigator(
       }),
       screen: EnterPrivateKey,
     },
+    'WalletList': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'WalletList',
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+      }),
+      screen: WalletList,
+    },
   },
   {
-    initialRouteName: 'Start',
+    initialRouteName: 'WalletList',
     headerLayoutPreset: 'center',
     navigationOptions: () => ({
       headerTransparent: true,
