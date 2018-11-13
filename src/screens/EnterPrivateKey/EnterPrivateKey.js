@@ -27,7 +27,6 @@ export default class EnterPrivateKey extends PureComponent {
           error={error}
         />
         <PrimaryButton
-          style={{ marginTop: 40 }}
           label='Add account'
           onPress={onDone}
         />

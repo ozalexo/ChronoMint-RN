@@ -8,6 +8,7 @@ import StoryProvider from './StoryProvider'
 //Screens
 import ImportMethod from './ImportMethod'
 import EnterPrivateKey from './EnterPrivateKey'
+import ScreenStart from './ScreenStart'
 
 //Wrappers
 import StoryWrapper from './StoryWrapper'
@@ -29,7 +30,6 @@ import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import TransactionsList from './TransactionsList'
-import ScreenStart from './ScreenStart'
 
 import styles from './styles'
 
@@ -364,19 +364,8 @@ storiesOf('Screens/Login', module)
       hierarchyRootSeparator: /\|/,
     },
   })
-  .addDecorator((story) => <StoryProvider story={story()} />)
-  .add('Start Screen', () => (
-    <ScreenStart />
-  ))
-  
-
-storiesOf('Screens', module)
-  .addParameters({
-    options: {
-      hierarchySeparator: /\//,
-      hierarchyRootSeparator: /\|/,
-    },
-  })
   .addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
-  .add('ImportMethod', () => <ImportMethod />)
-  .add('EnterPrivateKey', () => <EnterPrivateKey />)
+  .addDecorator((story) => <StoryProvider story={story()} />)
+  .add('Start Screen', () => <ScreenStart />)
+  .add('ImportMethod Screen', () => <ImportMethod />)
+  .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)

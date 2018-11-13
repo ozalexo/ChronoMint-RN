@@ -15,28 +15,27 @@ import textConstants from '../../locales/en'
 import TextButton from '../../components/TextButton'
 import styles from './ImportMethodStyles'
 
-
-
-const Method = ({image, label, onPress}) => {
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={styles.item}
-      >
-        <Image
-          source={image}
-          style={styles.itemImage}
-        />
-        <Text style={styles.itemLabel}>
-          {
-            label
-          }
-        </Text>
-      </TouchableOpacity>
-    )
+const Method = ({ image, label, onPress }) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.item}
+    >
+      <Image
+        source={image}
+        style={styles.itemImage}
+      />
+      <Text style={styles.itemLabel}>
+        {
+          label
+        }
+      </Text>
+    </TouchableOpacity>
+  )
 }
 
 Method.propTypes = {
+  image: PropTypes.number,
   label: PropTypes.string,
   onPress: PropTypes.func,
 }
@@ -50,7 +49,7 @@ export default class ImportMethod extends PureComponent {
     />
   )
 
-  render() {
+  render () {
     const {
       importMethodList,
       onCreateWallet,

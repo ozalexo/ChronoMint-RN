@@ -8,10 +8,13 @@ import PropTypes from 'prop-types'
 import StartContainer from '../../../src/screens/Login/Start/StartContainer'
 
 const StoryInput = () => (
-  <StartContainer />
+  <StartContainer navigation={{ navigate: () => { } }}/>
 )
 
 StoryInput.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
   onChangeText: PropTypes.func,
   error: PropTypes.string,
 }
