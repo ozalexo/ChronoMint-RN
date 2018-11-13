@@ -14,6 +14,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
+import { Formik } from 'formik'
 import styles from './StartStyles'
 import {
   ChronoWalletIcon,
@@ -58,7 +59,164 @@ export default class Start extends PureComponent {
       onChangePassword = () => { },
       onChangePasswordConfirmation = () => { },
       onDone = () => { },
-    } = this.props;
+    } = this.props
+
+    return (
+      <React.Fragment>
+        <Formik
+          initialValues={{
+            passowrd: '',
+            passwordConfirmation: '',
+          }}
+          onSubmit={this.props.onDone}
+        >
+          {
+            ({ handleChange, handleSubmit, values }) => (
+              <React.Fragment>
+                <Input
+                  validate={validate}
+                  value={values.password}
+                  autoCorrect={false}
+                  onChangeText={handleChange('password')}
+                  placeholder={PASSWORD_PLACEHOLDER}
+                  secureTextEntry
+                  style={styles.input}
+                  error={this.props.passwordError}
+                />
+                <Input
+                  validate={validate}
+                  value={values.passwordConfirmation}
+                  autoCorrect={false}
+                  onChangeText={handleChange('passwordConfirmation')}
+                  placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+                  secureTextEntry
+                  style={styles.input}
+                  error={this.props.confirmPasswordError}
+                />
+                <PrimaryButton
+                  label={CREATE_WALLET_BUTTON_LABEL}
+                  onPress={handleSubmit}
+                  style={styles.primaryButton}
+                  upperCase
+                />
+              </React.Fragment>
+            )
+          }
+        </Formik>
+        <Text style={styles.orText}>
+          {
+            'or'
+          }
+        </Text>
+        <TextButton
+          label={USE_EXISTING_WALLET_BUTTON_LABEL}
+          onPress={this.props.navigateToImportWallet}
+        />
+      </React.Fragment>
+    )
+  // renderCreateAccountForm = () => (
+  //   <React.Fragment>
+  //     <Input
+  //       autoCorrect={false}
+  //       onChangeText={this.props.onChangePassword}
+  //       placeholder={PASSWORD_PLACEHOLDER}
+  //       secureTextEntry
+  //       style={styles.input}
+  //       error={this.props.passwordError}
+  //     />
+  //     <Input
+  //       autoCorrect={false}
+  //       onChangeText={this.props.onChangePasswordConfirmation}
+  //       placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+  //       secureTextEntry
+  //       style={styles.input}
+  //       error={this.props.confirmPasswordError}
+  //     />
+  //     <PrimaryButton
+  //       label={CREATE_WALLET_BUTTON_LABEL}
+  //       onPress={this.props.onDone}
+  //       style={styles.primaryButton}
+  //       upperCase
+  //     />
+  //     <Text style={styles.orText}>
+  //       {
+  //         'or'
+  //       }
+  //     </Text>
+  //     <TextButton
+  //       label={USE_EXISTING_WALLET_BUTTON_LABEL}
+  //       onPress={this.props.navigateToImportWallet}
+  //     />
+  //   </React.Fragment>
+  // )
+
+  const validate = (values) => {
+    let errors = {};
+
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
+    }
+
+    //...
+
+    return errors;
+  };
+
+  renderCreateAccountForm = () => (
+    <React.Fragment>
+      <Formik
+        initialValues={{
+          passowrd: '',
+          passwordConfirmation: '',
+        }}
+        onSubmit={this.props.onDone}
+      >
+        {
+          ({ handleChange, handleSubmit, values }) => (
+            <React.Fragment>
+              <Input
+                validate={validate}
+                value={values.password}
+                autoCorrect={false}
+                onChangeText={handleChange('password')}
+                placeholder={PASSWORD_PLACEHOLDER}
+                secureTextEntry
+                style={styles.input}
+                error={this.props.passwordError}
+              />
+              <Input
+                validate={validate}
+                value={values.passwordConfirmation}
+                autoCorrect={false}
+                onChangeText={handleChange('passwordConfirmation')}
+                placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+                secureTextEntry
+                style={styles.input}
+                error={this.props.confirmPasswordError}
+              />
+              <PrimaryButton
+                label={CREATE_WALLET_BUTTON_LABEL}
+                onPress={handleSubmit}
+                style={styles.primaryButton}
+                upperCase
+              />
+            </React.Fragment>
+          )
+        }
+      </Formik>
+      <Text style={styles.orText}>
+        {
+          'or'
+        }
+      </Text>
+      <TextButton
+        label={USE_EXISTING_WALLET_BUTTON_LABEL}
+        onPress={this.props.navigateToImportWallet}
+      />
+    </React.Fragment>
+  )
 
     return (
       <React.Fragment>
