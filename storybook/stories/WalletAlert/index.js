@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import WalletAlert from '../../../src/components/WalletAlert'
 
-export default function StoryWalletAlert({actions, title, children, style, contentContainerStyle}) {
+export default StoryWalletAlert = ({actions, title, children, style, contentContainerStyle}) => {
   return (
     <WalletAlert
       actions={actions}

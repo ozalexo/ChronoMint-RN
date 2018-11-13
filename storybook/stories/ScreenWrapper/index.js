@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import styles from './style'
 import DefaultImageBackground from '../../../src/common/ImageBackground'
 
-export default function ScreenWrapper({ children }) {
+export default ScreenWrapper = ({ children }) => {
   return (
     <DefaultImageBackground>
       <View style={styles.main}>{children}</View>

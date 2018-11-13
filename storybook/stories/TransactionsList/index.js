@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TransactionsList from '../../../src/components/TransactionsList'
 
-export default function StoryTransactionsList ({
+export default StoryTransactionsList = ({
   transactions,
   refreshTransactionsList,
   mainWalletTransactionLoadingStatus,
   latestTransactionDate,
   navigator,
-}) {
+}) => {
   return (
     <TransactionsList
       transactions={transactions}
