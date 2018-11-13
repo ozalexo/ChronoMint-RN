@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TransactionIcon from '../../../src/components/TransactionIcon'
 
-export default function StoryTransactionIcon({confirmations, type, mode, style}) {
+export default StoryTransactionIcon = ({ confirmations, type, mode, style }) => {
   return (
     <TransactionIcon
       style={style}

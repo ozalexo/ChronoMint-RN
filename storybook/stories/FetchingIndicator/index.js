@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FetchingIndicator from '../../../src/components/FetchingIndicator'
 
-export default function StoryFetchingIndicator ({ status }) {
+export default StoryFetchingIndicator = ({ status }) => {
   return <FetchingIndicator status={status} />;
 }
 

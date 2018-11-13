@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Label from '../../../src/components/Label'
 
-export default function StoryLabel ({ labelTextAlign, labelType, text }) {
+export default StoryLabel = ({ labelTextAlign, labelType, text }) => {
   return <Label labelTextAlign={labelTextAlign} labelType={labelType} text={text} />;
 }
 

@@ -5,8 +5,16 @@ import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 import StoryProvider from './StoryProvider'
 
+//Screens
+import ImportMethod from './ImportMethod'
+import EnterPrivateKey from './EnterPrivateKey'
+import ScreenStart from './ScreenStart'
+
+//Wrappers
 import StoryWrapper from './StoryWrapper'
 import CenterView from './CenterView'
+import ScreenWrapper from './ScreenWrapper'
+//Components
 import Welcome from './Welcome'
 import Separator from './Separator'
 import Input from './Input'
@@ -22,7 +30,6 @@ import ListItem from './ListItem'
 import TransactionIcon from './TranscationIcon'
 import WalletAlert from './WalletAlert'
 import TransactionsList from './TransactionsList'
-import ScreenStart from './ScreenStart'
 
 import styles from './styles'
 
@@ -357,7 +364,8 @@ storiesOf('Screens/Login', module)
       hierarchyRootSeparator: /\|/,
     },
   })
+  .addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
   .addDecorator((story) => <StoryProvider story={story()} />)
-  .add('Start Screen', () => (
-    <ScreenStart />
-  ))
+  .add('Start Screen', () => <ScreenStart />)
+  .add('ImportMethod Screen', () => <ImportMethod />)
+  .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)

@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import styles from './style'
 import DefaultImageBackground from '../../../src/common/ImageBackground'
 
-const CenterView = ({ children }) => {
+export default ScreenWrapper = ({ children }) => {
   return (
     <DefaultImageBackground>
       <View style={styles.main}>{children}</View>
@@ -12,12 +12,10 @@ const CenterView = ({ children }) => {
   )
 }
 
-CenterView.defaultProps = {
+ScreenWrapper.defaultProps = {
   children: null,
 }
 
-CenterView.propTypes = {
+ScreenWrapper.propTypes = {
   children: PropTypes.node,
 }
-
-export default CenterView

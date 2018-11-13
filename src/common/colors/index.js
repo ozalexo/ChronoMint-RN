@@ -33,7 +33,8 @@ export default {
   grayLight: '#f7f9ff',
   gray: '#e9efff',
   grayDark: '#ccccdf',
-
+  darkpurple: '#A3A3CC',
+  
   primary: '#614DBA',
   primaryLight: '#786AB7',
   primaryDarkest: '#05326A',

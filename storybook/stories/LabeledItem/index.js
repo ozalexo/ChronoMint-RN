@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import LabeledItem from '../../../src/components/LabeledItem'
 
-export default function StoryLabeledItem ({ children, labelAlign, labelTextAlign, labelType, labelText }) {
+export default StoryLabeledItem = ({ children, labelAlign, labelTextAlign, labelType, labelText }) => {
   return (
     <LabeledItem
       labelAlign={labelAlign}

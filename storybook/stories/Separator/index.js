@@ -1,6 +1,6 @@
 import React from 'react'
 import Separator from '../../../src/components/Separator'
 
-export default function SeparatorStory ({ separator }) {
+export default SeparatorStory = ({ separator }) => {
   return <Separator style={separator} />
 }

@@ -49,41 +49,50 @@ export default class Start extends PureComponent {
     </React.Fragment>
   )
 
-  renderCreateAccountForm = () => (
-    <React.Fragment>
-      <Input
-        autoCorrect={false}
-        onChangeText={this.props.onChangePassword}
-        placeholder={PASSWORD_PLACEHOLDER}
-        secureTextEntry
-        style={styles.input}
-        error={this.props.passwordError}
-      />
-      <Input
-        autoCorrect={false}
-        onChangeText={this.props.onChangePasswordConfirmation}
-        placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
-        secureTextEntry
-        style={styles.input}
-        error={this.props.confirmPasswordError}
-      />
-      <PrimaryButton
-        label={CREATE_WALLET_BUTTON_LABEL}
-        onPress={this.props.onDone}
-        style={styles.primaryButton}
-        upperCase
-      />
-      <Text style={styles.orText}>
-        {
-          'or'
-        }
-      </Text>
-      <TextButton
-        label={USE_EXISTING_WALLET_BUTTON_LABEL}
-        onPress={this.props.navigateToImportWallet}
-      />
-    </React.Fragment>
-  )
+  renderCreateAccountForm = () => {
+    const {
+      onChangePassword = () => { },
+      onChangePasswordConfirmation = () => { },
+      navigateToImportWallet = () => { },
+      onDone = () => { },
+    } = this.props;
+
+    return (
+      <React.Fragment>
+        <Input
+          autoCorrect={false}
+          onChangeText={onChangePassword}
+          placeholder={PASSWORD_PLACEHOLDER}
+          secureTextEntry
+          style={styles.input}
+          error={this.props.passwordError}
+        />
+        <Input
+          autoCorrect={false}
+          onChangeText={onChangePasswordConfirmation}
+          placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+          secureTextEntry
+          style={styles.input}
+          error={this.props.confirmPasswordError}
+        />
+        <PrimaryButton
+          label={CREATE_WALLET_BUTTON_LABEL}
+          onPress={onDone}
+          style={styles.primaryButton}
+          upperCase
+        />
+        <Text style={styles.orText}>
+          {
+            'or'
+          }
+        </Text>
+        <TextButton
+          label={USE_EXISTING_WALLET_BUTTON_LABEL}
+          onPress={navigateToImportWallet}
+        />
+      </React.Fragment>
+    )
+  }
 
   handleKeyboardDismiss = () => Keyboard.dismiss()
 

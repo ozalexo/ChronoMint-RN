@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FeeSlider from '../../../src/components/FeeSlider'
 
-export default function StoryFeeSlider ({
+export default StoryFeeSlider = ({
   tokenSymbol,
   selectedCurrency,
   value,
@@ -13,7 +13,7 @@ export default function StoryFeeSlider ({
   step,
   handleValueChange,
   style,
-}) {
+}) => {
   return (
     <FeeSlider
       style={style}
