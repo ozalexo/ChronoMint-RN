@@ -52,7 +52,7 @@ export default class ImportMethod extends PureComponent {
   render () {
     const {
       importMethodList,
-      onCreateWallet,
+      onCreateWallet = () => {},
     } = this.props
 
     return (

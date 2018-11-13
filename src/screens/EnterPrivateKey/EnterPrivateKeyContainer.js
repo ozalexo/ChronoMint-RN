@@ -17,7 +17,7 @@ class EnterPrivateKeyContainer extends PureComponent {
   }
 
   handleDone = () => {
-    const { navigate, onPrivateKeyLogin } = this.props.navigation
+    const { navigation, onPrivateKeyLogin } = this.props
     const { privateKey } = this.state
     
     // onPrivateKeyLogin(privateKey)
@@ -25,7 +25,7 @@ class EnterPrivateKeyContainer extends PureComponent {
       this.setState({ error: 'Password is too small' })
     } else {
       this.setState({ error: '' })
-      navigate('SetAccountPassword')
+      navigation.navigate('SetAccountPassword')
     }
   }
 

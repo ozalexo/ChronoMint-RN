@@ -15,7 +15,7 @@ export default class EnterPrivateKey extends PureComponent {
   render() {
     const {
       onChangePrivateKey = () => {},
-      onDone,
+      onDone = () => {},
       error,
     } = this.props
 
