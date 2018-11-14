@@ -10,7 +10,7 @@ import {
 import I18n from 'react-native-i18n'
 import PropTypes from 'prop-types'
 import styles from './TokenCounterStyles'
-import testData from './testData'
+import testData from './testData.json'
 
 export default class TokensCounter extends PureComponent {
 

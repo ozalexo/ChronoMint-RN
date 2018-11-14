@@ -12,37 +12,8 @@ import {
   burger,
   plus,
 } from '../../../images'
+import testData from './testData'
 import WalletList from './WalletList'
-
-const sectionsSelector = () => { }
-const sections = [
-  {
-    data: [
-      {
-        address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
-        blockchain: 'ETH',
-      },
-      {
-        address: '0xf1106d1eb5975555555555343c1b4203fa0f2e9b',
-        blockchain: 'ETH',
-      }
-    ],
-    title: 'ETH',
-  },
-  {
-    data: [
-      {
-        address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
-        blockchain: 'BTC',
-      },
-      {
-        address: '0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b',
-        blockchain: 'BTC',
-      }
-    ],
-    title: 'BTC',
-  },
-]
 
 class WalletListContainer extends PureComponent {
   static navigatorButtons = {
@@ -102,7 +73,7 @@ class WalletListContainer extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  sections
+  sections: testData.sections
   // sections: sectionsSelector(state)
 })
 
