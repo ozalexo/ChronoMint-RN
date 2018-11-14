@@ -43,6 +43,10 @@ export default class Start extends PureComponent {
     onDone: PropTypes.func,
   }
 
+  navigateToImportMethods = () => {
+    this.props.navigation.navigate('ImportMethod')
+  }
+
   renderAccountsList = () => (
     <React.Fragment>
       <Text>Under construction</Text>
@@ -53,7 +57,6 @@ export default class Start extends PureComponent {
     const {
       onChangePassword = () => { },
       onChangePasswordConfirmation = () => { },
-      navigateToImportWallet = () => { },
       onDone = () => { },
     } = this.props;
 
@@ -88,7 +91,7 @@ export default class Start extends PureComponent {
         </Text>
         <TextButton
           label={USE_EXISTING_WALLET_BUTTON_LABEL}
-          onPress={navigateToImportWallet}
+          onPress={this.navigateToImportMethods}
         />
       </React.Fragment>
     )
