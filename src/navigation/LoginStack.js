@@ -53,7 +53,7 @@ const LoginStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'ImportMethod',
+    initialRouteName: 'Start',
     headerLayoutPreset: 'center',
     navigationOptions: () => ({
       headerTransparent: true,

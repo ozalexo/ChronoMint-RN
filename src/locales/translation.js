@@ -1,8 +1,8 @@
 import RNLanguages from 'react-native-languages';
 import i18n from 'i18n-js';
 
-import en from './en';
-import ru from './ru';
+import en from './en.json';
+import ru from './ru.json';
 
 i18n.locale = RNLanguages.language;
 i18n.fallbacks = true;
