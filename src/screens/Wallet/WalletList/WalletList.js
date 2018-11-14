@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import SectionHeader from '../../../components/SectionHeader'
-import WalletListItemContainer from './WalletListItem'
+import WalletListItemContainer from '../../../components/WalletListItem'
 import styles from './WalletListStyles'
 
 export default class WalletList extends PureComponent {

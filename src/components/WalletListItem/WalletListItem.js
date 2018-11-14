@@ -17,11 +17,11 @@ import PropTypes from 'prop-types'
 // import PrimaryBalanceContainerFactory from '../containers/PrimaryBalanceContainerFactory'
 // import PrimaryTokenContainerFactory from '../containers/PrimaryTokenContainerFactory'
 // import TokensListContainerFactory from '../containers/TokensListContainerFactory'
-import isNumber from '../../../../common/utils/numeric'
+import isNumber from '../../common/utils/numeric'
 import {
   indicator_receiving_0,
-} from '../../../../images'
-import WalletImage from './WalletImage'
+} from '../../images'
+import WalletImage from '../WalletImage'
 import styles from './WalletListItemStyles'
 
 const Transactions = ({ transactions }) => !transactions ? null : (
@@ -162,7 +162,6 @@ export default class WalletListItem extends PureComponent {
       selectedCurrency,
       onItemPress = () => { },
     } = this.props
-    console.log(this.props)
 
     return (
       <TouchableOpacity
