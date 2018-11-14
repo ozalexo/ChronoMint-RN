@@ -53,28 +53,12 @@ export default StyleSheet.create({
     fontWeight: '200',
     fontSize: 12,
   },
-  balanceText: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  tokens: {
-    color: colors.foregroundLighter,
-    fontWeight: '200',
-    marginTop: 4,
-  },
-  balanceContainer: {
+  balanceAndTokensRow: {
     flexDirection: 'row',
-    marginTop: 24,
-  },
-  balanceNumber: {
-    marginLeft: 4,
   },
   exchange: {
     color: colors.foregroundLighter,
     fontWeight: '200',
     marginTop: 4,
-  },
-  balanceAndTokensRow: {
-    flexDirection: 'row',
   },
 })

@@ -1,8 +1,6 @@
 /**
  * Copyright 2017–2018, LaborX PTY
  * Licensed under the AGPL Version 3 license.
- *
- * @flow
  */
 
 import React, { PureComponent } from 'react'
@@ -12,15 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import I18n from 'react-native-i18n'
 import PropTypes from 'prop-types'
 // import PrimaryBalanceContainerFactory from '../containers/PrimaryBalanceContainerFactory'
 // import PrimaryTokenContainerFactory from '../containers/PrimaryTokenContainerFactory'
 // import TokensListContainerFactory from '../containers/TokensListContainerFactory'
-import isNumber from '../../common/utils/numeric'
 import {
   indicator_receiving_0,
 } from '../../images'
+import TokensCounter from '../TokensCounter'
+import PrimaryToken from '../PrimaryToken'
+import PrimaryBalance from '../PrimaryBalance'
 import WalletImage from '../WalletImage'
 import styles from './WalletListItemStyles'
 
@@ -37,113 +36,6 @@ const Transactions = ({ transactions }) => !transactions ? null : (
       </View>
     )
 )
-
-class TokensCounter extends PureComponent {
-
-  render () {
-    const tokensLength = 2 // for testing
-    // const tokensLength = this.props.list.length - 1
-    if (!tokensLength) {
-      return null
-    }
-
-    return (
-      <Text style={styles.tokens}>
-        {
-          I18n.t('Tokens', { count: tokensLength, formatted_number: tokensLength })
-        }
-      </Text>
-    )
-
-  }
-}
-
-TokensCounter.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      amount: PropTypes.number,
-      symbol: PropTypes.string,
-    })
-  )
-}
-
-class PrimaryToken extends PureComponent {
-
-  static getFormattedBalance = (balance) => {
-    if (!isNumber(balance)) {
-      return '-.--'
-    }
-
-    // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
-    if (balance > 0 && balance < 0.0001) {
-      return '0.0000+'
-    } else {
-      // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
-      return balance ? balance.toFixed(4) : balance.toFixed(2)
-    }
-  }
-
-  render () {
-    return (
-      <View style={styles.balanceContainer}>
-        <Text style={styles.balanceText}>
-          {
-            this.props.symbol
-          }
-        </Text>
-        <Text style={[styles.balanceText, styles.balanceNumber]}>
-          {
-            PrimaryToken.getFormattedBalance(this.props.amount)
-          }
-        </Text>
-      </View>
-    )
-  }
-}
-
-PrimaryToken.propTypes = {
-  amount: PropTypes.number,
-  symbol: PropTypes.string,
-}
-
-class PrimaryBalance extends PureComponent {
-
-  static getFormattedBalance = (balance) => {
-    if (!isNumber(balance)) {
-      return '-.--'
-    }
-
-    // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
-    if (balance > 0 && balance < 0.01) {
-      return '0.00+'
-    } else {
-      // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
-      return balance.toFixed(2)
-    }
-
-  }
-
-  render () {
-
-    const displayPrimaryBalanceText = [
-      this.props.selectedCurrency,
-      PrimaryBalance.getFormattedBalance(this.props.balance),
-    ].join(' ')
-
-    return (
-      <Text style={styles.tokens}>
-        {
-          displayPrimaryBalanceText
-        }
-      </Text>
-    )
-  }
-}
-
-PrimaryBalance.propTypes = {
-  balance: PropTypes.number,
-  selectedCurrency: PropTypes.string,
-}
 
 
 const TokensListContainer = TokensCounter
