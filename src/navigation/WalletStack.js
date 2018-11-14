@@ -47,6 +47,7 @@ const WalletStack = createStackNavigator(
   {
     initialRouteName: 'WalletsList',
     navigationOptions: () => ({
+      headerForceInset: { top: 'never' },
       headerTransparent: true,
       headerBackTitle: null,
       headerTintColor: 'white',

@@ -54,7 +54,6 @@ const LoginStack = createStackNavigator(
         headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
         headerLeftContainerStyle: { paddingLeft: 20 },
         headerRightContainerStyle: { paddingRight: 20 },
-        headerForceInset: { top: 'never' },
         headerStyle: {
           height: 44,
         },
@@ -64,14 +63,14 @@ const LoginStack = createStackNavigator(
     'ImportMethod': {
       navigationOptions: ({ navigation }) => ({
         title: 'Add an existing account',
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: ImportMethod,
     },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({
         title: 'Enter Private Key',
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: EnterPrivateKey,
     },
@@ -87,6 +86,7 @@ const LoginStack = createStackNavigator(
     initialRouteName: 'Start',
     headerLayoutPreset: 'center',
     navigationOptions: () => ({
+      headerForceInset: { top: 'never' },
       headerTransparent: true,
       headerBackTitle: null,
       headerTintColor: 'white',
@@ -95,11 +95,6 @@ const LoginStack = createStackNavigator(
       backgroundColor: 'transparent',
     },
     transitionConfig,
-    // transitionConfig: () => ({
-    //   containerStyle: {
-    //     backgroundColor: 'transparent',
-    //   },
-    // }),
     transparentCard: true,
   }
 )
