@@ -6,5 +6,3 @@
 export const PIN_LENGTH = 4
 
 export const MNEMONIC_LENGTH = 12
-
-export const SESSION_DESTROY = 'session/DESTROY'
