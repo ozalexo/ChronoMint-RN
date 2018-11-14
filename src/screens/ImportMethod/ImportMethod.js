@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import textConstants from '../../locales/en'
+import i18n from '../../locales/translation'
 import TextButton from '../../components/TextButton'
 import styles from './ImportMethodStyles'
 
@@ -61,7 +61,7 @@ export default class ImportMethod extends PureComponent {
           {importMethodList.map(this.renderMethod)}
         </View>
         <Text style={styles.or}>
-          {textConstants.or}
+          {i18n.t('or')}
         </Text>
         <TextButton
           label='Create new wallet'

@@ -53,7 +53,7 @@ const LoginStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'WalletList',
+    initialRouteName: 'ImportMethod',
     headerLayoutPreset: 'center',
     navigationOptions: () => ({
       headerTransparent: true,

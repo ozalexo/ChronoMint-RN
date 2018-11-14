@@ -6,7 +6,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import textConstants from '../../locales/en'
+import i18n from '../../locales/translation'
 import styles from './FetchingIndicatorStyles'
 
 export const STATUS = {
@@ -27,7 +27,7 @@ const FetchingIndicator = (props) => {
   return (
     <View style={[styles.container, style]} >
       <View style={[styles.bullet, bulletStyle]} />
-      <Text style={styles.label}>{textConstants.FetchingIndicator[status]}</Text>
+      <Text style={styles.label}>{i18n.t(['FetchingIndicator',status])}</Text>
     </View>
   )
 }

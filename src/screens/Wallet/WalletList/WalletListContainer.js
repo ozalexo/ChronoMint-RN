@@ -6,12 +6,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import I18n from 'react-native-i18n'
 // import { sectionsSelector } from '../redux/mainWallet/selectors'
 import {
   burger,
   plus,
 } from '../../../images'
+import i18n from '../../../locales/translation'
 import testData from './testData'
 import WalletList from './WalletList'
 

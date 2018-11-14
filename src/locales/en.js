@@ -9,13 +9,13 @@ export default {
   btc: 'BTC',
   or: 'or',
   copyright: 'Copyright ©2018 LaborX Australia Pty Ltd. All Rights Reserved.',
-  'Tokens': {
-    'one': ', + 1 Token',
-    'other': ', + {{formatted_number}} Tokens'
+  Tokens: {
+    one: ', + 1 Token',
+    other: ', + {{formatted_number}} Tokens'
   },
-  'TokensCounter': {
-    'one': '1 Token',
-    'other': '{{formatted_number}} Tokens'
+  TokensCounter: {
+    one: '1 Token',
+    other: '{{formatted_number}} Tokens'
   },
   WalletsList: {
     title: 'My wallets'

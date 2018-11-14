@@ -7,7 +7,7 @@ import React, { PureComponent } from 'react'
 import {
   Text,
 } from 'react-native'
-import I18n from 'react-native-i18n'
+import i18n from '../../locales/translation'
 import PropTypes from 'prop-types'
 import styles from './TokenCounterStyles'
 import testData from './testData.json'
@@ -24,7 +24,7 @@ export default class TokensCounter extends PureComponent {
     return (
       <Text style={styles.tokens}>
         {
-          I18n.t('Tokens', { count: tokensLength, formatted_number: tokensLength })
+          i18n.t('Tokens', { count: tokensLength, formatted_number: tokensLength })
         }
       </Text>
     )
