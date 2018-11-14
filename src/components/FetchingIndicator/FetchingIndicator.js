@@ -27,7 +27,11 @@ const FetchingIndicator = (props) => {
   return (
     <View style={[styles.container, style]} >
       <View style={[styles.bullet, bulletStyle]} />
-      <Text style={styles.label}>{i18n.t(['FetchingIndicator',status])}</Text>
+      <Text style={styles.label}>
+        {
+          i18n.t(['FetchingIndicator', status])
+        }
+      </Text>
     </View>
   )
 }

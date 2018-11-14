@@ -61,7 +61,9 @@ export default class ImportMethod extends PureComponent {
           {importMethodList.map(this.renderMethod)}
         </View>
         <Text style={styles.or}>
-          {i18n.t('or')}
+          {
+            i18n.t('or')
+          }
         </Text>
         <TextButton
           label='Create new wallet'

@@ -18,11 +18,9 @@ export default class PrimaryBalance extends PureComponent {
       return '-.--'
     }
 
-    // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
     if (balance > 0 && balance < 0.01) {
       return '0.00+'
     } else {
-      // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
       return balance.toFixed(2)
     }
 

@@ -20,11 +20,9 @@ export default class PrimaryToken extends PureComponent {
       return '-.--'
     }
 
-    // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
     if (balance > 0 && balance < 0.0001) {
       return '0.0000+'
     } else {
-      // $FlowFixMe: balance has been verified above by isNumber. Now it is definitely a number.
       return balance ? balance.toFixed(4) : balance.toFixed(2)
     }
   }
