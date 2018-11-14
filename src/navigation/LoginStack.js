@@ -5,6 +5,10 @@
 
 import React from 'react'
 import {
+  Animated,
+  Easing,
+} from 'react-native'
+import {
   createStackNavigator,
   HeaderBackButton,
 } from 'react-navigation'
@@ -14,6 +18,33 @@ import Start from '../screens/Login/Start'
 import WalletList from '../screens/Wallet/WalletList'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
+
+const transitionConfig = () => {
+  return {
+    transitionSpec: {
+      duration: 750,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+      useNativeDriver: true,
+    },
+    screenInterpolator: (sceneProps) => {
+      const { layout, position, scene } = sceneProps
+
+      const thisSceneIndex = scene.index
+      const width = layout.initWidth
+
+      const translateX = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        outputRange: [width, 0],
+      })
+
+      return { transform: [ { translateX } ] }
+    },
+    containerStyle: {
+      backgroundColor: 'transparent',
+    },
+  }
+}
 
 const LoginStack = createStackNavigator(
   {
@@ -63,11 +94,12 @@ const LoginStack = createStackNavigator(
     cardStyle: {
       backgroundColor: 'transparent',
     },
-    transitionConfig: () => ({
-      containerStyle: {
-        backgroundColor: 'transparent',
-      },
-    }),
+    transitionConfig,
+    // transitionConfig: () => ({
+    //   containerStyle: {
+    //     backgroundColor: 'transparent',
+    //   },
+    // }),
     transparentCard: true,
   }
 )
