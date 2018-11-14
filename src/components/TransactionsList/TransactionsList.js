@@ -3,7 +3,7 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import React, {PureComponent} from 'react'
+import React, { PureComponent } from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -11,8 +11,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import I18n from 'react-native-i18n'
-import textConstants from '../../locales/en'
+import i18n from '../../locales/translation'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import Separator from '../Separator'
@@ -22,7 +21,7 @@ import styles from './TransactionsListStyles'
 
 export default class TransactionsList extends PureComponent {
 
-  componentDidMount() {
+  componentDidMount () {
     const trLoadingStatus = this.props.mainWalletTransactionLoadingStatus
     if (!trLoadingStatus.isFetching &&
       !trLoadingStatus.isInited
@@ -37,12 +36,12 @@ export default class TransactionsList extends PureComponent {
   renderItem = (item) => <TransactionItem {...item} navigator={this.props.navigator} />
 
 
-  render() {
+  render () {
     const {
       transactions,
       mainWalletTransactionLoadingStatus,
       latestTransactionDate,
-      refreshTransactionsList,
+      refreshTransactionsList = () => { },
     } = this.props
 
     const lastTransactionDate = latestTransactionDate
@@ -146,7 +145,7 @@ class TransactionItem extends PureComponent {
       format,
     ].join(' ')
 
-    return I18n.toCurrency(amount, {precision: 2, unit: ` ${symbol} `, format})
+    return i18n.toCurrency(amount, { precision: 2, unit: ` ${symbol} `, format })
 
   }
 
@@ -163,7 +162,7 @@ class TransactionItem extends PureComponent {
     } = props.item
   }
 
-  render() {
+  render () {
     const {
       address,
       confirmations,
@@ -176,7 +175,7 @@ class TransactionItem extends PureComponent {
       ? styles.sending
       : styles.receiving
 
-    const tType = textConstants.TransactionsList[type]
+    const tType = i18n.t(['TransactionsList', type])
 
     return (
       <TouchableWithoutFeedback

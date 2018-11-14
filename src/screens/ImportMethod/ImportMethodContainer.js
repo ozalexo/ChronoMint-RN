@@ -4,8 +4,8 @@
  */
 
 import React, { PureComponent } from 'react'
-import textConstants from '../../locales/en'
 import ImportMethod from './ImportMethod'
+import i18n from '../../locales/translation'
 import {mnemonic, private_key} from '../../images'
 
 class ImportMethodContainer extends PureComponent {
@@ -37,14 +37,14 @@ const importMethodList= [
     id: 'mnemonic',
     screen: 'EnterMnemonic',
     title: 'Enter mnemonic',
-    label: textConstants.ImportAccount.mnemonic,
+    label: i18n.t('ImportAccount.mnemonic'),
     image: mnemonic
   },
   {
     id: 'privateKey',
     screen: 'EnterPrivateKey',
     title: 'Enter private key',
-    label: textConstants.ImportAccount.privateKey,
+    label: i18n.t('ImportAccount.privateKey'),
     image: private_key
   }
 ]

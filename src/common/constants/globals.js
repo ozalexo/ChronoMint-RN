@@ -3,4 +3,6 @@
  * Licensed under the AGPL Version 3 license.
  */
 
- export default from './WalletListContainer'
+export const PIN_LENGTH = 4
+
+export const MNEMONIC_LENGTH = 12

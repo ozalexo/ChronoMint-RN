@@ -5,18 +5,80 @@
 
 import React, { PureComponent } from 'react'
 import {
-  Text,
+  ActivityIndicator,
+  SectionList,
   View,
 } from 'react-native'
+import PropTypes from 'prop-types'
+import SectionHeader from '../../../components/SectionHeader'
+import WalletListItemContainer from '../../../components/WalletListItem'
+import styles from './WalletListStyles'
 
 export default class WalletList extends PureComponent {
+
+  // Note: this key MUST use 'blockchain' and 'address' to be unique
+  keyExtractor = (walletItem, index) =>
+    [walletItem.blockchain, walletItem.address, index].join('_').replace(/\s/g, '')
+
+  renderItem = ({ item, section }) => (
+    <View style={styles.walletItemHorizontalPaddings}>
+      <WalletListItemContainer
+        address={item.address}
+        navigator={this.props.navigator}
+        blockchain={section.title}
+      />
+    </View>
+  )
+
+  renderSectionHeader = ({ section }) => (
+    <SectionHeader
+      title={`${section.title} Wallets`}
+      isDark
+    />
+  )
+
   render () {
+    const {
+      isRefreshing,
+      sections,
+      onRefresh = () => { },
+    } = this.props
+    
+    if (isRefreshing || !sections || !sections.length) {
+      return (
+        <View style={styles.activityIndicatorContainer}>
+          <ActivityIndicator size='large' />
+        </View>
+      )
+    }
+
     return (
-      <View>
-        <Text>
-          Wallet list screen
-        </Text>
-      </View>
+      <SectionList
+        style={styles.screenWrapper}
+        keyExtractor={this.keyExtractor}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing}
+        renderItem={this.renderItem}
+        renderSectionHeader={this.renderSectionHeader}
+        sections={sections}
+        stickySectionHeadersEnabled={false}
+      />
     )
   }
+}
+
+WalletList.propTypes = {
+  isRefreshing: PropTypes.bool,
+  onRefresh: PropTypes.func,
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          address: PropTypes.string,
+          blockchain: PropTypes.string,
+        })
+      ),
+      title: PropTypes.string,
+    })
+  ),
 }

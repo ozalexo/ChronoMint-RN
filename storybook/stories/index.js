@@ -9,6 +9,7 @@ import StoryProvider from './StoryProvider'
 import ImportMethod from './ImportMethod'
 import EnterPrivateKey from './EnterPrivateKey'
 import ScreenStart from './ScreenStart'
+import WalletList from './WalletList'
 
 //Wrappers
 import StoryWrapper from './StoryWrapper'
@@ -369,3 +370,14 @@ storiesOf('Screens/Login', module)
   .add('Start Screen', () => <ScreenStart />)
   .add('ImportMethod Screen', () => <ImportMethod />)
   .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)
+
+storiesOf('Screens/Wallet', module)
+  .addParameters({
+    options: {
+      hierarchySeparator: /\//,
+      hierarchyRootSeparator: /\|/,
+    },
+  })
+  .addDecorator((getStory) => <ScreenWrapper>{getStory()}</ScreenWrapper>)
+  .addDecorator((story) => <StoryProvider story={story()} />)
+  .add('WalletList Screen', () => <WalletList />)
