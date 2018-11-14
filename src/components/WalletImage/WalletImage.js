@@ -17,7 +17,7 @@ import PropTypes from 'prop-types'
 //   BLOCKCHAIN_LITECOIN
 // } from '@chronobank/login/network/BitcoinProvider'
 // import { BLOCKCHAIN_NEM } from '@chronobank/core/dao/NemDAO'
-import { indicators } from '../../common/constants/globals'
+import { indicators } from '../../common/constants/transactions'
 import {
   coin_ethereum_small,
   coin_bitcoin_cash_small,

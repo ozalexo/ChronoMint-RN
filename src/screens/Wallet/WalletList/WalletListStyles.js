@@ -4,7 +4,7 @@
  */
 
 import { StyleSheet } from 'react-native'
-import {headerHeight} from '../../../common/constants/screens'
+import { headerHeight } from '../../../common/constants/screens'
 
 export default StyleSheet.create({
   activityIndicatorContainer: {
