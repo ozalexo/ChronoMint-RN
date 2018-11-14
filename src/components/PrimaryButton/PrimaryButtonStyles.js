@@ -22,4 +22,7 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     lineHeight: 20,
   },
+  disabled: {
+    backgroundColor: colors.mainGrey,
+  },
 })

@@ -27,4 +27,7 @@ export default StyleSheet.create({
     color: colors.error,
     textAlign: 'center',
   },
+  errorContainer: {
+    height: 16,
+  },
 })
