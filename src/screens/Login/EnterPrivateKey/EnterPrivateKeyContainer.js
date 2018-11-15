@@ -22,15 +22,15 @@ class EnterPrivateKeyContainer extends PureComponent {
     
     // onPrivateKeyLogin(privateKey)
     if (privateKey.length <= 6) {
-      this.setState({ error: 'Password is too small' })
+      this.setState({ error: 'Private Key is too short' })
     } else {
       this.setState({ error: '' })
-      navigation.navigate('SetAccountPassword')
+      navigation.navigate('StartPage')
     }
   }
 
-  render() {
-    const { error } = this.state;
+  render () {
+    const { error } = this.state
     return (
       <EnterPrivateKey
         onChangePrivateKey={this.handleChangePrivateKey}

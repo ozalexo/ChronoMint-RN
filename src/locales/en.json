@@ -117,7 +117,7 @@
     "receiving": "Receiving from",
     "sending": "Sending to"
   },
-  "SetAccountPassword": {
+  "StartPage": {
     "password": "Password",
     "confirmPassword": "Confirm password",
     "createWallet": "Create a wallet",
@@ -125,7 +125,13 @@
     "useExistingWallet": "Use an existing wallet",
     "copyright": "Copyright ©2018 LaborX Australia Pty Ltd. All Rights Reserved.",
     "mismatchPasswords": "Passwords do not match",
-    "invalidPassword": "Password is not valid"
+    "invalidPassword": "Password is not valid",
+    "passwordTooShort": "at least {{min_password_length}} characters",
+    "passwordRequired": "Password is required",
+    "passwordLowerCaseChar": "at least one lowercase char",
+    "passwordUpperCaseChar": "at least one uppercase char",
+    "passwordSpecialChar": "at least 1 number or special char (@,!,#, etc).",
+    "confirmPasswordRequired": "Confirm Password is required"
   },
   "WalletBackup": {
     "title": "Wallet Back-up",

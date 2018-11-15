@@ -10,7 +10,7 @@
   "WalletsList": {
     "title": "Мои кошельки"
   },
-  "SetAccountPassword": {
+  "StartPage": {
     "password": "Пароль",
     "confirmPassword": "Подтверждение пароля",
     "createWallet": "Создать кошелек",

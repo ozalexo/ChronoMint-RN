@@ -3,8 +3,9 @@
  * Licensed under the AGPL Version 3 license.
  */
 
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Alert } from 'react-native'
+import PropTypes from 'prop-types'
 import Start from './Start'
 
 const mapStateToProps = (ownState, ownProps) => {
@@ -16,11 +17,34 @@ const mapStateToProps = (ownState, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     navigateToImportWallet: () => {},
-    handleEnterPasswordSubmit: (values, { setSubmitting }) => {
-      Alert.alert(JSON.stringify(values))
-      setSubmitting(false)
-    },
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Start)
+class StartContainer extends PureComponent {
+
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  }
+
+  handleUseExistingButtonClick = () => {
+    this.props.navigation.navigate('ImportMethod')
+  }
+
+  handleCreateWalletButtonClick = (values, { setSubmitting }) => {
+    setSubmitting(false)
+    this.props.navigation.navigate('GenerateMnemonic')
+  }
+
+  render () {
+    return (
+      <Start 
+        onClickUseExistingButton={this.handleUseExistingButtonClick}
+        onClickCreateWalletButton={this.handleCreateWalletButtonClick}
+      />
+    )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StartContainer)

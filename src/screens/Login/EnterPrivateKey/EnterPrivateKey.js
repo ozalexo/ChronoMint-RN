@@ -6,8 +6,8 @@
 import React, { PureComponent } from 'react'
 import { View } from 'react-native'
 import PropTypes from 'prop-types'
-import Input from '../../components/Input'
-import PrimaryButton from '../../components/PrimaryButton'
+import Input from '../../../components/Input'
+import PrimaryButton from '../../../components/PrimaryButton'
 import styles from './EnterPrivateKeyStyles'
 
 export default class EnterPrivateKey extends PureComponent {

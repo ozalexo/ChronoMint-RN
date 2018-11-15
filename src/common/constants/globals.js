@@ -3,6 +3,6 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export const PIN_LENGTH = 4
-
+export const MIN_PASSWORD_LENGTH = 8
 export const MNEMONIC_LENGTH = 12
+export const PIN_LENGTH = 4

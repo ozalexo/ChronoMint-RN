@@ -4,14 +4,22 @@
  */
 
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import ImportMethod from './ImportMethod'
-import i18n from '../../locales/translation'
-import {mnemonic, private_key} from '../../images'
+import i18n from '../../../locales/translation'
+import { mnemonic, private_key } from '../../../images'
 
 class ImportMethodContainer extends PureComponent {
+
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  }
+
   handleCreateWallet = () => {
-    const {navigate} = this.props.navigation
-    navigate('SetAccountPassword')
+    const { navigate } = this.props.navigation
+    navigate('StartPage')
   }
 
   handleSelectImportMethod = ({ screen, title }) => () => {
@@ -19,7 +27,7 @@ class ImportMethodContainer extends PureComponent {
     navigate(screen)
   }
 
-  render() {
+  render () {
     return (
       <ImportMethod
         importMethodList={importMethodList}
@@ -38,13 +46,13 @@ const importMethodList= [
     screen: 'EnterMnemonic',
     title: 'Enter mnemonic',
     label: i18n.t('ImportAccount.mnemonic'),
-    image: mnemonic
+    image: mnemonic,
   },
   {
     id: 'privateKey',
     screen: 'EnterPrivateKey',
     title: 'Enter private key',
     label: i18n.t('ImportAccount.privateKey'),
-    image: private_key
-  }
+    image: private_key,
+  },
 ]
