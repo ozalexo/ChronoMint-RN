@@ -5,7 +5,7 @@
   "author": "chronobank",
   "license": "AGPL-3.0",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "postinstall": "bash -c './scripts/postinstall.sh' && yarn patch-package",
     "storybook": "NODE_ENV=development BABEL_ENV=development storybook start -p 7007 -c .storybook -h 0.0.0.0 | react-native start --reset-cache --projectRoot storybook",

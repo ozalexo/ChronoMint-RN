@@ -1,3 +1,5 @@
-const bip39 = require('bip39')
+var Mnemonic = require('bitcore-mnemonic');
 
-export const generateMnemonic = () => bip39.generateMnemonic()
+
+export const generateMnemonic = () => new Mnemonic();
+export const validateMnemonic = (code) => Mnemonic.isValid(code)

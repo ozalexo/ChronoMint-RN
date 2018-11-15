@@ -2,6 +2,6 @@
   "name": "@chronobank/bitcoin",
   "version": "1.0.0",
   "dependencies": {
-    "bip39": "^2.5.0"
+    "bitcore-mnemonic": "^1.5.0"
   }
 }
