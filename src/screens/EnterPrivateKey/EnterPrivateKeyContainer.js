@@ -4,6 +4,7 @@
  */
 
 import React, { PureComponent } from 'react'
+import { generateMnemonic } from '@chronobank/bitcoin'
 import EnterPrivateKey from './EnterPrivateKey'
 
 class EnterPrivateKeyContainer extends PureComponent {
@@ -19,6 +20,8 @@ class EnterPrivateKeyContainer extends PureComponent {
   handleDone = () => {
     const { navigation, onPrivateKeyLogin } = this.props
     const { privateKey } = this.state
+    const mnemonic = generateMnemonic()
+    console.log("mnemonic: ", mnemonic)
     
     // onPrivateKeyLogin(privateKey)
     if (privateKey.length <= 6) {

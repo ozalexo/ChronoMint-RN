@@ -83,7 +83,7 @@ const LoginStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Start',
+    initialRouteName: 'EnterPrivateKey',
     headerLayoutPreset: 'center',
     navigationOptions: () => ({
       headerForceInset: { top: 'never' },
