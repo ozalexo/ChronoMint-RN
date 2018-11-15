@@ -137,7 +137,9 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-languages')
+    implementation project(':react-native-secure-randombytes')
+    // implementation project(':react-native-randombytes')
+    implementation project(':react-native-languages')
     implementation project(':react-native-splash-screen')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
