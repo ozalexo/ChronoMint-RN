@@ -7,7 +7,6 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall": "bash -c './scripts/postinstall.sh' && yarn patch-package",
     "storybook": "NODE_ENV=development BABEL_ENV=development storybook start -p 7007 -c .storybook -h 0.0.0.0 | react-native start --reset-cache --projectRoot storybook",
     "storybook:rn": "react-native start --reset-cache --projectRoot storybook",
     "storybook:web": "NODE_ENV=development BABEL_ENV=development storybook start -p 7007 -c .storybook -h 0.0.0.0",
@@ -16,9 +15,12 @@
   "dependencies": {
     "react": "^16.6.0",
     "react-native": "0.57.4",
+    "react-native-crypto": "^2.1.2",
     "react-native-splash-screen": "^3.1.1",
     "react-navigation": "^2.18.2",
-    "react-redux": "^5.1.0"
+    "react-redux": "^5.1.0",
+    "readable-stream": "^3.0.6",
+    "stream-browserify": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -43,6 +45,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "@chronobank/bitcoin": "*",
     "@storybook/addon-actions": "^4.0.0",
     "@storybook/addon-links": "^4.0.0",
     "@storybook/addon-options": "^4.0.0",
@@ -50,7 +53,6 @@
     "@storybook/cli": "^4.0.0",
     "@storybook/react": "^4.0.0",
     "@storybook/react-native": "^4.0.0",
-    "@chronobank/bitcoin": "*",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-jest": "23.6.0",
