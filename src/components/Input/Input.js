@@ -21,11 +21,13 @@ export default class Input extends Component {
   focus = () => this.input.focus()
 
   handleChange = (value) => {
-    this.props.onChange(this.props.name, value)
+    const { onChange, name } = this.props
+    onChange(name, value)
   }
 
   handleTouch = () => {
-    this.props.onTouch(this.props.name)
+    const { onTouch, name } = this.props 
+    onTouch(name)
   }
 
   render () {

@@ -1,3 +1,8 @@
+/**
+ * Copyright 2017–2018, LaborX PTY
+ * Licensed under the AGPL Version 3 license.
+ */
+
 const debounce = (func, delay) => {
   let timeout
   let laterFunc
@@ -8,23 +13,23 @@ const debounce = (func, delay) => {
 
     // Only run the deferred function once
     laterFunc = undefined
-  };
+  }
 
   const debouncedFunc = (...args) => {
     clearTimeout(timeout)
     laterFunc = createLaterFunc(args)
     timeout = setTimeout(laterFunc, delay)
-  };
+  }
 
   debouncedFunc.flush = () => {
     clearTimeout(timeout)
     if (laterFunc) laterFunc()
-  };
+  }
 
   debouncedFunc.cancel = () => {
     clearTimeout(timeout)
     laterFunc = undefined
-  };
+  }
 
   return debouncedFunc
 }
