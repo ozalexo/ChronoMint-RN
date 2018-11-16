@@ -8,6 +8,7 @@ const path = require('path')
 const extraCustomNodeModules = {
   // '_stream_transform': require.resolve('readable-stream/transform'),
   'crypto': require.resolve('react-native-crypto'),
+  'react-native-randombytes': require.resolve('react-native-secure-randombytes'),
   // 'fs': require.resolve('react-native-level-fs'),
   // 'http': require.resolve('react-native-http'),
   // 'https': require.resolve('https-browserify'),

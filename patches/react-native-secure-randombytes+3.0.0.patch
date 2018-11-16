@@ -1,0 +1,19 @@
+patch-package
+--- a/node_modules/react-native-secure-randombytes/android/build.gradle
++++ b/node_modules/react-native-secure-randombytes/android/build.gradle
+@@ -6,7 +6,6 @@ apply plugin: 'com.android.library'
+ 
+ android {
+     compileSdkVersion safeExtGet('compileSdkVersion', 26)
+-    buildToolsVersion safeExtGet('buildToolsVersion', '26.0.2')
+ 
+     defaultConfig {
+         minSdkVersion safeExtGet('minSdkVersion', 16)
+@@ -17,5 +16,5 @@ android {
+ }
+ 
+ dependencies {
+-    compile 'com.facebook.react:react-native:+'
++    implementation 'com.facebook.react:react-native:+'
+ }
+\ No newline at end of file

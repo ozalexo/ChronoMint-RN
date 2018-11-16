@@ -11,6 +11,12 @@ import { asyncRandomBytes } from 'react-native-secure-randombytes'
 
 window.randomBytes = asyncRandomBytes
 
+// Needed so that 'stream-http' chooses the right default protocol.
+global.location = {
+  protocol: 'file:',
+}
+
+
 if (typeof __dirname === 'undefined') global.__dirname = '/'
 if (typeof __filename === 'undefined') global.__filename = ''
 if (typeof process === 'undefined') {
@@ -45,7 +51,6 @@ if (typeof Error.captureStackTrace === 'undefined') {
   global.Error.captureStackTrace = require('capture-stack-trace')
 }
 
-// global.location = global.location || { port: 80 }
 const isDev = typeof __DEV__ === 'boolean' && __DEV__
 const strIsDev =  isDev ? 'development' : 'production'
 Object.assign(process.env, {"NODE_ENV": strIsDev})

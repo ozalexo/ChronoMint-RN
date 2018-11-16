@@ -138,7 +138,6 @@ android {
 
 dependencies {
     implementation project(':react-native-secure-randombytes')
-    // implementation project(':react-native-randombytes')
     implementation project(':react-native-languages')
     implementation project(':react-native-splash-screen')
     implementation fileTree(dir: "libs", include: ["*.jar"])
