@@ -5,7 +5,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import ImportMethod from '../../../src/screens/ImportMethod'
+import ImportMethod from '../../../src/screens/Login/ImportMethod'
 
 const StoryImportMethod = () => (
   <ImportMethod navigation={{ navigate: () => { } }} />

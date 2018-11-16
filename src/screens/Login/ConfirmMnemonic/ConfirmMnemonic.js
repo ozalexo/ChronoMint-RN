@@ -40,7 +40,7 @@ Word.propTypes = {
 
 export default class ConfirmMnemonic extends PureComponent {
 
-  keyExtractor = (word) => (word === 'emptyWord') ? Math.random().toString() : word
+  keyExtractor = (word) => (word === ' ') ? Math.random().toString() : word
 
   renderWord = ({ item }) => (
     <Word word={item} onPress={this.props.onWord(item)} />
@@ -52,7 +52,7 @@ export default class ConfirmMnemonic extends PureComponent {
     return (
       <View style={styles.screenView}>
         <View style={styles.mnemonicContainer}>
-          {mnemonic.map(item => (
+          {mnemonic.map((item) => (
             <Text key={item} style={styles.mnemonic}>
               {item}
               {' '}

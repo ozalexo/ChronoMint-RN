@@ -52,7 +52,6 @@ class GenerateMnemonicContainer extends PureComponent {
 }
 
 GenerateMnemonicContainer.propTypes = {
-  mnemonic: PropTypes.string,
   password: PropTypes.string,
   privateKey: PropTypes.string,
 }

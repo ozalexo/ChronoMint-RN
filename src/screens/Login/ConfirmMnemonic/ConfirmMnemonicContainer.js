@@ -51,7 +51,7 @@ class ConfirmMnemonicContainer extends PureComponent {
   handleWord = (word) => () => {
     this.setState(({ words, mnemonic }) => {
       words.splice(words.indexOf(word), 1)
-      words.push('emptyWord')
+      words.push(' ')
 
       return {
         mnemonic: [...mnemonic, word],

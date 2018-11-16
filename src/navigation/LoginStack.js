@@ -110,6 +110,7 @@ const LoginStack = createStackNavigator(
         fontWeight: 'normal',
         fontSize: 17,
       },
+      gestureEnadled: false,
     }),
     cardStyle: {
       backgroundColor: 'transparent',

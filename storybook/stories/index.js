@@ -6,9 +6,11 @@ import { linkTo } from '@storybook/addon-links'
 import StoryProvider from './StoryProvider'
 
 //Screens
-import ImportMethod from './ImportMethod'
-import EnterPrivateKey from './EnterPrivateKey'
 import ScreenStart from './ScreenStart'
+import ImportMethod from './ImportMethod'
+import GenerateMnemonic from './GenerateMnemonic'
+// import ConfitmMnemonic from './ConfitmMnemonic'
+import EnterPrivateKey from './EnterPrivateKey'
 import WalletList from './WalletList'
 
 //Wrappers
@@ -370,6 +372,14 @@ storiesOf('Screens/Login', module)
   .add('Start Screen', () => <ScreenStart />)
   .add('ImportMethod Screen', () => <ImportMethod />)
   .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)
+  .add('GenerateMnemonic Screen', () => (
+    <GenerateMnemonic 
+      mnemonic='check mnemonic phrase'
+      password='check123password'
+      privateKey='PrivateKeyCheck'
+    />
+  )
+  )
 
 storiesOf('Screens/Wallet', module)
   .addParameters({
