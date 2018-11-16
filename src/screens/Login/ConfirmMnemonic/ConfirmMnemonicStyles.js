@@ -23,6 +23,7 @@ export default StyleSheet.create({
     width: '32%',
   },
   primaryButton: {
+    marginVertical: 10,
     marginHorizontal: 50,
   },
   mnemonic: {

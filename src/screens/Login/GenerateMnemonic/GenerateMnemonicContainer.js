@@ -16,7 +16,7 @@ class GenerateMnemonicContainer extends PureComponent {
 
   componentDidMount () {
     generateMnemonic()
-      .then(resolve => {
+      .then((resolve) => {
         this.setState({ mnemonic: resolve })
       })
   }
@@ -33,7 +33,7 @@ class GenerateMnemonicContainer extends PureComponent {
     const params = {
       mnemonic,
       password,
-      privateKey
+      privateKey,
     }
 
     navigation.navigate('ConfirmMnemonic', params)

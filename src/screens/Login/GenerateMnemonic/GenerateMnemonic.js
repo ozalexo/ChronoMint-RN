@@ -17,8 +17,8 @@ const WarningItem = ({ warningIndex }) => (
       <Text style={styles.warningItemTitle}>
         {i18n.t(['GenerateMnemonic', 'warnings', warningIndex.toString(), 'title'])}
       </Text>
-      &nbsp;
-    {i18n.t(['GenerateMnemonic', 'warnings', warningIndex.toString(), 'content'])}
+      {' '}
+      {i18n.t(['GenerateMnemonic', 'warnings', warningIndex.toString(), 'content'])}
     </Text>
   </View>
 )
@@ -38,7 +38,7 @@ export default class GenerateMnemonic extends PureComponent {
   render () {
     const {
       mnemonic,
-      onConfirm = () => {},
+      onConfirm = () => { },
     } = this.props
 
     return (

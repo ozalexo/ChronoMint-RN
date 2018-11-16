@@ -40,7 +40,7 @@ const transitionConfig = () => {
         outputRange: [width, 0],
       })
 
-      return { transform: [ { translateX } ] }
+      return { transform: [{ translateX }] }
     },
     containerStyle: {
       backgroundColor: 'transparent',
@@ -93,7 +93,7 @@ const LoginStack = createStackNavigator(
     'WalletList': {
       navigationOptions: ({ navigation }) => ({
         title: 'WalletList',
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: WalletList,
     },

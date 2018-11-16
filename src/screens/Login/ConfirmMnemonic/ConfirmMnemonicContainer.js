@@ -42,7 +42,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     const params = {
       mnemonic,
       password,
-      privateKey
+      privateKey,
     }
 
     navigation.navigate('EnterPin', params)
@@ -55,7 +55,7 @@ class ConfirmMnemonicContainer extends PureComponent {
 
       return {
         mnemonic: [...mnemonic, word],
-        words: [...words]
+        words: [...words],
       }
     }, () => {
       if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
@@ -94,9 +94,16 @@ class ConfirmMnemonicContainer extends PureComponent {
 }
 
 ConfirmMnemonicContainer.propTypes = {
-  mnemonic: PropTypes.string,
+  navigation: PropTypes.shape({
+    state: PropTypes.shape({
+      params: PropTypes.shape({
+        mnemonic: PropTypes.string,
+        password: PropTypes.string,
+        privateKey: PropTypes.string,
+      }),
+    }),
+  }),
   usePinProtection: PropTypes.bool,
-  password: PropTypes.string,
 }
 
 export default ConfirmMnemonicContainer
