@@ -6,7 +6,8 @@
 import Mnemonic from 'bitcore-mnemonic-react-native'
 
 // eslint-disable-next-line import/prefer-default-export
-export const generateMnemonic = () => {
+export const generateMnemonic = async () => {
   const mnemonicObject = new Mnemonic(Mnemonic.Words.ENGLISH)
-  return mnemonicObject.phrase
+  const phrase = await mnemonicObject.phrase
+  return phrase
 }

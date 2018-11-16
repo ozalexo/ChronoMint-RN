@@ -7,8 +7,9 @@
 // import 'core-js/es6/symbol'
 // import 'core-js/fn/symbol/iterator'
 
+// For the package bitcore-mnemonic-react-native
+// See https://github.com/WoeOm/bitcore-mnemonic-react-native#readme
 import { asyncRandomBytes } from 'react-native-secure-randombytes'
-
 window.randomBytes = asyncRandomBytes
 
 // Needed so that 'stream-http' chooses the right default protocol.
