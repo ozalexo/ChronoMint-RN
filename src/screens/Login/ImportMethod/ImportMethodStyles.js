@@ -4,8 +4,8 @@
  */
 
 import { StyleSheet } from 'react-native'
-import { headerHeight } from '../../common/constants/screens'
-import colors from '../../common/colors'
+import { headerHeight } from '../../../common/constants/screens'
+import colors from '../../../common/colors'
 
 
 export default StyleSheet.create({

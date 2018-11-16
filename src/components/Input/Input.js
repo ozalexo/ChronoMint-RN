@@ -20,20 +20,18 @@ export default class Input extends Component {
 
   focus = () => this.input.focus()
 
-  renderErrorText = () => (
-    <Text
-      style={styles.errorText}
-      ellipsizeMode='tail'
-      numberOfLines={1}
-    >
-      {
-        this.props.error || ''
-      }
-    </Text>
-  )
+  handleChange = (value) => {
+    const { onChange, name } = this.props
+    onChange(name, value)
+  }
+
+  handleTouch = () => {
+    const { onTouch, name } = this.props 
+    onTouch(name)
+  }
 
   render () {
-    const { error, style, ...restProps } = this.props
+    const { error = '', style, ...restProps } = this.props
     const errorStyle = error
       ? styles.error
       : null
@@ -50,10 +48,20 @@ export default class Input extends Component {
           placeholderTextColor={colors.dustygray}
           underlineColorAndroid={colors.transparent}
           keyboardAppearance='dark'
+          onChangeText={this.handleChange}
+          onBlur={this.handleTouch}
         />
-        {
-          this.renderErrorText()
-        }
+        <View style={styles.errorContainer}>
+          <Text
+            style={styles.errorText}
+            ellipsizeMode='tail'
+            numberOfLines={1}
+          >
+            {
+              error
+            }
+          </Text>
+        </View>
       </View>
     )
   }

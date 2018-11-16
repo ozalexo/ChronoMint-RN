@@ -1,0 +1,11 @@
+patch-package
+--- a/node_modules/react-native-languages/android/build.gradle
++++ b/node_modules/react-native-languages/android/build.gradle
+@@ -6,7 +6,6 @@ def safeExtGet(prop, fallback) {
+ 
+ android {
+   compileSdkVersion safeExtGet('compileSdkVersion', 26)
+-  buildToolsVersion safeExtGet('buildToolsVersion', '26.0.3')
+ 
+   defaultConfig {
+     minSdkVersion safeExtGet('minSdkVersion', 16)

@@ -11,8 +11,8 @@ import {
   View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import i18n from '../../locales/translation'
-import TextButton from '../../components/TextButton'
+import i18n from '../../../locales/translation'
+import TextButton from '../../../components/TextButton'
 import styles from './ImportMethodStyles'
 
 const Method = ({ image, label, onPress }) => {

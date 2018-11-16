@@ -1,0 +1,11 @@
+{
+  "name": "@chronobank/bitcoin",
+  "version": "1.0.0",
+  "dependencies": {
+    "bitcore-mnemonic-react-native": "^1.2.4",
+    "react-native-crypto": "^2.1.2",
+    "react-native-secure-randombytes": "^3.0.0",
+    "stream-browserify": "^2.0.1",
+    "vm-browserify": "^1.1.0"
+  }
+}

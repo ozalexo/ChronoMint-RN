@@ -14,6 +14,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 import styles from './StartStyles'
 import {
   ChronoWalletIcon,
@@ -22,29 +24,16 @@ import {
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
 import TextButton from '../../../components/TextButton'
-
-// TODO: it will be a part of I18N translations
-const COPYRIGHT = 'Copyright ©2018 LaborX Australia Pty Ltd. All Rights Reserved.'
-const PASSWORD_PLACEHOLDER = 'Password'
-const CONFIRM_PASSWORD_PLACEHOLDER = 'Confirm password'
-const CREATE_WALLET_BUTTON_LABEL = 'Create a wallet'
-const USE_EXISTING_WALLET_BUTTON_LABEL = 'Use an existing wallet'
+import i18n from '../../../locales/translation'
+import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
 
 export default class Start extends PureComponent {
   static propTypes = {
     accounts: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
     })),
-    passwordError: PropTypes.string,
-    confirmPasswordError: PropTypes.string,
-    navigateToImportWallet: PropTypes.func,
-    onChangePassword: PropTypes.func,
-    onChangePasswordConfirmation: PropTypes.func,
-    onDone: PropTypes.func,
-  }
-
-  navigateToImportMethods = () => {
-    this.props.navigation.navigate('ImportMethod')
+    onClickUseExistingButton: PropTypes.func.isRequired,
+    onClickCreateWalletButton: PropTypes.func.isRequired,
   }
 
   renderAccountsList = () => (
@@ -53,45 +42,86 @@ export default class Start extends PureComponent {
     </React.Fragment>
   )
 
-  renderCreateAccountForm = () => {
-    const {
-      onChangePassword = () => { },
-      onChangePasswordConfirmation = () => { },
-      onDone = () => { },
-    } = this.props;
+  enterPasswordValidationSchema = Yup.object().shape({
+    password: Yup.string()
+      .min(8, i18n.t('StartPage.passwordTooShort', {min_password_length: MIN_PASSWORD_LENGTH}))
+      .required(i18n.t('StartPage.passwordRequired'))
+      .matches(/[a-z]/, i18n.t('StartPage.passwordLowerCaseChar'))
+      .matches(/[A-Z]/, i18n.t('StartPage.passwordUpperCaseChar'))
+      .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, i18n.t('StartPage.passwordSpecialChar')),
+    confirmPassword: Yup.string()
+      .oneOf(
+        [Yup.ref('password', null)],
+        i18n.t('StartPage.mismatchPasswords'),
+      )
+      .required(i18n.t('StartPage.confirmPasswordRequired')),
+  })
 
+  renderEnterPasswordForm = ({
+    errors,
+    handleSubmit,
+    isSubmitting,
+    isValid,
+    setFieldTouched,
+    setFieldValue,
+    touched,
+    values,
+  }) => {
     return (
       <React.Fragment>
         <Input
           autoCorrect={false}
-          onChangeText={onChangePassword}
-          placeholder={PASSWORD_PLACEHOLDER}
+          error={touched.password && errors.password}
+          name='password'
+          onTouch={setFieldTouched}
+          onChange={setFieldValue}
+          placeholder={i18n.t('StartPage.password')}
           secureTextEntry
           style={styles.input}
-          error={this.props.passwordError}
+          value={values.password}
         />
         <Input
           autoCorrect={false}
-          onChangeText={onChangePasswordConfirmation}
-          placeholder={CONFIRM_PASSWORD_PLACEHOLDER}
+          error={touched.confirmPassword && errors.confirmPassword}
+          name='confirmPassword'
+          onTouch={setFieldTouched}
+          onChange={setFieldValue}
+          placeholder={i18n.t('StartPage.confirmPassword')}
           secureTextEntry
           style={styles.input}
-          error={this.props.confirmPasswordError}
+          value={values.confirmPassword}
         />
         <PrimaryButton
-          label={CREATE_WALLET_BUTTON_LABEL}
-          onPress={onDone}
+          label={i18n.t('StartPage.createWallet')}
+          onPress={handleSubmit}
           style={styles.primaryButton}
+          disabled={!isValid || isSubmitting}
           upperCase
+        />
+      </React.Fragment>
+    )
+  }
+
+  renderCreateAccountForm = () => {
+    return (
+      <React.Fragment>
+        <Formik
+          initialValues={{
+            password: '',
+            confirmPassword: '',
+          }}
+          validationSchema={this.enterPasswordValidationSchema}
+          onSubmit={this.props.onClickCreateWalletButton}
+          render={this.renderEnterPasswordForm}
         />
         <Text style={styles.orText}>
           {
-            'or'
+            i18n.t('StartPage.or')
           }
         </Text>
         <TextButton
-          label={USE_EXISTING_WALLET_BUTTON_LABEL}
-          onPress={this.navigateToImportMethods}
+          label={i18n.t('StartPage.useExistingWallet')}
+          onPress={this.props.onClickUseExistingButton}
         />
       </React.Fragment>
     )
@@ -136,12 +166,11 @@ export default class Start extends PureComponent {
           </KeyboardAvoidingView>
           <Text style={styles.copyright}>
             {
-              COPYRIGHT
+              i18n.t('StartPage.copyright')
             }
           </Text>
         </View>
       </TouchableWithoutFeedback>
     )
-
   }
 }

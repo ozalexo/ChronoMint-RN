@@ -10,14 +10,20 @@
   "WalletsList": {
     "title": "Мои кошельки"
   },
-  "SetAccountPassword": {
+  "StartPage": {
     "password": "Пароль",
     "confirmPassword": "Подтверждение пароля",
     "createWallet": "Создать кошелек",
     "or": "или",
     "useExistingWallet": "Использовать существующий кошелек",
     "copyright": "Copyright ©2018 LaborX Australia Pty Ltd. All Rights Reserved.",
-    "mismatchPasswords": "Passwords do not match",
-    "invalidPassword": "Password is not valid"
-  }
+    "mismatchPasswords": "Пароли не совпадают",
+    "invalidPassword": "Некорректный пароль",
+    "passwordTooShort": "Как минимум {{min_password_length}} символов",
+    "passwordRequired": "Пароль обязателен",
+    "passwordLowerCaseChar": "Как минимум один символ в нижнем регистре",
+    "passwordUpperCaseChar": "Как минимум один символ в верхнем регистре",
+    "passwordSpecialChar": "Как минимум 1 число или спец. символ (@,!,#, и т.д.).",
+    "confirmPasswordRequired": "Подтверждение пароля обязательно"
+  },
 }

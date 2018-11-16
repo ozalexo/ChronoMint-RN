@@ -12,12 +12,13 @@ import {
   createStackNavigator,
   HeaderBackButton,
 } from 'react-navigation'
-import ImportMethod from '../screens/ImportMethod'
-import EnterPrivateKey from '../screens/EnterPrivateKey'
-import Start from '../screens/Login/Start'
-import WalletList from '../screens/Wallet/WalletList'
+import EnterPrivateKey from '../screens/Login/EnterPrivateKey'
+import GenerateMnemonic from '../screens/Login/GenerateMnemonic'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
+import ImportMethod from '../screens/Login/ImportMethod'
+import Start from '../screens/Login/Start'
+import WalletList from '../screens/Wallet/WalletList'
 
 const transitionConfig = () => {
   return {
@@ -67,6 +68,13 @@ const LoginStack = createStackNavigator(
       }),
       screen: ImportMethod,
     },
+    'GenerateMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Write down back-up phrase',
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: GenerateMnemonic,
+    },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({
         title: 'Enter Private Key',
@@ -84,12 +92,16 @@ const LoginStack = createStackNavigator(
   },
   {
     initialRouteName: 'Start',
-    headerLayoutPreset: 'center',
+    headerLayoutPreset: 'left',
     navigationOptions: () => ({
       headerForceInset: { top: 'never' },
       headerTransparent: true,
       headerBackTitle: null,
       headerTintColor: 'white',
+      headerTitleStyle: {
+        fontWeight: 'normal',
+        fontSize: 17,
+      },
     }),
     cardStyle: {
       backgroundColor: 'transparent',

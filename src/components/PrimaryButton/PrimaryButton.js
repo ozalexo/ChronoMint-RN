@@ -10,7 +10,11 @@ import styles from './PrimaryButtonStyles'
 
 export default class PrimaryButton extends React.Component {
   render () {
-    const { style, label, upperCase = false, ...restProps } = this.props
+    const { style, label, disabled = false, upperCase = false, ...restProps } = this.props
+    const disabledStyle = disabled
+      ? styles.disabled
+      : null
+
     const buttonLabel = upperCase
       ? label && label.toUpperCase()
       : label
@@ -19,6 +23,7 @@ export default class PrimaryButton extends React.Component {
         style={[
           styles.container,
           style,
+          disabledStyle,
         ]}
         {...restProps}
       >
