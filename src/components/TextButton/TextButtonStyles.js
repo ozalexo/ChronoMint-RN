@@ -5,17 +5,18 @@
 
 import { StyleSheet } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   container: {
-    minHeight: 10,
+    minHeight: normalize(10),
     alignSelf: 'center',
   },
   label: {
     color: colors.light,
     fontWeight: '900',
     textAlign: 'center',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: normalize(16),
+    lineHeight: normalize(22),
   },
 })

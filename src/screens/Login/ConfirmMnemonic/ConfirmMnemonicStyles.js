@@ -6,6 +6,7 @@
 import { StyleSheet } from 'react-native'
 import { headerHeight } from '../../../common/constants/screens'
 import colors from '../../../common/colors'
+import normalize from '../../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   screenView: {
@@ -15,39 +16,39 @@ export default StyleSheet.create({
   },
   emptyWordContainer: {
     backgroundColor: colors.shadowDark,
-    borderRadius: 3,
-    height: 40,
-    marginVertical: 3,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
+    borderRadius: normalize(3),
+    height: normalize(40),
+    marginVertical: normalize(3),
+    paddingHorizontal: normalize(5),
+    paddingVertical: normalize(10),
     width: '32%',
   },
   primaryButton: {
-    marginVertical: 10,
-    marginHorizontal: 50,
+    marginVertical: normalize(10),
+    marginHorizontal: normalize(50),
   },
   mnemonic: {
     color: colors.emerald,
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: '900',
   },
   mnemonicContainer: {
     backgroundColor: colors.shadowDark,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    height: 160,
-    margin: 20,
-    padding: 20,
+    height: normalize(160),
+    margin: normalize(20),
+    padding: normalize(20),
   },
   word: {
     color: colors.light,
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: '900',
     textAlign: 'center',
   },
   wordButtons: {
-    marginHorizontal: 20,
-    marginVertical: 10,
+    marginHorizontal: normalize(20),
+    marginVertical: normalize(10),
   },
   wordColumns: {
     justifyContent: 'space-between',
@@ -55,11 +56,11 @@ export default StyleSheet.create({
   wordContainer: {
     alignItems: 'center',
     backgroundColor: colors.primary,
-    borderRadius: 3,
-    height: 40,
-    marginVertical: 3,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
+    borderRadius: normalize(3),
+    height: normalize(40),
+    marginVertical: normalize(3),
+    paddingHorizontal: normalize(5),
+    paddingVertical: normalize(10),
     width: '32%',
   },
 })

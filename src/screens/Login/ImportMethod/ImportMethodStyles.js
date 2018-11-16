@@ -6,36 +6,37 @@
 import { StyleSheet } from 'react-native'
 import { headerHeight } from '../../../common/constants/screens'
 import colors from '../../../common/colors'
+import normalize from '../../../common/utils/responseveSize'
 
 
 export default StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: headerHeight + 30,
+    marginTop: headerHeight + normalize(30),
   },
   item: {
     alignItems: 'center',
     backgroundColor: colors.primary,
-    borderRadius: 3,
-    height: 105,
+    borderRadius: normalize(3),
+    height: normalize(105),
     justifyContent: 'center',
-    margin: 5,
-    width: 105,
+    margin: normalize(5),
+    width: normalize(105),
   },
   itemImage: {
-    height: 48,
-    width: 48,
+    height: normalize(48),
+    width: normalize(48),
   },
   itemLabel: {
     color: colors.light,
-    fontSize: 14,
+    fontSize: normalize(14),
     fontWeight: '700',
   },
   or: {
-    marginVertical: 20,
+    marginVertical:normalize(20),
     alignSelf: 'center',
     color: colors.darkpurple,
-    fontSize: 16,
+    fontSize: normalize(16),
   },
 })

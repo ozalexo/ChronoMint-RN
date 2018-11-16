@@ -9,7 +9,7 @@ import StoryProvider from './StoryProvider'
 import ScreenStart from './ScreenStart'
 import ImportMethod from './ImportMethod'
 import GenerateMnemonic from './GenerateMnemonic'
-// import ConfitmMnemonic from './ConfitmMnemonic'
+import ConfitmMnemonic from './ConfitmMnemonic'
 import EnterPrivateKey from './EnterPrivateKey'
 import WalletList from './WalletList'
 
@@ -373,13 +373,19 @@ storiesOf('Screens/Login', module)
   .add('ImportMethod Screen', () => <ImportMethod />)
   .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)
   .add('GenerateMnemonic Screen', () => (
-    <GenerateMnemonic 
+    <GenerateMnemonic
       mnemonic='check mnemonic phrase'
       password='check123password'
       privateKey='PrivateKeyCheck'
     />
-  )
-  )
+  ))
+  .add('ConfitmMnemonic Screen', () => (
+    <ConfitmMnemonic
+      mnemonic='test mnemonick for story book'
+      password='testPassword'
+      privateKey='testPrivate_Key'
+    />
+  ))
 
 storiesOf('Screens/Wallet', module)
   .addParameters({

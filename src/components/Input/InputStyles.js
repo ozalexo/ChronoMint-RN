@@ -5,6 +5,7 @@
 
 import {StyleSheet} from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   inputWrapper: {
@@ -15,10 +16,10 @@ export default StyleSheet.create({
     width: '100%',
     alignSelf: 'stretch',
     alignItems: 'center',
-    height: 44,
+    height: normalize(44),
     borderBottomColor: colors.dustygray,
     color: colors.dustygray,
-    fontSize: 16,
+    fontSize: normalize(16),
   },
   error: {
     borderBottomColor: colors.error,
@@ -28,6 +29,6 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   errorContainer: {
-    height: 16,
+    height: normalize(16),
   },
 })

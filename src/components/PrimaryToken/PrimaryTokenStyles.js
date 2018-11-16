@@ -4,17 +4,18 @@
  */
 
 import { StyleSheet } from 'react-native'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   balanceText: {
-    fontSize: 22,
+    fontSize: normalize(22),
     fontWeight: '700',
   },
   balanceContainer: {
     flexDirection: 'row',
-    marginTop: 24,
+    marginTop: normalize(24),
   },
   balanceNumber: {
-    marginLeft: 4,
+    marginLeft: normalize(4),
   },
 })

@@ -7,31 +7,32 @@ import {
   StyleSheet,
 } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   address: {
     color: colors.foregroundLighter,
-    fontSize: 12,
+    fontSize: normalize(12),
     fontWeight: '200',
   },
   image: {
-    height: 32,
-    margin: 8,
-    width: 32,
+    height: normalize(32),
+    margin:normalize(8),
+    width: normalize(32),
   },
   name: {
-    fontSize: 12,
+    fontSize: normalize(12),
     fontWeight: '700',
   },
   owner: {
     backgroundColor: colors.background,
-    borderRadius: 3,
+    borderRadius: normalize(3),
     flexDirection: 'row',
-    margin: 8,
-    padding: 8,
+    margin: normalize(8),
+    padding: normalize(8),
   },
   ownerContent: {
     flex: 1,
-    margin: 8,
+    margin: normalize(8),
   },
 })

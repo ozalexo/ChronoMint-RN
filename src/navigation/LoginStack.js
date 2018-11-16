@@ -20,6 +20,7 @@ import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetwork
 import ImportMethod from '../screens/Login/ImportMethod'
 import Start from '../screens/Login/Start'
 import WalletList from '../screens/Wallet/WalletList'
+import normalize from '../common/utils/responseveSize'
 
 const transitionConfig = () => {
   return {
@@ -54,10 +55,10 @@ const LoginStack = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         headerLeft: <HeaderNetworkSelect toggleDrawer={navigation.toggleNetworkDrawer} />,
         headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
-        headerLeftContainerStyle: { paddingLeft: 20 },
-        headerRightContainerStyle: { paddingRight: 20 },
+        headerLeftContainerStyle: { paddingLeft: normalize(20) },
+        headerRightContainerStyle: { paddingRight: normalize(20) },
         headerStyle: {
-          height: 44,
+          height: normalize(44),
         },
       }),
       screen: Start,
@@ -108,7 +109,7 @@ const LoginStack = createStackNavigator(
       headerTintColor: 'white',
       headerTitleStyle: {
         fontWeight: 'normal',
-        fontSize: 17,
+        fontSize: normalize(17),
       },
       gestureEnadled: false,
     }),

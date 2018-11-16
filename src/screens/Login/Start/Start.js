@@ -26,6 +26,7 @@ import PrimaryButton from '../../../components/PrimaryButton'
 import TextButton from '../../../components/TextButton'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
+import normalize from '../../../common/utils/responseveSize'
 
 export default class Start extends PureComponent {
   static propTypes = {
@@ -133,9 +134,7 @@ export default class Start extends PureComponent {
     // TODO: [AO] constants below were adjusted manually
     // Need to investigate the reasons and setup precise values
     // Default header heights: ios = 64, android = 56
-    const keyboardVerticalOffset = Platform.OS === 'ios'
-      ? -20
-      : 0
+    const keyboardVerticalOffset = normalize(-20)
 
     return (
       <TouchableWithoutFeedback

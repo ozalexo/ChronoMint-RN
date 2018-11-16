@@ -5,19 +5,20 @@
 
 import { StyleSheet } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   action: {
     flex: 1,
     justifyContent: 'center',
-    padding: 16,
+    padding: normalize(16),
   },
   actions: {
     flexDirection: 'row',
   },
   actionTitle: {
     color: colors.primaryLight,
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: '200',
     textAlign: 'center',
   },
@@ -32,11 +33,11 @@ export default StyleSheet.create({
     height: '80%',
   },
   content: {
-    padding: 24,
-    paddingBottom: 16,
+    padding: normalize(24),
+    paddingBottom: normalize(16),
   },
   title: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
+    paddingHorizontal: normalize(24),
+    paddingVertical: normalize(8),
   },
 })

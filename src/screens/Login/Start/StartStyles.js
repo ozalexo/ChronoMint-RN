@@ -5,48 +5,49 @@
 
 import { StyleSheet } from 'react-native'
 import colors from '../../../common/colors/index'
+import normalize from '../../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   container: {
     // TODO: to investigate a "magic" with this 20
-    marginTop: 20,
+    marginTop: normalize(20),
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
     alignSelf: 'stretch',
   },
   logo: {
-    marginBottom: 20,
+    marginBottom: normalize(20),
     alignSelf: 'center',
   },
   logoText: {
     // Default header heights: ios = 64, android = 56
-    marginBottom: 64,
+    marginBottom: normalize(64),
     alignSelf: 'center',
   },
   copyright: {
     alignSelf: 'center',
     color: colors.dustygray,
-    fontSize: 12,
+    fontSize: normalize(12),
     textAlign: 'center',
   },
   inputsContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: normalize(20),
     flex: 1,
     alignSelf: 'stretch',
   },
   input: {
-    marginBottom: 10,
+    marginBottom: normalize(10),
     textAlign: 'center',
   },
   primaryButton: {
-    marginBottom: 20,
+    marginBottom: normalize(20),
   },
   orText: {
     alignSelf: 'center',
     color: colors.textOnPurple,
-    fontSize: 16,
-    marginBottom: 20,
+    fontSize: normalize(16),
+    marginBottom: normalize(20),
   },
   kavContainer: {
     flex: 1,

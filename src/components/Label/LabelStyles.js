@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   container: {
@@ -14,14 +15,14 @@ export default StyleSheet.create({
   },
   defaultText: {
     color: colors.greySubLight,
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: 'bold',
-    lineHeight: 19,
+    lineHeight: normalize(19),
   },
   currencyText: {
     color: colors.activeBlue,
-    fontSize: 22,
-    lineHeight: 26,
+    fontSize: normalize(22),
+    lineHeight: normalize(26),
   },
   rightSidedText: {
     textAlign: 'right',

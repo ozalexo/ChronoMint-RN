@@ -4,5 +4,6 @@
  */
 
 import {Platform} from 'react-native'
+import normalize from '../utils/responseveSize'
 
-export const headerHeight = Platform.OS === 'ios' ? 64 : 56
+export const headerHeight = Platform.OS === 'ios' ? normalize(64) : normalize(56)

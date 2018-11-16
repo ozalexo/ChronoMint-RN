@@ -5,19 +5,20 @@
 
 import { StyleSheet } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 4,
+    padding: normalize(4),
   },
   bullet: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: normalize(8),
+    height: normalize(8),
+    borderRadius: normalize(4),
     backgroundColor: colors.red,
-    margin: 4,
+    margin: normalize(4),
   },
   bulletFetching: {
     backgroundColor: colors.grayDark,
@@ -29,7 +30,7 @@ export default StyleSheet.create({
     backgroundColor: colors.green,
   },
   label: {
-    fontSize: 12,
+    fontSize: normalize(12),
     color: colors.background,
   },
 })

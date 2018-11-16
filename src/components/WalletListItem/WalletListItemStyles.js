@@ -5,34 +5,35 @@
 
 import { StyleSheet } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    borderRadius: 4,
-    padding: 8,
-    marginHorizontal: 16,
-    marginVertical: 4,
-    paddingBottom: 40,
+    borderRadius: normalize(4),
+    padding: normalize(8),
+    marginHorizontal: normalize(16),
+    marginVertical: normalize(4),
+    paddingBottom: normalize(40),
   },
   transactions: {
     flexDirection: 'row',
-    margin: 4,
-    minHeight: 20,
+    margin: normalize(4),
+    minHeight: normalize(20),
     justifyContent: 'flex-end',
   },
   transactionsNumberContainer: {
-    height: 20,
-    minWidth: 20,
+    height: normalize(20),
+    minWidth: normalize(20),
     backgroundColor: colors.red,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: normalize(10),
   },
   image: {
-    marginRight: 16,
-    marginLeft: 8,
+    marginRight: normalize(16),
+    marginLeft: normalize(8),
   },
   transactionsNumber: {
     color: colors.background,
@@ -45,13 +46,13 @@ export default StyleSheet.create({
     flex: 1,
   },
   title: {
-    marginTop: 8,
+    marginTop: normalize(8),
     fontWeight: '700',
   },
   address: {
-    marginTop: 4,
+    marginTop: normalize(4),
     fontWeight: '200',
-    fontSize: 12,
+    fontSize: normalize(12),
   },
   balanceAndTokensRow: {
     flexDirection: 'row',
@@ -59,6 +60,6 @@ export default StyleSheet.create({
   exchange: {
     color: colors.foregroundLighter,
     fontWeight: '200',
-    marginTop: 4,
+    marginTop: normalize(4),
   },
 })

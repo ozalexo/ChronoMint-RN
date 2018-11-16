@@ -52,9 +52,9 @@ export default class ConfirmMnemonic extends PureComponent {
     return (
       <View style={styles.screenView}>
         <View style={styles.mnemonicContainer}>
-          {mnemonic.map((item) => (
-            <Text key={item} style={styles.mnemonic}>
-              {item}
+          {mnemonic.map((word, index) => (
+            <Text key={word + index} style={styles.mnemonic}>
+              {word}
               {' '}
             </Text>
           ))}

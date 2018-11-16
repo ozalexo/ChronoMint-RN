@@ -7,11 +7,12 @@ import {
   StyleSheet,
 } from 'react-native'
 import colors from '../../common/colors'
+import normalize from '../../common/utils/responseveSize'
 
 export default StyleSheet.create({
   item: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
+    paddingVertical: normalize(16),
+    paddingHorizontal: normalize(24),
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
@@ -23,8 +24,8 @@ export default StyleSheet.create({
   },
   itemText: {
     flexShrink: 1,
-    marginHorizontal: 8,
-    fontSize: 13,
+    marginHorizontal: normalize(8),
+    fontSize: normalize(13),
   },
   receiving: {
     color: colors.green,
@@ -34,15 +35,15 @@ export default StyleSheet.create({
   },
   transactionsListContainer: {
     backgroundColor: colors.background,
-    borderRadius: 3,
-    marginBottom: 32,
-    marginTop: 8,
-    paddingVertical: 8,
+    borderRadius: normalize(3),
+    marginBottom: normalize(32),
+    marginTop: normalize(8),
+    paddingVertical: normalize(8),
   },
   transactionsListTitle: {
-    paddingBottom: 8,
-    paddingHorizontal: 24,
-    paddingTop: 4,
+    paddingBottom: normalize(8),
+    paddingHorizontal: normalize(24),
+    paddingTop: normalize(4),
   },
   refreshTouch: {
     flexDirection: 'row',
@@ -51,7 +52,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   refreshImage: {
-    marginLeft: 4,
-    marginRight: 4,
+    marginLeft: normalize(4),
+    marginRight: normalize(4),
   },
 })
