@@ -5,6 +5,7 @@
 
 import { StyleSheet } from 'react-native'
 import { headerHeight } from '../../../common/constants/screens'
+import colors from '../../../common/colors'
 
 export default StyleSheet.create({
   screenView: {
@@ -13,18 +14,17 @@ export default StyleSheet.create({
     flexDirection: 'column',
   },
   description: {
-    color: '#A3A3CC',
+    color: colors.darkpurple,
     fontSize: 16,
     margin: 20,
   },
   mnemonic: {
-    borderRadius: 3,
-    color: '#FFB54E',
+    color: colors.darkYellow,
     fontSize: 16,
     fontWeight: '900',
   },
   mnemonicContainer: {
-    backgroundColor: '#302D59',
+    backgroundColor: colors.textContainer,
     marginHorizontal: 20,
     marginVertical: 10,
     paddingHorizontal: 20,
@@ -34,13 +34,21 @@ export default StyleSheet.create({
     marginHorizontal: '20%',
   },
   warningContainer: {
-    backgroundColor: '#302D59',
+    backgroundColor: colors.darkpurple,
     borderRadius: 3,
-    borderTopColor: '#FFB54E',
+    borderTopColor: colors.warningTitle,
     borderTopWidth: 5,
     marginHorizontal: 20,
     marginVertical: 10,
     paddingBottom: 30,
+  },
+  warningTitle: {
+    color:  colors.warningTitle,
+    fontSize: 22,
+    fontWeight: '900',
+    marginBottom: 10,
+    marginHorizontal: 20,
+    marginTop: 30,
   },
   warningItem: {
     flexDirection: 'row',
@@ -48,27 +56,19 @@ export default StyleSheet.create({
     marginVertical: 10,
   },
   warningItemContent: {
-    color: '#A3A3CC',
+    color: colors.darkpurple,
     flex: 1,
     fontSize: 16,
   },
   warningItemTitle: {
-    color: 'white',
+    color: colors.light,
     fontSize: 16,
     fontWeight: '900',
   },
   warningNumber: {
-    color: 'white',
+    color: colors.light,
     fontSize: 16,
     fontWeight: '900',
     marginRight: 5,
-  },
-  warningTitle: {
-    color: 'white',
-    fontSize: 22,
-    fontWeight: '900',
-    marginBottom: 10,
-    marginHorizontal: 20,
-    marginTop: 30,
   },
 })
