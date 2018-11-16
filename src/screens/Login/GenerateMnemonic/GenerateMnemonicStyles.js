@@ -34,7 +34,7 @@ export default StyleSheet.create({
     marginHorizontal: '20%',
   },
   warningContainer: {
-    backgroundColor: colors.darkpurple,
+    backgroundColor: colors.textContainer,
     borderRadius: 3,
     borderTopColor: colors.warningTitle,
     borderTopWidth: 5,

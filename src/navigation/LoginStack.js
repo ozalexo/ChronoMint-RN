@@ -14,6 +14,7 @@ import {
 } from 'react-navigation'
 import EnterPrivateKey from '../screens/Login/EnterPrivateKey'
 import GenerateMnemonic from '../screens/Login/GenerateMnemonic'
+import ConfirmMnemonic from '../screens/Login/ConfirmMnemonic'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
 import ImportMethod from '../screens/Login/ImportMethod'
@@ -74,6 +75,13 @@ const LoginStack = createStackNavigator(
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: GenerateMnemonic,
+    },
+    'ConfirmMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title: 'Confirm recovery phrase',
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: ConfirmMnemonic,
     },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({

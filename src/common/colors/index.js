@@ -42,6 +42,7 @@ export default {
   primaryLight: '#786AB7',
   primaryDarkest: '#05326A',
 
+  emerald: '#6EE289',
   green: '#68CC8E',
   red: '#C25451',
   orange: '#FFAB00',

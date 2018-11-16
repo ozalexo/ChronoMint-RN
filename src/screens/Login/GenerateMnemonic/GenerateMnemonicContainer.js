@@ -23,12 +23,12 @@ class GenerateMnemonicContainer extends PureComponent {
 
 
   handleConfirm = () => {
+    const { mnemonic } = this.state
     const {
       password,
       privateKey,
       navigation,
     } = this.props
-    const { mnemonic } = this.state
 
     const params = {
       mnemonic,
