@@ -50,7 +50,6 @@ export default class ConfirmMnemonic extends PureComponent {
 
   render () {
     const { words, onDone, mnemonic } = this.props
-    console.log(mnemonic)
 
     return (
       <View style={styles.screenView}>
