@@ -374,7 +374,7 @@ storiesOf('Screens/Login', module)
   .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)
   .add('GenerateMnemonic Screen', () => (
     <GenerateMnemonic
-      mnemonic='check mnemonic phrase'
+      mnemonic='jacket lady situate brass inflict chest arch series glass second soup food'
       password='check123password'
       privateKey='PrivateKeyCheck'
     />
