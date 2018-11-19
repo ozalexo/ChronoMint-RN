@@ -30,7 +30,7 @@ WarningItem.propTypes = {
 export default class GenerateMnemonic extends PureComponent {
   renderWarningItem = (item, index) => (
     <WarningItem
-      key={`warning${index}`}
+      key={`warning${item + index}`}
       warningIndex={index}
     />
   )

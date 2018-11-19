@@ -49,19 +49,20 @@ class ConfirmMnemonicContainer extends PureComponent {
   }
 
   handleWord = (word) => () => {
-    this.setState(({ words, mnemonic }) => {
-      words.splice(words.indexOf(word), 1)
-      words.push(' ')
+    if (word) {
+      this.setState(({ words, mnemonic }) => {
+        words[words.indexOf(word)] = ''
 
-      return {
-        mnemonic: [...mnemonic, word],
-        words: [...words],
-      }
-    }, () => {
-      if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
-        this.handleDone()
-      }
-    })
+        return {
+          mnemonic: [...mnemonic, word],
+          words: [...words],
+        }
+      }, () => {
+        if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
+          this.handleDone()
+        }
+      })
+    }
   }
 
   createInitialState = () => {

@@ -18,8 +18,8 @@ import i18n from '../../../locales/translation'
 import styles from './ConfirmMnemonicStyles'
 
 const Word = ({ word, onPress }) => {
-  if (word === 'emptyWord') {
-    
+  if (word === '') {
+
     return <View style={styles.emptyWordContainer} />
   }
 
@@ -42,7 +42,7 @@ Word.propTypes = {
 
 export default class ConfirmMnemonic extends PureComponent {
 
-  keyExtractor = (word) => (word === ' ') ? Math.random().toString() : word
+  keyExtractor = (word) => (word === '') ? Math.random().toString() : word
 
   renderWord = ({ item }) => (
     <Word word={item} onPress={this.props.onWord(item)} />
@@ -50,12 +50,16 @@ export default class ConfirmMnemonic extends PureComponent {
 
   render () {
     const { words, onDone, mnemonic } = this.props
+    console.log(mnemonic)
 
     return (
       <View style={styles.screenView}>
         <View style={styles.mnemonicContainer}>
           {mnemonic.map((word, index) => (
-            <Text key={word + index} style={styles.mnemonic}>
+            <Text
+              key={`mnemonic${word + index}`}
+              style={styles.mnemonic}
+            >
               {word}
               {' '}
             </Text>

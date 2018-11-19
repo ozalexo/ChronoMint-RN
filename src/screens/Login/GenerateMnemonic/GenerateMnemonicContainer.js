@@ -17,7 +17,6 @@ class GenerateMnemonicContainer extends PureComponent {
   componentDidMount () {
     generateMnemonic()
       .then((resolve) => {
-        console.log(resolve)
         this.setState({ mnemonic: resolve })
       })
   }
