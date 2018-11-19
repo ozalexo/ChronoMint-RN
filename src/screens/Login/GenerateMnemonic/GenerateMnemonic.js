@@ -4,7 +4,7 @@
  */
 
 import React, { PureComponent } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 import i18n from '../../../locales/translation'
 import PrimaryButton from '../../../components/PrimaryButton'
@@ -42,7 +42,7 @@ export default class GenerateMnemonic extends PureComponent {
     } = this.props
 
     return (
-      <View style={styles.screenView}>
+      <ScrollView style={styles.screenView}>
         <Text style={styles.description}>
           {i18n.t('GenerateMnemonic.description')}
         </Text>
@@ -63,7 +63,7 @@ export default class GenerateMnemonic extends PureComponent {
           onPress={onConfirm}
           upperCase
         />
-      </View>
+      </ScrollView>
     )
   }
 }

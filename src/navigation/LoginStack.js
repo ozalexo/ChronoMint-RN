@@ -12,6 +12,7 @@ import {
   createStackNavigator,
   HeaderBackButton,
 } from 'react-navigation'
+import i18n from '../locales/translation'
 import EnterPrivateKey from '../screens/Login/EnterPrivateKey'
 import GenerateMnemonic from '../screens/Login/GenerateMnemonic'
 import ConfirmMnemonic from '../screens/Login/ConfirmMnemonic'
@@ -64,35 +65,35 @@ const LoginStack = createStackNavigator(
     },
     'ImportMethod': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Add an existing account',
+        title: i18n.t('ScreensTitles.ImportMethod'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: ImportMethod,
     },
     'GenerateMnemonic': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Write down back-up phrase',
+        title: i18n.t('ScreensTitles.GenerateMnemonic'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: GenerateMnemonic,
     },
     'ConfirmMnemonic': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Confirm recovery phrase',
+        title: i18n.t('ScreensTitles.ConfirmMnemonic'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: ConfirmMnemonic,
     },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Enter Private Key',
+        title: i18n.t('ScreensTitles.EnterPrivateKey'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: EnterPrivateKey,
     },
     'WalletList': {
       navigationOptions: ({ navigation }) => ({
-        title: 'WalletList',
+        title: i18n.t('ScreensTitles.WalletList'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: WalletList,

@@ -8,11 +8,12 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   inputWrapper: {
-    width: '100%',
+    flex: 1,
+    alignItems: 'flex-start',
   },
   input: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    width: '100%',
+    flexDirection: 'row',
     alignSelf: 'stretch',
     alignItems: 'center',
     height: 44,

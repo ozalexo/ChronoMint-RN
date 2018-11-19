@@ -12,7 +12,7 @@ export default StyleSheet.create({
   item: {
     paddingVertical: 16,
     paddingHorizontal: 24,
-    width: '100%',
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

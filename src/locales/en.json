@@ -148,18 +148,18 @@
   },
   "GenerateMnemonic": {
     "title": "Write down recovery phrase",
-    "description": "You can use the phrase shown below to restore or login to your wallet by using additional wallet\"s login options.",
+    "description": "You can use the phrase shown below to restore or login to your wallet by using additional wallet's login options.",
     "warningTitle": "Important!\nRead the security guidelines",
-    "warningItem1Title": "Don\"t share your mnemonic phrase with someone you don\"t trust.",
-    "warningItem1Content": "Double check services you\"re giving your mnemonic to and don\"t share your phrase with anyone.",
+    "warningItem1Title": "Don't share your mnemonic phrase with someone you don't trust.",
+    "warningItem1Content": "Double check services you're giving your mnemonic to and don't share your phrase with anyone.",
     "confirm": "Confirm phrase",
     "warnings": {
       "0": {
-        "title": "Don\"t share your mnemonic phrase with someone you don\"t trust.",
-        "content": "Double check services you\"re giving your mnemonic to and don\"t share your phrase with anyone."
+        "title": "Don't share your mnemonic phrase with someone you don't trust.",
+        "content": "Double check services you\"re giving your mnemonic to and don't share your phrase with anyone."
       },
       "1": {
-        "title": "Don\"t loose your key.",
+        "title": "Don't loose your key.",
         "content": "We do not store this information and Your account will be lost together with all your funds and history."
       }
     }
@@ -186,5 +186,12 @@
     "mnemonic": "Mnemonic",
     "privateKey": "Private key",
     "walletFile": "Wallet File"
+  },
+  "ScreensTitles": {
+    "ImportMethod": "Add an existing account",
+    "GenerateMnemonic": "Write down back-up phrase",
+    "ConfirmMnemonic": "Confirm recovery phrase",
+    "EnterPrivateKey": "Enter Private Key",
+    "WalletList": "WalletList"
   }
 }

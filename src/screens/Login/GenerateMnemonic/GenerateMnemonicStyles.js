@@ -32,7 +32,7 @@ export default StyleSheet.create({
     paddingVertical: 30,
   },
   primaryButton: {
-    marginHorizontal: '20%',
+    margin: 20,
   },
   warningContainer: {
     backgroundColor: colors.textContainer,
