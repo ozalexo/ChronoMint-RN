@@ -17,7 +17,7 @@ const configureStore = () => {
     ? composeWithDevTools({ realtime: true })
     : compose
 
-  const middleware = getMiddlewares(history)
+  const middleware = getMiddlewares()
 
   const createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(...middleware)
@@ -31,7 +31,7 @@ const configureStore = () => {
   // const persistor = persistStore(store)
 
   // store.persistor = persistor
-  // return { store, history, persistor }
+  // return { store, persistor }
   return { store }
 }
 

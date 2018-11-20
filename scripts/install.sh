@@ -27,7 +27,7 @@ do
     if [ "$arg" == "--upgrade" ] || [ "$arg" == "-u" ]
     then
         echo $'[Yarn upgrade] Removing all package-lock.json, yarn.lock and yarn-error.log files...'
-        find ./packages -maxdepth 1 -name "package-lock.json" -name "yarn.lock" -name "yarn-error.log" -type f -delete
+        find ./packages -maxdepth 2 -name "package-lock.json" -name "yarn.lock" -name "yarn-error.log" -type f -delete
         rm -f package-lock.json yarn.lock yarn-error.log
     fi
 done

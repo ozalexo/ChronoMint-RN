@@ -3,4 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export const DUCK_NETWORK = 'network'
+export const DUCK_SESSION = 'session'

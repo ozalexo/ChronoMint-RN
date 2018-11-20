@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import DefaultImageBackground from './common/ImageBackground'
 import RootNavigator from './navigation/RootNavigator'
-import { configureStore } from './store/configureStore'
+import configureStore from './store/configureStore'
 import styles from './AppStyles'
 
 const { store } = configureStore()

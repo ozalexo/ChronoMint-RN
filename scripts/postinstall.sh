@@ -5,8 +5,13 @@
 
     ROOT_PWD=$(pwd)
     cd ./node_modules/react-native
-    ./scripts/ios-install-third-party.sh
-    cd ./third-party/glog-0.3.5/
-    ../../scripts/ios-configure-glog.sh
-    cd $ROOT_PWD
+    if [ -f ./alreadybuilt.flag.txt ]; then
+        ./scripts/ios-install-third-party.sh
+        cd ./third-party/glog-0.3.5/
+        ../../scripts/ios-configure-glog.sh
+        cd $ROOT_PWD
+        cd ./node_modules/react-native
+        touch alreadybuilt.flag.txt
+        cd $ROOT_PWD
+    fi
 
