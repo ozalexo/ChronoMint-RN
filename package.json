@@ -26,6 +26,7 @@
     "react-navigation": "^2.18.2",
     "react-redux": "^5.1.0",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "yup": "^0.26.6"
   },
   "devDependencies": {
