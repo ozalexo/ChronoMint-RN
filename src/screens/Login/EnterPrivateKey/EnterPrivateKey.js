@@ -12,10 +12,10 @@ import styles from './EnterPrivateKeyStyles'
 
 export default class EnterPrivateKey extends PureComponent {
 
-  render() {
+  render () {
     const {
-      onChangePrivateKey = () => {},
-      onDone = () => {},
+      onChangePrivateKey = () => { },
+      onDone = () => { },
       error,
     } = this.props
 
@@ -23,7 +23,8 @@ export default class EnterPrivateKey extends PureComponent {
       <View style={styles.screenView}>
         <Input
           label='Private key'
-          onChangeText={onChangePrivateKey}
+          name='privateKey'
+          onChange={onChangePrivateKey}
           error={error}
         />
         <PrimaryButton
@@ -38,4 +39,5 @@ export default class EnterPrivateKey extends PureComponent {
 EnterPrivateKey.propTypes = {
   onChangePrivateKey: PropTypes.func,
   onDone: PropTypes.func,
+  error: PropTypes.string,
 }

@@ -44,7 +44,7 @@ export default StyleSheet.create({
     paddingBottom: 30,
   },
   warningTitle: {
-    color:  colors.warningTitle,
+    color: colors.warningTitle,
     fontSize: 22,
     fontWeight: '900',
     marginBottom: 10,

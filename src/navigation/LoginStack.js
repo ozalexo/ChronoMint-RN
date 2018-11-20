@@ -21,6 +21,7 @@ import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetwork
 import ImportMethod from '../screens/Login/ImportMethod'
 import Start from '../screens/Login/Start'
 import WalletList from '../screens/Wallet/WalletList'
+import { headerHeight } from '../common/constants/screens'
 
 const transitionConfig = () => {
   return {
@@ -57,9 +58,10 @@ const LoginStack = createStackNavigator(
         headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
         headerLeftContainerStyle: { paddingLeft: 20 },
         headerRightContainerStyle: { paddingRight: 20 },
-        headerStyle: {
-          height: 44,
-        },
+        //each screen heigth may be set manually
+        // headerStyle: { 
+        //   height: 44,
+        // },
       }),
       screen: Start,
     },
@@ -110,6 +112,9 @@ const LoginStack = createStackNavigator(
       headerTitleStyle: {
         fontWeight: 'normal',
         fontSize: 17,
+      },
+      headerStyle: {
+        height: headerHeight,
       },
       gestureEnadled: false,
     }),

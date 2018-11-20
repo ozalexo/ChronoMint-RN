@@ -22,7 +22,7 @@ export default class Input extends Component {
 
   handleChange = (value) => {
     const {
-      onChange = () => { },
+      onChange,
       name,
     } = this.props
     onChange(name, value)
@@ -31,7 +31,7 @@ export default class Input extends Component {
   handleTouch = () => {
     const {
       onTouch = () => { },
-      name
+      name,
     } = this.props
     onTouch(name)
   }

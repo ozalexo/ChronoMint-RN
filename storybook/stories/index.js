@@ -135,8 +135,8 @@ storiesOf('Components/Inputs', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('Input', () => (
     <StoryWrapper>
-      <Input placeholder='Default Input' />
-      <Input placeholder='Error Input' error='Some kind of error happened here.' />
+      <Input placeholder='Default Input' name='default'/>
+      <Input placeholder='Error Input' name='error' error='Some kind of error happened here.' />
     </StoryWrapper>
   ))
   .add('Checkboxes', () => (

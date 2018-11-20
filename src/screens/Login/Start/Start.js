@@ -9,7 +9,6 @@ import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   Text,
   TouchableWithoutFeedback,
   View,
@@ -26,6 +25,7 @@ import PrimaryButton from '../../../components/PrimaryButton'
 import TextButton from '../../../components/TextButton'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
+import { headerHeight } from '../../../common/constants/screens'
 
 export default class Start extends PureComponent {
   static propTypes = {
@@ -44,7 +44,7 @@ export default class Start extends PureComponent {
 
   enterPasswordValidationSchema = Yup.object().shape({
     password: Yup.string()
-      .min(8, i18n.t('StartPage.passwordTooShort', {min_password_length: MIN_PASSWORD_LENGTH}))
+      .min(8, i18n.t('StartPage.passwordTooShort', { min_password_length: MIN_PASSWORD_LENGTH }))
       .required(i18n.t('StartPage.passwordRequired'))
       .matches(/[a-z]/, i18n.t('StartPage.passwordLowerCaseChar'))
       .matches(/[A-Z]/, i18n.t('StartPage.passwordUpperCaseChar'))
@@ -133,9 +133,7 @@ export default class Start extends PureComponent {
     // TODO: [AO] constants below were adjusted manually
     // Need to investigate the reasons and setup precise values
     // Default header heights: ios = 64, android = 56
-    const keyboardVerticalOffset = Platform.OS === 'ios'
-      ? -20
-      : 0
+    const keyboardVerticalOffset = -headerHeight
 
     return (
       <TouchableWithoutFeedback
