@@ -79,7 +79,9 @@
     "react-dom": "^16.6.0",
     "react-native-languages": "^3.0.1",
     "react-native-web": "^0.9.8",
-    "react-test-renderer": "16.6.0-alpha.8af6728"
+    "react-test-renderer": "16.6.0-alpha.8af6728",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6"
   },
   "jest": {
     "preset": "react-native"

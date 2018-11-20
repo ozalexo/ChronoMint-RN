@@ -12,8 +12,10 @@ import {
 } from 'react-native'
 import DefaultImageBackground from './common/ImageBackground'
 import RootNavigator from './navigation/RootNavigator'
-import store from './store/createStore'
+import { configureStore } from './store/configureStore'
 import styles from './AppStyles'
+
+const { store } = configureStore()
 
 export default class App extends Component {
   componentDidMount () {
