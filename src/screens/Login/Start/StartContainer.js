@@ -6,7 +6,11 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import configureStore from '../../../store/configureStore'
+import { loginThunk, logoutThunk } from '../../../redux/session/thunks'
 import Start from './Start'
+
+const { store } = configureStore()
 
 const mapStateToProps = (ownState, ownProps) => {
   return {
@@ -16,7 +20,7 @@ const mapStateToProps = (ownState, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    navigateToImportWallet: () => {},
+    navigateToImportWallet: () => { },
   }
 }
 
@@ -26,6 +30,11 @@ class StartContainer extends PureComponent {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
+  }
+
+  componentDidMount () {
+    store.dispatch(loginThunk('0xf1106d1eb597ef2f14c8f5343c1b4203fa0f2e9b')) //check login
+    store.dispatch(logoutThunk()) //check login
   }
 
   handleUseExistingButtonClick = () => {
@@ -39,7 +48,7 @@ class StartContainer extends PureComponent {
 
   render () {
     return (
-      <Start 
+      <Start
         onClickUseExistingButton={this.handleUseExistingButtonClick}
         onClickCreateWalletButton={this.handleCreateWalletButtonClick}
       />

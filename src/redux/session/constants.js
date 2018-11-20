@@ -5,8 +5,6 @@
 
 export const DUCK_SESSION = 'session'
 
-export const USER_ACTIONS = {
-  LOGIN: 'LOGIN',
-  LOGOUT: 'LOGOUT',
-}
+export const SESSION_LOGIN = 'SESSION/LOGIN'
+export const SESSION_LOGOUT = 'SESSION/LOGOUT'
 

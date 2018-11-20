@@ -5,18 +5,18 @@
 
 import { login, logout } from './actions'
 
-export const Login = (currentWallet) => async (dispatch) => {
+export const loginThunk = (currentWallet) => (dispatch) => {
   try {
-    dispatch(login(currentWallet))
+    return dispatch(login(currentWallet))
   } catch (e) {
-    console.error('login error:', e.message)
+    return Promise.reject(e)
   }
 }
 
-export const Logout = () => async (dispatch) => {
+export const logoutThunk = () => (dispatch) => {
   try {
-    dispatch(logout())
+    return dispatch(logout())
   } catch (e) {
-    console.error('logout error:', e.message)
+    return Promise.reject(e)
   }
 }

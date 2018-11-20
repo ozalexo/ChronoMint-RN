@@ -3,24 +3,20 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import { USER_ACTIONS } from './constants'
-import { initialState } from './initialState'
+import * as ActionTypes from './constants'
+import initialState from './initialState'
 
 const mutations = {
-  [USER_ACTIONS.LOGIN]: (state, { currentWallet }) => {
+  [ActionTypes.SESSION_LOGIN]: (state, { currentWallet }) => {
     return {
       ...state,
-      session: {
-        currentWallet,
-      },
+      currentWallet,
     }
   },
-  [USER_ACTIONS.LOGOUT]: (state) => {
+  [ActionTypes.SESSION_LOGOUT]: (state) => {
     return {
       ...state,
-      session: {
-        currentWallet: '',
-      },
+      currentWallet: null,
     }
   },
 }

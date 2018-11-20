@@ -3,8 +3,6 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export const initialState = {
-  session: {
-    currentWallet: '',
-  },
+export default {
+  currentWallet: null,
 }
