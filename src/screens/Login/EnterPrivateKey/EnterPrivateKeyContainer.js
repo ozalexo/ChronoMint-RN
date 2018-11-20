@@ -4,9 +4,17 @@
  */
 
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import EnterPrivateKey from './EnterPrivateKey'
 
 class EnterPrivateKeyContainer extends PureComponent {
+
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+  }
+
   state = {
     privateKey: '',
     error: '',
@@ -17,7 +25,10 @@ class EnterPrivateKeyContainer extends PureComponent {
   }
 
   handleDone = () => {
-    const { navigation, onPrivateKeyLogin } = this.props
+    const {
+      navigation,
+      // onPrivateKeyLogin,
+    } = this.props
     const { privateKey } = this.state
 
     // onPrivateKeyLogin(privateKey)
