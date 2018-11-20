@@ -8,14 +8,14 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   inputWrapper: {
-    width: '100%',
+    flexDirection: 'column',
+    height: 60, // 44 - input + 16 - error text
   },
   input: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    width: '100%',
+    flex: 1,
     alignSelf: 'stretch',
     alignItems: 'center',
-    height: 44,
     borderBottomColor: colors.dustygray,
     color: colors.dustygray,
     fontSize: 16,

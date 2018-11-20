@@ -12,6 +12,7 @@ export default StyleSheet.create({
     marginBottom: 20,
     flex: 1,
     flexDirection: 'column',
+    justifyContent: 'flex-start',
     paddingHorizontal: 20,
   },
 })

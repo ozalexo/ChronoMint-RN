@@ -20,6 +20,9 @@ export default {
   sectionHeaderContainer: '#efeff3',
   ghost: '#C7C7CC',
   textOnPurple: '#A3A3CC',
+  darkYellow: '#FFB54E',
+  textContainer: '#302D59',
+  warningTitle: '#ff6d6b',
 
   background: '#FBFBFE',
   backgroundLight: '#FFFFFF',
@@ -39,6 +42,7 @@ export default {
   primaryLight: '#786AB7',
   primaryDarkest: '#05326A',
 
+  emerald: '#6EE289',
   green: '#68CC8E',
   red: '#C25451',
   orange: '#FFAB00',

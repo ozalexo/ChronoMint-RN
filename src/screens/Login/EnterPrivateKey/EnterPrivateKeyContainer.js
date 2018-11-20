@@ -19,7 +19,7 @@ class EnterPrivateKeyContainer extends PureComponent {
   handleDone = () => {
     const { navigation, onPrivateKeyLogin } = this.props
     const { privateKey } = this.state
-    
+
     // onPrivateKeyLogin(privateKey)
     if (privateKey.length <= 6) {
       this.setState({ error: 'Private Key is too short' })

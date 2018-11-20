@@ -12,13 +12,16 @@ import {
   createStackNavigator,
   HeaderBackButton,
 } from 'react-navigation'
+import i18n from '../locales/translation'
 import EnterPrivateKey from '../screens/Login/EnterPrivateKey'
 import GenerateMnemonic from '../screens/Login/GenerateMnemonic'
+import ConfirmMnemonic from '../screens/Login/ConfirmMnemonic'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
 import ImportMethod from '../screens/Login/ImportMethod'
 import Start from '../screens/Login/Start'
 import WalletList from '../screens/Wallet/WalletList'
+import { headerHeight } from '../common/constants/screens'
 
 const transitionConfig = () => {
   return {
@@ -39,7 +42,7 @@ const transitionConfig = () => {
         outputRange: [width, 0],
       })
 
-      return { transform: [ { translateX } ] }
+      return { transform: [{ translateX }] }
     },
     containerStyle: {
       backgroundColor: 'transparent',
@@ -55,37 +58,45 @@ const LoginStack = createStackNavigator(
         headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
         headerLeftContainerStyle: { paddingLeft: 20 },
         headerRightContainerStyle: { paddingRight: 20 },
-        headerStyle: {
-          height: 44,
-        },
+        //each screen heigth may be set manually
+        // headerStyle: { 
+        //   height: 44,
+        // },
       }),
       screen: Start,
     },
     'ImportMethod': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Add an existing account',
+        title: i18n.t('ScreensTitles.ImportMethod'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: ImportMethod,
     },
     'GenerateMnemonic': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Write down back-up phrase',
+        title: i18n.t('ScreensTitles.GenerateMnemonic'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: GenerateMnemonic,
     },
+    'ConfirmMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title: i18n.t('ScreensTitles.ConfirmMnemonic'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: ConfirmMnemonic,
+    },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({
-        title: 'Enter Private Key',
+        title: i18n.t('ScreensTitles.EnterPrivateKey'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: EnterPrivateKey,
     },
     'WalletList': {
       navigationOptions: ({ navigation }) => ({
-        title: 'WalletList',
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />
+        title: i18n.t('ScreensTitles.WalletList'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: WalletList,
     },
@@ -102,6 +113,10 @@ const LoginStack = createStackNavigator(
         fontWeight: 'normal',
         fontSize: 17,
       },
+      headerStyle: {
+        height: headerHeight,
+      },
+      gestureEnadled: false,
     }),
     cardStyle: {
       backgroundColor: 'transparent',

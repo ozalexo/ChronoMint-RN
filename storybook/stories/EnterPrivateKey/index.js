@@ -5,7 +5,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import EnterPrivateKey from '../../../src/screens/EnterPrivateKey'
+import EnterPrivateKey from '../../../src/screens/Login/EnterPrivateKey'
 
 const StoryEnterPrivateKey = () => (
   <EnterPrivateKey navigation={{ navigate: () => { } }} />

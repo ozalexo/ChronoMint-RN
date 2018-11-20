@@ -21,12 +21,18 @@ export default class Input extends Component {
   focus = () => this.input.focus()
 
   handleChange = (value) => {
-    const { onChange, name } = this.props
+    const {
+      onChange,
+      name,
+    } = this.props
     onChange(name, value)
   }
 
   handleTouch = () => {
-    const { onTouch, name } = this.props 
+    const {
+      onTouch = () => { },
+      name,
+    } = this.props
     onTouch(name)
   }
 
