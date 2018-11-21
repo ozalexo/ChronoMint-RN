@@ -4,10 +4,26 @@
  */
 
 import Mnemonic from 'bitcore-mnemonic-react-native'
+import bitcoin, { networks } from 'bitcoinjs-lib'
 
-// eslint-disable-next-line import/prefer-default-export
+const mnemonicObject = new Mnemonic(Mnemonic.Words.ENGLISH)
+
 export const generateMnemonic = async () => {
-  const mnemonicObject = new Mnemonic(Mnemonic.Words.ENGLISH)
   const phrase = await mnemonicObject.phrase
   return phrase
+}
+
+export const getPrivateKey = async () => {
+  const key = mnemonicObject.toHDPrivateKey()
+  return key
+}
+
+export const getAddress = (privateKey) => {
+  const keyPair = getKeyPair(privateKey)
+  const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network: networks.testnet })
+  return address
+}
+
+const getKeyPair = (privateKey) => {
+  return new bitcoin.ECPair.fromPrivateKey(Buffer.from(privateKey, "hex"), { network: networks.testnet })
 }
