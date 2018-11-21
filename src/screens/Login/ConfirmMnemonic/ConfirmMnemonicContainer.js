@@ -11,7 +11,7 @@ import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
 
 class ConfirmMnemonicContainer extends PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = this.createInitialState()
   }
@@ -69,7 +69,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     const { mnemonic } = this.props.navigation.state.params
     return {
       mnemonic: [],
-      words: mnemonic.split(' ').sort(() => Math.random() - 0.5)
+      words: mnemonic.split(' ').sort(() => Math.random() - 0.5),
     }
   }
 

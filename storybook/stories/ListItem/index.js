@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ListItem from '../../../src/components/ListItem'
 
-export default StoryListItem = ({ icon, value, hasArrow, title, isDark, onPress }) => {
+const StoryListItem = ({ icon, value, hasArrow, title, isDark, onPress }) => {
   return (
     <ListItem
       icon={icon}
@@ -22,3 +22,5 @@ StoryListItem.propTypes = {
   isDark: PropTypes.bool,
   onPress: PropTypes.func,
 }
+
+export default StoryListItem

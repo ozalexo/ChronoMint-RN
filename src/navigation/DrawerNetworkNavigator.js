@@ -11,14 +11,16 @@ import {
 import LoginStack from './LoginStack'
 import DrawerNetworkContainer from '../containers/DrawerNetworkContainer'
 
+const renderDrawerNetworkContainer = (props) => (
+  <DrawerNetworkContainer {...props} />
+)
+
 const DrawerNetworkNavigator = createDrawerNavigator(
   {
     LoginStack,
   },
   {
-    contentComponent: (props) => (
-      <DrawerNetworkContainer {...props} />
-    ),
+    contentComponent: renderDrawerNetworkContainer,
     getCustomActionCreators: (route, stateKey) => {
       return {
         toggleNetworkDrawer: () =>

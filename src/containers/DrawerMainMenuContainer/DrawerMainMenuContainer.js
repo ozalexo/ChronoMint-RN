@@ -6,6 +6,7 @@
 import { connect } from 'react-redux'
 import DrawerMainMenu from '../../components/DrawerMainMenu'
 
+/* eslint-disable no-unused-vars */
 const mapStateToProps = (ownState, ownProps) => {
   return {
     
@@ -17,5 +18,6 @@ const mapDispatchToProps = (dispatch) => {
 
   }
 }
+/* eslint-enable no-unused-vars */
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerMainMenu)

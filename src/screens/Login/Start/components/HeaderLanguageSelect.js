@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import styles from './HeaderLanguageSelectStyles'
 
-export default class  extends PureComponent {
+export default class HeaderLanguageSelect extends PureComponent {
   render () {
     return (
       <TouchableOpacity

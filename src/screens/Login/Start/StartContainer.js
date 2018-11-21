@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Start from './Start'
 
+/* eslint-disable no-unused-vars */
 const mapStateToProps = (ownState, ownProps) => {
   return {
     accounts: null,
@@ -19,6 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     navigateToImportWallet: () => { },
   }
 }
+/* eslint-enable no-unused-vars */
 
 class StartContainer extends PureComponent {
 

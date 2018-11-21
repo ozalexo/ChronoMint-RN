@@ -6,7 +6,7 @@
 import React from 'react'
 import {
   View,
-  Image
+  Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
 // import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
@@ -67,7 +67,7 @@ const getFallbackWalletImage = (blockchain, size = 'small') => {
     BLOCKCHAIN_BITCOIN,
     BLOCKCHAIN_ETHEREUM,
     BLOCKCHAIN_LITECOIN,
-    BLOCKCHAIN_NEM
+    BLOCKCHAIN_NEM,
   ]
 
   if (blockchain && bcsList.includes(blockchain)) {
@@ -83,7 +83,7 @@ const WalletImage = ({
   shapeStyle,
   imageStyle,
   style,
-  size
+  size,
 }) => {
   // Size guard. Default is small wallet icon
   let imageSize = size ? size : 'small'
@@ -104,14 +104,14 @@ const WalletImage = ({
           : <View
             style={[
               styles.walletImageShape,
-              shapeStyle
+              shapeStyle,
             ]}
           >
             <Image
               source={wImage}
               style={[
                 styles.walletImage,
-                imageStyle
+                imageStyle,
               ]}
             />
           </View>

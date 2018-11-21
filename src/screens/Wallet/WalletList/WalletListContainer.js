@@ -11,7 +11,7 @@ import {
   burger,
   plus,
 } from '../../../images'
-import i18n from '../../../locales/translation'
+// import i18n from '../../../locales/translation'
 import testData from './testData'
 import WalletList from './WalletList'
 
@@ -21,28 +21,28 @@ class WalletListContainer extends PureComponent {
       {
         id: 'drawer',
         icon: burger,
-      }
+      },
     ],
     rightButtons: [
       {
         id: 'addWallet',
         icon: plus,
-      }
-    ]
+      },
+    ],
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent)
   }
 
   state = {
-    isRefreshing: false
+    isRefreshing: false,
   }
 
   handleRefresh = () => {
     this.setState({
-      isRefreshing: true
+      isRefreshing: true,
     })
 
     setTimeout(() => this.setState({ isRefreshing: false }), 1000)
@@ -72,8 +72,8 @@ class WalletListContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  sections: testData.sections
+const mapStateToProps = () => ({
+  sections: testData.sections,
   // sections: sectionsSelector(state)
 })
 

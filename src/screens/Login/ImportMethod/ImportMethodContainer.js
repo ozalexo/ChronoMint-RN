@@ -22,7 +22,7 @@ class ImportMethodContainer extends PureComponent {
     navigate('StartPage')
   }
 
-  handleSelectImportMethod = ({ screen, title }) => () => {
+  handleSelectImportMethod = ({ screen }) => () => {
     const { navigate } = this.props.navigation
     navigate(screen)
   }

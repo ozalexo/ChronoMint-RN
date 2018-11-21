@@ -23,5 +23,5 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderTopColor: colors.ghost,
     borderBottomColor: colors.ghost,
-  }
+  },
 })

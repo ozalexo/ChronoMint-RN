@@ -11,14 +11,16 @@ import {
 import WalletStack from './WalletStack'
 import DrawerMainMenuContainer from '../containers/DrawerMainMenuContainer'
 
+const renderDrawerMainMenuContainer = (props) => (
+  <DrawerMainMenuContainer {...props} />
+)
+
 const DrawerMainMenuNavigator = createDrawerNavigator(
   {
     WalletStack,
   },
   {
-    contentComponent: (props) => (
-      <DrawerMainMenuContainer {...props} />
-    ),
+    contentComponent: renderDrawerMainMenuContainer,
     getCustomActionCreators: (route, stateKey) => {
       return {
         toggleMainMenuDrawer: () =>

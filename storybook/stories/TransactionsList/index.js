@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TransactionsList from '../../../src/components/TransactionsList'
 
-export default StoryTransactionsList = ({
+const StoryTransactionsList = ({
   transactions,
   refreshTransactionsList,
   mainWalletTransactionLoadingStatus,
@@ -32,3 +32,5 @@ StoryTransactionsList.propTypes = {
   ),
   refreshTransactionsList: PropTypes.func,
 }
+
+export default StoryTransactionsList

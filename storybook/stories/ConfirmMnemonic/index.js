@@ -8,31 +8,22 @@ import PropTypes from 'prop-types'
 import ConfirmMnemonic from '../../../src/screens/Login/ConfirmMnemonic'
 
 const StoryConfirmMnemonic = ({ mnemonic,password,privateKey }) => (
-    <ConfirmMnemonic
-      navigation={{
-        navigate: () => { },
-        state: {
-          params:{
-            mnemonic,
-            password,
-            privateKey,
-          }
-        }
-      }} />
+  <ConfirmMnemonic
+    navigation={{
+      navigate: () => { },
+      state: {
+        params:{
+          mnemonic,
+          password,
+          privateKey,
+        },
+      },
+    }} />
 )
 
 StoryConfirmMnemonic.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
-  }),
-  navigation: PropTypes.shape({
-    state: PropTypes.shape({
-      params: PropTypes.shape({
-        mnemonic: PropTypes.string,
-        password: PropTypes.string,
-        privateKey: PropTypes.string,
-      }),
-    }),
   }),
   usePinProtection: PropTypes.bool,
 }

@@ -12,7 +12,7 @@ export default StyleSheet.create({
     minWidth: 20,
     minHeight: 20,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   label: {
     color: colors.primaryLight,
@@ -21,6 +21,6 @@ export default StyleSheet.create({
     color: colors.primaryDarkest,
   },
   checkboxContainer: {
-    marginRight: 8
-  }
+    marginRight: 8,
+  },
 })

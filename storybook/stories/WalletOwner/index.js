@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import WalletOwner from '../../../src/components/WalletOwner'
 
-export default StoryWalletOwner = ({ address, id, image, name, onSelectOwner }) => {
+const StoryWalletOwner = ({ address, id, image, name, onSelectOwner }) => {
   return (
     <WalletOwner
       address={address}
@@ -21,3 +21,5 @@ StoryWalletOwner.propTypes = {
   name: PropTypes.string,
   onSelectOwner: PropTypes.func,
 }
+
+export default StoryWalletOwner

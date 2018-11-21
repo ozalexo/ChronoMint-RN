@@ -6,6 +6,7 @@
 import { connect } from 'react-redux'
 import DrawerNetwork from '../../components/DrawerNetwork'
 
+/* eslint-disable no-unused-vars */
 const mapStateToProps = (ownState, ownProps) => {
   return {
     
@@ -17,5 +18,6 @@ const mapDispatchToProps = (dispatch) => {
 
   }
 }
+/* eslint-enable no-unused-vars */
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerNetwork)

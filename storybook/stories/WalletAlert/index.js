@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import WalletAlert from '../../../src/components/WalletAlert'
 
-export default StoryWalletAlert = ({actions, title, children, style, contentContainerStyle}) => {
+const StoryWalletAlert = ({actions, title, children, style, contentContainerStyle}) => {
   return (
     <WalletAlert
       actions={actions}
@@ -25,3 +25,5 @@ StoryWalletAlert.propTypes = {
   ),
   title: PropTypes.string,
 }
+
+export default StoryWalletAlert

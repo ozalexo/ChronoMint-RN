@@ -10,8 +10,7 @@ import PropTypes from 'prop-types'
 // import { selectWallet } from '@chronobank/core/redux/wallet/actions'
 import WalletListItem from './WalletListItem'
 
-const DUCK_MARKET = 'DUCK_MARKET'
-const selectWallet = () => { }
+/* eslint-disable no-unused-vars */
 const makeMapStateToProps = (origState, origProps) => {
   const blockchain = origProps.blockchain
   const address = origProps.address
@@ -22,21 +21,25 @@ const makeMapStateToProps = (origState, origProps) => {
     return {
       address,
       blockchain,
-      selectedCurrency
+      selectedCurrency,
     }
   }
   return mapStateToProps
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  selectWallet: (blockchain, address) =>
-    {}
-    // dispatch(selectWallet(blockchain, address))
+  selectWallet: (blockchain, address) => {}, // dispatch(selectWallet(blockchain, address))
 })
+/* eslint-enable no-unused-vars */
 
 class WalletListItemContainer extends PureComponent {
   handleItemPress = () => {
-    const { selectWallet, address, blockchain, navigation } = this.props
+    const {
+      selectWallet,
+      address,
+      blockchain,
+      // navigation,
+    } = this.props
     selectWallet(blockchain, address)
     // navigation.navigate('Wallet')
   }
@@ -45,7 +48,7 @@ class WalletListItemContainer extends PureComponent {
     const {
       address,
       blockchain,
-      selectedCurrency
+      selectedCurrency,
     } = this.props
 
     return (

@@ -11,15 +11,17 @@ import {
 import DrawerNetworkNavigator from './DrawerNetworkNavigator'
 import DrawerLanguageContainer from '../containers/DrawerLanguageContainer'
 
+const renderDrawerLanguageContainer = (props) => (
+  <DrawerLanguageContainer {...props} />
+)
+
 const DrawerLanguageNavigator = createDrawerNavigator(
   {
     DrawerNetworkNavigator,
   },
   {
     drawerPosition: 'right',
-    contentComponent: (props) => (
-      <DrawerLanguageContainer {...props} />
-    ),
+    contentComponent: renderDrawerLanguageContainer,
     getCustomActionCreators: (route, stateKey) => {
       return {
         toggleLanguageDrawer: () =>

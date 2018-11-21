@@ -8,7 +8,6 @@ import {
   Text,
 } from 'react-native'
 import i18n from '../../locales/translation'
-import PropTypes from 'prop-types'
 import styles from './TokenCounterStyles'
 import testData from './testData.json'
 
@@ -30,13 +29,4 @@ export default class TokensCounter extends PureComponent {
     )
 
   }
-}
-
-TokensCounter.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      amount: PropTypes.number,
-      symbol: PropTypes.string,
-    })
-  )
 }

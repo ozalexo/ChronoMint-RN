@@ -41,7 +41,6 @@ export default class TransactionsList extends PureComponent {
       transactions,
       mainWalletTransactionLoadingStatus,
       latestTransactionDate,
-      refreshTransactionsList = () => { },
     } = this.props
 
     const lastTransactionDate = latestTransactionDate
@@ -108,12 +107,10 @@ export default class TransactionsList extends PureComponent {
       return (<TransactionsLoading />)
     } else {
       if (mainWalletTransactionLoadingStatus.isInited) {
-        if (mainWalletTransactionLoadingStatus.isFetched) {
-          if (transactions && transactions.length) {
-            return (<LoadedTransactions />)
-          } else {
-            return (<NoTransactionsExists />)
-          }
+        if (transactions && transactions.length) {
+          return (<LoadedTransactions />)
+        } else {
+          return (<NoTransactionsExists />)
         }
       } else {
         return (<TransactionsLoading />)
@@ -149,17 +146,17 @@ class TransactionItem extends PureComponent {
 
   }
 
-  goToTx = (props) => {
-    const {
-      address,
-      amount,
-      blockNumber,
-      confirmations,
-      fee,
-      symbol,
-      txDate,
-      type,
-    } = props.item
+  handleTransactionClick = () => {
+    // const {
+    //   address,
+    //   amount,
+    //   blockNumber,
+    //   confirmations,
+    //   fee,
+    //   symbol,
+    //   txDate,
+    //   type,
+    // } = props.item
   }
 
   render () {
@@ -179,7 +176,7 @@ class TransactionItem extends PureComponent {
 
     return (
       <TouchableWithoutFeedback
-        onPress={() => this.goToTx(this.props)}
+        onPress={this.handleTransactionClick}
       >
         <View style={styles.item}>
           <View style={styles.leftPart}>

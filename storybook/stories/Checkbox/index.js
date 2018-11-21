@@ -2,8 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Checkbox from '../../../src/components/Checkbox'
 
-export default StoryCheckbox = ({ label, isDark, isChecked, onPress }) => {
-  return <Checkbox label={label} isDark={isDark} isChecked={isChecked} onPress={onPress} />;
+const StoryCheckbox = ({ label, isDark, isChecked, onPress }) => {
+  return (
+    <Checkbox
+      label={label}
+      isDark={isDark}
+      isChecked={isChecked}
+      onPress={onPress}
+    />
+  )
 }
 
 StoryCheckbox.propTypes = {
@@ -12,3 +19,5 @@ StoryCheckbox.propTypes = {
   isChecked: PropTypes.bool,
   onPress: PropTypes.func,
 }
+
+export default StoryCheckbox
