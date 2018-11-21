@@ -12,8 +12,6 @@ class GenerateMnemonicContainer extends PureComponent {
 
   state = {
     mnemonic: '',
-    privateKey: '',
-    address: '',
   }
 
   componentDidMount () {
@@ -25,7 +23,7 @@ class GenerateMnemonicContainer extends PureComponent {
 
 
   handleConfirm = () => {
-    const { mnemonic, privateKey } = this.state
+    const { mnemonic } = this.state
     const {
       password,
       navigation,
@@ -34,7 +32,6 @@ class GenerateMnemonicContainer extends PureComponent {
     const params = {
       mnemonic,
       password,
-      privateKey,
     }
 
     navigation.navigate('ConfirmMnemonic', params)
@@ -54,7 +51,6 @@ class GenerateMnemonicContainer extends PureComponent {
 
 GenerateMnemonicContainer.propTypes = {
   password: PropTypes.string,
-  privateKey: PropTypes.string,
 }
 
 export default GenerateMnemonicContainer
