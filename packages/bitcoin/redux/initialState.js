@@ -3,4 +3,24 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export default {}
+export default {
+  selected: {
+    address: '',
+    parentWalletAddress: '',
+    transactions: {},
+    balances: {
+      'BTC': {}, // BigNumber or Amount
+    },
+    txPrepare: {
+      rawTx: {
+        from: '',
+        to: '',
+        amount: '',
+        fee: '',
+        txHex: '',
+      },
+      signedTx: null, // txHex signed
+    },
+  },
+  list: {},
+}
