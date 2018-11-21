@@ -4,7 +4,7 @@
  */
 
 import React, { PureComponent } from 'react'
-import { generateMnemonic } from '@chronobank/bitcoin/utils'
+import { generateMnemonic } from '@chronobank/ethereum/utils'
 import PropTypes from 'prop-types'
 import GenerateMnemonic from './GenerateMnemonic'
 
@@ -26,14 +26,12 @@ class GenerateMnemonicContainer extends PureComponent {
     const { mnemonic } = this.state
     const {
       password,
-      privateKey,
       navigation,
     } = this.props
 
     const params = {
       mnemonic,
       password,
-      privateKey,
     }
 
     navigation.navigate('ConfirmMnemonic', params)
@@ -53,7 +51,6 @@ class GenerateMnemonicContainer extends PureComponent {
 
 GenerateMnemonicContainer.propTypes = {
   password: PropTypes.string,
-  privateKey: PropTypes.string,
 }
 
 export default GenerateMnemonicContainer
