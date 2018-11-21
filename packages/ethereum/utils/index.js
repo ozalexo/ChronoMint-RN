@@ -6,20 +6,19 @@
 import Mnemonic from 'bitcore-mnemonic-react-native'
 import hdKey from 'ethereumjs-wallet/hdkey'
 import Accounts from 'web3-eth-accounts'
-
-export const DEFAULT_PATH = `m/44'/60'/0'/0/0`
+import {WALLET_HD_PATH} from '../constants'
 
 const getDerivedWallet = (mnemonic, path) => {
-  const walletPath = !path ? DEFAULT_PATH : path
+  const walletPath = !path ? WALLET_HD_PATH : path
   const accounts = new Accounts()
-  const wallet = accounts.wallet.create()
+  const wallets = accounts.wallet.create()
 
   const hdWallet = hdKey.fromMasterSeed(mnemonic)
-  const w = hdWallet.derivePath(walletPath).getWallet()
-  const account = accounts.privateKeyToAccount(`0x${w.getPrivateKey().toString('hex')}`)
-  wallet.add(account)
+  const wallet = hdWallet.derivePath(walletPath).getWallet()
+  const account = accounts.privateKeyToAccount(`0x${wallet.getPrivateKey().toString('hex')}`)
+  wallets.add(account)
 
-  return wallet[0]
+  return wallets[0]
 }
 
 export const generateMnemonic = async () => {

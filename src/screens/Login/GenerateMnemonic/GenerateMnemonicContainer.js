@@ -4,7 +4,7 @@
  */
 
 import React, { PureComponent } from 'react'
-import { getPrivateKeyByMnemonic, generateMnemonic } from '@chronobank/ethereum/utils'
+import { generateMnemonic } from '@chronobank/ethereum/utils'
 import PropTypes from 'prop-types'
 import GenerateMnemonic from './GenerateMnemonic'
 
@@ -17,13 +17,9 @@ class GenerateMnemonicContainer extends PureComponent {
   }
 
   componentDidMount () {
-    const {mnemonic} = this.state
     generateMnemonic()
       .then((resolve) => {
-        this.setState({ mnemonic: resolve }, () => {
-          const privateKey = getPrivateKeyByMnemonic(mnemonic)
-          this.setState({ privateKey })
-        })
+        this.setState({ mnemonic: resolve })
       })
   }
 
