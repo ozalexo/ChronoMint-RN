@@ -4,20 +4,20 @@
  */
 
 import { connect } from 'react-redux'
+import { getAvailableNetworkList } from '@chronobank/network/redux/selectors'
+import {networkSelect } from '@chronobank/network/redux/thunks'
 import DrawerNetwork from '../../components/DrawerNetwork'
 
-/* eslint-disable no-unused-vars */
-const mapStateToProps = (ownState, ownProps) => {
+const mapStateToProps = (ownState) => {
   return {
-    
+    networks: getAvailableNetworkList(ownState),
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    onSelectNetwork: (networkIndex) => () => dispatch(networkSelect(networkIndex)),
   }
 }
-/* eslint-enable no-unused-vars */
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerNetwork)

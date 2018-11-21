@@ -9,4 +9,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
+  title: {
+    fontSize: 22,
+    fontWeight: '700',
+    margin: 20,
+  },
 })
