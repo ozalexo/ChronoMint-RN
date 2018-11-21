@@ -3,6 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export const DUCK_NETWORK = 'network'
-
-export const NETWORK_SELECT = 'NETWORK/SELECT'
+export default from './NetworkItem'

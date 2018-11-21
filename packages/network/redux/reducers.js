@@ -4,8 +4,18 @@
  */
 
 import initialState from './initialState'
+import * as ActionTypes from './constants'
 
-const mutations = {}
+const networkSelect = (state, action) => {
+  return {
+    ...state,
+    selected: state.availableNetworks[action.networkIndex],
+  }
+}
+
+const mutations = {
+  [ActionTypes.NETWORK_SELECT]: networkSelect,
+}
 
 export default (state = initialState, { type, ...payload }) => {
   return (type in mutations)
