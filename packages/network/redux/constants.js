@@ -4,3 +4,5 @@
  */
 
 export const DUCK_NETWORK = 'network'
+
+export const NETWORK_SELECT = 'NETWORK/SELECT'
