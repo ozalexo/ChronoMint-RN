@@ -18,7 +18,7 @@ export default StyleSheet.create({
     marginHorizontal: 10,
   },
   networkStatus: {
-    backgroundColor: 'gray',
+    backgroundColor: colors.gray,
     borderRadius: 5.5,
     height: 11,
     width: 11,
