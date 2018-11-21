@@ -3,4 +3,6 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export const DUCK_SESSION = 'session'
+export default {
+  currentWallet: null,
+}

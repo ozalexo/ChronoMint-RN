@@ -16,7 +16,7 @@ const mapStateToProps = (ownState, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    navigateToImportWallet: () => {},
+    navigateToImportWallet: () => { },
   }
 }
 
@@ -39,7 +39,7 @@ class StartContainer extends PureComponent {
 
   render () {
     return (
-      <Start 
+      <Start
         onClickUseExistingButton={this.handleUseExistingButtonClick}
         onClickCreateWalletButton={this.handleCreateWalletButtonClick}
       />
