@@ -4,35 +4,32 @@
  */
 
 import React, { PureComponent } from 'react'
-import { generateMnemonic, getPrivateKey, getAddress } from '@chronobank/bitcoin/utils'
+import { getPrivateKeyByMnemonic, generateMnemonic } from '@chronobank/ethereum/utils'
 import PropTypes from 'prop-types'
 import GenerateMnemonic from './GenerateMnemonic'
 
 class GenerateMnemonicContainer extends PureComponent {
 
   state = {
-    mnemonic: null,
-    privateKey: null,
-    address: null,
+    mnemonic: '',
+    privateKey: '',
+    address: '',
   }
 
   componentDidMount () {
+    const {mnemonic} = this.state
     generateMnemonic()
       .then((resolve) => {
-        this.setState({ mnemonic: resolve })
-      })
-    getPrivateKey()
-      .then((resolve) => {
-        this.setState({ privateKey: resolve.privateKey.toString() }, () => {
-          const address = getAddress(this.state.privateKey)
-          this.setState({ address })
+        this.setState({ mnemonic: resolve }, () => {
+          const privateKey = getPrivateKeyByMnemonic(mnemonic)
+          this.setState({ privateKey })
         })
       })
   }
 
 
   handleConfirm = () => {
-    const { mnemonic, privateKey, address } = this.state
+    const { mnemonic, privateKey } = this.state
     const {
       password,
       navigation,
