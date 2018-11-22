@@ -16,21 +16,17 @@ export const getSections = createSelector(
   getDuckEthereum(),
   (bitcoin, ethereum) => [
     {
-      data: [
-        {
-          address: bitcoin.list.address,
-          blockchain: 'BTC',
-        },
-      ],
+      data: Object.keys(bitcoin.list).map((wallet) => ({
+        address: wallet.address,
+        blockchain: 'BTC',
+      })),
       title: 'Bitcoin Test',
     },
     {
-      data: [
-        {
-          address: ethereum.list.address,
-          blockchain: 'ETH',
-        },
-      ],
+      data: Object.keys(ethereum.list).map((wallet) => ({
+        address: wallet.address,
+        blockchain: 'ETH',
+      })),
       title: 'Etereum',
     },
   ]

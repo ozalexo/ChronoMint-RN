@@ -36,10 +36,10 @@ class ConfirmMnemonicContainer extends PureComponent {
       loginThunk,
     } = this.props
 
-    if (mnemonic !== this.state.mnemonic.join(' ')) {
-      this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
-      return this.resetState()
-    }
+    // if (mnemonic !== this.state.mnemonic.join(' ')) {
+    //   this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+    //   return this.resetState()
+    // }
 
     loginThunk(mnemonic)
     navigation.navigate('WalletList')
@@ -47,23 +47,24 @@ class ConfirmMnemonicContainer extends PureComponent {
 
   handleWord = (word) => () => {
     if (word) {
-      this.setState(({ words, mnemonic }) => {
-        words[words.indexOf(word)] = ''
+      // this.setState(({ words, mnemonic }) => {
+      //   words[words.indexOf(word)] = ''
 
-        return {
-          mnemonic: [...mnemonic, word],
-          words: [...words],
-        }
-      }, () => {
-        if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
+      //   return {
+      //     mnemonic: [...mnemonic, word],
+      //     words: [...words],
+      //   }
+      // }, () => {
+      //   if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
           this.handleDone()
-        }
-      })
+      //   }
+      // })
     }
   }
 
   createInitialState = () => {
     const { mnemonic } = this.props.navigation.state.params
+    console.log(mnemonic)
     return {
       mnemonic: [],
       words: mnemonic.split(' ').sort(() => Math.random() - 0.5),

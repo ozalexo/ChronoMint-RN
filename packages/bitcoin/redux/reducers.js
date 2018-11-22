@@ -8,12 +8,14 @@ import initialState from './initialState'
 
 const mutations = {
 
-  [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { address }) => ({
-    ...state,
-    list: {
-      address,
-    },
-  }),
+  [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { parentAddress, address }) => {
+    let list = Object.assign({}, state.list)
+    list = { ...list, [parentAddress]: {...list.parentAddress, address} }
+    return {
+      ...state,
+      list,
+    }
+  },
   // GET UTXOS
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS]: (state) => state,
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS_SUCCESS]: (state, data) => ({

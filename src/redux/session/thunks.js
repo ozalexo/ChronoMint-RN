@@ -14,8 +14,11 @@ export const loginThunk = (mnemonic) => (dispatch) => {
     const privateKey = getPrivateKeyByMnemonic(mnemonic)
     const bitcoinAddress = getAddress(privateKey)
     const ethAddress = getAddressByMnemonic(mnemonic)
-    dispatch(bitcoinCreateWallet(bitcoinAddress))
     dispatch(ethereumCreateWallet(ethAddress))
+    dispatch(ethereumCreateWallet(`0x${bitcoinAddress}`))
+    dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
+    dispatch(bitcoinCreateWallet(ethAddress, ethAddress))
+    dispatch(bitcoinCreateWallet(`0x${bitcoinAddress}`, bitcoinAddress))
     dispatch(savePrivateKey(privateKey))
     dispatch(login(ethAddress))
   } catch (e) {

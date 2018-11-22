@@ -8,12 +8,14 @@ import initialState from './initialState'
 
 const mutations = {
 
-  [ActionsTypes.ETHEREUM_CREATE_WALLET]: (state, { address }) => ({
-    ...state,
-    list: {
-      address,
-    },
-  }),
+  [ActionsTypes.ETHEREUM_CREATE_WALLET]: (state, { address }) => {
+    let list = Object.assign({}, state.list)
+    list = { ...list, address }
+    return {
+      ...state,
+      list,
+    }
+  },
 }
 
 export default (state = initialState, { type, ...other }) => {
