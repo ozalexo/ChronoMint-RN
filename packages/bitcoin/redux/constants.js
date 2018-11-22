@@ -6,7 +6,7 @@
 export const DUCK_BITCOIN = 'bitcoin'
 
 
-export const BITCOIN_CREATE_WALLET = 'BITCOIN/CReATE WALLET'
+export const BITCOIN_CREATE_WALLET = 'BITCOIN/CREATE_WALLET'
 
 
 // Actions to operate with preparation of a transaction Create/update, accept before send or reject.

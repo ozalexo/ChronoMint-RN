@@ -5,8 +5,8 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { getSections } from '@chronobank/ethereum/redux/selectors'
 import PropTypes from 'prop-types'
-import { getSections } from '../../../redux/mainWallet/selectors'
 import {
   burger,
   plus,

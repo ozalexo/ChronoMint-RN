@@ -8,10 +8,6 @@ import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { getAddress } from '@chronobank/bitcoin/utils'
-import { bitcoinCreateWallet } from '@chronobank/bitcoin/redux/actions'
-import { ethereumCreateWallet } from '@chronobank/ethereum/redux/actions'
-import { getPrivateKeyByMnemonic, getAddressByMnemonic } from '@chronobank/ethereum/utils'
 import { loginThunk } from '../../../redux/session/thunks'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
@@ -23,8 +19,6 @@ const mapStateToProps = (ownState, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   loginThunk,
-  bitcoinCreateWallet,
-  ethereumCreateWallet,
 }, dispatch)
 
 class ConfirmMnemonicContainer extends PureComponent {
@@ -40,20 +34,14 @@ class ConfirmMnemonicContainer extends PureComponent {
     const {
       navigation,
       loginThunk,
-      bitcoinCreateWallet,
-      ethereumCreateWallet,
     } = this.props
 
     if (mnemonic !== this.state.mnemonic.join(' ')) {
       this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
       return this.resetState()
     }
-    const privateKey = getPrivateKeyByMnemonic(mnemonic)
-    const bitcoinAddress = getAddress(privateKey)
-    const ethAddress = getAddressByMnemonic(mnemonic)
-    bitcoinCreateWallet(bitcoinAddress)
-    ethereumCreateWallet(ethAddress)
-    loginThunk(privateKey,ethAddress)
+
+    loginThunk(mnemonic)
     navigation.navigate('WalletList')
   }
 
