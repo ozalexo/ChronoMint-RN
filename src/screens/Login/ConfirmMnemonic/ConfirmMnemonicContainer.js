@@ -5,47 +5,56 @@
 
 import React, { PureComponent } from 'react'
 import { Alert } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { getAddress } from '@chronobank/bitcoin/utils'
+import { bitcoinSaveAddress } from '@chronobank/bitcoin/redux/actions'
+import { ethSaveAddress } from '@chronobank/ethereum/redux/actions'
+import { getPrivateKeyByMnemonic, getAddressByMnemonic } from '@chronobank/ethereum/utils'
+import { loginThunk } from '../../../redux/session/thunks'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
 
+const mapStateToProps = (ownState, ownProps) => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  loginThunk,
+  bitcoinSaveAddress,
+  ethSaveAddress,
+}, dispatch)
+
 class ConfirmMnemonicContainer extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = this.createInitialState()
   }
 
-  handleDone = async () => {
+  handleDone = () => {
     const {
       mnemonic,
-      password,
     } = this.props.navigation.state.params
     const {
-      usePinProtection,
       navigation,
-      onMnemonicLogin,
-      onLogin,
+      loginThunk,
+      bitcoinSaveAddress,
+      ethSaveAddress,
     } = this.props
 
     if (mnemonic !== this.state.mnemonic.join(' ')) {
       this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
       return this.resetState()
     }
-
-    const { privateKey } = await onMnemonicLogin(mnemonic) //need action from @chronobank
-
-    if (!usePinProtection) {
-      return onLogin()
-    }
-
-    const params = {
-      mnemonic,
-      password,
-      privateKey,
-    }
-
-    navigation.navigate('EnterPin', params)
+    const privateKey = getPrivateKeyByMnemonic(mnemonic)
+    const bitcoinAddress = getAddress(privateKey)
+    const ethAddress = getAddressByMnemonic(mnemonic)
+    bitcoinSaveAddress(bitcoinAddress)
+    ethSaveAddress(ethAddress)
+    loginThunk(privateKey,ethAddress)
+    navigation.navigate('WalletList')
   }
 
   handleWord = (word) => () => {
@@ -95,6 +104,9 @@ class ConfirmMnemonicContainer extends PureComponent {
 }
 
 ConfirmMnemonicContainer.propTypes = {
+  loginThunk: PropTypes.func,
+  bitcoinSaveAddress: PropTypes.func,
+  ethSaveAddress: PropTypes.func,
   navigation: PropTypes.shape({
     state: PropTypes.shape({
       params: PropTypes.shape({
@@ -104,7 +116,6 @@ ConfirmMnemonicContainer.propTypes = {
       }),
     }),
   }),
-  usePinProtection: PropTypes.bool,
 }
 
-export default ConfirmMnemonicContainer
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmMnemonicContainer)

@@ -102,7 +102,7 @@ const LoginStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Start',
+    initialRouteName: 'GenerateMnemonic',
     headerLayoutPreset: 'left',
     navigationOptions: () => ({
       headerForceInset: { top: 'never' },

@@ -19,6 +19,11 @@ export const bitcoinTxAccept = (entry) => ({
   isPending: true,
 })
 
+export const bitcoinSaveAddress = (address) => ({
+  type: ActionsTypes.BITCOIN_SAVE_ADDRESS,
+  address,
+})
+
 export const bitcoinHttpGetBlocksHeight = () => ({
   type: ActionsTypes.BITCOIN_HTTP_GET_BLOCKS_HEIGHT,
 })

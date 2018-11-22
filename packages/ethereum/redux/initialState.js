@@ -3,4 +3,9 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export default {}
+export default {
+  selected: {},
+  list: {},
+  lastRequestMeta: null,
+  pending: {},
+}

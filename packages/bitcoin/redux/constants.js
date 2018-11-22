@@ -5,6 +5,10 @@
 
 export const DUCK_BITCOIN = 'bitcoin'
 
+
+export const BITCOIN_SAVE_ADDRESS = 'BITCOIN/SAVE WALLET ADDRESS'
+
+
 // Actions to operate with preparation of a transaction Create/update, accept before send or reject.
 export const BITCOIN_TX_UPDATE = 'BITCOIN/TX/UPDATE'
 export const BITCOIN_TX_ACCEPT = 'BITCOIN/TX/ACCEPT'

@@ -3,12 +3,21 @@
  * Licensed under the AGPL Version 3 license.
  */
 
+import * as ActionsTypes from './constants'
 import initialState from './initialState'
 
-const mutations = {}
+const mutations = {
 
-export default (state = initialState, { type, ...payload }) => {
+  [ActionsTypes.ETH_SAVE_ADDRESS]: (state, { address }) => ({
+    ...state,
+    list: {
+      address,
+    },
+  }),
+}
+
+export default (state = initialState, { type, ...other }) => {
   return (type in mutations)
-    ? mutations[type](state, payload)
+    ? mutations[type](state, other)
     : state
 }

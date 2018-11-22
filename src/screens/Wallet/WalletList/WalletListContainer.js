@@ -6,13 +6,13 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-// import { sectionsSelector } from '../redux/mainWallet/selectors'
+import { getSections } from '../../../redux/mainWallet/selectors'
 import {
   burger,
   plus,
 } from '../../../images'
-// import i18n from '../../../locales/translation'
-import testData from './testData'
+import i18n from '../../../locales/translation'
+// import testData from './testData'
 import WalletList from './WalletList'
 
 class WalletListContainer extends PureComponent {
@@ -31,7 +31,7 @@ class WalletListContainer extends PureComponent {
     ],
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent)
   }
@@ -49,14 +49,12 @@ class WalletListContainer extends PureComponent {
   }
 
   onNavigatorEvent = ({ type, id }) => {
+    const { navigate } = this.props.navigation
     if (type === 'NavBarButtonPress' && id === 'drawer') {
       // this.props.navigator.toggleDrawer({ side: 'left' })
     }
     if (type === 'NavBarButtonPress' && id === 'addWallet') {
-      // this.props.navigator.push({
-      //   screen: 'AddWallet',
-      //   title: I18n.t('AddWallet.title')
-      // })
+      navigate('AddWallet')
     }
   }
 
@@ -72,9 +70,9 @@ class WalletListContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = () => ({
-  sections: testData.sections,
-  // sections: sectionsSelector(state)
+const mapStateToProps = (state) => ({
+  // sections: testData.sections,
+  sections: getSections(state),
 })
 
 WalletListContainer.propTypes = {

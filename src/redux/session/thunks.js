@@ -3,11 +3,12 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import { login, logout } from './actions'
+import { login, logout, savePrivateKey } from './actions'
 
-export const loginThunk = (currentWallet) => (dispatch) => {
+export const loginThunk = (privateKey, currentWallet) => (dispatch) => {
   try {
-    return dispatch(login(currentWallet))
+    dispatch(savePrivateKey(privateKey))
+    dispatch(login(currentWallet))
   } catch (e) {
     return Promise.reject(e)
   }

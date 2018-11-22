@@ -11,70 +11,65 @@
  * See middleware API documantaion here: https://github.com/ChronoBank/middleware-bitcoin-rest
  */
 
-import { BLOCKCHAIN_BITCOIN } from '../constants'
 import * as bitcoinApi from './httpAPI'
-
-const chainsMapping = {
-  [BLOCKCHAIN_BITCOIN]: bitcoinApi,
-}
 
 /**
  * register new address on middleware
  * @param {string} address
  */
-export const requestBitcoinSubscribeWalletByAddress = (blockchain, address) =>
-  chainsMapping[blockchain].requestSubscribeWalletByAddress(address)
+export const requestBitcoinSubscribeWalletByAddress = (address) =>
+  bitcoinApi.requestSubscribeWalletByAddress(address)
 
 /**
  * remove an address from middleware
  * @param {string} address
  */
-export const requestBitcoinUnubscribeWalletByAddress = (blockchain, address) =>
-  chainsMapping[blockchain].requestUnubscribeWalletByAddress(address)
+export const requestBitcoinUnubscribeWalletByAddress = (address) =>
+  bitcoinApi.requestUnubscribeWalletByAddress(address)
 
 /**
  * retrieve balance of the registered address
  * @param {string} address
  */
-export const requestBitcoinBalanceByAddress = (blockchain, address) =>
-  chainsMapping[blockchain].requestBalanceByAddress(address)
+export const requestBitcoinBalanceByAddress = (address) =>
+  bitcoinApi.requestBalanceByAddress(address)
 
 /**
  * returns an array of unspent transactions (utxo)
  * @param {string} address
  */
-export const requestBitcoinUtxoByAddress = (blockchain, address) =>
-  chainsMapping[blockchain].requestUtxoByAddress(address)
+export const requestBitcoinUtxoByAddress = (address) =>
+  bitcoinApi.requestUtxoByAddress(address)
 
 /**
  * broadcast new transaction to network
  * @param {string} rawTx
  */
-export const requestBitcoinSendRawTransaction = (blockchain, rawTx) =>
-  chainsMapping[blockchain].requestSendRawTransaction(rawTx)
+export const requestBitcoinSendRawTransaction = (rawTx) =>
+  bitcoinApi.requestSendRawTransaction(rawTx)
 
 /**
  * retrieve transactions for the registered adresses [use skip and limit paramters]
  * @param {string} address
  */
-export const requestBitcoinTransactionsHistoryByAddress = (blockchain, address, skip, offset) =>
-  chainsMapping[blockchain].requestTransactionsHistoryByAddress(address, skip, offset)
+export const requestBitcoinTransactionsHistoryByAddress = (address, skip, offset) =>
+  bitcoinApi.requestTransactionsHistoryByAddress(address, skip, offset)
 
 /**
  * retrieve transaction by its hash
  * @param {string} txHash
  */
-export const requestBitcoinTransactionByHash = (blockchain, txHash) =>
-  chainsMapping[blockchain].requestTransactionByHash(txHash)
+export const requestBitcoinTransactionByHash = (txHash) =>
+  bitcoinApi.requestTransactionByHash(txHash)
 
 /**
  * estimate fee rate (based on last 6 blocks)
  */
-export const requestBitcoinEstimateFeeRate = (blockchain) =>
-  chainsMapping[blockchain].requestEstimateFeeRate()
+export const requestBitcoinEstimateFeeRate = () =>
+  bitcoinApi.requestEstimateFeeRate()
 
 /**
  * estimate fee rate (based on last 6 blocks)
  */
-export const requestBlocksHeight = (blockchain) =>
-  chainsMapping[blockchain].requestBlocksHeight()
+export const requestBlocksHeight = () =>
+  bitcoinApi.requestBlocksHeight()

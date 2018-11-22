@@ -8,6 +8,12 @@ import initialState from './initialState'
 
 const mutations = {
 
+  [ActionsTypes.BITCOIN_SAVE_ADDRESS]: (state, { address }) => ({
+    ...state,
+    list: {
+      address,
+    },
+  }),
   // GET UTXOS
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS]: (state) => state,
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS_SUCCESS]: (state, data) => ({
