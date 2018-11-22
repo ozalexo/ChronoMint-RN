@@ -6,16 +6,16 @@
 import { createSelector } from 'reselect'
 import { DUCK_BITCOIN } from './constants'
 
-export const bitcoinSelector = () => (state) =>
+export const getDuckBitcoin = () => (state) =>
   state.get(DUCK_BITCOIN)
 
-export const bitcoinPendingSelector = (blockchain) => createSelector(
-  bitcoinSelector(),
+export const getBitcoinPending = (blockchain) => createSelector(
+  getDuckBitcoin(),
   (scope) => scope[blockchain].pending,
 )
 
-export const pendingEntrySelector = (address, key, blockchain) => createSelector(
-  bitcoinPendingSelector(blockchain),
+export const getEntryPending = (address, key, blockchain) => createSelector(
+  getBitcoinPending(blockchain),
   (pending) => {
     if (address in pending) {
       return pending[address][key] || null

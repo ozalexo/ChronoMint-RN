@@ -13,3 +13,5 @@ export const BTC_PRIMARY_TOKEN = 'BTC'
 
 export const COIN_TYPE_BTC_MAINNET = 0
 export const COIN_TYPE_BTC_TESTNET = 1
+
+export const DECIMALS = 100000000

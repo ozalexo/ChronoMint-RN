@@ -4,23 +4,8 @@
  */
 
 export default {
-  selected: {
-    address: '',
-    parentWalletAddress: '',
-    transactions: {},
-    balances: {
-      'BTC': {}, // BigNumber or Amount
-    },
-    txPrepare: {
-      rawTx: {
-        from: '',
-        to: '',
-        amount: '',
-        fee: '',
-        txHex: '',
-      },
-      signedTx: null, // txHex signed
-    },
-  },
+  selected: {},
   list: {},
+  lastRequestMeta: null,
+  pending: {},
 }
