@@ -8,7 +8,7 @@ import initialState from './initialState'
 
 const mutations = {
 
-  [ActionsTypes.ETH_SAVE_ADDRESS]: (state, { address }) => ({
+  [ActionsTypes.ETHEREUM_CREATE_WALLET]: (state, { address }) => ({
     ...state,
     list: {
       address,

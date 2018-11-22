@@ -6,6 +6,6 @@
 export const DUCK_ETHEREUM = 'ethereum'
 
 
-export const ETH_SAVE_ADDRESS = 'ETHERIUM/SAVE WALLET ADDRESS'
+export const ETHEREUM_CREATE_WALLET = 'ETHERIUM/CREATE WALLET'
 
 

@@ -8,7 +8,7 @@ import initialState from './initialState'
 
 const mutations = {
 
-  [ActionsTypes.BITCOIN_SAVE_ADDRESS]: (state, { address }) => ({
+  [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { address }) => ({
     ...state,
     list: {
       address,

@@ -5,7 +5,7 @@
 
 import * as ActionsTypes from './constants'
 
-export const ethSaveAddress = (address) => ({
-  type: ActionsTypes.ETH_SAVE_ADDRESS,
+export const ethereumCreateWallet = (address) => ({
+  type: ActionsTypes.ETHEREUM_CREATE_WALLET,
   address,
 })

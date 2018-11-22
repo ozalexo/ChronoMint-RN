@@ -9,8 +9,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { getAddress } from '@chronobank/bitcoin/utils'
-import { bitcoinSaveAddress } from '@chronobank/bitcoin/redux/actions'
-import { ethSaveAddress } from '@chronobank/ethereum/redux/actions'
+import { bitcoinCreateWallet } from '@chronobank/bitcoin/redux/actions'
+import { ethereumCreateWallet } from '@chronobank/ethereum/redux/actions'
 import { getPrivateKeyByMnemonic, getAddressByMnemonic } from '@chronobank/ethereum/utils'
 import { loginThunk } from '../../../redux/session/thunks'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
@@ -23,8 +23,8 @@ const mapStateToProps = (ownState, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   loginThunk,
-  bitcoinSaveAddress,
-  ethSaveAddress,
+  bitcoinCreateWallet,
+  ethereumCreateWallet,
 }, dispatch)
 
 class ConfirmMnemonicContainer extends PureComponent {
@@ -40,8 +40,8 @@ class ConfirmMnemonicContainer extends PureComponent {
     const {
       navigation,
       loginThunk,
-      bitcoinSaveAddress,
-      ethSaveAddress,
+      bitcoinCreateWallet,
+      ethereumCreateWallet,
     } = this.props
 
     if (mnemonic !== this.state.mnemonic.join(' ')) {
@@ -51,8 +51,8 @@ class ConfirmMnemonicContainer extends PureComponent {
     const privateKey = getPrivateKeyByMnemonic(mnemonic)
     const bitcoinAddress = getAddress(privateKey)
     const ethAddress = getAddressByMnemonic(mnemonic)
-    bitcoinSaveAddress(bitcoinAddress)
-    ethSaveAddress(ethAddress)
+    bitcoinCreateWallet(bitcoinAddress)
+    ethereumCreateWallet(ethAddress)
     loginThunk(privateKey,ethAddress)
     navigation.navigate('WalletList')
   }

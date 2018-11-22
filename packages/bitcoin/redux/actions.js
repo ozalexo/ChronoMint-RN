@@ -19,8 +19,8 @@ export const bitcoinTxAccept = (entry) => ({
   isPending: true,
 })
 
-export const bitcoinSaveAddress = (address) => ({
-  type: ActionsTypes.BITCOIN_SAVE_ADDRESS,
+export const bitcoinCreateWallet = (address) => ({
+  type: ActionsTypes.BITCOIN_CREATE_WALLET,
   address,
 })
 
