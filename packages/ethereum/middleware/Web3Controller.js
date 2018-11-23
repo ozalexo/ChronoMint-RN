@@ -11,9 +11,9 @@ import BigNumber from 'bignumber.js'
 import web3utils from 'web3/lib/utils/utils'
 import * as Utils from './abi/utils'
 import ContractList from './abi'
-import * as NodesActions from '../../nodes/actions'
-import * as Web3ListenerActions from './actions'
-import * as Web3ListenerThunks from './thunks'
+// import * as NodesActions from '../../nodes/actions'
+import * as Web3Actions from './actions'
+import * as Web3Thunks from './thunks'
 import Web3Provider from './Web3Provider'
 
 export default class Web3Controller {
@@ -53,11 +53,11 @@ export default class Web3Controller {
   }
 
   onErrorHandler = (error) => {
-    this.dispatch(NodesActions.primaryNodeError(this.host, error))
+    // this.dispatch(NodesActions.primaryNodeError(this.host, error))
   }
 
   onEndHandler = (error) => {
-    this.dispatch(Web3ListenerActions.middlewareConnectFailure(error))
+    this.dispatch(Web3Actions.connectFailure(error))
     this.provider && this.provider.disconnect()
 
     if (!this.web3) {
@@ -68,7 +68,7 @@ export default class Web3Controller {
     this.resetContracts()
 
     setTimeout(() => {
-      this.dispatch(Web3ListenerThunks.middlewareReconnect())
+      this.dispatch(Web3Thunks.reconnect())
     }, 5000)
   }
 
@@ -76,23 +76,24 @@ export default class Web3Controller {
     return new Promise((resolve, reject) => {
       try {
         this.provider = this.provider || new Web3Provider(this.host)
-
+        console.log('Provider', this.provider)
         this.provider
           .connect()
           .then(() => {
+            console.log('Connected?')
             this.provider
               .on('error', this.onErrorHandler)
               .on('end', this.onEndHandler)
-
+            console.log('this.provider.connected', this.provider.connected)
             if (this.provider.connected) {
 
               this.web3 = new Web3(this.provider)
-              this.dispatch(Web3ListenerActions.middlewareConnectSuccess(this.host))
+              this.dispatch(Web3Actions.connectSuccess(this.host))
               this.web3.eth.net
                 .getId()
                 .then((netId) => {
                   if (netId === 1 || netId === 4) {
-                    this.dispatch(Web3ListenerActions.middlewareConnectSuccess(this.host))
+                    this.dispatch(Web3Actions.connectSuccess(this.host))
                     this.checkSyncStatus()
                     this.initContracts()
                     this.subscribeOnContractsEvents()
@@ -100,24 +101,27 @@ export default class Web3Controller {
                     this.provider.disconnect()
                     this.web3 = null
                     this.provider = null
-                    this.dispatch(Web3ListenerActions.middlewareIncompatibleNetwork(netId))
+                    this.dispatch(Web3Actions.incompatibleNetwork(netId))
                   }
                 })
                 .catch(() => {
-                  this.dispatch(Web3ListenerThunks.middlewareReconnect())
+                  this.dispatch(Web3Thunks.reconnect())
                 })
               return resolve()
             } else {
+              console.log('Not connected.')
               return reject()
             }
           })
-          .catch(() => {
-            this.dispatch(Web3ListenerThunks.middlewareReconnect())
+          .catch((e) => {
+            console.log('e1', e)
+            this.dispatch(Web3Thunks.reconnect())
             return reject()
           })
       } catch (error) {
+        console.log('e2', error)
         setTimeout(() => {
-          this.dispatch(Web3ListenerThunks.middlewareReconnect())
+          this.dispatch(Web3Thunks.reconnect())
         }, 10000)
         return reject()
       }
@@ -172,9 +176,9 @@ export default class Web3Controller {
             case 'transfer': {
               // eslint-disable-next-line no-console
               console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
-              if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
-                this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
-              }
+              // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
+              //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
+              // }
               break
             }
             case 'approval': {
@@ -297,11 +301,11 @@ export default class Web3Controller {
       try {
         const address = Utils.getContractAddressByNetworkId(contract.networks, this.networkId, contractObjectName)
         this.contracts = this.contracts.set(contract.contractName, new this.web3.eth.Contract(abi, address))
-        this.dispatch(Web3ListenerActions.appendContract(contractObjectName))
+        this.dispatch(Web3Actions.appendContract(contractObjectName))
       } catch (error) {
         if (abstractContracts.includes(contractObjectName)) {
           this.contracts.set(contract.contractName, (address) => new this.web3.eth.Contract(abi, address))
-          this.dispatch(Web3ListenerActions.appendContract(contractObjectName))
+          this.dispatch(Web3Actions.appendContract(contractObjectName))
         } else {
           // TODO: to handle possible errors
           // eslint-disable-next-line no-console
@@ -331,23 +335,23 @@ export default class Web3Controller {
           if (syncStatus === true) {
             const syncingComplete = false
             const progress = 0
-            this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
+            // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
           } else {
             if (syncStatus) {
               const syncingComplete = false
               const progress = (syncStatus.currentBlock - syncStatus.startingBlock) / (syncStatus.highestBlock - syncStatus.startingBlock)
-              this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
+              // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
             } else {
               const syncingComplete = true
               const progress = 1
-              this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
+              // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
             }
           }
         })
         .catch((error) => {
           const syncingInProgress = true
           const progress = 0
-          this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingInProgress, progress))
+          // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingInProgress, progress))
           // eslint-disable-next-line no-console
           console.log('Set SIP, progress 0', error)
         })

@@ -4,18 +4,11 @@
  */
 
 export default {
-  web3Listener: {
+  web3: {
     isConnected: false,
     isConnecting: false,
     isSyncing: null,
-    contracts: {
-      list: [],
-    },
-  },
-  web3Writer: {
-    isConnected: false,
-    isConnecting: false,
-    isSyncing: null,
+    tokens: {},
     contracts: {
       list: [],
     },
