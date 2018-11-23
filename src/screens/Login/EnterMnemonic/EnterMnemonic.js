@@ -18,10 +18,9 @@ export default class EnterMnemonic extends PureComponent {
     ),
     onEnterWord: PropTypes.func,
     onLogin: PropTypes.func,
-    refInput: PropTypes.func,
   }
 
-  keyExtractor = (item, index) => index
+  keyExtractor = (item, index) => item + index
 
   renderItem = ({ index }) => (
     <Input
@@ -34,7 +33,10 @@ export default class EnterMnemonic extends PureComponent {
   )
 
   render () {
-    const { inputsList, onLogin } = this.props
+    const {
+      inputsList,
+      onLogin = () => { },
+    } = this.props
 
     return (
       <View style={styles.screenView}>

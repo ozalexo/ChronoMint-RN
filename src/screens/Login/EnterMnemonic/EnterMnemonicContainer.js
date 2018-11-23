@@ -19,16 +19,16 @@ class EnterMnemonicContainer extends PureComponent {
   }
 
   handleEnterWord = (index) => (name, value) => {
-    if(value){
+    if (value) {
       const { mnemonicWords } = this.state
       mnemonicWords[index] = value.trim()
-  
+
       if (/\s+$/.test(value)) {
         (index + 1 === MNEMONIC_LENGTH)
           ? this.handleLogin()
           : null
       }
-  
+
       this.setState({ mnemonicWords })
     }
   }
@@ -43,8 +43,7 @@ class EnterMnemonicContainer extends PureComponent {
     const address = getAddress(privateKey)
 
     if (!address || !privateKey || mnemonicWords.length !== MNEMONIC_LENGTH) {
-      this.addError(i18n.t('EnterMnemonic.wrongMnemonic'))
-      return this.resetState()
+      return this.addError(i18n.t('EnterMnemonic.wrongMnemonic'))
     }
 
     navigate('SetAccountPassword')
@@ -64,7 +63,6 @@ class EnterMnemonicContainer extends PureComponent {
         inputsList={inputsList}
         onEnterWord={this.handleEnterWord}
         onLogin={this.handleLogin}
-        refInput={this.refInput}
       />
     )
   }
