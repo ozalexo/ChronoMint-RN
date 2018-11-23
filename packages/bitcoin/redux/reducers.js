@@ -10,7 +10,15 @@ const mutations = {
 
   [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { parentAddress, address }) => {
     let list = Object.assign({}, state.list)
-    list = { ...list, [parentAddress]: {...list.parentAddress, address} }
+    list = {
+      ...list,
+      [parentAddress]: {
+        ...list[parentAddress],
+        [address]: {
+          address,
+        },
+      },
+    }
     return {
       ...state,
       list,

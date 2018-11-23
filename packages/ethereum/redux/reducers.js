@@ -10,7 +10,12 @@ const mutations = {
 
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: (state, { address }) => {
     let list = Object.assign({}, state.list)
-    list = { ...list, address }
+    list = {
+      ...list,
+      [address]: {
+        address,
+      },
+    }
     return {
       ...state,
       list,
