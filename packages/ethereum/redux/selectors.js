@@ -10,56 +10,61 @@ import { DUCK_ETHEREUM } from './constants'
 export const getDuckEthereum = () => (state) =>
   state[DUCK_ETHEREUM]
 
-const getBitcoinWallets = (bitcoin) => {
-  let bitcoinWallets = []
-  for (const key in bitcoin.list) {
-    for (const secKey in bitcoin.list[key]) {
-      bitcoinWallets = [
-        ...bitcoinWallets,
+const getBitcoinWallets = () => createSelector(
+  getDuckBitcoin(),
+  (bitcoin) => {
+    let bitcoinWallets = []
+    for (const key in bitcoin.list) {
+      for (const secKey in bitcoin.list[key]) {
+        bitcoinWallets = [
+          ...bitcoinWallets,
+          {
+            data: [
+              {
+                address: bitcoin.list[key][secKey].address,
+                blockchain: 'BTC',
+              },
+            ],
+            title: key,
+          },
+        ]
+      }
+    }
+
+    return bitcoinWallets
+  }
+)
+
+const getEthereumWallets = () => createSelector(
+  getDuckEthereum(),
+  (ethereum) => {
+    let ethereumWallets = []
+    for (const key in ethereum.list) {
+      ethereumWallets = [
+        ...ethereumWallets,
         {
           data: [
             {
-              address: bitcoin.list[key][secKey].address,
-              blockchain: 'BTC',
+              address: ethereum.list[key].address,
+              blockchain: 'ETH',
             },
           ],
-          title: 'Bitcoin example',
+          title: key,
         },
       ]
     }
-  }
 
-  return bitcoinWallets
-}
-const getEthereumWallets = (ethereum) => {
-  let ethereumWallets = []
-  for (const key in ethereum.list) {
-    ethereumWallets = [
-      ...ethereumWallets,
-      {
-        data: [
-          {
-            address: ethereum.list[key].address,
-            blockchain: 'BTC',
-          },
-        ],
-        title: 'Ethereum example',
-      },
-    ]
+    return ethereumWallets
   }
-
-  return ethereumWallets
-}
+)
 
 export const getSections = createSelector(
-  getDuckBitcoin(),
-  getDuckEthereum(),
-  (bitcoin, ethereum) => {
+  getBitcoinWallets(),
+  getEthereumWallets(),
+  (bitWallets, ethWallets) => {
     const combinedSections = [], walletObj = {}
     let wallets = []
-    const bitcoinWallets = getBitcoinWallets(bitcoin)
-    const ethereumWallets = getEthereumWallets(ethereum)
-    wallets = [...wallets, bitcoinWallets, ethereumWallets].flat()
+    wallets = [...wallets, bitWallets, ethWallets].flat()
     wallets.forEach((wallet) => {
       if (!walletObj[wallet.title]) {
         walletObj[wallet.title] = wallet.data

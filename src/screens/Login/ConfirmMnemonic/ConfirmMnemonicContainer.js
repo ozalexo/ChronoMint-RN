@@ -64,7 +64,6 @@ class ConfirmMnemonicContainer extends PureComponent {
 
   createInitialState = () => {
     const { mnemonic } = this.props.navigation.state.params
-    console.log(mnemonic)
     return {
       mnemonic: [],
       words: mnemonic.split(' ').sort(() => Math.random() - 0.5),
