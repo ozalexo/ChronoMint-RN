@@ -24,7 +24,8 @@
     "mnemonic": "Mnemonic key",
     "saveOnDevice": "Save wallet on device",
     "login": "Log in",
-    "generateMnemonic": "Generate mnemonic key"
+    "generateMnemonic": "Generate mnemonic key",
+    "wrongMnemonic": "Something wrong with your mnemonic. Try again"
   },
   "EnterPinCode": {
     "title": "Login",
@@ -192,6 +193,7 @@
     "GenerateMnemonic": "Write down back-up phrase",
     "ConfirmMnemonic": "Confirm recovery phrase",
     "EnterPrivateKey": "Enter Private Key",
+    "EnterMnemonic": "Enter Mnemonic Phrase",
     "WalletList": "WalletList"
   }
 }

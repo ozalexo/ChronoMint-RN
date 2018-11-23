@@ -4,36 +4,15 @@
 */
 
 import { createSelector } from 'reselect'
-import { getDuckBitcoin } from '@chronobank/bitcoin/redux/selectors'
+import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { DUCK_ETHEREUM } from './constants'
+
+const flatten = (list) => list.reduce(
+  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
+)
 
 export const getDuckEthereum = () => (state) =>
   state[DUCK_ETHEREUM]
-
-const getBitcoinWallets = () => createSelector(
-  getDuckBitcoin(),
-  (bitcoin) => {
-    let bitcoinWallets = []
-    for (const key in bitcoin.list) {
-      for (const secKey in bitcoin.list[key]) {
-        bitcoinWallets = [
-          ...bitcoinWallets,
-          {
-            data: [
-              {
-                address: bitcoin.list[key][secKey].address,
-                blockchain: 'BTC',
-              },
-            ],
-            title: key,
-          },
-        ]
-      }
-    }
-
-    return bitcoinWallets
-  }
-)
 
 const getEthereumWallets = () => createSelector(
   getDuckEthereum(),
@@ -64,8 +43,8 @@ export const getSections = createSelector(
   (bitWallets, ethWallets) => {
     const combinedSections = [], walletObj = {}
     let wallets = []
-    wallets = [...wallets, bitWallets, ethWallets].flat()
-    wallets.forEach((wallet) => {
+    wallets = [...wallets, bitWallets, ethWallets]
+    flatten(wallets).forEach((wallet) => {
       if (!walletObj[wallet.title]) {
         walletObj[wallet.title] = wallet.data
       } else {

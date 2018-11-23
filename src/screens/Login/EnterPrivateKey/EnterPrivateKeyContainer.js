@@ -20,8 +20,8 @@ class EnterPrivateKeyContainer extends PureComponent {
     error: '',
   }
 
-  handleChangePrivateKey = (privateKey) => {
-    this.setState({ privateKey })
+  handleChangePrivateKey = (name, value) => {
+    this.setState({ [name]: value })
   }
 
   handleDone = () => {

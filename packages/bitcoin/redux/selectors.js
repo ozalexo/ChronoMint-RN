@@ -14,6 +14,31 @@ export const getBitcoinPending = (blockchain) => createSelector(
   (scope) => scope[blockchain].pending,
 )
 
+export const getBitcoinWallets = () => createSelector(
+  getDuckBitcoin(),
+  (bitcoin) => {
+    let bitcoinWallets = []
+    for (const key in bitcoin.list) {
+      for (const secKey in bitcoin.list[key]) {
+        bitcoinWallets = [
+          ...bitcoinWallets,
+          {
+            data: [
+              {
+                address: bitcoin.list[key][secKey].address,
+                blockchain: 'BTC',
+              },
+            ],
+            title: key,
+          },
+        ]
+      }
+    }
+
+    return bitcoinWallets
+  }
+)
+
 export const getEntryPending = (address, key, blockchain) => createSelector(
   getBitcoinPending(blockchain),
   (pending) => {

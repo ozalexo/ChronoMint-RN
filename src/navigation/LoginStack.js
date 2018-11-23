@@ -15,6 +15,7 @@ import {
 import i18n from '../locales/translation'
 import EnterPrivateKey from '../screens/Login/EnterPrivateKey'
 import GenerateMnemonic from '../screens/Login/GenerateMnemonic'
+import EnterMnemonic from '../screens/Login/EnterMnemonic'
 import ConfirmMnemonic from '../screens/Login/ConfirmMnemonic'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
@@ -85,6 +86,13 @@ const LoginStack = createStackNavigator(
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: ConfirmMnemonic,
+    },
+    'EnterMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title: i18n.t('ScreensTitles.EnterMnemonic'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: EnterMnemonic,
     },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({
