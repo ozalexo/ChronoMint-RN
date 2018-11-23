@@ -4,12 +4,12 @@
  */
 
 import * as ActionTypes from './constants'
+import { NETWORK_SELECT } from '@chronobank/network/redux/constants'
 import initialState from './initialState'
-// import * as Actions from './actions'
 
 const infoReducer = (state) => state
 
-const web3ListenerAppendContract = (state, payload) => {
+const appendContract = (state, payload) => {
   return {
     ...state,
     contracts: {
@@ -36,21 +36,19 @@ const connect = (state, payload) => ({
   isConnecting: payload.isConnecting,
 })
 
-const web3ListenerReset = () => {
+const reset = () => {
   return initialState
 }
 
 export const mutations = {
 
-  [ActionTypes.WEB3_LISTENER_APPEND_CONTRACT]: web3ListenerAppendContract,
-  [ActionTypes.WEB3_LISTENER_RESET]: web3ListenerReset,
-  [ActionTypes.WEB3_LISTENER_RECONNECT]: connect,
-  [ActionTypes.WEB3_LISTENER_RECONNECT_SUCCESS]: connectSuccess,
-  [ActionTypes.WEB3_LISTENER_RECONNECT_FAILURE]: connectFailure,
-  [ActionTypes.WEB3_LISTENER_CONNECT]: connect,
-  [ActionTypes.WEB3_LISTENER_CONNECT_SUCCESS]: connectSuccess,
-  [ActionTypes.WEB3_LISTENER_CONNECT_FAILURE]: connectFailure,
-  [ActionTypes.WEB3_LISTENER_INCOMPATIBLE_NETWORK]: infoReducer,
+  [ActionTypes.WEB3_MIDDLEWARE_APPEND_CONTRACT]: appendContract,
+  [ActionTypes.WEB3_MIDDLEWARE_RESET]: reset,
+  [ActionTypes.WEB3_MIDDLEWARE_CONNECT]: connect,
+  [ActionTypes.WEB3_MIDDLEWARE_CONNECT_SUCCESS]: connectSuccess,
+  [ActionTypes.WEB3_MIDDLEWARE_CONNECT_FAILURE]: connectFailure,
+  [ActionTypes.WEB3_MIDDLEWARE_INCOMPATIBLE_NETWORK]: infoReducer,
+  [NETWORK_SELECT]: connect,
 
 }
 

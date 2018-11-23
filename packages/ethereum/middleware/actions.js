@@ -3,69 +3,55 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import * as MiddlewareActionTypes from './constants'
+import * as ActionTypes from './constants'
 
-export const middlewareConnect = () => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_CONNECT,
+export const connect = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_CONNECT,
 })
 
-export const middlewareConnectSuccess = () => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_CONNECT_SUCCESS,
+export const connectSuccess = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_CONNECT_SUCCESS,
 })
 
-export const middlewareConnectFailure = (error) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_CONNECT_FAILURE,
+export const connectFailure = (error) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_CONNECT_FAILURE,
   error,
 })
 
-export const middlewareDisconnect = () => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_DISCONNECT,
+export const disconnect = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_DISCONNECT,
 })
 
-export const middlewareReconnect = (isConnecting = true) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_RECONNECT,
-  isConnecting,
+export const incompatibleNetwork = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_INCOMPATIBLE_NETWORK,
 })
 
-export const middlewareReconnectSuccess = () => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_RECONNECT_SUCCESS,
-})
-
-export const middlewareReconnectFailure = (error) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_RECONNECT_FAILURE,
-  error,
-})
-
-export const middlewareIncompatibleNetwork = () => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_INCOMPATIBLE_NETWORK,
-})
-
-export const middlewareSubscribe = (channel, onMessageThunk) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_SUBSCRIBE,
+export const subscribe = (channel, onMessageThunk) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_SUBSCRIBE,
   channel,
   onMessageThunk,
 })
 
-export const middlewareSubscribeSuccess = (channel) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_SUBSCRIBE_SUCCESS,
+export const subscribeSuccess = (channel) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_SUBSCRIBE_SUCCESS,
   channel,
 })
 
-export const middlewareSubscribeFailure = (error) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_SUBSCRIBE_FAILURE,
+export const subscribeFailure = (error) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_SUBSCRIBE_FAILURE,
   error,
 })
 
-export const middlewareUnsubscribe = (channel) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_UNSUBSCRIBE,
+export const unsubscribe = (channel) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_UNSUBSCRIBE,
   channel,
 })
 
 export const appendContract = (contractName) => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_APPEND_CONTRACT,
+  type: ActionTypes.WEB3_MIDDLEWARE_APPEND_CONTRACT,
   contractName,
 })
 
-export const web3Reset = () => ({
-  type: MiddlewareActionTypes.WEB3_LISTENER_RESET,
+export const reset = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_RESET,
 })
