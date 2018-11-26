@@ -11,13 +11,13 @@ import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
 import { DUCK_MARKET } from '@chronobank/market/redux/constants'
 import { DUCK_NETWORK } from '@chronobank/network/redux/constants'
 import { DUCK_SESSION } from '@chronobank/session/redux/constants'
-import { DUCK_WEB3_MIDDLEWARE } from '@chronobank/ethereum/redux/constants'
+import { DUCK_WEB3_MIDDLEWARE } from '@chronobank/ethereum/middleware/constants'
 import bitcoin from '@chronobank/bitcoin/redux/reducers'
 import ethereum from '@chronobank/ethereum/redux/reducers'
 import market from '@chronobank/market/redux/reducers'
 import network from '@chronobank/network/redux/reducers'
 import session from '@chronobank/session/redux/reducers'
-import web3reducer from '@chronobank/ethereum/redux/reducers'
+import web3middleware from '@chronobank/ethereum/middleware/reducers'
 
 import ETHEREUM_PERSIST_CONFIG from '@chronobank/ethereum/redux/persist'
 import BITCOIN_PERSIST_CONFIG from '@chronobank/bitcoin/redux/persist'
@@ -29,4 +29,5 @@ export default combineReducers({
   [DUCK_MARKET]: market,
   [DUCK_NETWORK]: network,
   [DUCK_SESSION]: session,
+  [DUCK_WEB3_MIDDLEWARE]: web3middleware,
 })

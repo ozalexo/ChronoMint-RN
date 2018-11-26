@@ -22,3 +22,23 @@ patch-package
 +    implementation 'com.android.support:appcompat-v7:26.1.0'
 +    implementation "com.facebook.react:react-native:+" // From node_modules
  }
+--- a/node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj/project.pbxproj
++++ b/node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj/project.pbxproj
+@@ -206,7 +206,7 @@
+ 			isa = XCBuildConfiguration;
+ 			buildSettings = {
+ 				HEADER_SEARCH_PATHS = "";
+-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+ 				OTHER_LDFLAGS = "-ObjC";
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				SKIP_INSTALL = YES;
+@@ -217,7 +217,7 @@
+ 			isa = XCBuildConfiguration;
+ 			buildSettings = {
+ 				HEADER_SEARCH_PATHS = "";
+-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+ 				OTHER_LDFLAGS = "-ObjC";
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				SKIP_INSTALL = YES;
