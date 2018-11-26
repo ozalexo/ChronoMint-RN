@@ -5,39 +5,33 @@
 
 import React, { PureComponent } from 'react'
 import { Alert } from 'react-native'
+import PropTypes from 'prop-types'
 import { getAddress } from '@chronobank/bitcoin/utils'
 import { getPrivateKeyByMnemonic } from '@chronobank/ethereum/utils'
 import i18n from '../../../locales/translation'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import EnterMnemonic from './EnterMnemonic'
 
-const inputsList = Array(MNEMONIC_LENGTH).fill(1)
-
 class EnterMnemonicContainer extends PureComponent {
-  state = {
-    mnemonicWords: [],
+  
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
-  handleEnterWord = (index) => (name, value) => {
-    if (value) {
-      const { mnemonicWords } = this.state
-      mnemonicWords[index] = value.trim()
+  state = {
+    mnemonic: '',
+  }
 
-      if (/\s+$/.test(value)) {
-        (index + 1 === MNEMONIC_LENGTH)
-          ? this.handleLogin()
-          : null
-      }
-
-      this.setState({ mnemonicWords })
-    }
+  handleChangeMnemonic = (name, value) => {
+    this.setState({ [name]: value })
   }
 
   handleLogin = () => {
-    const { mnemonicWords } = this.state
+    const { mnemonic } = this.state
     const { navigate } = this.props.navigation
-    const mnemonic = mnemonicWords.join(' ')
-
+    const mnemonicWords = mnemonic.split(' ')
 
     const privateKey = getPrivateKeyByMnemonic(mnemonic)
     const address = getAddress(privateKey)
@@ -58,11 +52,12 @@ class EnterMnemonicContainer extends PureComponent {
   }
 
   render () {
+    const { error } = this.state
     return (
       <EnterMnemonic
-        inputsList={inputsList}
-        onEnterWord={this.handleEnterWord}
+        onChangeMnemonic={this.handleChangeMnemonic}
         onLogin={this.handleLogin}
+        error={error}
       />
     )
   }

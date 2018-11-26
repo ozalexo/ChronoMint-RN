@@ -4,7 +4,7 @@
  */
 
 import React, { PureComponent } from 'react'
-import { FlatList, View } from 'react-native'
+import { View } from 'react-native'
 import PropTypes from 'prop-types'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
@@ -13,38 +13,25 @@ import styles from './EnterMnemonicStyles'
 export default class EnterMnemonic extends PureComponent {
 
   static propTypes = {
-    inputsList: PropTypes.arrayOf(
-      PropTypes.number
-    ),
-    onEnterWord: PropTypes.func,
+    onChangeMnemonic: PropTypes.func,
     onLogin: PropTypes.func,
+    error: PropTypes.string,
   }
-
-  keyExtractor = (item, index) => item + index
-
-  renderItem = ({ index }) => (
-    <Input
-      label='Enter mnemonic'
-      name={`word${index}`}
-      onChange={this.props.onEnterWord(index)}
-      placeholder={`word ${index + 1}`}
-      style={styles.input}
-    />
-  )
 
   render () {
     const {
-      inputsList,
+      onChangeMnemonic = () => { },
       onLogin = () => { },
+      error,
     } = this.props
 
     return (
       <View style={styles.screenView}>
-        <FlatList
-          data={inputsList}
-          keyExtractor={this.keyExtractor}
-          numColumns={4}
-          renderItem={this.renderItem}
+        <Input
+          label='Mnemonic'
+          name='mnemonic'
+          onChange={onChangeMnemonic}
+          error={error}
         />
         <PrimaryButton
           style={styles.button}

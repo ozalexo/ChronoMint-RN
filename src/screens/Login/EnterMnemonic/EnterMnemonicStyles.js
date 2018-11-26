@@ -7,15 +7,18 @@ import { StyleSheet } from 'react-native'
 import { headerHeight } from '../../../common/constants/screens'
 
 export default StyleSheet.create({
+  screenView: {
+    marginTop: headerHeight + 20,
+    marginBottom: 20,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 20,
+  },
   input: {
     flex: 1,
     marginHorizontal: 5,
     marginTop: headerHeight + 20,
-  },
-  screenView: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: 60,
   },
   button: {
     margin: 20,
