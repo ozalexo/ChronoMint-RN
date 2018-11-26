@@ -20,6 +20,7 @@ import ConfirmMnemonic from '../screens/Login/ConfirmMnemonic'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
 import ImportMethod from '../screens/Login/ImportMethod'
+import SetAccountPassword from '../screens/Login/SetAccountPassword'
 import Start from '../screens/Login/Start'
 import WalletList from '../screens/Wallet/WalletList'
 import { headerHeight } from '../common/constants/screens'
@@ -65,6 +66,19 @@ const LoginStack = createStackNavigator(
         // },
       }),
       screen: Start,
+    },
+    'SetAccountPassword': {
+      navigationOptions: ({ navigation }) => ({
+        headerLeft: <HeaderNetworkSelect toggleDrawer={navigation.toggleNetworkDrawer} />,
+        headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
+        headerLeftContainerStyle: { paddingLeft: 20 },
+        headerRightContainerStyle: { paddingRight: 20 },
+        //each screen heigth may be set manually
+        // headerStyle: { 
+        //   height: 44,
+        // },
+      }),
+      screen: SetAccountPassword,
     },
     'ImportMethod': {
       navigationOptions: ({ navigation }) => ({

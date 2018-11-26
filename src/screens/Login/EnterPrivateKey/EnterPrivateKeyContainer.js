@@ -35,8 +35,7 @@ class EnterPrivateKeyContainer extends PureComponent {
     if (privateKey.length <= 6) {
       this.setState({ error: 'Private Key is too short' })
     } else {
-      this.setState({ error: '' })
-      navigation.navigate('StartPage')
+      navigation.navigate('SetAccountPassword')
     }
   }
 

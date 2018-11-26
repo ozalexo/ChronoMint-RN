@@ -39,8 +39,13 @@ class EnterMnemonicContainer extends PureComponent {
     if (!address || !privateKey || mnemonicWords.length !== MNEMONIC_LENGTH) {
       return this.addError(i18n.t('EnterMnemonic.wrongMnemonic'))
     }
+    const params = {
+      mnemonic,
+      privateKey,
+      address,
+    }
 
-    navigate('SetAccountPassword')
+    navigate('SetAccountPassword', params)
   }
 
   resetState = () => {

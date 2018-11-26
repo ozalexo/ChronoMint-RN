@@ -1,4 +1,4 @@
- {
+{
   "usd": "USD",
   "eth": "ETH",
   "btc": "BTC",
@@ -42,7 +42,7 @@
     "title": "Upload wallet file",
     "subtitle": "Enter password for the wallet:",
     "password": "Password",
-   " saveOnDevice": "Save wallet on device",
+    " saveOnDevice": "Save wallet on device",
     "login": "Log in"
   },
   "GenerateWalletFile": {
@@ -157,7 +157,7 @@
     "warnings": {
       "0": {
         "title": "Don't share your mnemonic phrase with someone you don't trust.",
-        "content": "Double check services you\"re giving your mnemonic to and don't share your phrase with anyone."
+        "content": "Double check services you're giving your mnemonic to and don't share your phrase with anyone."
       },
       "1": {
         "title": "Don't loose your key.",
@@ -182,6 +182,17 @@
     "recoverUsingMnemonic": "Recover using mnemonic",
     "or": "common.or"
   },
+  "SetAccountPassword": {
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "createWallet": "Create a wallet",
+    "setPassword": "Set password",
+    "or": "or",
+    "useExistingWallet": "Use an existing wallet",
+    "copyright": "Copyright ©2018 LaborX Australia Pty Ltd. All Rights Reserved.",
+    "mismatchPasswords": "Passwords do not match",
+    "invalidPassword": "Password is not valid"
+  },
   "ImportAccount": {
     "title": "Import Address",
     "mnemonic": "Mnemonic",
@@ -194,6 +205,7 @@
     "ConfirmMnemonic": "Confirm recovery phrase",
     "EnterPrivateKey": "Enter Private Key",
     "EnterMnemonic": "Enter Mnemonic Phrase",
-    "WalletList": "WalletList"
+    "WalletList": "WalletList",
+    "SetAccountPassword": "Set Account Password"
   }
 }
