@@ -6,13 +6,10 @@
 import { createSelector } from 'reselect'
 import { DUCK_SESSION } from './constants'
 
-const getDuckSession = (state) =>
+export const getDuckSession = () => (state) =>
   state[DUCK_SESSION]
 
 export const getCurrentWallet = createSelector(
-  getDuckSession,
-  (session) => {
-    const { currentWallet } = session
-    return currentWallet
-  },
+  getDuckSession(),
+  (session) => session.currentWallet
 )

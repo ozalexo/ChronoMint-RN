@@ -37,8 +37,8 @@ const getEthereumWallets = () => createSelector(
   }
 )
 
-export const getSections = createSelector(
-  getBitcoinWallets(),
+export const getSections = (ethAddress) => createSelector(
+  getBitcoinWallets(ethAddress),
   getEthereumWallets(),
   (bitWallets, ethWallets) => {
     const combinedSections = [], walletObj = {}

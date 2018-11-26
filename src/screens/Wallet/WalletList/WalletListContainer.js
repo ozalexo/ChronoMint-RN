@@ -6,6 +6,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { getSections } from '@chronobank/ethereum/redux/selectors'
+import { getCurrentWallet } from '../../../redux/session/selectors'
 import PropTypes from 'prop-types'
 import {
   burger,
@@ -31,7 +32,7 @@ class WalletListContainer extends PureComponent {
     ],
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent)
   }
@@ -72,7 +73,7 @@ class WalletListContainer extends PureComponent {
 
 const mapStateToProps = (state) => ({
   // sections: testData.sections,
-  sections: getSections(state),
+  sections: getSections(getCurrentWallet(state))(state),
 })
 
 WalletListContainer.propTypes = {
