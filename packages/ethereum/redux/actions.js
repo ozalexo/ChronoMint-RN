@@ -9,3 +9,9 @@ export const ethereumCreateWallet = (address) => ({
   type: ActionsTypes.ETHEREUM_CREATE_WALLET,
   address,
 })
+
+export const ethereumCreateDerivedWallet = (parentAddress, address) => ({
+  type: ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET,
+  parentAddress,
+  address,
+})

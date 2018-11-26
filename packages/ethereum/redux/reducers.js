@@ -21,6 +21,23 @@ const mutations = {
       list,
     }
   },
+  [ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET]: (state, { parentAddress, address }) => {
+    let list = Object.assign({}, state.list)
+    list = {
+      ...list,
+      [parentAddress]: {
+        ...list[parentAddress],
+        deriveds: {
+          ...list[parentAddress].deriveds,
+          [address]: {address},
+        },
+      },
+    }
+    return {
+      ...state,
+      list,
+    }
+  },
 }
 
 export default (state = initialState, { type, ...other }) => {

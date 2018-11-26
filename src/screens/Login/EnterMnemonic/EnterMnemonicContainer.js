@@ -31,7 +31,7 @@ class EnterMnemonicContainer extends PureComponent {
   handleLogin = () => {
     const { mnemonic } = this.state
     const { navigate } = this.props.navigation
-    const mnemonicWords = mnemonic.split(' ')
+    const mnemonicWords = mnemonic.trim().split(' ')
 
     const privateKey = getPrivateKeyByMnemonic(mnemonic)
     const address = getAddress(privateKey)
