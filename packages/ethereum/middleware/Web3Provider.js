@@ -45,7 +45,10 @@ export default class Web3Provider {
           this.connection.close()
         }
         this.connection = new WebSocket(this.url)
+        console.log('WS Connection created!', this.url)
+        console.log('this.connection', this.connection)
         this.connection.onopen = () => {
+          console.log('open')
           if (hasReturned) {
             this.connection.close()
           } else {

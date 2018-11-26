@@ -105,13 +105,13 @@ class CryptocompareSocket {
       this.socket.on('disconnect', () => {
         return reject()
       })
-      this.socket.on('ping', () => {
-        this.WStimeout = setTimeout(() => {  // if it doesn't respond within two seconds
-          if (this.socket && this.socket.io.readyState === 'open') {  // and if the connection is still open
-            this.socket.close() // force reconnect
-          }
-        }, 2000)
-      })
+      // this.socket.on('ping', () => {
+      //   this.WStimeout = setTimeout(() => {  // if it doesn't respond within two seconds
+      //     if (this.socket && this.socket.io.readyState === 'open') {  // and if the connection is still open
+      //       this.socket.close() // force reconnect
+      //     }
+      //   }, 2000)
+      // })
       this.socket.on('pong', () => {
         clearTimeout(this.WStimeout)
       })

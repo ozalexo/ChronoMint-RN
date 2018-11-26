@@ -53,10 +53,12 @@ export default class Web3Controller {
   }
 
   onErrorHandler = (error) => {
+    console.log('onErrorHandler error', error)
     // this.dispatch(NodesActions.primaryNodeError(this.host, error))
   }
 
   onEndHandler = (error) => {
+    console.log('onEndHandler error', error)
     this.dispatch(Web3Actions.connectFailure(error))
     this.provider && this.provider.disconnect()
 
@@ -88,15 +90,16 @@ export default class Web3Controller {
             if (this.provider.connected) {
 
               this.web3 = new Web3(this.provider)
-              this.dispatch(Web3Actions.connectSuccess(this.host))
+              // this.dispatch(Web3Actions.connectSuccess(this.host))
               this.web3.eth.net
                 .getId()
                 .then((netId) => {
+                  console.log('Network id from Eth node:', netId)
                   if (netId === 1 || netId === 4) {
                     this.dispatch(Web3Actions.connectSuccess(this.host))
                     this.checkSyncStatus()
                     this.initContracts()
-                    this.subscribeOnContractsEvents()
+                    // this.subscribeOnContractsEvents()
                   } else {
                     this.provider.disconnect()
                     this.web3 = null
@@ -309,7 +312,7 @@ export default class Web3Controller {
         } else {
           // TODO: to handle possible errors
           // eslint-disable-next-line no-console
-          //#console.log(error.message)
+          console.log(error.message)
         }
       }
     })

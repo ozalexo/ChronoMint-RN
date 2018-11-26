@@ -4,13 +4,13 @@
  */
 
 export default {
-  web3: {
-    isConnected: false,
-    isConnecting: false,
-    isSyncing: null,
-    tokens: {},
-    contracts: {
-      list: [],
-    },
+  isConnected: false,
+  isConnecting: false,
+  isSyncing: null,
+  tokens: {
+    list: [],
+  },
+  contracts: {
+    list: [],
   },
 }
