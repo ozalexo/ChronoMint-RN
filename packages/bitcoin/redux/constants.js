@@ -4,6 +4,7 @@
  */
 
 export const DUCK_BITCOIN = 'bitcoin'
+export const DUCK_SESSION = 'session'
 
 
 export const BITCOIN_CREATE_WALLET = 'BITCOIN/CREATE_WALLET'

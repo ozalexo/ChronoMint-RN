@@ -4,8 +4,15 @@
  */
 
 import { createSelector } from 'reselect'
-import { getCurrentWallet } from '../../../src/redux/session/selectors'
-import { DUCK_BITCOIN } from './constants'
+import { DUCK_BITCOIN, DUCK_SESSION } from './constants'
+
+export const getDuckSession = () => (state) =>
+  state[DUCK_SESSION]
+
+export const getCurrentWallet = createSelector(
+  getDuckSession(),
+  (session) => session.currentWallet
+)
 
 export const getDuckBitcoin = () => (state) =>
   state[DUCK_BITCOIN]
