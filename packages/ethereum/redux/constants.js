@@ -4,7 +4,6 @@
  */
 
 export const DUCK_ETHEREUM = 'ethereum'
-export const DUCK_SESSION = 'session'
 
 
 export const ETHEREUM_CREATE_WALLET = 'ETHERIUM/CREATE_WALLET'
