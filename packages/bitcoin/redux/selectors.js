@@ -4,15 +4,8 @@
  */
 
 import { createSelector } from 'reselect'
-import { DUCK_BITCOIN, DUCK_SESSION } from './constants'
-
-export const getDuckSession = () => (state) =>
-  state[DUCK_SESSION]
-
-export const getCurrentWallet = createSelector(
-  getDuckSession(),
-  (session) => session.currentWallet
-)
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { DUCK_BITCOIN } from './constants'
 
 export const getDuckBitcoin = () => (state) =>
   state[DUCK_BITCOIN]

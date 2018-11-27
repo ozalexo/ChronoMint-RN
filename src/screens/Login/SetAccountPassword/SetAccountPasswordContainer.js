@@ -4,8 +4,8 @@
  */
 
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
+import PropTypes from 'prop-types'
 import SetAccountPassword from './SetAccountPassword'
 
 let lastAccount = false

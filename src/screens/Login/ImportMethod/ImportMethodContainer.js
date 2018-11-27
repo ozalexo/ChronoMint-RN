@@ -5,9 +5,9 @@
 
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import ImportMethod from './ImportMethod'
 import i18n from '../../../locales/translation'
 import { mnemonic, private_key } from '../../../images'
+import ImportMethod from './ImportMethod'
 
 class ImportMethodContainer extends PureComponent {
 

@@ -5,15 +5,8 @@
 
 import { createSelector } from 'reselect'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
-import { DUCK_ETHEREUM, DUCK_SESSION } from './constants'
-
-export const getDuckSession = () => (state) =>
-  state[DUCK_SESSION]
-
-export const getCurrentWallet = createSelector(
-  getDuckSession(),
-  (session) => session.currentWallet
-)
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { DUCK_ETHEREUM } from './constants'
 
 const flatten = (list) => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []

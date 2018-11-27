@@ -8,12 +8,12 @@ import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { loginThunk } from '../../../redux/session/thunks'
+import { loginThunk } from '@chronobank/session/redux/thunks'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
 
-const mapStateToProps = (ownState, ownProps) => {
+const mapStateToProps = () => {
   return {}
 }
 
