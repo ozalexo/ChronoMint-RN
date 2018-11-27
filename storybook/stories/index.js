@@ -11,6 +11,7 @@ import ImportMethod from './ImportMethod'
 import GenerateMnemonic from './GenerateMnemonic'
 import ConfirmMnemonic from './ConfirmMnemonic'
 import EnterPrivateKey from './EnterPrivateKey'
+import EnterMnemonic from './EnterMnemonic'
 import WalletList from './WalletList'
 
 //Wrappers
@@ -372,6 +373,7 @@ storiesOf('Screens/Login', module)
   .add('Start Screen', () => <ScreenStart />)
   .add('ImportMethod Screen', () => <ImportMethod />)
   .add('EnterPrivateKey Screen', () => <EnterPrivateKey />)
+  .add('EnterMnemonic Screen', () => <EnterMnemonic />)
   .add('GenerateMnemonic Screen', () => (
     <GenerateMnemonic
       mnemonic='jacket lady situate brass inflict chest arch series glass second soup food'

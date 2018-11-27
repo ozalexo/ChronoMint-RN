@@ -13,6 +13,12 @@ const mutations = {
       currentWallet,
     }
   },
+  [ActionTypes.SESSION_SAVE_KEY]: (state, { privateKey }) => {
+    return {
+      ...state,
+      privateKey,
+    }
+  },
   [ActionTypes.SESSION_LOGOUT]: (state) => {
     return {
       ...state,

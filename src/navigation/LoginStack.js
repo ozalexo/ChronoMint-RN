@@ -15,12 +15,13 @@ import {
 import i18n from '../locales/translation'
 import EnterPrivateKey from '../screens/Login/EnterPrivateKey'
 import GenerateMnemonic from '../screens/Login/GenerateMnemonic'
+import EnterMnemonic from '../screens/Login/EnterMnemonic'
 import ConfirmMnemonic from '../screens/Login/ConfirmMnemonic'
 import HeaderLanguageSelect from '../screens/Login/Start/components/HeaderLanguageSelect'
 import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetworkSelect'
 import ImportMethod from '../screens/Login/ImportMethod'
+import SetAccountPassword from '../screens/Login/SetAccountPassword'
 import Start from '../screens/Login/Start'
-import WalletList from '../screens/Wallet/WalletList'
 import { headerHeight } from '../common/constants/screens'
 
 const transitionConfig = () => {
@@ -65,6 +66,13 @@ const LoginStack = createStackNavigator(
       }),
       screen: Start,
     },
+    'SetAccountPassword': {
+      navigationOptions: ({ navigation }) => ({
+        title: i18n.t('ScreensTitles.SetAccountPassword'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: SetAccountPassword,
+    },
     'ImportMethod': {
       navigationOptions: ({ navigation }) => ({
         title: i18n.t('ScreensTitles.ImportMethod'),
@@ -86,19 +94,19 @@ const LoginStack = createStackNavigator(
       }),
       screen: ConfirmMnemonic,
     },
+    'EnterMnemonic': {
+      navigationOptions: ({ navigation }) => ({
+        title: i18n.t('ScreensTitles.EnterMnemonic'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: EnterMnemonic,
+    },
     'EnterPrivateKey': {
       navigationOptions: ({ navigation }) => ({
         title: i18n.t('ScreensTitles.EnterPrivateKey'),
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: EnterPrivateKey,
-    },
-    'WalletList': {
-      navigationOptions: ({ navigation }) => ({
-        title: i18n.t('ScreensTitles.WalletList'),
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
-      }),
-      screen: WalletList,
     },
   },
   {

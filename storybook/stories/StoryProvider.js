@@ -5,7 +5,9 @@
 
 import React from 'react'
 import { Provider } from 'react-redux'
-import store from '../../src/store/createStore'
+import configureStore from '../../src/store/configureStore'
+
+const {store} = configureStore()
 
 const StoryProvider = ({ story }) => {
   return (

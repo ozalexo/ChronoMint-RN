@@ -3,9 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export default {
-  selected: {},
-  list: {},
-  lastRequestMeta: null,
-  pending: {},
-}
+export default from './SetAccountPasswordContainer'

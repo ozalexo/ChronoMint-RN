@@ -20,19 +20,21 @@ export default class WalletList extends PureComponent {
   keyExtractor = (walletItem, index) =>
     [walletItem.blockchain, walletItem.address, index].join('_').replace(/\s/g, '')
 
-  renderItem = ({ item, section }) => (
-    <View style={styles.walletItemHorizontalPaddings}>
-      <WalletListItemContainer
-        address={item.address}
-        navigator={this.props.navigator}
-        blockchain={section.title}
-      />
-    </View>
-  )
+  renderItem = ({ item }) => {
+    return (
+      <View style={styles.walletItemHorizontalPaddings}>
+        <WalletListItemContainer
+          address={item.address}
+          navigator={this.props.navigator}
+          blockchain={item.blockchain}
+        />
+      </View>
+    )
+  }
 
   renderSectionHeader = ({ section }) => (
     <SectionHeader
-      title={`${section.title} Wallets`}
+      title={`My ${section.title} wallets`}
       isDark
     />
   )
@@ -43,7 +45,7 @@ export default class WalletList extends PureComponent {
       sections,
       onRefresh = () => { },
     } = this.props
-    
+
     if (isRefreshing || !sections || !sections.length) {
       return (
         <View style={styles.activityIndicatorContainer}>

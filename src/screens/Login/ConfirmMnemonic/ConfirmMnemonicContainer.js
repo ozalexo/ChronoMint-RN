@@ -5,10 +5,21 @@
 
 import React, { PureComponent } from 'react'
 import { Alert } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { loginThunk } from '@chronobank/session/redux/thunks'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
+
+const mapStateToProps = () => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  loginThunk,
+}, dispatch)
 
 class ConfirmMnemonicContainer extends PureComponent {
   constructor (props) {
@@ -16,16 +27,13 @@ class ConfirmMnemonicContainer extends PureComponent {
     this.state = this.createInitialState()
   }
 
-  handleDone = async () => {
+  handleDone = () => {
     const {
       mnemonic,
-      password,
     } = this.props.navigation.state.params
     const {
-      usePinProtection,
       navigation,
-      onMnemonicLogin,
-      onLogin,
+      loginThunk,
     } = this.props
 
     if (mnemonic !== this.state.mnemonic.join(' ')) {
@@ -33,19 +41,8 @@ class ConfirmMnemonicContainer extends PureComponent {
       return this.resetState()
     }
 
-    const { privateKey } = await onMnemonicLogin(mnemonic) //need action from @chronobank
-
-    if (!usePinProtection) {
-      return onLogin()
-    }
-
-    const params = {
-      mnemonic,
-      password,
-      privateKey,
-    }
-
-    navigation.navigate('EnterPin', params)
+    loginThunk(mnemonic)
+    navigation.navigate('WalletList')
   }
 
   handleWord = (word) => () => {
@@ -95,6 +92,9 @@ class ConfirmMnemonicContainer extends PureComponent {
 }
 
 ConfirmMnemonicContainer.propTypes = {
+  loginThunk: PropTypes.func,
+  bitcoinSaveAddress: PropTypes.func,
+  ethSaveAddress: PropTypes.func,
   navigation: PropTypes.shape({
     state: PropTypes.shape({
       params: PropTypes.shape({
@@ -104,7 +104,6 @@ ConfirmMnemonicContainer.propTypes = {
       }),
     }),
   }),
-  usePinProtection: PropTypes.bool,
 }
 
-export default ConfirmMnemonicContainer
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmMnemonicContainer)

@@ -15,6 +15,7 @@
     "lint:errors": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx --quiet ."
   },
   "dependencies": {
+    "@chronobank/session": "*",
     "@chronobank/bitcoin": "*",
     "@chronobank/ethereum": "*",
     "@chronobank/market": "*",
