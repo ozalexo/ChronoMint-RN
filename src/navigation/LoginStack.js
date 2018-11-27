@@ -22,7 +22,6 @@ import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetwork
 import ImportMethod from '../screens/Login/ImportMethod'
 import SetAccountPassword from '../screens/Login/SetAccountPassword'
 import Start from '../screens/Login/Start'
-import WalletList from '../screens/Wallet/WalletList'
 import { headerHeight } from '../common/constants/screens'
 
 const transitionConfig = () => {
@@ -114,13 +113,6 @@ const LoginStack = createStackNavigator(
         headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: EnterPrivateKey,
-    },
-    'WalletList': {
-      navigationOptions: ({ navigation }) => ({
-        title: i18n.t('ScreensTitles.WalletList'),
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
-      }),
-      screen: WalletList,
     },
   },
   {

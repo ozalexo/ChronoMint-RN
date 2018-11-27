@@ -34,8 +34,6 @@ export default class SetAccountPassword extends PureComponent {
     onChangePassword: PropTypes.func,
     onChangePasswordConfirmation: PropTypes.func,
     onDone: PropTypes.func,
-    onSelectLanguage: PropTypes.func,
-    onSelectNetwork: PropTypes.func,
     onUseWallet: PropTypes.func,
   }
 
@@ -128,7 +126,6 @@ export default class SetAccountPassword extends PureComponent {
     const keyboardVerticalOffset = -headerHeight
 
     const {
-      isCreatingNewWallet = () => { },
       onDone = () => { },
     } = this.props
     return (

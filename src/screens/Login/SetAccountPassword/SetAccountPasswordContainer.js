@@ -22,9 +22,7 @@ class SetAccountPasswordContainer extends PureComponent {
         }),
       }),
     }).isRequired,
-    generateMnemonic: PropTypes.func,
     isCreatingNewWallet: PropTypes.bool,
-    privateKey: PropTypes.string,
   }
 
   static navigatorStyle = {

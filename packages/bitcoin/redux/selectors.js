@@ -4,6 +4,7 @@
  */
 
 import { createSelector } from 'reselect'
+import { getCurrentWallet } from '../../../src/redux/session/selectors'
 import { DUCK_BITCOIN } from './constants'
 
 export const getDuckBitcoin = () => (state) =>
@@ -14,9 +15,10 @@ export const getBitcoinPending = (blockchain) => createSelector(
   (scope) => scope[blockchain].pending,
 )
 
-export const getBitcoinWallets = (ethAddress) => createSelector(
+export const getBitcoinWallets = createSelector(
   getDuckBitcoin(),
-  (bitcoin) => {
+  getCurrentWallet,
+  (bitcoin, ethAddress) => {
     let bitcoinWallets = []
     for (const key in bitcoin.list[ethAddress]) {
       bitcoinWallets = [
@@ -25,7 +27,7 @@ export const getBitcoinWallets = (ethAddress) => createSelector(
           data: [
             {
               address: bitcoin.list[ethAddress][key].address,
-              blockchain: 'BTC',
+              blockchain: DUCK_BITCOIN,
             },
           ],
           title: ethAddress,

@@ -5,6 +5,7 @@
 
 import { createSelector } from 'reselect'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
+import { getCurrentWallet } from '../../../src/redux/session/selectors'
 import { DUCK_ETHEREUM } from './constants'
 
 const flatten = (list) => list.reduce(
@@ -14,9 +15,10 @@ const flatten = (list) => list.reduce(
 export const getDuckEthereum = () => (state) =>
   state[DUCK_ETHEREUM]
 
-export const getDerivedEthWallets = (ethAddress) => createSelector(
+export const getDerivedEthWallets = createSelector(
   getDuckEthereum(),
-  (ethereum) => {
+  getCurrentWallet,
+  (ethereum, ethAddress) => {
     const deriveds = []
     if(ethereum.list[ethAddress] && ethereum.list[ethAddress].deriveds){
       for(const key in ethereum.list[ethAddress].deriveds){
@@ -37,7 +39,7 @@ const getEthereumWallets = () => createSelector(
           data: [
             {
               address: ethereum.list[key].address,
-              blockchain: 'ETH',
+              blockchain: DUCK_ETHEREUM,
             },
           ],
           title: key,
@@ -49,8 +51,8 @@ const getEthereumWallets = () => createSelector(
   }
 )
 
-export const getSections = (ethAddress) => createSelector(
-  getBitcoinWallets(ethAddress),
+export const getSections = createSelector(
+  getBitcoinWallets,
   getEthereumWallets(),
   (bitWallets, ethWallets) => {
     const combinedSections = [], walletObj = {}

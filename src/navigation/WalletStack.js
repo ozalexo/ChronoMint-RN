@@ -10,8 +10,8 @@ import {
 import {
   createStackNavigator,
 } from 'react-navigation'
-
 import WalletList from '../screens/Wallet/WalletList'
+import i18n from '../locales/translation'
 
 const transitionConfig = () => {
   return {
@@ -32,7 +32,7 @@ const transitionConfig = () => {
         outputRange: [width, 0],
       })
 
-      return { transform: [ { translateX } ] }
+      return { transform: [{ translateX }] }
     },
     containerStyle: {
       backgroundColor: 'transparent',
@@ -42,10 +42,15 @@ const transitionConfig = () => {
 
 const WalletStack = createStackNavigator(
   {
-    WalletList,
+    'WalletList': {
+      navigationOptions: () => ({
+        title: i18n.t('ScreensTitles.WalletList'),
+      }),
+      screen: WalletList,
+    },
   },
   {
-    initialRouteName: 'WalletsList',
+    initialRouteName: 'WalletList',
     navigationOptions: () => ({
       headerForceInset: { top: 'never' },
       headerTransparent: true,
