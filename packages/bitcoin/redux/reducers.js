@@ -3,11 +3,25 @@
  * Licensed under the AGPL Version 3 license.
  */
 
+import { REHYDRATE } from 'redux-persist'
 import * as ActionsTypes from './constants'
 import initialState from './initialState'
 
+const bitcoinRehydrate = (state, payload) => {
+  // action.payload is undefined if LocalStorage is empty
+  // See https://github.com/rt2zz/redux-persist/issues/719
+  if (!payload.payload || payload.key !== ActionsTypes.DUCK_ETHEREUM) {
+    return state
+  }
+  return {
+    ...state,
+    list: payload.payload.list,
+  }
+}
+
 const mutations = {
 
+  [REHYDRATE]: bitcoinRehydrate,
   [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { parentAddress, address }) => {
     let list = Object.assign({}, state.list)
     list = {

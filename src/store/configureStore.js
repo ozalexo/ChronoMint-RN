@@ -5,7 +5,7 @@
 
 import { applyMiddleware, compose, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/logOnly'
-// import { persistStore } from 'redux-persist'
+import { persistStore } from 'redux-persist'
 import getMiddlewares from './middlewares'
 import rootReducer from './rootReducer'
 
@@ -28,11 +28,10 @@ const configureStore = () => {
     initialState,
   )
 
-  // const persistor = persistStore(store)
+  const persistor = persistStore(store)
 
-  // store.persistor = persistor
-  // return { store, persistor }
-  return { store }
+  store.persistor = persistor
+  return { store, persistor }
 }
 
 export default configureStore

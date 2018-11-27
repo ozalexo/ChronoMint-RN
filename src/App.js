@@ -3,9 +3,10 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { SafeAreaView } from 'react-native'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/lib/integration/react'
 import SplashScreen from 'react-native-splash-screen'
 import {
   StatusBar,
@@ -15,7 +16,7 @@ import RootNavigator from './navigation/RootNavigator'
 import configureStore from './store/configureStore'
 import styles from './AppStyles'
 
-const { store } = configureStore()
+const { store, persistor } = configureStore()
 
 export default class App extends Component {
   componentDidMount () {
@@ -25,12 +26,17 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <SafeAreaView style={styles.safeArea}>
-          <DefaultImageBackground>
-            <StatusBar barStyle='light-content' />
-            <RootNavigator />
-          </DefaultImageBackground>
-        </SafeAreaView>
+        <PersistGate
+          loader={null}
+          persistor={persistor}
+        >
+          <SafeAreaView style={styles.safeArea}>
+            <DefaultImageBackground>
+              <StatusBar barStyle='light-content' />
+              <RootNavigator />
+            </DefaultImageBackground>
+          </SafeAreaView>
+        </PersistGate>
       </Provider>
     )
   }
