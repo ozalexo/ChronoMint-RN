@@ -16,8 +16,6 @@ class SetAccountPasswordContainer extends PureComponent {
       navigate: PropTypes.func.isRequired,
       state: PropTypes.shape({
         params: PropTypes.shape({
-          mnemonic: PropTypes.string,
-          password: PropTypes.string,
           privateKey: PropTypes.string,
         }),
       }),
@@ -46,7 +44,6 @@ class SetAccountPasswordContainer extends PureComponent {
 
   handleDone = () => {
     const {
-      mnemonic,
       privateKey,
     } = this.props.navigation.state.params
     const { navigate } = this.props.navigation
@@ -54,7 +51,6 @@ class SetAccountPasswordContainer extends PureComponent {
     const { password } = this.state
 
     const params = {
-      mnemonic,
       privateKey,
       password,
     }

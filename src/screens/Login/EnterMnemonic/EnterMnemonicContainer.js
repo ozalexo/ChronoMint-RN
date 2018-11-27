@@ -40,9 +40,7 @@ class EnterMnemonicContainer extends PureComponent {
       return this.addError(i18n.t('EnterMnemonic.wrongMnemonic'))
     }
     const params = {
-      mnemonic,
       privateKey,
-      address,
     }
 
     navigate('SetAccountPassword', params)

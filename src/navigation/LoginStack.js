@@ -68,14 +68,8 @@ const LoginStack = createStackNavigator(
     },
     'SetAccountPassword': {
       navigationOptions: ({ navigation }) => ({
-        headerLeft: <HeaderNetworkSelect toggleDrawer={navigation.toggleNetworkDrawer} />,
-        headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
-        headerLeftContainerStyle: { paddingLeft: 20 },
-        headerRightContainerStyle: { paddingRight: 20 },
-        //each screen heigth may be set manually
-        // headerStyle: { 
-        //   height: 44,
-        // },
+        title: i18n.t('ScreensTitles.SetAccountPassword'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
       }),
       screen: SetAccountPassword,
     },
