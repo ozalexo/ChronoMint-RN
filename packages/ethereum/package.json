@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "dependencies": {
     "bitcore-mnemonic-react-native": "^1.2.4",
+    "ethereumjs-wallet": "^0.6.2",
+    "ethereumjs-wallet-react-native": "^0.6.7",
+    "https-browserify": "^1.0.0",
     "react-native-crypto": "^2.1.2",
+    "react-native-http": "^0.0.3",
+    "react-native-os": "^1.2.1",
     "react-native-secure-randombytes": "^3.0.0",
     "stream-browserify": "^2.0.1",
     "vm-browserify": "^1.1.0",
-    "ethereumjs-wallet": "^0.6.2",
-    "https-browserify": "^1.0.0",
-    "react-native-http": "^0.0.3",
-    "react-native-os": "^1.2.1",
     "web3-eth-accounts": "^1.0.0-beta.36"
   }
 }

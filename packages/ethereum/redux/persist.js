@@ -40,7 +40,7 @@ const keepOnlyDerivedWallets = createTransform(
 const ETHEREUM_PERSIST_CONFIG = {
   key: DUCK_ETHEREUM,
   version: '1.0',
-  storage: storage,
+  storage,
   whitelist: ['list'],
   // There is an issue in the source code of redux-persist (default setTimeout does not cleaning)
   // See https://github.com/rt2zz/redux-persist/issues/786#issuecomment-421850652

@@ -30,6 +30,7 @@ class ConfirmMnemonicContainer extends PureComponent {
   handleDone = () => {
     const {
       mnemonic,
+      password,
     } = this.props.navigation.state.params
     const {
       navigation,
@@ -41,7 +42,7 @@ class ConfirmMnemonicContainer extends PureComponent {
       return this.resetState()
     }
 
-    loginThunk(mnemonic)
+    loginThunk(mnemonic, password)
     navigation.navigate('WalletList')
   }
 
@@ -100,7 +101,6 @@ ConfirmMnemonicContainer.propTypes = {
       params: PropTypes.shape({
         mnemonic: PropTypes.string,
         password: PropTypes.string,
-        privateKey: PropTypes.string,
       }),
     }),
   }),

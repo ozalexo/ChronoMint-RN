@@ -24,10 +24,8 @@ class GenerateMnemonicContainer extends PureComponent {
 
   handleConfirm = () => {
     const { mnemonic } = this.state
-    const {
-      password,
-      navigation,
-    } = this.props
+    const { navigation } = this.props
+    const { password } = navigation.state.params
 
     const params = {
       mnemonic,
@@ -51,6 +49,13 @@ class GenerateMnemonicContainer extends PureComponent {
 
 GenerateMnemonicContainer.propTypes = {
   password: PropTypes.string,
+  navigation: PropTypes.shape({
+    state: PropTypes.shape({
+      params: PropTypes.shape({
+        password: PropTypes.string,
+      }),
+    }),
+  }),
 }
 
 export default GenerateMnemonicContainer

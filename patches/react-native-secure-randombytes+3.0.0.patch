@@ -17,3 +17,25 @@ patch-package
 +    implementation 'com.facebook.react:react-native:+'
  }
 \ No newline at end of file
+--- a/node_modules/react-native-secure-randombytes/index.js
++++ b/node_modules/react-native-secure-randombytes/index.js
+@@ -8,6 +8,19 @@ function toBuffer (nativeStr) {
+ }
+ 
+ export function randomBytes (length, cb) {
++
++  if (!cb) {
++    return new Promise(function(resolve, reject) {
++      RNRandomBytes.randomBytes(length, function(err, base64String) {
++        if (err) {
++          reject(err)
++        } else {
++          resolve(toBuffer(base64String))
++        }
++      })
++    })
++  }
++
+   RNRandomBytes.randomBytes(length, function(err, base64String) {
+     if (err) {
+       cb(err)

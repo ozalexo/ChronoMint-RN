@@ -3,6 +3,8 @@ package com.chronomint;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.oblador.keychain.KeychainPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -26,6 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
+            new KeychainPackage(),
             new RandomBytesPackage(),
             new RNLanguagesPackage(),
             new SplashScreenReactPackage()
