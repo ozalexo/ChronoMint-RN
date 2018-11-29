@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import axiosMiddleware from '@chronobank/network/middlewares/axios'
 import web3middleware from '@chronobank/ethereum/middleware'
-// import rabbitmqMiddleware from '@chronobank/nodes/redux/middlewares/rabbitmq'
+import createRmqMiddleware from '@chronobank/network/middlewares/rabbitmq'
 import createCryptoCompareMiddleware from '@chronobank/market/middleware'
 
 export default () => {
@@ -15,8 +15,8 @@ export default () => {
     createCryptoCompareMiddleware(), // this middleware will dispatch thunks, so it MUST be placed before 'thunks'
     thunk,
     axiosMiddleware,
-    web3middleware,
-    // rabbitmqMiddleware,
+    web3middleware, // This middleware MUST be before createRmqMiddleware
+    createRmqMiddleware(), // This middleware MUST be after web3middleware
   ]
   const isDevelopmentEnv = process.env.NODE_ENV === 'development'
   if (isDevelopmentEnv) {

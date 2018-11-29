@@ -23,7 +23,7 @@
     "subtitle": "Enter mnemonic key:",
     "mnemonic": "Mnemonic key",
     "saveOnDevice": "Save wallet on device",
-    "login": "Log in",
+    "login": "Add account",
     "generateMnemonic": "Generate mnemonic key",
     "wrongMnemonic": "Something wrong with your mnemonic. Try again"
   },
@@ -36,7 +36,7 @@
     "subtitle": "Enter private key:",
     "private": "Private key",
     "saveOnDevice": "Save wallet on device",
-    "login": "Log in"
+    "login": "Add account"
   },
   "EnterWalletPassword": {
     "title": "Upload wallet file",
