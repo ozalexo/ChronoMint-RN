@@ -41,6 +41,7 @@ class StartContainer extends PureComponent {
 
   getBio = () => {
     Keychain.getSupportedBiometryType().then((biometryType) => {
+      console.log(biometryType)
       this.setState({ biometryType })
     })
   }
