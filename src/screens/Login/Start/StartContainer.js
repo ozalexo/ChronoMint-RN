@@ -5,6 +5,7 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import TouchID from 'react-native-touch-id'
 import * as Keychain from 'react-native-keychain'
 import PropTypes from 'prop-types'
 import Start from './Start'
@@ -40,10 +41,10 @@ class StartContainer extends PureComponent {
   }
 
   getBio = () => {
-    Keychain.getSupportedBiometryType().then((biometryType) => {
-      console.log(biometryType)
-      this.setState({ biometryType })
-    })
+    console.log(TouchID)
+    // .then((biometryType) => {
+    //   this.setState({ biometryType }, () => console.log(biometryType))
+    // })
   }
 
   save = async ({ password, confirmPassword }) => {
