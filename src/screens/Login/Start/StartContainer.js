@@ -40,7 +40,7 @@ class StartContainer extends PureComponent {
   }
 
   getBio = () => {
-    Keychain.getSupportedBiometryType().then(biometryType => {
+    Keychain.getSupportedBiometryType().then((biometryType) => {
       this.setState({ biometryType })
     })
   }
@@ -62,7 +62,6 @@ class StartContainer extends PureComponent {
   load = async () => {
     try {
       const credentials = await Keychain.getGenericPassword();
-      console.log(credentials)
       if (credentials) {
         this.setState({ ...credentials, status: 'Credentials loaded!' })
       } else {
@@ -70,18 +69,6 @@ class StartContainer extends PureComponent {
       }
     } catch (err) {
       this.setState({ status: 'Could not load credentials. ' + err })
-    }
-
-  }
-
-  reset = async () => {
-    try {
-      await Keychain.resetGenericPassword();
-      this.setState({
-        status: 'Credentials Reset!',
-      })
-    } catch (err) {
-      this.setState({ status: 'Could not reset credentials, ' + err })
     }
   }
 
