@@ -5,8 +5,9 @@
 
 import { connect } from 'react-redux'
 import { getAvailableNetworkList } from '@chronobank/network/redux/selectors'
-import {networkSelect } from '@chronobank/network/redux/thunks'
+import { networkSelect, rmqConnect, rmqDisconnect } from '@chronobank/network/redux/thunks'
 import DrawerNetwork from '../../components/DrawerNetwork'
+import {} from '@chronobank/network/middlewares/rabbitmq/actions'
 
 const mapStateToProps = (ownState) => {
   return {
@@ -16,6 +17,8 @@ const mapStateToProps = (ownState) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    rmqConnect: () => dispatch(rmqConnect()),
+    rmqDisconnect: () => dispatch(rmqDisconnect()),
     onSelectNetwork: (networkIndex) => () => dispatch(networkSelect(networkIndex)),
   }
 }

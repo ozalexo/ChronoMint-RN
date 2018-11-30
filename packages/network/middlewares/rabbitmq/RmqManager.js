@@ -3,82 +3,111 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import SockJS from 'sockjs-client'
-import {Stomp} from '@stomp/stompjs'
-console.log('\n\n\n\n\nSTOMP:', Stomp)
+import { Client } from '@stomp/stompjs'
 
 class RmqManager {
   constructor () {
+    this.client = null
     this.subscriptions = []
     this.ws = null
-    this.client = null
-    this.eventHandlers = {}
   }
 
-  connect (baseUrl, user, password) {
-    if (this.ws && this.client) {
-      console.log('RMQ already connected')
+  connect (baseUrl, user, password, handlers) {
+    /* See
+     * https://stomp-js.github.io/api-docs/latest/classes/Client.html#active
+     * https://stomp-js.github.io/api-docs/latest/classes/Client.html#connected
+     */
+    if (this.client && this.client.active) {
       return Promise.resolve()
     }
-    console.log('>>>>>>>>>>> RMQ M: connecting')
+
     return new Promise((resolve, reject) => {
+      const stompConfig = {
+        brokerURL: baseUrl,
+        connectHeaders: {
+          login: user,
+          passcode: password,
+        },
+        // Incoming HeartBeats must be disabled, unsupported on server
+        heartbeatIncoming: 0,
+        /* Outgoing HeartBeats must be enabled,
+         * otherwise WebSocket will be closed with code 1001 "Going Away"
+         * Default reconnect delay is 5000 (5 seconds),
+         * that is why heartbeatOutgoing equal to 4000 (4 seconds)
+         * But you may configure it right here, e.g. "reconnectDelay: 10000"
+         */
+        heartbeatOutgoing: 4000,
+        ...handlers,
+        // onConnect handler overriden, because we need to return Promise here
+        onConnect: () => {
+          handlers.onConnect()
+          return resolve()
+        },
+      }
+  
+      // eslint-disable-next-line no-undef
+      if (__DEV__) {
+        stompConfig.debug = (str) => {
+          // eslint-disable-next-line no-console
+          console.log('STOMP DEBUG:', str)
+        }
+      }
+
       try {
-        this.ws = this.ws || new SockJS(baseUrl)
-        this.client = Stomp.over(this.ws, {
-          heartbeat: false,
-          debug: false,
-        })
-        console.log('>>>>>>>>>>> RMQ M: this.ws', this.ws)
-        this.client.connect(
-          user,
-          password,
-          () => {
-            console.log('RMQ connected')
-            return resolve()
-          },
-          (error) => {
-            console.log('RMQ connection error:', error)
-            return reject(error)
-          },
-        )
-        console.log('>>>>>>>>>>> RMQ M: this.client', this.client)
+        this.client = new Client()
+        this.client.configure(stompConfig)
+        this.client.activate()
       } catch (error) {
-        reject(error)
+        return reject(error)
       }
     })
   }
-  
-  // TODO: [AO] not sure that async..await required here
-  async disconnect () {
-    for (const channel of this.subscriptions) {
-      await this.unsubscribe(channel)
+
+  disconnect () {
+    this.unsubscribeAll()
+    if (this.client) {
+      this.client.deactivate()
+      this.client = null
     }
-    this.ws.close()
     return Promise.resolve()
   }
 
   subscribe (channel, handler) {
     return new Promise((resolve, reject) => {
       if (!this.ws || !this.client) {
-        return reject('Error: no connection to RabbitMQ host')
+        return reject('RmqManager subscribe error: no connection to RabbitMQ host')
       }
       try {
-        this.client.subscribe(channel, handler)
-        resolve()
+        const subscription = this.client.subscribe(channel, handler)
+        this.subscriptions[channel] = subscription
+        return resolve()
       } catch (error) {
-        reject(error)
+        return reject(error)
       }
     })
   }
 
-  // We may get all channels from Redux Store and subscribe to all og them
-  subscribeAll () {
-    // TODO
+  unsubscribe (channel) {
+    const subscription = this.subscriptions[channel]
+    subscription && subscription.unsubscribe()
+    delete this.subscriptions[channel]
   }
 
-  unsubscribe (channel) {
-    // TODO
+  async unsubscribeAll () {
+    for (const subscription of this.subscriptions) {
+      await subscription.unsubscribe()
+    }
   }
+
+  async resubscribeAll () {
+    const subscriptionsList = Object.assign({}, this.subscriptions)
+    this.subscriptions = {}
+    for (const subscription of Object.entries(subscriptionsList)) {
+      await this.subscribe(subscription[0], subscription[1])
+    }
+    return Promise.resolve()
+  }
+
 }
 
 export default new RmqManager()
