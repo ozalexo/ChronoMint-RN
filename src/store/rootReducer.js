@@ -26,7 +26,6 @@ import ETHEREUM_PERSIST_CONFIG from '@chronobank/ethereum/redux/persist'
 import BITCOIN_PERSIST_CONFIG from '@chronobank/bitcoin/redux/persist'
 
 export default combineReducers({
-  [DUCK_WEB3_MIDDLEWARE]: web3reducer,
   [DUCK_BITCOIN]: persistReducer(BITCOIN_PERSIST_CONFIG, bitcoin),
   [DUCK_ETHEREUM]: persistReducer(ETHEREUM_PERSIST_CONFIG, ethereum),
   [DUCK_MARKET]: market,
