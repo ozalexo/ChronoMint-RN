@@ -38,3 +38,11 @@ export const autoSelectNetwork = () => (dispatch, getState) => {
     // dispatch(NodesActions.networkSwitch(networkIndex))
   }
 }
+
+export const rmqConnect = () => (dispatch) => {
+  return dispatch(Actions.rmqConnect())
+}
+
+export const rmqDisconnect = () => (dispatch) => {
+  return dispatch(Actions.rmqDisconnect())
+}
