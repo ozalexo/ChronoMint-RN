@@ -16,6 +16,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'stretch',
   },
+  accountsList: {
+    margin: 10,
+  },
   logo: {
     marginBottom: 20,
     alignSelf: 'center',

@@ -15,6 +15,16 @@ const flatten = (list) => list.reduce(
 export const getDuckEthereum = () => (state) =>
   state[DUCK_ETHEREUM]
 
+export const getEthAccounts = createSelector(
+  getDuckEthereum(),
+  (ethereum) => {
+    const accounts = []
+    for (const key in ethereum.list) {
+      accounts.push(ethereum.list[key])
+    }
+    return accounts
+  }
+)
 export const getDerivedEthWallets = createSelector(
   getDuckEthereum(),
   getCurrentWallet,

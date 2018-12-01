@@ -11,7 +11,9 @@ import {
   KeyboardAvoidingView,
   Text,
   TouchableWithoutFeedback,
+  TouchableHighlight,
   View,
+  FlatList,
 } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -22,10 +24,14 @@ import {
 } from '../../../images'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
+import AccountItem from '../../../components/AccountItem'
 import TextButton from '../../../components/TextButton'
+import Separator from '../../../components/Separator'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
 import { headerHeight } from '../../../common/constants/screens'
+
+const CustomizedSeparator = () => <Separator style={styles.separator} />
 
 export default class Start extends PureComponent {
   static propTypes = {
@@ -36,10 +42,25 @@ export default class Start extends PureComponent {
     onClickCreateWalletButton: PropTypes.func.isRequired,
   }
 
+  keyExtractor = ({ address }) => address
+
+  renderItem = ({ item }) => (
+    <AccountItem
+      {...item}
+      onPress={this.props.onSelectAccount(item)}
+    />
+  )
+
   renderAccountsList = () => (
-    <React.Fragment>
-      <Text>Under construction</Text>
-    </React.Fragment>
+    <FlatList
+      data={this.props.accounts}
+      ItemSeparatorComponent={CustomizedSeparator}
+      keyExtractor={this.keyExtractor}
+      ListFooterComponent={CustomizedSeparator}
+      ListHeaderComponent={CustomizedSeparator}
+      renderItem={this.renderItem}
+      style={styles.accountsList}
+    />
   )
 
   enterPasswordValidationSchema = Yup.object().shape({
@@ -155,6 +176,20 @@ export default class Start extends PureComponent {
                 source={ChronoWalletText}
                 style={styles.logoText}
               />
+
+              <TouchableHighlight
+                style={styles.btn}
+                onPress={this.props.authHandler}
+                underlayColor="#0380BE"
+                activeOpacity={1}
+              >
+                <Text style={{
+                  color: '#fff',
+                  fontWeight: '600',
+                }}>
+                  {`Authenticate with`}
+                </Text>
+              </TouchableHighlight>
               {
                 this.props.accounts
                   ? this.renderAccountsList()

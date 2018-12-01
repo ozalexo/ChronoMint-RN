@@ -45,7 +45,7 @@ const ETHEREUM_PERSIST_CONFIG = {
   // There is an issue in the source code of redux-persist (default setTimeout does not cleaning)
   // See https://github.com/rt2zz/redux-persist/issues/786#issuecomment-421850652
   timeout: null,
-  transforms: [keepOnlyDerivedWallets],
+  // transforms: [keepOnlyDerivedWallets],
 }
 
 export default ETHEREUM_PERSIST_CONFIG
