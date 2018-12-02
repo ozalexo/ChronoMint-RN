@@ -9,7 +9,12 @@ import { DUCK_RMQ_MIDDLEWARE } from './constants'
 export const getDuckRmqMiddleware = () => (state) =>
   state[DUCK_RMQ_MIDDLEWARE]
 
-export const getSubscriptions = createSelector(
+export const getRmqSubscriptions = createSelector(
   getDuckRmqMiddleware,
   (duckRmqMiddleware) => duckRmqMiddleware.subscriptions
+)
+
+export const getRmwConnectionStatus = createSelector(
+  getDuckRmqMiddleware,
+  (duckRmqMiddleware) => duckRmqMiddleware.isConnected
 )
