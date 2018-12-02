@@ -4,6 +4,7 @@
  */
 
 import * as Actions from './actions'
+import * as RmqMiddlewareActions from '../middlewares/rabbitmq/actions'
 import * as Selectors from './selectors'
 
 export const networkSelect = (networkIndex) => (dispatch, getState) => {
@@ -35,14 +36,21 @@ export const autoSelectNetwork = () => (dispatch, getState) => {
       networkIndex = 1
     }
     dispatch(Actions.networkSelect(networkIndex))
-    // dispatch(NodesActions.networkSwitch(networkIndex))
   }
 }
 
 export const rmqConnect = () => (dispatch) => {
-  return dispatch(Actions.rmqConnect())
+  return dispatch(RmqMiddlewareActions.mwRmqConnect())
 }
 
 export const rmqDisconnect = () => (dispatch) => {
-  return dispatch(Actions.rmqDisconnect())
+  return dispatch(RmqMiddlewareActions.mwRmqDisconnect())
+}
+
+export const rmqSubscribe = ({ channel, handler }) => (dispatch) => {
+  return dispatch(RmqMiddlewareActions.mwRmqSubscribe({ channel, handler }))
+}
+
+export const rmqUnsubscribe = ({ channel }) => (dispatch) => {
+  return dispatch(RmqMiddlewareActions.mwRmqUnsubscribe({ channel }))
 }

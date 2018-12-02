@@ -1,0 +1,29 @@
+patch-package
+--- a/node_modules/web3-eth-accounts/src/index.js
++++ b/node_modules/web3-eth-accounts/src/index.js
+@@ -333,13 +333,13 @@ Accounts.prototype.decrypt = function (v3Keystore, password, nonStrict) {
+     return this.privateKeyToAccount(seed);
+ };
+ 
+-Accounts.prototype.encrypt = function (privateKey, password, options) {
++Accounts.prototype.encrypt =  async function (privateKey, password, options) {
+     /* jshint maxcomplexity: 20 */
+     var account = this.privateKeyToAccount(privateKey);
+ 
+     options = options || {};
+-    var salt = options.salt || cryp.randomBytes(32);
+-    var iv = options.iv || cryp.randomBytes(16);
++    var salt = options.salt || await cryp.randomBytes(32);
++    var iv = options.iv || await cryp.randomBytes(16);
+ 
+     var derivedKey;
+     var kdf = options.kdf || 'scrypt';
+@@ -373,7 +373,7 @@ Accounts.prototype.encrypt = function (privateKey, password, options) {
+ 
+     return {
+         version: 3,
+-        id: uuid.v4({ random: options.uuid || cryp.randomBytes(16) }),
++        id: uuid.v4({ random: options.uuid || await cryp.randomBytes(16) }),
+         address: account.address.toLowerCase().replace('0x',''),
+         crypto: {
+             ciphertext: ciphertext.toString('hex'),

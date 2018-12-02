@@ -6,50 +6,91 @@
 import initialState from './initialState'
 import * as ActionTypes from './constants'
 
-const connect = (state, action) => {
+const connectSuccess = (state) => {
   return {
     ...state,
-    isConnected: action.isConnected,
+    isConnected: true,
+    error: null,
+  }
+}
+
+const connectFailure = (state, action) => {
+  return {
+    ...state,
+    isConnected: false,
     error: action.error,
   }
 }
 
-const disconnect = (state, action) => {
-  console.log('DISCONNECT ACTION:', action)
+const subscribeSuccess = (state, action) => {
   return {
     ...state,
-    isConnected: false,
-    error: {
-      // code: action.code,
-      // reason: action.reason,
-    },
-  }
-}
-
-const subscribe = (state, action) => {
-  return {
-    ...state,
+    error: null,
     subscriptions: {
       ...state.subscriptions,
-      [action.channel]: action.channel,
+      [action.channel]: true,
     },
   }
 }
 
-const unsubscribe = (state, action) => {
+const subscribeFailure = (state, action) => {
+  return {
+    ...state,
+    error: action.error,
+  }
+}
 
+const unsubscribeSuccess = (state, action) => {
+  const {
+    // eslint-disable-next-line no-unused-vars
+    [action.channel]: unsubscribedChannel,
+    otherChannels,
+  } = state.subscriptions
+
+  return {
+    ...state,
+    error: null,
+    subscriptions: otherChannels,
+  }
+}
+
+const unsubscribeFailure = (state, action) => {
+  return {
+    ...state,
+    error: action.error,
+  }
+}
+
+const disconnectSuccess = (state) => {
+  return {
+    ...state,
+    error: null,
+    subscriptions: null,
+    isConnected: false,
+  }
+}
+
+const disconnectFailure = (state, action) => {
+  return {
+    ...state,
+    error: action.error,
+    subscriptions: null,
+    isConnected: false,
+  }
 }
 
 // This is info reducer to display log in Redux logger
-const resubscribed = (state) => state
+// const resubscribed = (state) => state
 
 const mutations = {
-  // [ActionTypes.NETWORK_SELECT]: connect,
-  [ActionTypes.RMQ_CONNECT]: connect,
-  [ActionTypes.RMQ_DISCONNECT]: disconnect,
-  [ActionTypes.RMQ_RESUBSCRIBED]: resubscribed,
-  [ActionTypes.RMQ_SUBSCRIBE]: subscribe,
-  [ActionTypes.RMQ_UNSUBSCRIBE]: unsubscribe,
+  [ActionTypes.RMQ_CONNECT_SUCCESS]: connectSuccess,
+  [ActionTypes.RMQ_CONNECT_FAILURE]: connectFailure,
+  [ActionTypes.RMQ_DISCONNECT_SUCCESS]: disconnectSuccess,
+  [ActionTypes.RMQ_DISCONNECT_FAILURE]: disconnectFailure,
+  [ActionTypes.RMQ_SUBSCRIBE_SUCCESS]: subscribeSuccess,
+  [ActionTypes.RMQ_SUBSCRIBE_FAILURE]: subscribeFailure,
+  [ActionTypes.RMQ_UNSUBSCRIBE_SUCCESS]: unsubscribeSuccess,
+  [ActionTypes.RMQ_UNSUBSCRIBE_FAILURE]: unsubscribeFailure,
 }
 
 export default (state = initialState, { type, ...payload }) => {

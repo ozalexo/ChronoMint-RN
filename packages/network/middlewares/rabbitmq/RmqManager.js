@@ -9,7 +9,6 @@ class RmqManager {
   constructor () {
     this.client = null
     this.subscriptions = []
-    this.ws = null
   }
 
   connect (baseUrl, user, password, handlers) {
@@ -57,6 +56,7 @@ class RmqManager {
         this.client = new Client()
         this.client.configure(stompConfig)
         this.client.activate()
+        return resolve()
       } catch (error) {
         return reject(error)
       }
@@ -64,17 +64,24 @@ class RmqManager {
   }
 
   disconnect () {
-    this.unsubscribeAll()
-    if (this.client) {
-      this.client.deactivate()
-      this.client = null
+    try {
+      this.unsubscribeAll()
+      if (this.client) {
+        this.client.deactivate()
+        this.client = null
+      }
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
     }
-    return Promise.resolve()
   }
 
   subscribe (channel, handler) {
     return new Promise((resolve, reject) => {
-      if (!this.ws || !this.client) {
+      if (!this.client) {
+        return reject('RmqManager subscribe error: no connection to RabbitMQ host')
+      }
+      if (this.client && !this.client.connected) {
         return reject('RmqManager subscribe error: no connection to RabbitMQ host')
       }
       try {
@@ -88,9 +95,16 @@ class RmqManager {
   }
 
   unsubscribe (channel) {
-    const subscription = this.subscriptions[channel]
-    subscription && subscription.unsubscribe()
-    delete this.subscriptions[channel]
+    return new Promise((resolve, reject) => {
+      try {
+        const subscription = this.subscriptions[channel]
+        subscription && subscription.unsubscribe()
+        delete this.subscriptions[channel]
+        return resolve()
+      } catch (error) {
+        return reject(error)
+      }
+    })
   }
 
   async unsubscribeAll () {

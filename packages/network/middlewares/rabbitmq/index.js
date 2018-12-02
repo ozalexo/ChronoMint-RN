@@ -4,29 +4,30 @@
  */
 
 import RmqManager from './RmqManager'
-import { getSubscriptions } from './selectors'
+// import { getRmqSubscriptions } from './selectors'
 import {
   BASE_URL,
+  MW_RMQ_CONNECT,
+  MW_RMQ_DISCONNECT,
+  MW_RMQ_SUBSCRIBE,
+  MW_RMQ_UNSUBSCRIBE,
   PASSWORD,
   USER,
-  RMQ_CONNECT,
-  RMQ_DISCONNECT,
 } from './constants'
-import * as mwRmqActions from './actions'
-import * as rmqActions from '../../redux/actions'
+import * as Actions from './actions'
 
 const createRmqMiddleware = () => {
 
   const connect = async (store, action, next) => {
     const onConnect = () => {
-      const state = store.getState()
-      const rmqSubscriptions = getSubscriptions(state)
-      // We need to resubscribe to all existing subscriptions in case of reconnect
-      if (rmqSubscriptions && Object.keys(rmqSubscriptions).length > 0) {
-        RmqManager.resubscribeAll().then(() => {
-          store.dispatch(mwRmqActions.mwRmqResubscribed())
-        })
-      }
+      // const state = store.getState()
+      // const rmqSubscriptions = getRmqSubscriptions(state)
+      // // We need to resubscribe to all existing subscriptions in case of reconnect
+      // if (rmqSubscriptions && Object.keys(rmqSubscriptions).length > 0) {
+      //   RmqManager.resubscribeAll().then(() => {
+      //     store.dispatch(mwRmqActions.mwRmqResubscribed())
+      //   })
+      // }
     }
 
     const onStompError = (frame) => {
@@ -43,12 +44,14 @@ const createRmqMiddleware = () => {
     const onWebSocketClose = (closeEvent) => {
       // See WebSocketEvent codes here:
       // https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent
-      // console.log(Object.getOwnPropertySymbols(closeEvent))
-      console.log(closeEvent.code, closeEvent.reason)
-      store.dispatch(mwRmqActions.mwRmqDisconnect({
-        code: closeEvent.code,
-        reason: closeEvent.reason,
-      }))
+      if (this.client && this.client.active) {
+        store.dispatch(Actions.rmqConnectFailure({
+          error: {
+            code: closeEvent.code,
+            reason: closeEvent.reason,
+          },
+        }))
+      }
     }
 
     const handlers = {
@@ -63,71 +66,63 @@ const createRmqMiddleware = () => {
 
     return RmqManager.connect(BASE_URL, USER, PASSWORD, handlers)
       .then(() => {
-        next(mwRmqActions.mwRmqConnect({
-          isConnected: true,
-          error: null,
-        }))
-        // next(action)
+        next(Actions.rmqConnectSuccess())
         return Promise.resolve()
       })
       .catch((error) => {
-        next(mwRmqActions.mwRmqConnect({
-          isConnected: false,
-          error: error,
-        }))
-        // next(action)
+        next(Actions.rmqConnectFailure({ error }))
         return Promise.reject(error)
       })
   }
 
-  // const subscribe = (store, action, next) => {
-  //   return RmqManager.subscribe(action.channel, action.handler)
-  //     .then((result) => {
-  //       next(action)
-  //       return Promise.resolve(result)
-  //     })
-  //     .catch((error) => {
-  //       return Promise.reject(error)
-  //     })
-  // }
+  const subscribe = (store, action, next) => {
+    return RmqManager.subscribe(action.channel, action.handler)
+      .then((result) => {
+        next(Actions.rmqSubscribeSuccess({ channel: action.channel }))
+        return Promise.resolve(result)
+      })
+      .catch((error) => {
+        next(Actions.rmqSubscribeFailure({
+          channel: action.channel,
+          error,
+        }))
+        return Promise.reject(error)
+      })
+  }
 
-  // const unsubscribe = (store, action, next) => {
-  //   return RmqManager.unsubscribe(action.channel)
-  //     .then((result) => {
-  //       next({
-  //         ...action,
-  //         channel: action.channel,
-  //       })
-  //       return Promise.resolve(result)
-  //     })
-  //     .catch((error) => {
-  //       next({
-  //         ...action,
-  //         channel: action.channel,
-  //         error: action.error,
-  //       })
-  //       return Promise.reject(error)
-  //     })
-  // }
+  const unsubscribe = (store, action, next) => {
+    return RmqManager.unsubscribe(action.channel)
+      .then((result) => {
+        next(Actions.rmqUnsubscribeSuccess({ channel: action.channel }))
+        return Promise.resolve(result)
+      })
+      .catch((error) => {
+        next(Actions.rmqUnsubscribeFailure({
+          channel: action.channel,
+          error,
+        }))
+        return Promise.reject(error)
+      })
+  }
 
   const disconnect = (store, action, next) => {
     return RmqManager.disconnect()
       .then((result) => {
-        next(rmqActions.rmqDisconnect())
+        next(Actions.rmqDisconnectSuccess())
         return Promise.resolve(result)
       })
       .catch((error) => {
-        next(rmqActions.rmqDisconnect()) // will mark as disconnected in any way.
-        return Promise.reject(error) // TODO: maybe better to resolve here too
+        next(Actions.rmqDisconnectFailure({ error }))
+        return Promise.reject(error)
       })
   }
   
   const mutations = {
   
-    [RMQ_CONNECT]: connect,
-    [RMQ_DISCONNECT]: disconnect,
-    // [RMQ_SUBSCRIBE]: subscribe,
-    // [RMQ_UNSUBSCRIBE]: unsubscribe,
+    [MW_RMQ_CONNECT]: connect,
+    [MW_RMQ_DISCONNECT]: disconnect,
+    [MW_RMQ_SUBSCRIBE]: subscribe,
+    [MW_RMQ_UNSUBSCRIBE]: unsubscribe,
   }
 
   return (store) => (next) => (action) => {
