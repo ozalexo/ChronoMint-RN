@@ -22,7 +22,6 @@ const mutations = {
   [ActionTypes.SESSION_LOGOUT]: (state) => {
     return {
       ...state,
-      currentWallet: null,
     }
   },
 }

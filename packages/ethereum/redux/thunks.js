@@ -20,7 +20,7 @@ export const createAccount = (mnemonic, password) => async (dispatch) => {
 
     await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
 
-    dispatch(ethereumCreateWallet(ethAddress))
+    dispatch(ethereumCreateWallet(ethAddress,encryptedWallet))
     dispatch(savePrivateKey(decryptedWallet.privateKey))
 
     dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))

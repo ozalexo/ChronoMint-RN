@@ -50,17 +50,23 @@ export default class Start extends PureComponent {
     />
   )
 
-  renderAccountsList = () => (
-    <FlatList
-      data={this.props.accounts}
-      ItemSeparatorComponent={CustomizedSeparator}
-      keyExtractor={this.keyExtractor}
-      ListFooterComponent={CustomizedSeparator}
-      ListHeaderComponent={CustomizedSeparator}
-      renderItem={this.renderItem}
-      style={styles.accountsList}
-    />
-  )
+  renderAccountsList = () => {
+    const { accounts } = this.props
+    if (!accounts || accounts.length === 0) {
+      return <Text style={styles.noAccountsText}>No Accounts To Show</Text>
+    }
+    return (
+      <FlatList
+        data={this.props.accounts}
+        ItemSeparatorComponent={CustomizedSeparator}
+        keyExtractor={this.keyExtractor}
+        ListFooterComponent={CustomizedSeparator}
+        ListHeaderComponent={CustomizedSeparator}
+        renderItem={this.renderItem}
+        style={styles.accountsList}
+      />
+    )
+  }
 
   enterPasswordValidationSchema = Yup.object().shape({
     password: Yup.string()
@@ -143,6 +149,10 @@ export default class Start extends PureComponent {
     // Need to investigate the reasons and setup precise values
     // Default header heights: ios = 64, android = 56
     const keyboardVerticalOffset = -headerHeight
+    const {
+      showAccountsList,
+      onToggleScreenContent,
+    } = this.props
 
     return (
       <TouchableWithoutFeedback
@@ -165,11 +175,15 @@ export default class Start extends PureComponent {
                 style={styles.logoText}
               />
               {
-                this.props.accounts
+                showAccountsList
                   ? this.renderAccountsList()
                   : this.renderCreateAccountForm()
               }
-
+              <TextButton
+                label={showAccountsList ? i18n.t('StartPage.showCreateForm') : i18n.t('StartPage.showAccountsList')}
+                onPress={onToggleScreenContent}
+                style={styles.textButton}
+              />
               <Text style={styles.orText}>
                 {
                   i18n.t('StartPage.or')

@@ -5,6 +5,7 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { getEthAccounts } from '@chronobank/ethereum/redux/selectors'
 import Start from './Start'
@@ -16,14 +17,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    navigateToImportWallet: () => { },
-  }
-}
-/* eslint-enable no-unused-vars */
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
 class StartContainer extends PureComponent {
+  constructor (props) {
+    super(props)
+    this.state={
+      showAccountsList: props.accounts && props.accounts.length !== 0 ? true : false,
+    }
+  }
 
   static propTypes = {
     accounts: PropTypes.arrayOf(PropTypes.shape({
@@ -54,14 +56,21 @@ class StartContainer extends PureComponent {
     navigate('Login', params)
   }
 
+  handleContentToggle = () => {
+    this.setState({ showAccountsList: !this.state.showAccountsList })
+  }
+
   render () {
     const { accounts } = this.props
+    const { showAccountsList } = this.state
     return (
       <Start
         onClickUseExistingButton={this.handleUseExistingButtonClick}
         onClickCreateWalletButton={this.handleCreateWalletButtonClick}
         onSelectAccount={this.handleSelectAccount}
         accounts={accounts}
+        showAccountsList={showAccountsList}
+        onToggleScreenContent={this.handleContentToggle}
       />
     )
   }

@@ -55,6 +55,12 @@ export default StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
   },
+  noAccountsText: {
+    alignSelf: 'center',
+    color: colors.light,
+    fontSize: 16,
+    marginBottom: 20,
+  },
   textButton: {
     marginBottom: 10,
   },

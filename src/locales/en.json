@@ -132,7 +132,9 @@
     "passwordLowerCaseChar": "At least one lowercase char",
     "passwordUpperCaseChar": "At least one uppercase char",
     "passwordSpecialChar": "At least 1 number or special char (@,!,#, etc).",
-    "confirmPasswordRequired": "Confirm Password is required"
+    "confirmPasswordRequired": "Confirm Password is required",
+    "showAccountsList": "Switch to Accounts list",
+    "showCreateForm": "Switch to create form"
   },
   "LoginPage": {
     "forgotPassword": "Forgot your password?"

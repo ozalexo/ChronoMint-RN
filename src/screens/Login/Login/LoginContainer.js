@@ -67,16 +67,14 @@ class LoginContainer extends PureComponent {
   }
 
   authenticate = () => {
-    return TouchID.authenticate()
+    return TouchID.authenticate('ChronoWallet Application')
       .then((success) => {
         const {
           account,
         } = this.props.navigation.state.params
         this.handleLogin(account.address)
       })
-      .catch((error) => {
-        Alert.alert(error.message)
-      })
+      .catch(() => {})
   }
 
   checkPassword = async (password) => {
