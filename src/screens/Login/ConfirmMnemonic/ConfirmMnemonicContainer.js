@@ -8,7 +8,7 @@ import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { loginThunk } from '@chronobank/session/redux/thunks'
+import { createAccount } from '@chronobank/ethereum/redux/thunks'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
@@ -18,7 +18,7 @@ const mapStateToProps = () => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  loginThunk,
+  createAccount,
 }, dispatch)
 
 class ConfirmMnemonicContainer extends PureComponent {
@@ -34,33 +34,33 @@ class ConfirmMnemonicContainer extends PureComponent {
     } = this.props.navigation.state.params
     const {
       navigation,
-      loginThunk,
+      createAccount,
     } = this.props
 
-    if (mnemonic !== this.state.mnemonic.join(' ')) {
-      this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
-      return this.resetState()
-    }
+    // if (mnemonic !== this.state.mnemonic.join(' ')) {
+    //   this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+    //   return this.resetState()
+    // }
 
-    loginThunk(mnemonic, password)
+    createAccount(mnemonic, password)
     navigation.navigate('WalletList')
   }
 
   handleWord = (word) => () => {
-    if (word) {
-      this.setState(({ words, mnemonic }) => {
-        words[words.indexOf(word)] = ''
+    // if (word) {
+    //   this.setState(({ words, mnemonic }) => {
+    //     words[words.indexOf(word)] = ''
 
-        return {
-          mnemonic: [...mnemonic, word],
-          words: [...words],
-        }
-      }, () => {
-        if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
+    //     return {
+    //       mnemonic: [...mnemonic, word],
+    //       words: [...words],
+    //     }
+    //   }, () => {
+    //     if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
           this.handleDone()
-        }
-      })
-    }
+    //     }
+    //   })
+    // }
   }
 
   createInitialState = () => {
@@ -93,7 +93,7 @@ class ConfirmMnemonicContainer extends PureComponent {
 }
 
 ConfirmMnemonicContainer.propTypes = {
-  loginThunk: PropTypes.func,
+  createAccount: PropTypes.func,
   bitcoinSaveAddress: PropTypes.func,
   ethSaveAddress: PropTypes.func,
   navigation: PropTypes.shape({

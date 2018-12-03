@@ -5,17 +5,14 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Alert } from 'react-native'
-import TouchID from 'react-native-touch-id'
-import * as Keychain from 'react-native-keychain'
 import PropTypes from 'prop-types'
 import { getEthAccounts } from '@chronobank/ethereum/redux/selectors'
 import Start from './Start'
 
 /* eslint-disable no-unused-vars */
-const mapStateToProps = (ownState, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    accounts: getEthAccounts(ownState),
+    accounts: getEthAccounts(state),
   }
 }
 
@@ -27,12 +24,6 @@ const mapDispatchToProps = (dispatch) => {
 /* eslint-enable no-unused-vars */
 
 class StartContainer extends PureComponent {
-  constructor () {
-    super()
-    this.state = {
-      biometryType: null,
-    }
-  }
 
   static propTypes = {
     accounts: PropTypes.arrayOf(PropTypes.shape({
@@ -41,61 +32,6 @@ class StartContainer extends PureComponent {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-  }
-
-  componentDidMount () {
-    this.getBio()
-  }
-
-  getBio = () => {
-    Keychain.canImplyAuthentication().then((type) => console.log(type))
-    Keychain.getSupportedBiometryType().then((type) => console.log(type))
-    TouchID.isSupported()
-      .then((biometryType) => {
-        this.setState({ biometryType }, () => Alert.alert(this.state.biometryType === true ? 'AUTH ENABLED' : null));
-      })
-      .catch((error) => {
-        Alert.alert(error.message);
-      })
-  }
-
-  authHandler = () => {
-    TouchID.isSupported()
-      .then(this.authenticate)
-  }
-
-  authenticate = () => {
-    return TouchID.authenticate()
-      .then((success) => console.log(success))
-      .catch((error) => {
-        Alert.alert(error.message)
-      })
-  }
-
-  save = async ({ password }) => {
-    try {
-      await Keychain.setGenericPassword(
-        password,
-        { accessControl: 'password' }
-      )
-      this.setState({ password: '', status: 'Credentials saved!' })
-    } catch (err) {
-      this.setState({ status: 'Could not save credentials, ' + err })
-    }
-
-  }
-
-  load = async () => {
-    try {
-      const credentials = await Keychain.getGenericPassword();
-      if (credentials) {
-        this.setState({ ...credentials, status: 'Credentials loaded!' })
-      } else {
-        this.setState({ status: 'No credentials stored.' })
-      }
-    } catch (err) {
-      this.setState({ status: 'Could not load credentials. ' + err })
-    }
   }
 
   handleUseExistingButtonClick = () => {
@@ -115,7 +51,7 @@ class StartContainer extends PureComponent {
     const params = {
       account,
     }
-    navigate('SetAccountPassword', params)
+    navigate('Login', params)
   }
 
   render () {
@@ -125,7 +61,6 @@ class StartContainer extends PureComponent {
         onClickUseExistingButton={this.handleUseExistingButtonClick}
         onClickCreateWalletButton={this.handleCreateWalletButtonClick}
         onSelectAccount={this.handleSelectAccount}
-        authHandler={this.authHandler}
         accounts={accounts}
       />
     )

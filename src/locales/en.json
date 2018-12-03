@@ -134,6 +134,9 @@
     "passwordSpecialChar": "At least 1 number or special char (@,!,#, etc).",
     "confirmPasswordRequired": "Confirm Password is required"
   },
+  "LoginPage": {
+    "forgotPassword": "Forgot your password?"
+  },
   "WalletBackup": {
     "title": "Wallet Back-up",
     "subtitle": "Get you wallet back up phrase and use it as a recovery option.",

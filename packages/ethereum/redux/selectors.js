@@ -22,7 +22,7 @@ export const getEthAccounts = createSelector(
     for (const key in ethereum.list) {
       accounts.push(ethereum.list[key])
     }
-    return accounts
+    return accounts.length === 0  ? null : accounts
   }
 )
 export const getDerivedEthWallets = createSelector(

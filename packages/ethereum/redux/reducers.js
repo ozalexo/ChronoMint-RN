@@ -22,12 +22,13 @@ const ethereumRehydrate = (state, payload) => {
 const mutations = {
 
   [REHYDRATE]: ethereumRehydrate,
-  [ActionsTypes.ETHEREUM_CREATE_WALLET]: (state, { address }) => {
+  [ActionsTypes.ETHEREUM_CREATE_WALLET]: (state, { address, encrypted }) => {
     let list = Object.assign({}, state.list)
     list = {
       ...list,
       [address]: {
         address,
+        encrypted,
       },
     }
     return {

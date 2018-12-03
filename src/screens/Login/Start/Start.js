@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView,
   Text,
   TouchableWithoutFeedback,
-  TouchableHighlight,
   View,
   FlatList,
 } from 'react-native'
@@ -125,26 +124,15 @@ export default class Start extends PureComponent {
 
   renderCreateAccountForm = () => {
     return (
-      <React.Fragment>
-        <Formik
-          initialValues={{
-            password: '',
-            confirmPassword: '',
-          }}
-          validationSchema={this.enterPasswordValidationSchema}
-          onSubmit={this.props.onClickCreateWalletButton}
-          render={this.renderEnterPasswordForm}
-        />
-        <Text style={styles.orText}>
-          {
-            i18n.t('StartPage.or')
-          }
-        </Text>
-        <TextButton
-          label={i18n.t('StartPage.useExistingWallet')}
-          onPress={this.props.onClickUseExistingButton}
-        />
-      </React.Fragment>
+      <Formik
+        initialValues={{
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={this.enterPasswordValidationSchema}
+        onSubmit={this.props.onClickCreateWalletButton}
+        render={this.renderEnterPasswordForm}
+      />
     )
   }
 
@@ -176,25 +164,22 @@ export default class Start extends PureComponent {
                 source={ChronoWalletText}
                 style={styles.logoText}
               />
-
-              <TouchableHighlight
-                style={styles.btn}
-                onPress={this.props.authHandler}
-                underlayColor="#0380BE"
-                activeOpacity={1}
-              >
-                <Text style={{
-                  color: '#fff',
-                  fontWeight: '600',
-                }}>
-                  {`Authenticate with`}
-                </Text>
-              </TouchableHighlight>
               {
                 this.props.accounts
                   ? this.renderAccountsList()
                   : this.renderCreateAccountForm()
               }
+
+              <Text style={styles.orText}>
+                {
+                  i18n.t('StartPage.or')
+                }
+              </Text>
+              <TextButton
+                label={i18n.t('StartPage.useExistingWallet')}
+                onPress={this.props.onClickUseExistingButton}
+                style={styles.textButton}
+              />
             </View>
           </KeyboardAvoidingView>
           <Text style={styles.copyright}>

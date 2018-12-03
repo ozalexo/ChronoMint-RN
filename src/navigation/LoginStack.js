@@ -22,6 +22,7 @@ import HeaderNetworkSelect from '../screens/Login/Start/components/HeaderNetwork
 import ImportMethod from '../screens/Login/ImportMethod'
 import SetAccountPassword from '../screens/Login/SetAccountPassword'
 import Start from '../screens/Login/Start'
+import Login from '../screens/Login/Login'
 import { headerHeight } from '../common/constants/screens'
 
 const transitionConfig = () => {
@@ -65,6 +66,15 @@ const LoginStack = createStackNavigator(
         // },
       }),
       screen: Start,
+    },
+    'Login': {
+      navigationOptions: ({ navigation }) => ({
+        headerLeft: <HeaderNetworkSelect toggleDrawer={navigation.toggleNetworkDrawer} />,
+        headerRight: <HeaderLanguageSelect toggleDrawer={navigation.toggleLanguageDrawer} />,
+        headerLeftContainerStyle: { paddingLeft: 20 },
+        headerRightContainerStyle: { paddingRight: 20 },
+      }),
+      screen: Login,
     },
     'SetAccountPassword': {
       navigationOptions: ({ navigation }) => ({
