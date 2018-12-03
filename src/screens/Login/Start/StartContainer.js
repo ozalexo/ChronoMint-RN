@@ -10,7 +10,6 @@ import PropTypes from 'prop-types'
 import { getEthAccounts } from '@chronobank/ethereum/redux/selectors'
 import Start from './Start'
 
-/* eslint-disable no-unused-vars */
 const mapStateToProps = (state) => {
   return {
     accounts: getEthAccounts(state),

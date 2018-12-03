@@ -10,6 +10,7 @@ import { Alert } from 'react-native'
 import TouchID from 'react-native-touch-id'
 import * as Keychain from 'react-native-keychain'
 import PropTypes from 'prop-types'
+import { decryptWallet } from '@chronobank/ethereum/utils'
 import { loginThunk } from '@chronobank/session/redux/thunks'
 import Login from './Login'
 
@@ -74,18 +75,22 @@ class LoginContainer extends PureComponent {
         } = this.props.navigation.state.params
         this.handleLogin(account.address)
       })
-      .catch(() => {})
+      .catch(() => { })
   }
 
   checkPassword = async (password) => {
-    const {
-      account,
-    } = this.props.navigation.state.params
-    const credentials = await Keychain.getInternetCredentials(account.address)
-    if (credentials.password === password) {
-      return account.address
+    try {
+      const {
+        account,
+      } = this.props.navigation.state.params
+      const credentials = await Keychain.getInternetCredentials(account.address)
+      const results = await decryptWallet(account.encrypted, password)
+      if (password === credentials.password && results) {
+        return results.address
+      }
+    } catch (e) {
+      return false
     }
-    return false
   }
 
   handleLoginClick = async () => {
