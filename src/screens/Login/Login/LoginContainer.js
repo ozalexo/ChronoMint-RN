@@ -85,7 +85,7 @@ class LoginContainer extends PureComponent {
     } = this.props.navigation.state.params
     const credentials = await Keychain.getInternetCredentials(account.address)
     if (credentials.password === password) {
-      return credentials.address
+      return account.address
     }
     return false
   }
