@@ -28,7 +28,7 @@ export default class WalletInfo extends PureComponent {
     blockchain: PropTypes.string,
     selectedCurrency: PropTypes.string,
   }
-q
+
   render () {
     const {
       address,

@@ -3,14 +3,10 @@
  */
 
 import { connect } from 'react-redux'
-import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import WalletInfo from './WalletInfo'
 
 const mapStateToProps = (state) => {
   return {
-    address: '0xcasd5ad456a46qw45asd46asd', //for testing
-    blockchain: 'ETH', //for testing
-    selectedCurrency: selectCurrentCurrency(state),
   }
 }
 

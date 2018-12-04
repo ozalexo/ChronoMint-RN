@@ -43,7 +43,9 @@ ActionButton.propTypes = {
 export default class Wallet extends PureComponent {
 
   static propTypes = {
+    address: PropTypes.string,
     blockchain: PropTypes.string,
+    selectedCurrency: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
     }),
@@ -57,11 +59,18 @@ export default class Wallet extends PureComponent {
       onSend,
       onReceive,
       navigation,
+      address,
+      blockchain,
+      selectedCurrency,
     } = this.props
     return (
       <View style={styles.screenView}>
         <ScrollView style={styles.mainSection}>
-          <WalletInfoContainer />
+          <WalletInfoContainer
+            address={address}
+            blockchain={blockchain}
+            selectedCurrency={selectedCurrency}
+          />
           <TransactionsList
             navigation={navigation}
             mainWalletTransactionLoadingStatus={{ isFetched: true, isFetching: false, isInited: true }} //for Testing

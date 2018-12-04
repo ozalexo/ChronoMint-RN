@@ -28,10 +28,12 @@ class WalletListItemContainer extends PureComponent {
       address,
       blockchain,
       navigate,
+      selectedCurrency,
     } = this.props
     const params = {
       blockchain,
       address,
+      selectedCurrency,
     }
     // selectWallet(blockchain, address)
     navigate('Wallet', params)

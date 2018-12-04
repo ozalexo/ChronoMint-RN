@@ -33,6 +33,7 @@ class WalletContainer extends Component {
         params: PropTypes.shape({
           address: PropTypes.string,
           blockchain: PropTypes.string,
+          selectedCurrency: PropTypes.string,
         }),
       }),
     }),
@@ -72,10 +73,14 @@ class WalletContainer extends Component {
   render () {
     const {
       blockchain,
+      address,
+      selectedCurrency,
     } = this.props.navigation.state.params
     return (
       <Wallet
         blockchain={blockchain}
+        address={address}
+        selectedCurrency={selectedCurrency}
         onSend={this.handleSend}
         onReceive={this.handleReceive}
       />
