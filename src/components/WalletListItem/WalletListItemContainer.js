@@ -6,29 +6,18 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-// import { DUCK_MARKET } from '@chronobank/core/redux/market/actions'
+import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 // import { selectWallet } from '@chronobank/core/redux/wallet/actions'
 import WalletListItem from './WalletListItem'
 
-/* eslint-disable no-unused-vars */
-const makeMapStateToProps = (origState, origProps) => {
-  const blockchain = origProps.blockchain
-  const address = origProps.address
-  const selectedCurrency = 'ETH'
-  // const selectedCurrency = origState.get(DUCK_MARKET).selectedCurrency
-
-  const mapStateToProps = (state) => {
-    return {
-      address,
-      blockchain,
-      selectedCurrency,
-    }
+const mapStateToProps = (state) => {
+  return {
+    selectedCurrency: selectCurrentCurrency(state),
   }
-  return mapStateToProps
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  selectWallet: (blockchain, address) => {}, // dispatch(selectWallet(blockchain, address))
+  selectWallet: (blockchain, address) => { }, // dispatch(selectWallet(blockchain, address))
 })
 /* eslint-enable no-unused-vars */
 
@@ -38,10 +27,14 @@ class WalletListItemContainer extends PureComponent {
       selectWallet,
       address,
       blockchain,
-      // navigation,
+      navigate,
     } = this.props
-    selectWallet(blockchain, address)
-    // navigation.navigate('Wallet')
+    const params = {
+      blockchain,
+      address,
+    }
+    // selectWallet(blockchain, address)
+    navigate('Wallet', params)
   }
 
   render () {
@@ -63,10 +56,11 @@ class WalletListItemContainer extends PureComponent {
 }
 
 WalletListItemContainer.propTypes = {
+  navigate: PropTypes.func,
   address: PropTypes.string,
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
   selectWallet: PropTypes.func,
 }
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(WalletListItemContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(WalletListItemContainer)

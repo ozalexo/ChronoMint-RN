@@ -33,7 +33,7 @@ export default class TransactionsList extends PureComponent {
   keyExtractor = (item, index) =>
     '' + item.address + '_' + item.blockNumber + '_' + index
 
-  renderItem = (item) => <TransactionItem {...item} navigator={this.props.navigator} />
+  renderItem = (item) => <TransactionItem {...item} navigation={this.props.navigation} />
 
 
   render () {

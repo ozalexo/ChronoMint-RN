@@ -25,8 +25,8 @@ export default class WalletList extends PureComponent {
       <View style={styles.walletItemHorizontalPaddings}>
         <WalletListItemContainer
           address={item.address}
-          navigator={this.props.navigator}
           blockchain={item.blockchain}
+          navigate={this.props.navigate}
         />
       </View>
     )
@@ -70,6 +70,7 @@ export default class WalletList extends PureComponent {
 }
 
 WalletList.propTypes = {
+  navigate: PropTypes.func,
   isRefreshing: PropTypes.bool,
   onRefresh: PropTypes.func,
   sections: PropTypes.arrayOf(

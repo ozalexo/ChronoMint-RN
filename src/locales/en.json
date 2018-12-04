@@ -210,7 +210,8 @@
     "ConfirmMnemonic": "Confirm recovery phrase",
     "EnterPrivateKey": "Enter Private Key",
     "EnterMnemonic": "Enter Mnemonic Phrase",
-    "WalletList": "WalletList",
-    "SetAccountPassword": "Set Account Password"
+    "SetAccountPassword": "Set Account Password",
+    "WalletList": "Wallets List",
+    "Wallet": "Wallet"
   }
 }

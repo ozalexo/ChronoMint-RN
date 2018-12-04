@@ -31,7 +31,6 @@ class WalletListContainer extends PureComponent {
 
   constructor (props) {
     super(props)
-    // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent)
   }
 
   state = {
@@ -57,12 +56,13 @@ class WalletListContainer extends PureComponent {
   }
 
   render () {
+    const { navigation, sections} = this.props
     return (
       <WalletList
         isRefreshing={this.state.isRefreshing}
-        navigator={this.props.navigator}
+        navigate={navigation.navigate}
         onRefresh={this.handleRefresh}
-        sections={this.props.sections}
+        sections={sections}
       />
     )
   }

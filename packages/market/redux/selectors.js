@@ -8,7 +8,7 @@ import { DUCK_MARKET } from './constants'
 
 // store.market
 export const selectDuckMarket = (state) =>
-  state.get(DUCK_MARKET)
+  state[DUCK_MARKET]
 
 // store.market.socketStatus
 export const selectSocketStatus = createSelector(

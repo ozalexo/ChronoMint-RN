@@ -3,14 +3,17 @@
  * Licensed under the AGPL Version 3 license.
  */
 
+import React from 'react'
 import {
   Animated,
   Easing,
 } from 'react-native'
 import {
   createStackNavigator,
+  HeaderBackButton,
 } from 'react-navigation'
 import WalletList from '../screens/Wallet/WalletList'
+import Wallet from '../screens/Wallet/Wallet'
 import i18n from '../locales/translation'
 
 const transitionConfig = () => {
@@ -47,6 +50,13 @@ const WalletStack = createStackNavigator(
         title: i18n.t('ScreensTitles.WalletList'),
       }),
       screen: WalletList,
+    },
+    'Wallet': {
+      navigationOptions: ({ navigation }) => ({
+        title: i18n.t('ScreensTitles.Wallet'),
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+      }),
+      screen: Wallet,
     },
   },
   {
