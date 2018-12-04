@@ -12,10 +12,8 @@ import * as Keychain from 'react-native-keychain'
 import PropTypes from 'prop-types'
 import { decryptWallet } from '@chronobank/ethereum/utils'
 import { loginThunk } from '@chronobank/session/redux/thunks'
+import { name as appName } from '../../../../app.json'
 import Login from './Login'
-
-/* eslint-disable no-unused-vars */
-
 
 const mapStateToProps = (state) => {
   return {
@@ -45,6 +43,7 @@ class LoginContainer extends PureComponent {
   state = {
     password: '',
     error: null,
+    biometryType: null,
   }
 
   componentDidMount () {
@@ -61,6 +60,12 @@ class LoginContainer extends PureComponent {
 
   handleScan = () => {
     TouchID.isSupported()
+      .then((biometryType) => {
+        this.setState({ biometryType })
+        if (biometryType === true) {
+          this.setState({ biometryType: 'TouchID' }) //For Android
+        }
+      })
       .then(this.authenticate)
       .catch((error) => {
         Alert.alert('You do not support the ability to scan.')
@@ -68,7 +73,7 @@ class LoginContainer extends PureComponent {
   }
 
   authenticate = () => {
-    return TouchID.authenticate('ChronoWallet Application')
+    return TouchID.authenticate(`${appName} Application`)
       .then((success) => {
         const {
           account,
@@ -89,7 +94,7 @@ class LoginContainer extends PureComponent {
         return results.address
       }
     } catch (e) {
-      return false
+      this.setState({ error: e.message })
     }
   }
 
@@ -98,8 +103,6 @@ class LoginContainer extends PureComponent {
     const address = await this.checkPassword(password)
     if (address) {
       this.handleLogin(address)
-    } else {
-      this.setState({ error: 'Wrong Password' })
     }
   }
 
@@ -113,15 +116,17 @@ class LoginContainer extends PureComponent {
     const {
       address,
     } = this.props.navigation.state.params.account
+    const { biometryType, error } = this.state
 
     return (
       <Login
+        biometryType={biometryType}
+        error={error}
         address={address}
         onChangePassword={this.handlePasswordChange}
         onClickForgotButton={this.handleForgotClick}
         onLoginClick={this.handleLoginClick}
         onScan={this.handleScan}
-        error={this.state.error}
       />
     )
   }

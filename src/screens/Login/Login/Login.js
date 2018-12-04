@@ -62,7 +62,8 @@ export default class Login extends PureComponent {
       onChangePassword = () => { },
       onClickForgotButton = () => { },
       onLoginClick = () => { },
-      onScan = () => {},
+      onScan = () => { },
+      biometryType,
     } = this.props
 
     return (
@@ -85,10 +86,14 @@ export default class Login extends PureComponent {
                 source={ChronoWalletText}
                 style={styles.logoText}
               />
-              <TextButton
-                label={'Bio Auth'}
-                onPress={onScan}
-              />
+              {
+                biometryType &&
+                <TextButton
+                  label={`${biometryType} Auth`}
+                  onPress={onScan}
+                />
+              }
+
               {
                 this.renderAccount()
               }
