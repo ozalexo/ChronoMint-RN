@@ -112,6 +112,7 @@ export default class Login extends PureComponent {
               />
               <TextButton
                 label={i18n.t('LoginPage.forgotPassword')}
+                style={styles.forgotButton}
                 onPress={onClickForgotButton}
               />
             </View>

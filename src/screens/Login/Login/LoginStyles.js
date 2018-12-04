@@ -42,6 +42,9 @@ export default StyleSheet.create({
   primaryButton: {
     marginBottom: 30,
   },
+  forgotButton: {
+    marginBottom: 30,
+  },
   kavContainer: {
     flex: 1,
     alignSelf: 'stretch',

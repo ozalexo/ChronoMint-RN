@@ -11,13 +11,11 @@ import styles from './TextButtonStyles'
 export default class TextButton extends React.Component {
   render () {
     const { label, onPress, style, ...restProps } = this.props
+    const buttonStyle = {...styles.container, ...style}
 
     return (
       <TouchableOpacity
-        style={[
-          styles.container,
-          style,
-        ]}
+        style={buttonStyle}
         onPress={onPress}
         {...restProps}
       >
