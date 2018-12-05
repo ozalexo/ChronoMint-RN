@@ -8,6 +8,9 @@ module.exports = function (api) {
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-export-namespace-from',
     '@babel/plugin-proposal-class-properties',
+    ['babel-plugin-transform-builtin-extend', {
+      globals: ['Error'], // ["Error", "Array"]
+    }],
     '@babel/plugin-transform-regenerator',
     '@babel/plugin-transform-async-to-generator',
     '@babel/plugin-transform-runtime',
