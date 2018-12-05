@@ -41,12 +41,10 @@ export default class WalletList extends PureComponent {
 
   render () {
     const {
-      isRefreshing,
       sections,
-      onRefresh = () => { },
     } = this.props
 
-    if (isRefreshing || !sections || !sections.length) {
+    if (!sections || !sections.length) {
       return (
         <View style={styles.activityIndicatorContainer}>
           <ActivityIndicator size='large' />
@@ -58,8 +56,6 @@ export default class WalletList extends PureComponent {
       <SectionList
         style={styles.screenWrapper}
         keyExtractor={this.keyExtractor}
-        onRefresh={onRefresh}
-        refreshing={isRefreshing}
         renderItem={this.renderItem}
         renderSectionHeader={this.renderSectionHeader}
         sections={sections}
@@ -71,8 +67,6 @@ export default class WalletList extends PureComponent {
 
 WalletList.propTypes = {
   navigate: PropTypes.func,
-  isRefreshing: PropTypes.bool,
-  onRefresh: PropTypes.func,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       data: PropTypes.arrayOf(

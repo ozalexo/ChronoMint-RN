@@ -7,61 +7,15 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { getSections } from '@chronobank/ethereum/redux/selectors'
 import PropTypes from 'prop-types'
-import {
-  burger,
-  plus,
-} from '../../../images'
 import WalletList from './WalletList'
 
 class WalletListContainer extends PureComponent {
-  static navigatorButtons = {
-    leftButtons: [
-      {
-        id: 'drawer',
-        icon: burger,
-      },
-    ],
-    rightButtons: [
-      {
-        id: 'addWallet',
-        icon: plus,
-      },
-    ],
-  }
-
-  constructor (props) {
-    super(props)
-  }
-
-  state = {
-    isRefreshing: false,
-  }
-
-  handleRefresh = () => {
-    this.setState({
-      isRefreshing: true,
-    })
-
-    setTimeout(() => this.setState({ isRefreshing: false }), 1000)
-  }
-
-  onNavigatorEvent = ({ type, id }) => {
-    const { navigate } = this.props.navigation
-    if (type === 'NavBarButtonPress' && id === 'drawer') {
-      // this.props.navigator.toggleDrawer({ side: 'left' })
-    }
-    if (type === 'NavBarButtonPress' && id === 'addWallet') {
-      navigate('AddWallet')
-    }
-  }
 
   render () {
     const { navigation, sections} = this.props
     return (
       <WalletList
-        isRefreshing={this.state.isRefreshing}
         navigate={navigation.navigate}
-        onRefresh={this.handleRefresh}
         sections={sections}
       />
     )
@@ -73,8 +27,9 @@ const mapStateToProps = (state) => ({
 })
 
 WalletListContainer.propTypes = {
-  isRefreshing: PropTypes.bool,
-  onRefresh: PropTypes.func,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       data: PropTypes.arrayOf(

@@ -5,14 +5,14 @@
 
     # ONLY FOR RN 0.57.4
     # ==================
-    ROOT_PWD=$(pwd)
-    cd ./node_modules/react-native
-    if [ ! -f ./alreadybuilt.flag.txt ]; then
-        ./scripts/ios-install-third-party.sh
-        cd ./third-party/glog-0.3.4/
-        ../../scripts/ios-configure-glog.sh
-        cd $ROOT_PWD
-        cd ./node_modules/react-native
-        touch alreadybuilt.flag.txt
-        cd $ROOT_PWD
-    fi
+    # ROOT_PWD=$(pwd)
+    # cd ./node_modules/react-native
+    # if [ ! -f ./alreadybuilt.flag.txt ]; then
+    #     ./scripts/ios-install-third-party.sh
+    #     cd ./third-party/glog-0.3.4/
+    #     ../../scripts/ios-configure-glog.sh
+    #     cd $ROOT_PWD
+    #     cd ./node_modules/react-native
+    #     touch alreadybuilt.flag.txt
+    #     cd $ROOT_PWD
+    # fi
