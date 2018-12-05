@@ -63,31 +63,28 @@ PasswordEnterModal.propTypes = {
   styles: PropTypes.shape({}),
 }
 
-const ConfirmSendModal = ({ visible, modalToggle, sendConfirm, styles }) => {
-  console.log("RENDER")
-  return (
-    <Modal
-      animationType="slide"
-      visible={visible}
-      onRequestClose={modalToggle}
-    >
-      <View style={styles.modal}>
-        <View style={styles.actions}>
-          <ActionButton
-            title='Cancel'
-            onPress={modalToggle}
-          />
-        </View>
-        <View style={styles.confirmButtons}>
-          <PrimaryButton
-            label='Confirm Send'
-            onPress={sendConfirm}
-          />
-        </View>
+const ConfirmSendModal = ({ visible, modalToggle, sendConfirm, styles }) => (
+  <Modal
+    animationType="slide"
+    visible={visible}
+    onRequestClose={modalToggle}
+  >
+    <View style={styles.modal}>
+      <View style={styles.actions}>
+        <ActionButton
+          title='Cancel'
+          onPress={modalToggle}
+        />
       </View>
-    </Modal>
-  )
-}
+      <View style={styles.confirmButtons}>
+        <PrimaryButton
+          label='Confirm Send'
+          onPress={sendConfirm}
+        />
+      </View>
+    </View>
+  </Modal>
+)
 ConfirmSendModal.propTypes = {
   visible: PropTypes.bool,
   modalToggle: PropTypes.func,

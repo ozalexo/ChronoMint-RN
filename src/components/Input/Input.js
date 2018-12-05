@@ -56,6 +56,7 @@ export default class Input extends Component {
           keyboardAppearance='dark'
           onChangeText={this.handleChange}
           onBlur={this.handleTouch}
+          autoCapitalize='none'
         />
         <View style={styles.errorContainer}>
           <Text

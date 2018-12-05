@@ -31,6 +31,10 @@ export const getAddressByMnemonic = (mnemonic) => {
   return getDerivedWallet(mnemonic).address
 }
 
+export const getPrivateKeyByMnemonic = (mnemonic) => {
+  return getDerivedWallet(mnemonic).privateKey
+}
+
 export const decryptWallet = async (entry, password) => {
   const accounts = new Accounts()
   const wallet = await accounts.wallet.decrypt([entry], password)
