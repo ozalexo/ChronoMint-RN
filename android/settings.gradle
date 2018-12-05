@@ -1,15 +1,15 @@
 rootProject.name = 'ChronoMint'
-include ':react-native-touch-id'
-project(':react-native-touch-id').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-touch-id/android')
 include ':react-native-device-info'
-project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-keychain'
-project(':react-native-keychain').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-keychain/android')
-include ':react-native-secure-randombytes'
-project(':react-native-secure-randombytes').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-secure-randombytes/android')
 include ':react-native-languages'
-project(':react-native-languages').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-languages/android')
+include ':react-native-secure-randombytes'
 include ':react-native-splash-screen'
+include ':react-native-touch-id'
+project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
+project(':react-native-keychain').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-keychain/android')
+project(':react-native-languages').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-languages/android')
+project(':react-native-secure-randombytes').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-secure-randombytes/android')
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
+project(':react-native-touch-id').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-touch-id/android')
 
 include ':app'

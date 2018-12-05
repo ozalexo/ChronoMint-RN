@@ -2,17 +2,17 @@ package com.chronomint;
 
 import android.app.Application;
 
-import com.facebook.react.ReactApplication;
-import com.rnfingerprint.FingerprintAuthPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.oblador.keychain.KeychainPackage;
-import com.reactcommunity.rnlanguages.RNLanguagesPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.oblador.keychain.KeychainPackage;
+import com.reactcommunity.rnlanguages.RNLanguagesPackage;
+import com.rnfingerprint.FingerprintAuthPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,9 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new FingerprintAuthPackage(),
-            new RNDeviceInfo(),
             new KeychainPackage(),
             new RandomBytesPackage(),
+            new RNDeviceInfo(),
             new RNLanguagesPackage(),
             new SplashScreenReactPackage()
       );
