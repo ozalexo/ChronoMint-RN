@@ -10,24 +10,9 @@ import colors from '../../../common/colors'
 import { headerHeight } from '../../../common/constants/screens'
 
 export default StyleSheet.create({
-  actionButton: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    padding: 4,
-  },
-  actionIcon: {
-    tintColor: colors.background,
-  },
   actions: {
     backgroundColor: colors.primary,
     flexDirection: 'row',
-  },
-  actionTitle: {
-    color: colors.background,
-    fontSize: 10,
-    fontWeight: '500',
-    marginTop: 4,
   },
   screenView: {
     flex: 1,

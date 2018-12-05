@@ -212,6 +212,7 @@
     "EnterMnemonic": "Enter Mnemonic Phrase",
     "SetAccountPassword": "Set Account Password",
     "WalletList": "Wallets List",
-    "Wallet": "Wallet"
+    "Wallet": "Wallet",
+    "Send": "Send Transaction Screen"
   }
 }

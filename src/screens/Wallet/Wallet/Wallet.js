@@ -5,14 +5,12 @@
 
 import React, { PureComponent } from 'react'
 import {
-  Image,
-  Text,
-  TouchableOpacity,
   View,
   ScrollView,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import i18n from '../../../locales/translation'
+import ActionButton from '../../../components/ActionButton'
 import {
   send_ios,
   receive_ios,
@@ -20,25 +18,6 @@ import {
 import TransactionsList from '../../../components/TransactionsList'
 import WalletInfoContainer from './WalletInfo'
 import styles from './WalletStyles'
-
-const ActionButton = ({ title, image, onPress }) => (
-  <TouchableOpacity
-    style={styles.actionButton}
-    onPress={onPress}
-  >
-    <Image
-      source={image}
-      style={styles.actionIcon}
-    />
-    <Text style={styles.actionTitle}>
-      {title}
-    </Text>
-  </TouchableOpacity>
-)
-ActionButton.propTypes = {
-  title: PropTypes.string,
-  onPress: PropTypes.func,
-}
 
 export default class Wallet extends PureComponent {
 
