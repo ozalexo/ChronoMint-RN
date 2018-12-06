@@ -18,7 +18,7 @@ export const subscribe = (channel, onMessageThunk) => (dispatch) =>
 export const unsubscribe = (channel) => (dispatch) =>
   dispatch(Actions.middlewareUnsubscribe(channel))
 
-export const reconnect = (isConnecting) => (dispatch, getState) => {
+export const reconnect = (/*isConnecting*/) => (/*dispatch, getState*/) => {
   // const state = getState()
   // const isConnectingState = selectWeb3ListenerReconnectingStatus(state)
   // if (!isConnectingState) {

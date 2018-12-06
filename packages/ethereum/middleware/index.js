@@ -18,13 +18,10 @@ const connect = async (store, action, next) => {
 
   w3c = new Web3Controller(store.dispatch, primaryNodeURL, networkData.networkId.toString())
   try {
-    console.log('w3c', w3c)
     await w3c.initController()
-    console.log('Controller initialized')
     next(action)
     // return Promise.resolve(w3c.getWeb3Instance())
   } catch (error) {
-    console.log('Controller initialization error:', error)
     // return Promise.reject(error)
   }
 }

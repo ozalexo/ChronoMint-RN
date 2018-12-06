@@ -15,11 +15,6 @@ import { loginThunk } from '@chronobank/session/redux/thunks'
 import { name as appName } from '../../../../app.json'
 import Login from './Login'
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
-
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   loginThunk,
 }, dispatch)
@@ -67,14 +62,14 @@ class LoginContainer extends PureComponent {
         }
       })
       .then(this.authenticate)
-      .catch((error) => {
+      .catch(() => {
         Alert.alert('You do not support the ability to scan.')
       })
   }
 
   authenticate = () => {
     return TouchID.authenticate(`${appName} Application`)
-      .then((success) => {
+      .then(() => {
         const {
           account,
         } = this.props.navigation.state.params
@@ -132,5 +127,5 @@ class LoginContainer extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
+export default connect(null, mapDispatchToProps)(LoginContainer)
 

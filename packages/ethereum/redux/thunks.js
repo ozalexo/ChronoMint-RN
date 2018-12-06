@@ -10,6 +10,7 @@ import { encryptWallet, decryptWallet } from '../utils'
 import { ethereumCreateWallet } from './actions'
 import * as Keychain from 'react-native-keychain'
 
+// eslint-disable-next-line import/prefer-default-export
 export const createAccount = (mnemonic, password) => async (dispatch) => {
   try {
     const encryptedWallet = await encryptWallet(mnemonic, password)
@@ -25,7 +26,6 @@ export const createAccount = (mnemonic, password) => async (dispatch) => {
     dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
     dispatch(login(ethAddress))
   } catch (e) {
-    console.log(e)
     return Promise.reject(e)
   }
 }

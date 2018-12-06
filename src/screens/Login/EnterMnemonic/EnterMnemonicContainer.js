@@ -34,7 +34,6 @@ class EnterMnemonicContainer extends PureComponent {
     const mnemonicWords = mnemonic.trim().split(' ')
 
     const privateKey = getPrivateKeyByMnemonic(mnemonic)
-    console.log("HEY????: ", privateKey)
     const address = getAddress(privateKey)
 
 

@@ -5,9 +5,9 @@
 import { connect } from 'react-redux'
 import WalletInfo from './WalletInfo'
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//   }
+// }
 
-export default connect(mapStateToProps, null)(WalletInfo)
+export default connect(null, null)(WalletInfo)

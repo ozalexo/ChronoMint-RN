@@ -9,7 +9,6 @@ export const loginThunk = (ethAddress) => (dispatch) => {
   try {
     dispatch(login(ethAddress))
   } catch (e) {
-    console.log(e)
     return Promise.reject(e)
   }
 }

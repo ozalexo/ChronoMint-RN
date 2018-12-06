@@ -37,30 +37,30 @@ class ConfirmMnemonicContainer extends PureComponent {
       createAccount,
     } = this.props
 
-    // if (mnemonic !== this.state.mnemonic.join(' ')) {
-    //   this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
-    //   return this.resetState()
-    // }
+    if (mnemonic !== this.state.mnemonic.join(' ')) {
+      this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+      return this.resetState()
+    }
 
     createAccount(mnemonic, password)
     navigation.navigate('WalletList')
   }
 
   handleWord = (word) => () => {
-    // if (word) {
-    //   this.setState(({ words, mnemonic }) => {
-    //     words[words.indexOf(word)] = ''
+    if (word) {
+      this.setState(({ words, mnemonic }) => {
+        words[words.indexOf(word)] = ''
 
-    //     return {
-    //       mnemonic: [...mnemonic, word],
-    //       words: [...words],
-    //     }
-    //   }, () => {
-    //     if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
+        return {
+          mnemonic: [...mnemonic, word],
+          words: [...words],
+        }
+      }, () => {
+        if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
           this.handleDone()
-    //     }
-    //   })
-    // }
+        }
+      })
+    }
   }
 
   createInitialState = () => {
@@ -94,8 +94,6 @@ class ConfirmMnemonicContainer extends PureComponent {
 
 ConfirmMnemonicContainer.propTypes = {
   createAccount: PropTypes.func,
-  bitcoinSaveAddress: PropTypes.func,
-  ethSaveAddress: PropTypes.func,
   navigation: PropTypes.shape({
     state: PropTypes.shape({
       params: PropTypes.shape({

@@ -16,15 +16,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  selectWallet: (blockchain, address) => { }, // dispatch(selectWallet(blockchain, address))
+const mapDispatchToProps = (/*dispatch*/) => ({
+  selectWallet: (/*blockchain, address*/) => { }, // dispatch(selectWallet(blockchain, address))
 })
 /* eslint-enable no-unused-vars */
 
 class WalletListItemContainer extends PureComponent {
   handleItemPress = () => {
     const {
-      selectWallet,
+      // selectWallet,
       address,
       blockchain,
       navigate,

@@ -52,13 +52,13 @@ export default class Web3Controller {
     return this.initController()
   }
 
-  onErrorHandler = (error) => {
-    console.log('onErrorHandler error', error)
+  onErrorHandler = (/*error*/) => {
+    // console.log('onErrorHandler error', error)
     // this.dispatch(NodesActions.primaryNodeError(this.host, error))
   }
 
   onEndHandler = (error) => {
-    console.log('onEndHandler error', error)
+    // console.log('onEndHandler error', error)
     this.dispatch(Web3Actions.connectFailure(error))
     this.provider && this.provider.disconnect()
 
@@ -78,15 +78,15 @@ export default class Web3Controller {
     return new Promise((resolve, reject) => {
       try {
         this.provider = this.provider || new Web3Provider(this.host)
-        console.log('Provider', this.provider)
+        // console.log('Provider', this.provider)
         this.provider
           .connect()
           .then(() => {
-            console.log('Connected?')
+            // console.log('Connected?')
             this.provider
               .on('error', this.onErrorHandler)
               .on('end', this.onEndHandler)
-            console.log('this.provider.connected', this.provider.connected)
+            // console.log('this.provider.connected', this.provider.connected)
             if (this.provider.connected) {
 
               this.web3 = new Web3(this.provider)
@@ -94,7 +94,7 @@ export default class Web3Controller {
               this.web3.eth.net
                 .getId()
                 .then((netId) => {
-                  console.log('Network id from Eth node:', netId)
+                  // console.log('Network id from Eth node:', netId)
                   if (netId === 1 || netId === 4) {
                     this.dispatch(Web3Actions.connectSuccess(this.host))
                     this.checkSyncStatus()
@@ -112,17 +112,16 @@ export default class Web3Controller {
                 })
               return resolve()
             } else {
-              console.log('Not connected.')
+              // console.log('Not connected.')
               return reject()
             }
           })
-          .catch((e) => {
-            console.log('e1', e)
+          .catch(() => {
             this.dispatch(Web3Thunks.reconnect())
             return reject()
           })
       } catch (error) {
-        console.log('e2', error)
+        // console.log('e2', error)
         setTimeout(() => {
           this.dispatch(Web3Thunks.reconnect())
         }, 10000)
@@ -336,24 +335,24 @@ export default class Web3Controller {
         .then((syncStatus) => {
           //#console.log('Manual checking node status:', syncStatus)
           if (syncStatus === true) {
-            const syncingComplete = false
-            const progress = 0
+            // const syncingComplete = false
+            // const progress = 0
             // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
           } else {
             if (syncStatus) {
-              const syncingComplete = false
-              const progress = (syncStatus.currentBlock - syncStatus.startingBlock) / (syncStatus.highestBlock - syncStatus.startingBlock)
+              // const syncingComplete = false
+              // const progress = (syncStatus.currentBlock - syncStatus.startingBlock) / (syncStatus.highestBlock - syncStatus.startingBlock)
               // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
             } else {
-              const syncingComplete = true
-              const progress = 1
+              // const syncingComplete = true
+              // const progress = 1
               // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingComplete, progress))
             }
           }
         })
         .catch((error) => {
-          const syncingInProgress = true
-          const progress = 0
+          // const syncingInProgress = true
+          // const progress = 0
           // this.dispatch(NodesActions.primaryNodeSetSyncingStatus(syncingInProgress, progress))
           // eslint-disable-next-line no-console
           console.log('Set SIP, progress 0', error)
