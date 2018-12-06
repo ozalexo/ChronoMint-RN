@@ -9,12 +9,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { createAccount } from '@chronobank/ethereum/redux/thunks'
+import { getEthAccounts } from '@chronobank/ethereum/redux/selectors'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = (state) => {
+  return {
+    accounts: getEthAccounts(state),
+  }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -35,6 +38,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     const {
       navigation,
       createAccount,
+      accounts,
     } = this.props
 
     // if (mnemonic !== this.state.mnemonic.join(' ')) {
@@ -43,7 +47,10 @@ class ConfirmMnemonicContainer extends PureComponent {
     // }
 
     createAccount(mnemonic, password)
-    navigation.navigate('WalletList')
+      .then(() => {
+        const params = accounts && accounts.length !== 0 ? {account: accounts[accounts.length-1]} : null
+        navigation.navigate(`${params ? 'Login' : 'Start'}`, params)
+      })
   }
 
   handleWord = (word) => () => {
@@ -57,7 +64,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     //     }
     //   }, () => {
     //     if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
-          this.handleDone()
+    this.handleDone()
     //     }
     //   })
     // }
@@ -93,6 +100,9 @@ class ConfirmMnemonicContainer extends PureComponent {
 }
 
 ConfirmMnemonicContainer.propTypes = {
+  accounts: PropTypes.arrayOf(PropTypes.shape({
+    address: PropTypes.string,
+  })),
   createAccount: PropTypes.func,
   navigation: PropTypes.shape({
     state: PropTypes.shape({

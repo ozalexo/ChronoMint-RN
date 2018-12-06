@@ -28,6 +28,7 @@ class LoginContainer extends PureComponent {
         params: PropTypes.shape({
           account: PropTypes.shape({
             address: PropTypes.string,
+            privateKey: PropTypes.string,
             encrypted: PropTypes.shape({}),
           }),
         }),
@@ -73,38 +74,43 @@ class LoginContainer extends PureComponent {
         const {
           account,
         } = this.props.navigation.state.params
-        this.handleLogin(account.address)
+        return Keychain.getInternetCredentials(account.address)
       })
+      .then((result) => this.handleLoginClick({password: result.password}))
       .catch(() => { })
   }
 
-  checkPassword = async (password) => {
-    try {
-      const {
-        account,
-      } = this.props.navigation.state.params
-      const credentials = await Keychain.getInternetCredentials(account.address)
-      const results = await decryptWallet(account.encrypted, password)
-      if (password === credentials.password && results) {
-        return results.address
-      }
-    } catch (e) {
-      this.setState({ error: e.message })
+  checkPassword = (password) => {
+    const {
+      account,
+    } = this.props.navigation.state.params
+    return decryptWallet(account.encrypted, password)
+      .then((results) => {
+        return {
+          address: results.address,
+          privateKey: results.privateKey,
+        }
+      })
+      .catch((error) => this.setState({ error: error.message }))
+  }
+
+  handleLoginClick = async ({password}) => {
+    const pass = password ? password : this.state.password
+    const results = await this.checkPassword(pass)
+    if (results) {
+      this.handleLogin(results)
     }
   }
 
-  handleLoginClick = async () => {
-    const { password } = this.state
-    const address = await this.checkPassword(password)
-    if (address) {
-      this.handleLogin(address)
-    }
-  }
-
-  handleLogin = (address) => {
+  handleLogin = ({ address, privateKey }) => {
     const { navigate } = this.props.navigation
-    this.props.loginThunk(address)
-    navigate('WalletList')
+    this.props.loginThunk(address, privateKey)
+      .then(() => {
+        navigate('WalletList')
+      })
+      .catch((error) => {
+        console.log('Login failure:', error)
+      })
   }
 
   render () {

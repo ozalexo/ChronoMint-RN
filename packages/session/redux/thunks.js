@@ -4,10 +4,13 @@
  */
 
 import { login, logout } from './actions'
+import { createBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
 
-export const loginThunk = (ethAddress) => (dispatch) => {
+export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
   try {
-    dispatch(login(ethAddress))
+    dispatch(createBitcoinWallet(privateKey, ethAddress))
+      .then(dispatch(login(ethAddress)))
+    return Promise.resolve()
   } catch (e) {
     return Promise.reject(e)
   }

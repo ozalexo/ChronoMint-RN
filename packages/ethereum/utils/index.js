@@ -8,14 +8,13 @@ import hdKey from 'ethereumjs-wallet/hdkey'
 import Accounts from 'web3-eth-accounts'
 import { WALLET_HD_PATH } from '../constants'
 
-const getDerivedWallet = (mnemonic, path) => {
-  const walletPath = !path ? WALLET_HD_PATH : path
+const getDerivedWallet = (mnemonic, path = WALLET_HD_PATH) => {
   const accounts = new Accounts()
   const wallets = accounts.wallet.create()
-
   const hdWallet = hdKey.fromMasterSeed(mnemonic)
-  const wallet = hdWallet.derivePath(walletPath).getWallet()
+  const wallet = hdWallet.derivePath(path).getWallet()
   const account = accounts.privateKeyToAccount(`0x${wallet.getPrivateKey().toString('hex')}`)
+
   wallets.add(account)
 
   return wallets[0]
@@ -42,8 +41,12 @@ export const decryptWallet = async (entry, password) => {
   return wallet[0]
 }
 
-export const encryptWallet = async (mnemonic, password) => {
+export const createEthWallet = (mnemonic) => {
   const wallet = getDerivedWallet(mnemonic)
+  return wallet
+}
+
+export const encryptWallet = async (wallet, password) => {
   const encryptWallet = await wallet.encrypt(password)
   return encryptWallet
 }
