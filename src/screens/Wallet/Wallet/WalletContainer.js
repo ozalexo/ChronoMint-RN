@@ -5,9 +5,11 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   Alert,
 } from 'react-native'
+import { requestSubscribeWalletByAddress } from '@chronobank/bitcoin/service/httpAPI'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
 
@@ -17,6 +19,10 @@ const mapStateToProps = () => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  requestSubscribeWalletByAddress,
+}, dispatch)
+
 
 class WalletContainer extends Component {
   constructor (props) {
@@ -25,8 +31,6 @@ class WalletContainer extends Component {
 
   static propTypes = {
     getAccountTransactions: PropTypes.func,
-    address: PropTypes.string,
-    blockchain: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       state: PropTypes.shape({
@@ -56,11 +60,20 @@ class WalletContainer extends Component {
   }
 
   handleReceive = () => {
-    Alert.alert(
-      'Work in progress',
-      'Sorry, receiving is under construction still.',
-      [{ text: 'Ok', onPress: () => { }, style: 'cancel' }]
-    )
+    const { requestSubscribeWalletByAddress, navigation } = this.props
+    const {
+      address,
+    } = navigation.state.params
+    console.log("ADDRESS: ", address)
+    console.log("props: ", this.props)
+    requestSubscribeWalletByAddress(address)
+      .then((data) => { console.log('HTTP response OK:', data) })
+      .catch((error) => { console.log('HTTP response ERROR:', error) })
+    // Alert.alert(
+    //   'Work in progress',
+    //   'Sorry, receiving is under construction still.',
+    //   [{ text: 'Ok', onPress: () => { }, style: 'cancel' }]
+    // )
   }
 
   handleIndexChange = (index) =>
@@ -88,4 +101,4 @@ class WalletContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(WalletContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(WalletContainer)
