@@ -104,7 +104,12 @@ class LoginContainer extends PureComponent {
   handleLogin = (address) => {
     const { navigate } = this.props.navigation
     this.props.loginThunk(address)
-    navigate('WalletList')
+      .then(() => {
+        navigate('WalletList')
+      })
+      .catch((error) => {
+        console.log('Login failure:', error)
+      })
   }
 
   render () {

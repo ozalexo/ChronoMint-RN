@@ -8,6 +8,7 @@ import { login, logout } from './actions'
 export const loginThunk = (ethAddress) => (dispatch) => {
   try {
     dispatch(login(ethAddress))
+    return Promise.resolve()
   } catch (e) {
     return Promise.reject(e)
   }

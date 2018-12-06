@@ -43,7 +43,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     // }
 
     createAccount(mnemonic, password)
-    navigation.navigate('WalletList')
+    navigation.navigate('Start')
   }
 
   handleWord = (word) => () => {

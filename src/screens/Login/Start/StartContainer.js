@@ -22,7 +22,7 @@ class StartContainer extends PureComponent {
   constructor (props) {
     super(props)
     this.state={
-      showAccountsList: props.accounts && props.accounts.length !== 0 ? true : false,
+      showAccountsList: props.accounts && props.accounts.length !== 0,
     }
   }
 
