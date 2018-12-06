@@ -15,8 +15,6 @@ export const login = (currentWallet) => {
 export const logout = () => {
   return {
     type: ActionTypes.SESSION_LOGOUT,
-    currentWallet: null,
-    privateKey: null,
   }
 }
 export const savePrivateKey = (privateKey) => {

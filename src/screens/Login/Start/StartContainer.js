@@ -5,26 +5,31 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { getEthAccounts } from '@chronobank/ethereum/redux/selectors'
 import Start from './Start'
 
-/* eslint-disable no-unused-vars */
-const mapStateToProps = (ownState, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    accounts: null,
+    accounts: getEthAccounts(state),
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    navigateToImportWallet: () => { },
-  }
-}
-/* eslint-enable no-unused-vars */
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
 class StartContainer extends PureComponent {
+  constructor (props) {
+    super(props)
+    this.state={
+      showAccountsList: props.accounts && props.accounts.length !== 0 ? true : false,
+    }
+  }
 
   static propTypes = {
+    accounts: PropTypes.arrayOf(PropTypes.shape({
+      address: PropTypes.string,
+    })),
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
@@ -36,14 +41,35 @@ class StartContainer extends PureComponent {
 
   handleCreateWalletButtonClick = (values, { setSubmitting }) => {
     setSubmitting(false)
-    this.props.navigation.navigate('GenerateMnemonic')
+    const params = {
+      password: values.password,
+    }
+    this.props.navigation.navigate('GenerateMnemonic', params)
+  }
+
+  handleSelectAccount = (account) => () => {
+    const { navigate } = this.props.navigation
+    const params = {
+      account,
+    }
+    navigate('Login', params)
+  }
+
+  handleContentToggle = () => {
+    this.setState({ showAccountsList: !this.state.showAccountsList })
   }
 
   render () {
+    const { accounts } = this.props
+    const { showAccountsList } = this.state
     return (
       <Start
         onClickUseExistingButton={this.handleUseExistingButtonClick}
         onClickCreateWalletButton={this.handleCreateWalletButtonClick}
+        onSelectAccount={this.handleSelectAccount}
+        accounts={accounts}
+        showAccountsList={showAccountsList}
+        onToggleScreenContent={this.handleContentToggle}
       />
     )
   }

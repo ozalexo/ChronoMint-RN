@@ -5,6 +5,7 @@
 
 import * as ActionTypes from './constants'
 
+// eslint-disable-next-line import/prefer-default-export
 export const networkSelect = (networkIndex) => ({
   type: ActionTypes.NETWORK_SELECT,
   networkIndex,

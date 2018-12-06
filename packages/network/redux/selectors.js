@@ -35,6 +35,14 @@ export const getAvailableNetworks = createSelector(
   (network) => network.availableNetworks
 )
 
+/**
+ * get network.selected
+ * @param {object} state
+ */
+export const getNetworkByIndex = (networkIndex) =>createSelector(
+  getAvailableNetworks,
+  (availableNetworks) => availableNetworks[networkIndex]
+)
 
 /**
  * get flattened network.displaySections.%section%.networks

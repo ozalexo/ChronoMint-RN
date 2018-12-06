@@ -9,6 +9,7 @@ const extraCustomNodeModules = {
   // '_stream_transform': require.resolve('readable-stream/transform'),
   'crypto': require.resolve('react-native-crypto'),
   'react-native-randombytes': require.resolve('react-native-secure-randombytes'),
+  'ethereumjs-wallet': require.resolve('ethereumjs-wallet-react-native'),
   // 'fs': require.resolve('react-native-level-fs'),
   'http': require.resolve('react-native-http'),
   'https': require.resolve('https-browserify'),
@@ -60,7 +61,6 @@ module.exports = {
   getProjectRoots () {
     return [
       path.resolve(__dirname, 'node_modules'),
-      path.resolve(__dirname, 'packages/bitcoin/node_modules'),
       __dirname,
     ]
   },

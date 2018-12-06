@@ -24,11 +24,13 @@ import WalletImage from '../WalletImage'
 import styles from './WalletListItemStyles'
 
 const Transactions = ({ transactions }) => !transactions ? null : (
-  !transactions[1] ? (
-    <Image
-      source={indicator_receiving_0}
-    />
-  ) : (
+  !transactions[1] ?
+    (
+      <Image
+        source={indicator_receiving_0}
+      />
+    ) :
+    (
       <View style={styles.transactionsNumberContainer}>
         <Text style={styles.transactionsNumber}>
           {transactions.length}

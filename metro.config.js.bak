@@ -1,0 +1,66 @@
+/**
+ * Copyright 2017–2018, LaborX PTY
+ * Licensed under the AGPL Version 3 license.
+ */
+
+// See https://facebook.github.io/metro/docs/en/configuration
+
+const { mergeConfig } = require('metro-config')
+const { DEFAULT } = require('react-native/local-cli/util/Config')
+
+// Get blacklist factory
+let blacklist
+try {
+  // >= 0.57
+  blacklist = require('metro-config/src/defaults/blacklist')
+} catch (e) {
+  // <= 0.56
+  blacklist = require('metro/src/blacklist')
+}
+
+const config = {
+  resolver: {
+    /* resolver options */
+    useWatchman: true,
+    extraNodeModules: {
+      'crypto': require.resolve('react-native-crypto'),
+      'ethereumjs-wallet': require.resolve('ethereumjs-wallet-react-native'),
+      'http': require.resolve('react-native-http'),
+      'https': require.resolve('https-browserify'),
+      'os': require.resolve('react-native-os'),
+      'react-native-randombytes': require.resolve('react-native-secure-randombytes'),
+      'stream': require.resolve('stream-browserify'),
+      'vm': require.resolve('vm-browserify'),
+    },
+    blacklistRE: blacklist([
+      /node_modules\/crypto\/.*/,
+      /node_modules\/stream\/.*/,
+    ]),
+  },
+  transformer: {
+    /* transformer options */
+    minifierConfig: {
+      mangle: {
+        toplevel: true,
+        reserved: [
+          "BigInteger",
+          "ECPair",
+          "Point",
+        ],
+      },
+    },
+  },
+  // serializer: {
+  //   /* serializer options */
+  // },
+  server: {
+    /* server options */
+    useGlobalHotkey: true,
+  },
+
+  /* general options */
+  watch: true,
+  resetCache: true,
+}
+
+module.exports = mergeConfig(DEFAULT, config)

@@ -23,7 +23,7 @@
     "subtitle": "Enter mnemonic key:",
     "mnemonic": "Mnemonic key",
     "saveOnDevice": "Save wallet on device",
-    "login": "Log in",
+    "login": "Add account",
     "generateMnemonic": "Generate mnemonic key",
     "wrongMnemonic": "Something wrong with your mnemonic. Try again"
   },
@@ -36,7 +36,7 @@
     "subtitle": "Enter private key:",
     "private": "Private key",
     "saveOnDevice": "Save wallet on device",
-    "login": "Log in"
+    "login": "Add account"
   },
   "EnterWalletPassword": {
     "title": "Upload wallet file",
@@ -132,7 +132,12 @@
     "passwordLowerCaseChar": "At least one lowercase char",
     "passwordUpperCaseChar": "At least one uppercase char",
     "passwordSpecialChar": "At least 1 number or special char (@,!,#, etc).",
-    "confirmPasswordRequired": "Confirm Password is required"
+    "confirmPasswordRequired": "Confirm Password is required",
+    "showAccountsList": "Switch to Accounts list",
+    "showCreateForm": "Switch to create form"
+  },
+  "LoginPage": {
+    "forgotPassword": "Forgot your password?"
   },
   "WalletBackup": {
     "title": "Wallet Back-up",
@@ -205,7 +210,9 @@
     "ConfirmMnemonic": "Confirm recovery phrase",
     "EnterPrivateKey": "Enter Private Key",
     "EnterMnemonic": "Enter Mnemonic Phrase",
-    "WalletList": "WalletList",
-    "SetAccountPassword": "Set Account Password"
+    "SetAccountPassword": "Set Account Password",
+    "WalletList": "Wallets List",
+    "Wallet": "Wallet",
+    "Send": "Send Transaction Screen"
   }
 }

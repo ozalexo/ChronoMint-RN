@@ -1,0 +1,18 @@
+patch-package
+--- a/node_modules/react-native-touch-id/android/build.gradle
++++ b/node_modules/react-native-touch-id/android/build.gradle
+@@ -27,7 +27,6 @@ def _targetSdkVersion = _ext.has('targetSdkVersion') ? _ext.targetSdkVersion : 2
+ 
+ android {
+   compileSdkVersion _compileSdkVersion
+-  buildToolsVersion _buildToolsVersion
+ 
+   defaultConfig {
+     minSdkVersion _minSdkVersion
+@@ -45,5 +44,5 @@ repositories {
+ }
+ 
+ dependencies {
+-  compile "com.facebook.react:react-native:${_reactNativeVersion}"
++  implementation "com.facebook.react:react-native:${_reactNativeVersion}"
+ }

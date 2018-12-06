@@ -19,7 +19,7 @@ class ImportMethodContainer extends PureComponent {
 
   handleCreateWallet = () => {
     const { navigate } = this.props.navigation
-    navigate('StartPage')
+    navigate('Start')
   }
 
   handleSelectImportMethod = ({ screen }) => () => {

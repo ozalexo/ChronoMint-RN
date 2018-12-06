@@ -12,6 +12,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  FlatList,
 } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -22,10 +23,14 @@ import {
 } from '../../../images'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
+import AccountItem from '../../../components/AccountItem'
 import TextButton from '../../../components/TextButton'
+import Separator from '../../../components/Separator'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
 import { headerHeight } from '../../../common/constants/screens'
+
+const CustomizedSeparator = () => <Separator style={styles.separator} />
 
 export default class Start extends PureComponent {
   static propTypes = {
@@ -36,11 +41,32 @@ export default class Start extends PureComponent {
     onClickCreateWalletButton: PropTypes.func.isRequired,
   }
 
-  renderAccountsList = () => (
-    <React.Fragment>
-      <Text>Under construction</Text>
-    </React.Fragment>
+  keyExtractor = ({ address }) => address
+
+  renderItem = ({ item }) => (
+    <AccountItem
+      {...item}
+      onPress={this.props.onSelectAccount(item)}
+    />
   )
+
+  renderAccountsList = () => {
+    const { accounts } = this.props
+    if (!accounts || accounts.length === 0) {
+      return <Text style={styles.noAccountsText}>No Accounts To Show</Text>
+    }
+    return (
+      <FlatList
+        data={this.props.accounts}
+        ItemSeparatorComponent={CustomizedSeparator}
+        keyExtractor={this.keyExtractor}
+        ListFooterComponent={CustomizedSeparator}
+        ListHeaderComponent={CustomizedSeparator}
+        renderItem={this.renderItem}
+        style={styles.accountsList}
+      />
+    )
+  }
 
   enterPasswordValidationSchema = Yup.object().shape({
     password: Yup.string()
@@ -104,26 +130,15 @@ export default class Start extends PureComponent {
 
   renderCreateAccountForm = () => {
     return (
-      <React.Fragment>
-        <Formik
-          initialValues={{
-            password: '',
-            confirmPassword: '',
-          }}
-          validationSchema={this.enterPasswordValidationSchema}
-          onSubmit={this.props.onClickCreateWalletButton}
-          render={this.renderEnterPasswordForm}
-        />
-        <Text style={styles.orText}>
-          {
-            i18n.t('StartPage.or')
-          }
-        </Text>
-        <TextButton
-          label={i18n.t('StartPage.useExistingWallet')}
-          onPress={this.props.onClickUseExistingButton}
-        />
-      </React.Fragment>
+      <Formik
+        initialValues={{
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={this.enterPasswordValidationSchema}
+        onSubmit={this.props.onClickCreateWalletButton}
+        render={this.renderEnterPasswordForm}
+      />
     )
   }
 
@@ -134,6 +149,10 @@ export default class Start extends PureComponent {
     // Need to investigate the reasons and setup precise values
     // Default header heights: ios = 64, android = 56
     const keyboardVerticalOffset = -headerHeight
+    const {
+      showAccountsList,
+      onToggleScreenContent,
+    } = this.props
 
     return (
       <TouchableWithoutFeedback
@@ -156,10 +175,25 @@ export default class Start extends PureComponent {
                 style={styles.logoText}
               />
               {
-                this.props.accounts
+                showAccountsList
                   ? this.renderAccountsList()
                   : this.renderCreateAccountForm()
               }
+              <TextButton
+                label={showAccountsList ? i18n.t('StartPage.showCreateForm') : i18n.t('StartPage.showAccountsList')}
+                onPress={onToggleScreenContent}
+                style={styles.textButton}
+              />
+              <Text style={styles.orText}>
+                {
+                  i18n.t('StartPage.or')
+                }
+              </Text>
+              <TextButton
+                label={i18n.t('StartPage.useExistingWallet')}
+                onPress={this.props.onClickUseExistingButton}
+                style={styles.textButton}
+              />
             </View>
           </KeyboardAvoidingView>
           <Text style={styles.copyright}>

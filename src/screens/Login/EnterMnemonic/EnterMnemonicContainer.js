@@ -36,6 +36,7 @@ class EnterMnemonicContainer extends PureComponent {
     const privateKey = getPrivateKeyByMnemonic(mnemonic)
     const address = getAddress(privateKey)
 
+
     if (!address || !privateKey || mnemonicWords.length !== MNEMONIC_LENGTH) {
       return this.addError(i18n.t('EnterMnemonic.wrongMnemonic'))
     }

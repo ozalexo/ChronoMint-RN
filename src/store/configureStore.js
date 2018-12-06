@@ -4,7 +4,7 @@
  */
 
 import { applyMiddleware, compose, createStore } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension/logOnly'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistStore } from 'redux-persist'
 import getMiddlewares from './middlewares'
 import rootReducer from './rootReducer'

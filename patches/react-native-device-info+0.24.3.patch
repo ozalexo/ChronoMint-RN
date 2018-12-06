@@ -1,0 +1,11 @@
+patch-package
+--- a/node_modules/react-native-device-info/android/build.gradle
++++ b/node_modules/react-native-device-info/android/build.gradle
+@@ -7,7 +7,6 @@ def DEFAULT_GOOGLE_PLAY_SERVICES_VERSION    = "+"
+ 
+ android {
+     compileSdkVersion project.hasProperty('compileSdkVersion') ? project.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
+-    buildToolsVersion project.hasProperty('buildToolsVersion') ? project.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
+ 
+     defaultConfig {
+         minSdkVersion 16

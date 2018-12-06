@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 import NetworkItem from '../NetworkItem'
 import Separator from '../Separator'
 import styles from './DrawerNetworkStyles'
-
+import TextButton from '../TextButton'
 class DrawerNetwork extends PureComponent {
 
   static propTypes = {
@@ -69,6 +69,19 @@ class DrawerNetwork extends PureComponent {
             ListHeaderComponent={Separator}
             renderItem={this.renderNetworkItem}
           />
+          <Text style={styles.title}>
+            Test area
+          </Text>
+          <View style={{backgroundColor: 'yellow'}}>
+            <TextButton
+              label='Connect RMQ'
+              onPress={this.props.rmqConnect}
+            />
+            <TextButton
+              label='Disconnect RMQ'
+              onPress={this.props.rmqDisconnect}
+            />
+          </View>
         </View>
       </SafeAreaView>
     )

@@ -8,6 +8,10 @@ import colors from '../../../common/colors'
 import { headerHeight } from '../../../common/constants/screens'
 
 export default StyleSheet.create({
+  screenView: {
+    flex: 1,
+    flexDirection: 'column',
+  },
   container: {
     // TODO: to investigate a "magic" with this 20
     marginTop: 20,
@@ -15,6 +19,9 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignSelf: 'stretch',
+  },
+  accountsList: {
+    margin: 10,
   },
   logo: {
     marginBottom: 20,
@@ -47,6 +54,15 @@ export default StyleSheet.create({
     color: colors.textOnPurple,
     fontSize: 16,
     marginBottom: 20,
+  },
+  noAccountsText: {
+    alignSelf: 'center',
+    color: colors.light,
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  textButton: {
+    marginBottom: 10,
   },
   kavContainer: {
     flex: 1,

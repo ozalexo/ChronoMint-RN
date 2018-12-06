@@ -4,9 +4,11 @@
  */
 
 import bitcoin, { networks } from 'bitcoinjs-lib'
+import { checkPrivateKey } from '@chronobank/ethereum/utils'
 
 export const getAddress = (privateKey) => {
-  const keyPair = getKeyPair(privateKey)
+  const key = checkPrivateKey(privateKey)
+  const keyPair = getKeyPair(key)
   const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network: networks.testnet })
   return address
 }
