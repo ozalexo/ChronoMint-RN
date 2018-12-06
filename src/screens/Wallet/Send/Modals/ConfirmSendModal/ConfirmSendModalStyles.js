@@ -4,15 +4,18 @@
  */
 
 import { StyleSheet } from 'react-native'
-import { headerHeight } from '../../../common/constants/screens'
+import colors from '../../../../../common/colors'
 
 export default StyleSheet.create({
-  screenView: {
-    marginTop: headerHeight + 20,
-    marginBottom: 20,
+  modal: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 20,
+  },
+  confirmButtons: {
+    marginVertical: 50,
+  },
+  actions: {
+    backgroundColor: colors.primary,
+    flexDirection: 'row',
   },
 })

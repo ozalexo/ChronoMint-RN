@@ -32,14 +32,12 @@ export default class Send extends PureComponent {
           passwordChange={onPasswordChange}
           error={error}
           confirmPassword={onPasswordConfirm}
-          styles={styles}
         />
         }
         {showConfirmModal && <ConfirmSendModal
           visible={showConfirmModal}
           modalToggle={onCloseConfirmModal}
           sendConfirm={onSendConfirm}
-          styles={styles}
         />
         }
         <PrimaryButton

@@ -4,7 +4,7 @@
  */
 
 import bitcoin, { networks } from 'bitcoinjs-lib'
-import {checkPrivateKey} from '@chronobank/ethereum/utils'
+import { checkPrivateKey } from '@chronobank/ethereum/utils'
 
 export const getAddress = (privateKey) => {
   const key = checkPrivateKey(privateKey)
