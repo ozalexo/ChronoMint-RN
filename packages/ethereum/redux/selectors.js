@@ -22,20 +22,17 @@ export const getEthAccounts = createSelector(
     for (const key in ethereum.list) {
       accounts.push(ethereum.list[key])
     }
-    return accounts.length === 0  ? null : accounts
+    return accounts.length === 0 ? null : accounts
   }
 )
 export const getDerivedEthWallets = createSelector(
   getDuckEthereum(),
   getCurrentWallet,
   (ethereum, ethAddress) => {
-    const deriveds = []
     if (ethereum.list[ethAddress] && ethereum.list[ethAddress].deriveds) {
-      for (const key in ethereum.list[ethAddress].deriveds) {
-        deriveds.push(key)
-      }
+      return Object.keys(ethereum.list[ethAddress].deriveds)
     }
-    return deriveds
+    return null
   }
 )
 const getEthereumWallets = () => createSelector(
