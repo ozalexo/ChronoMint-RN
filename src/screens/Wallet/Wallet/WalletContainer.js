@@ -45,19 +45,24 @@ class WalletContainer extends Component {
   componentDidMount () {
     const {
       navigation,
+      requestBitcoinSubscribeWalletByAddress,
       requestBitcoinBalanceByAddress,
       rmqSubscribe,
     } = this.props
     const {
       address,
     } = navigation.state.params
-    requestBitcoinBalanceByAddress(address)
-      .then((ballance) => {
-        console.log('HTTP BALLANCE OK:', ballance)
-        rmqSubscribe({
-          channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
-          handler: (data) => { console.log('HERE IS DATA FROM WEBSOCKET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ', data) },
-        })
+    requestBitcoinSubscribeWalletByAddress(address)
+      .then((subscribe) => {
+        console.log('subscribed: ', subscribe)
+        requestBitcoinBalanceByAddress(address)
+          .then((ballance) => {
+            console.log('ballance: ', ballance)
+            rmqSubscribe({
+              channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
+              handler: (data) => { console.log('HERE IS DATA FROM WEBSOCKET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ', data) },
+            })
+          })
       })
       .catch((error) => { console.log('HTTP response ERROR:', error) })
   }
