@@ -10,19 +10,22 @@ import {
   Alert,
 } from 'react-native'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
+import { updateBitcoinWalletBalance } from '@chronobank/bitcoin/redux/thunks'
 import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
+    currentWallet: getCurrentWallet(state),
   }
 }
 
-const https = { rmqSubscribe, ...apiBTC }
+const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance  }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(https, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
 class WalletContainer extends Component {
   constructor (props) {
@@ -31,6 +34,8 @@ class WalletContainer extends Component {
 
   static propTypes = {
     getAccountTransactions: PropTypes.func,
+    updateBitcoinWalletBalance: PropTypes.func,
+    currentWallet: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       state: PropTypes.shape({
@@ -48,16 +53,23 @@ class WalletContainer extends Component {
       navigation,
       requestBitcoinSubscribeWalletByAddress,
       requestBitcoinBalanceByAddress,
+      updateBitcoinWalletBalance,
       rmqSubscribe,
+      currentWallet,
     } = this.props
     const {
       address,
     } = navigation.state.params
     requestBitcoinSubscribeWalletByAddress(address)
-      .then((subscribe) => {
-        console.log('subscribed: ', subscribe)
+      .then(() => {
         requestBitcoinBalanceByAddress(address)
           .then((ballance) => {
+            updateBitcoinWalletBalance({
+              address,
+              parentAddress: currentWallet,
+              balance: ballance.payload.data.confirmations6.satoshis,
+              amount: ballance.payload.data.confirmations6.amount,
+            })
             console.log('ballance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(ballance))
             rmqSubscribe({
               channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,

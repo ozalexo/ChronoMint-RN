@@ -25,6 +25,14 @@ export const bitcoinCreateWallet = (parentAddress, address) => ({
   address,
 })
 
+export const bitcoinUpdateBalance = ({parentAddress, address, balance, amount}) => ({
+  type: ActionsTypes.BITCOIN_UPDATE_BALANCE,
+  parentAddress,
+  address,
+  balance,
+  amount,
+})
+
 export const bitcoinHttpGetBlocksHeight = () => ({
   type: ActionsTypes.BITCOIN_HTTP_GET_BLOCKS_HEIGHT,
 })
