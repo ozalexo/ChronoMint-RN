@@ -4,6 +4,7 @@
  */
 
 import { REHYDRATE } from 'redux-persist'
+import { DECIMALS, BTC_PRIMARY_TOKEN } from '../constants'
 import * as ActionsTypes from './constants'
 import initialState from './initialState'
 
@@ -22,6 +23,29 @@ const bitcoinRehydrate = (state, payload) => {
 const mutations = {
 
   [REHYDRATE]: bitcoinRehydrate,
+  [ActionsTypes.BITCOIN_UPDATE_BALANCE]: (state, { parentAddress, address, balance, amount }) => {
+    let list = Object.assign({}, state.list)
+    list = {
+      ...list,
+      [parentAddress]: {
+        ...list[parentAddress],
+        [address]: {
+          address,
+          tokens: {
+            [BTC_PRIMARY_TOKEN]: {
+              ...list[parentAddress][address].tokens[BTC_PRIMARY_TOKEN],
+              balance,
+              amount,
+            },
+          },
+        },
+      },
+    }
+    return {
+      ...state,
+      list,
+    }
+  },
   [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { parentAddress, address }) => {
     let list = Object.assign({}, state.list)
     list = {
@@ -30,6 +54,14 @@ const mutations = {
         ...list[parentAddress],
         [address]: {
           address,
+          tokens: {
+            [BTC_PRIMARY_TOKEN]: {
+              balance: null, // это баланс для UI, то есть amount (ниже) пересчитанный с учетом DECIMALS
+              symbol: BTC_PRIMARY_TOKEN, // тут лучше взять константу
+              amount: null, // здесь будет лежать сумма как есть с сервера
+              decimals: DECIMALS, // из константы значение
+            },
+          },
         },
       },
     }
