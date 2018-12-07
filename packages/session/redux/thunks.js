@@ -3,13 +3,16 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import { login, logout } from './actions'
 import { createBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
+import { login, logout, savePrivateKey } from './actions'
 
 export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
   try {
     dispatch(createBitcoinWallet(privateKey, ethAddress))
-      .then(dispatch(login(ethAddress)))
+      .then(() => {
+        dispatch(login(ethAddress))
+        dispatch(savePrivateKey(privateKey))
+      })
     return Promise.resolve()
   } catch (e) {
     return Promise.reject(e)

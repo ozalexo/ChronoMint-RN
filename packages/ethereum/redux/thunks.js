@@ -4,7 +4,6 @@
  */
 
 import * as Keychain from 'react-native-keychain'
-import { savePrivateKey } from '@chronobank/session/redux/actions'
 import { encryptWallet, createEthWallet } from '../utils'
 import { ethereumCreateWallet } from './actions'
 
@@ -19,7 +18,6 @@ export const createAccount = (mnemonic, password) => async (dispatch) => {
     const encryptedWallet = await encryptWallet(decryptedWallet, password)
     dispatch(ethereumCreateWallet(ethAddress, encryptedWallet))
 
-    dispatch(savePrivateKey(decryptedWallet.privateKey))
     return Promise.resolve()
   } catch (e) {
     return Promise.reject(e)
