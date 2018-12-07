@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
+import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
 
@@ -57,7 +58,7 @@ class WalletContainer extends Component {
         console.log('subscribed: ', subscribe)
         requestBitcoinBalanceByAddress(address)
           .then((ballance) => {
-            console.log('ballance: ', ballance)
+            console.log('ballance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(ballance))
             rmqSubscribe({
               channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
               handler: (data) => { console.log('HERE IS DATA FROM WEBSOCKET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ', data) },
