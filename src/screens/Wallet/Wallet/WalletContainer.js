@@ -9,20 +9,19 @@ import { bindActionCreators } from 'redux'
 import {
   Alert,
 } from 'react-native'
-import { requestSubscribeWalletByAddress } from '@chronobank/bitcoin/service/httpAPI'
+import { rmqSubscribe } from '@chronobank/network/redux/thunks'
+import * as apiBTC from '@chronobank/bitcoin/service/api'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
-
 
 const mapStateToProps = () => {
   return {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  requestSubscribeWalletByAddress,
-}, dispatch)
+const https = { rmqSubscribe, ...apiBTC }
 
+const mapDispatchToProps = (dispatch) => bindActionCreators(https, dispatch)
 
 class WalletContainer extends Component {
   constructor (props) {
@@ -43,6 +42,26 @@ class WalletContainer extends Component {
     }),
   }
 
+  componentDidMount () {
+    const {
+      navigation,
+      requestBitcoinBalanceByAddress,
+      rmqSubscribe,
+    } = this.props
+    const {
+      address,
+    } = navigation.state.params
+    requestBitcoinBalanceByAddress(address)
+      .then((ballance) => {
+        console.log('HTTP BALLANCE OK:', ballance)
+        rmqSubscribe({
+          channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
+          handler: (data) => { console.log('HERE IS DATA FROM WEBSOCKET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ', data) },
+        })
+      })
+      .catch((error) => { console.log('HTTP response ERROR:', error) })
+  }
+
   handleSend = () => {
     // TODO: [AO] This is temporary limitation. At the moment we can't send not-ETH funds
     const {
@@ -60,20 +79,12 @@ class WalletContainer extends Component {
   }
 
   handleReceive = () => {
-    const { requestSubscribeWalletByAddress, navigation } = this.props
-    const {
-      address,
-    } = navigation.state.params
-    console.log("ADDRESS: ", address)
-    console.log("props: ", this.props)
-    requestSubscribeWalletByAddress(address)
-      .then((data) => { console.log('HTTP response OK:', data) })
-      .catch((error) => { console.log('HTTP response ERROR:', error) })
-    // Alert.alert(
-    //   'Work in progress',
-    //   'Sorry, receiving is under construction still.',
-    //   [{ text: 'Ok', onPress: () => { }, style: 'cancel' }]
-    // )
+
+    Alert.alert(
+      'Work in progress',
+      'Sorry, receiving is under construction still.',
+      [{ text: 'Ok', onPress: () => { }, style: 'cancel' }]
+    )
   }
 
   handleIndexChange = (index) =>

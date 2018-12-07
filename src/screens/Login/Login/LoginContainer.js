@@ -76,7 +76,7 @@ class LoginContainer extends PureComponent {
         } = this.props.navigation.state.params
         return Keychain.getInternetCredentials(account.address)
       })
-      .then((result) => this.handleLoginClick({password: result.password}))
+      .then((keychain) => this.handleLoginClick({password: keychain.password}))
       .catch(() => { })
   }
 
@@ -85,10 +85,10 @@ class LoginContainer extends PureComponent {
       account,
     } = this.props.navigation.state.params
     return decryptWallet(account.encrypted, password)
-      .then((results) => {
+      .then((wallet) => {
         return {
-          address: results.address,
-          privateKey: results.privateKey,
+          address: wallet.address,
+          privateKey: wallet.privateKey,
         }
       })
       .catch((error) => this.setState({ error: error.message }))
@@ -96,9 +96,9 @@ class LoginContainer extends PureComponent {
 
   handleLoginClick = async ({password}) => {
     const pass = password ? password : this.state.password
-    const results = await this.checkPassword(pass)
-    if (results) {
-      this.handleLogin(results)
+    const passwordValidationResults = await this.checkPassword(pass)
+    if (passwordValidationResults) {
+      this.handleLogin(passwordValidationResults)
     }
   }
 
@@ -109,7 +109,7 @@ class LoginContainer extends PureComponent {
         navigate('WalletList')
       })
       .catch((error) => {
-        console.log('Login failure:', error)
+        Alert.alert('Login failture: ', error.message)
       })
   }
 

@@ -48,8 +48,10 @@ class ConfirmMnemonicContainer extends PureComponent {
 
     createAccount(mnemonic, password)
       .then(() => {
-        const params = accounts && accounts.length !== 0 ? {account: accounts[accounts.length-1]} : null
-        navigation.navigate(`${params ? 'Login' : 'Start'}`, params)
+        const [account] = accounts.slice(-1) // get last created account
+        const params = account ? { account } : null
+        const page = params ? 'Login' : 'Start' // need to verify that account is falsy here
+        navigation.navigate(page, params)
       })
   }
 
