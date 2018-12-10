@@ -7,12 +7,12 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { getEthAccounts } from '@chronobank/ethereum/redux/selectors'
+import { getEthAccountList } from '@chronobank/ethereum/redux/selectors'
 import Start from './Start'
 
 const mapStateToProps = (state) => {
   return {
-    accounts: getEthAccounts(state),
+    accounts: getEthAccountList(state),
   }
 }
 

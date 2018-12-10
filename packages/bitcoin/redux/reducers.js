@@ -56,10 +56,10 @@ const mutations = {
           address,
           tokens: {
             [BTC_PRIMARY_TOKEN]: {
-              balance: null, // это баланс для UI, то есть amount (ниже) пересчитанный с учетом DECIMALS
-              symbol: BTC_PRIMARY_TOKEN, // тут лучше взять константу
-              amount: null, // здесь будет лежать сумма как есть с сервера
-              decimals: DECIMALS, // из константы значение
+              balance: null,
+              symbol: BTC_PRIMARY_TOKEN,
+              amount: null,
+              decimals: DECIMALS,
             },
           },
         },

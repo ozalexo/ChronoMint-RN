@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance  }
+const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
@@ -63,14 +63,14 @@ class WalletContainer extends Component {
     requestBitcoinSubscribeWalletByAddress(address)
       .then(() => {
         requestBitcoinBalanceByAddress(address)
-          .then((ballance) => {
+          .then((balance) => {
             updateBitcoinWalletBalance({
               address,
               parentAddress: currentWallet,
-              balance: ballance.payload.data.confirmations6.satoshis,
-              amount: ballance.payload.data.confirmations6.amount,
+              balance: balance.payload.data.confirmations6.satoshis,
+              amount: balance.payload.data.confirmations6.amount,
             })
-            console.log('ballance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(ballance))
+            console.log('balance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(balance))
             rmqSubscribe({
               channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
               handler: (data) => { console.log('HERE IS DATA FROM WEBSOCKET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ', data) },

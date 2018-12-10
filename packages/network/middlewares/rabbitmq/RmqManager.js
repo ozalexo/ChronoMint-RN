@@ -81,9 +81,6 @@ class RmqManager {
       if (!this.client) {
         return reject('RmqManager subscribe error: no connection to RabbitMQ host')
       }
-      // if (this.client && !this.client.connected) {
-      //   return reject('RmqManager subscribe error: no connection to RabbitMQ host')
-      // }
       try {
         const subscription = this.client.subscribe(channel, handler)
         this.subscriptions[channel] = subscription
