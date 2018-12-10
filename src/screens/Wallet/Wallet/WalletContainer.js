@@ -46,11 +46,16 @@ class WalletContainer extends Component {
       navigate,
       state,
     } = this.props.navigation
-    const { address, blockchain } = state.params
+    const {
+      address,
+      blockchain,
+      selectedCurrency,
+    } = state.params
 
     const params = {
       address,
       blockchain,
+      selectedCurrency,
     }
 
     navigate('Send', params)

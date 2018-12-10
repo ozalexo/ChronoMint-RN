@@ -4,10 +4,48 @@
  */
 
 import React, { PureComponent } from 'react'
-import { View } from 'react-native'
+import {
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Image,
+  Text,
+} from 'react-native'
 import PropTypes from 'prop-types'
+import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
+import i18n from '../../../locales/translation'
 import PrimaryButton from '../../../components/PrimaryButton'
+import FeeSlider from '../../../components/FeeSlider'
+import Input from '../../../components/Input'
+import SectionHeader from '../../../components/SectionHeader'
+import Separator from '../../../components/Separator'
+import {
+  chevron_right,
+  coin_time_small,
+} from '../../../images'
 import styles from './SendStyles'
+
+
+const TokenSelector = ({ onPress = () => { }, selectedToken }) => (
+  <TouchableOpacity style={styles.container} onPress={onPress}>
+    <View style={styles.tokenSelector}>
+      {
+        selectedToken && selectedToken.symbol &&
+        <Text style={styles.tokenSelectorLabel}>
+          {
+            selectedToken.symbol
+          }
+        </Text>
+      }
+      <Image source={chevron_right} />
+    </View>
+  </TouchableOpacity>
+)
+
+TokenSelector.propTypes = {
+  onPress: PropTypes.func,
+  selectedToken: PropTypes.string,
+}
 
 export default class Send extends PureComponent {
 
@@ -23,9 +61,39 @@ export default class Send extends PureComponent {
       showPasswordModal,
       showConfirmModal,
       error,
+      //
+      amount,
+      amountInCurrency,
+      blockchain,
+      // currentTokenBalance,
+      feeMultiplier,
+      gasFeeAmount,
+      gasFeeAmountInCurrency,
+      onChangeAmount = () => { },
+      onChangeRecipient = () => { },
+      onFeeSliderChange = () => { },
+      onSelectToken,
+      recipient,
+      selectedCurrency,
+      selectedToken,
+      selectedWallet,
     } = this.props
+
+    const currentTokenBalance = selectedWallet.tokens ?
+      selectedWallet.tokens[Object.keys(selectedWallet.tokens)[0]].balance :
+      null
+
+    const strings = {
+      amountInput: `Amount, ${selectedToken.symbol || ''}`,
+      walletValue: selectedToken && [selectedToken.symbol, selectedToken.amount].join(' '),
+      walletTitle: `My ${blockchain} Wallet`,
+      walletBalance: `${selectedCurrency} ${currentTokenBalance && currentTokenBalance.toFixed(2)}`,
+      sendBalance: `${selectedCurrency} ${amountInCurrency.toFixed(2)}`,
+      advancedFee: 'Advanced Fee',
+      scanQr: 'Scan QR code',
+    }
     return (
-      <View style={styles.screenView}>
+      <ScrollView style={styles.scrollView}>
         {showPasswordModal && <PasswordEnterModal
           visible={showPasswordModal}
           modalToggle={onTogglePasswordModal}
@@ -40,11 +108,80 @@ export default class Send extends PureComponent {
           sendConfirm={onSendConfirm}
         />
         }
+        <View style={styles.formHeader}>
+          <Text style={styles.walletTitle}>
+            {
+              strings.walletTitle
+            }
+          </Text>
+          <Text style={styles.walletAddress}>
+            {
+              selectedWallet.address
+            }
+          </Text>
+          {
+            (blockchain === DUCK_ETHEREUM)
+              ? (
+                <View>
+                  <Separator style={styles.separatorDark} />
+                  <TokenSelector
+                    selectedToken={selectedToken}
+                    onPress={onSelectToken}
+                  />
+                </View>
+              ) : null
+          }
+          <Separator style={styles.separatorDark} />
+          <Text style={styles.walletValue}>
+            {
+              strings.walletValue
+            }
+          </Text>
+          <Text style={styles.walletBalance}>
+            {
+              strings.walletBalance
+            }
+          </Text>
+        </View>
+        <View style={styles.formBody}>
+          <Image
+            source={coin_time_small}
+            style={styles.tokenImage}
+          />
+          <Input
+            placeholder='Recipient Address'
+            onChange={onChangeRecipient}
+            name='recipient'
+          />
+          <Input
+            placeholder={strings.amountInput}
+            keyboardType='numeric'
+            onChange={onChangeAmount}
+            name='amount'
+          />
+          <Text style={styles.sendBalance}>
+            {
+              strings.sendBalance
+            }
+          </Text>
+          <SectionHeader title='Fee' />
+          <FeeSlider
+            tokenSymbol={selectedToken.symbol}
+            selectedCurrency={selectedCurrency}
+            calculatedFeeValue={gasFeeAmount}
+            calculatedFeeValueInSelectedCurrency={gasFeeAmountInCurrency}
+            maximumValue={1.9}
+            minimumValue={0.1}
+            value={feeMultiplier}
+            step={0.1}
+            handleValueChange={onFeeSliderChange}
+          />
+        </View>
         <PrimaryButton
           label='Go to password entrance'
           onPress={onTogglePasswordModal}
         />
-      </View>
+      </ScrollView>
     )
   }
 }

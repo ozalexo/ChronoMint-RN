@@ -6,6 +6,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
 import { getSections } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
@@ -13,14 +14,13 @@ import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinWalletBalance } from '@chronobank/bitcoin/redux/thunks'
 import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
-import PropTypes from 'prop-types'
 import WalletList from './WalletList'
 
 
 const mapStateToProps = (state) => ({
   sections: getSections(state),
   currentWallet: getCurrentWallet(state),
-  BTCwallets: getBitcoinWalletsList(state),
+  BTCwalletsList: getBitcoinWalletsList(state),
 })
 
 const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance }
@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, disp
 class WalletListContainer extends PureComponent {
 
   static propTypes = {
-    BTCwallets: PropTypes.arrayOf(
+    BTCwalletsList: PropTypes.arrayOf(
       PropTypes.string
     ),
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
@@ -63,9 +63,9 @@ class WalletListContainer extends PureComponent {
       updateBitcoinWalletBalance,
       rmqSubscribe,
       currentWallet,
-      BTCwallets,
+      BTCwalletsList,
     } = this.props
-    BTCwallets.forEach((address) => {
+    BTCwalletsList.forEach((address) => {
       requestBitcoinSubscribeWalletByAddress(address)
         .then(() => {
           requestBitcoinBalanceByAddress(address)
