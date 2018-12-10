@@ -16,9 +16,9 @@ export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch) => {
   }
 }
 
-export const updateBitcoinWalletBalance = ({parentAddress, address, balance, amount}) => (dispatch) => {
+export const updateBitcoinWalletBalance = ({ address, parentAddress, balance, amount }) => (dispatch) => {
   try {
-    dispatch(bitcoinUpdateBalance({parentAddress, address, balance, amount}))
+    dispatch(bitcoinUpdateBalance({ address, parentAddress, balance, amount }))
     return Promise.resolve()
   } catch (e) {
     return Promise.reject(e)

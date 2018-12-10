@@ -39,6 +39,12 @@ export const getBitcoinWallets = createSelector(
   }
 )
 
+export const getBitcoinWalletsList = createSelector(
+  getDuckBitcoin(),
+  getCurrentWallet,
+  (bitcoin, ethAddress) => Object.keys(bitcoin.list[ethAddress])
+)
+
 export const getEntryPending = (address, key, blockchain) => createSelector(
   getBitcoinPending(blockchain),
   (pending) => {

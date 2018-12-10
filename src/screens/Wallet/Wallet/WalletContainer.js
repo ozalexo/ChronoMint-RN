@@ -9,11 +9,7 @@ import { bindActionCreators } from 'redux'
 import {
   Alert,
 } from 'react-native'
-import { rmqSubscribe } from '@chronobank/network/redux/thunks'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import * as apiBTC from '@chronobank/bitcoin/service/api'
-import { updateBitcoinWalletBalance } from '@chronobank/bitcoin/redux/thunks'
-import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
 
@@ -23,9 +19,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance }
-
-const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
 class WalletContainer extends Component {
   constructor (props) {
@@ -34,8 +28,6 @@ class WalletContainer extends Component {
 
   static propTypes = {
     getAccountTransactions: PropTypes.func,
-    updateBitcoinWalletBalance: PropTypes.func,
-    currentWallet: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       state: PropTypes.shape({
@@ -46,38 +38,6 @@ class WalletContainer extends Component {
         }),
       }),
     }),
-  }
-
-  componentDidMount () {
-    const {
-      navigation,
-      requestBitcoinSubscribeWalletByAddress,
-      requestBitcoinBalanceByAddress,
-      updateBitcoinWalletBalance,
-      rmqSubscribe,
-      currentWallet,
-    } = this.props
-    const {
-      address,
-    } = navigation.state.params
-    requestBitcoinSubscribeWalletByAddress(address)
-      .then(() => {
-        requestBitcoinBalanceByAddress(address)
-          .then((balance) => {
-            updateBitcoinWalletBalance({
-              address,
-              parentAddress: currentWallet,
-              balance: balance.payload.data.confirmations6.satoshis,
-              amount: balance.payload.data.confirmations6.amount,
-            })
-            console.log('balance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(balance))
-            rmqSubscribe({
-              channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
-              handler: (data) => { console.log('HERE IS DATA FROM WEBSOCKET!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ', data) },
-            })
-          })
-      })
-      .catch((error) => { console.log('HTTP response ERROR:', error) })
   }
 
   handleSend = () => {

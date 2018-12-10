@@ -25,10 +25,10 @@ export const bitcoinCreateWallet = (parentAddress, address) => ({
   address,
 })
 
-export const bitcoinUpdateBalance = ({parentAddress, address, balance, amount}) => ({
+export const bitcoinUpdateBalance = ({ address, parentAddress, balance, amount }) => ({
   type: ActionsTypes.BITCOIN_UPDATE_BALANCE,
-  parentAddress,
   address,
+  parentAddress,
   balance,
   amount,
 })

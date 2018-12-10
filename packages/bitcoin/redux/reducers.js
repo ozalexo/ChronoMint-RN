@@ -23,7 +23,7 @@ const bitcoinRehydrate = (state, payload) => {
 const mutations = {
 
   [REHYDRATE]: bitcoinRehydrate,
-  [ActionsTypes.BITCOIN_UPDATE_BALANCE]: (state, { parentAddress, address, balance, amount }) => {
+  [ActionsTypes.BITCOIN_UPDATE_BALANCE]: (state, { address, parentAddress, balance, amount }) => {
     let list = Object.assign({}, state.list)
     list = {
       ...list,
