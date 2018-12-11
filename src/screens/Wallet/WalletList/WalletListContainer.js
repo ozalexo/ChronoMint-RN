@@ -12,7 +12,7 @@ import { getSections } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { updateBitcoinWalletBalance } from '@chronobank/bitcoin/redux/thunks'
+import { updateBitcoinWalletBalance, dropSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
 import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => ({
   BTCwalletsList: getBitcoinWalletsList(state),
 })
 
-const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance }
+const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance, dropSelectedWallet }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
@@ -33,6 +33,7 @@ class WalletListContainer extends PureComponent {
     BTCwalletsList: PropTypes.arrayOf(
       PropTypes.string
     ),
+    dropSelectedWallet: PropTypes.func,
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
     requestBitcoinBalanceByAddress: PropTypes.func,
     rmqSubscribe: PropTypes.func,
@@ -53,6 +54,9 @@ class WalletListContainer extends PureComponent {
     ),
   }
 
+  handleRemoveSelectedWallet = () => {
+    this.props.dropSelectedWallet()
+  }
 
   componentDidMount () {
     const {
@@ -100,6 +104,7 @@ class WalletListContainer extends PureComponent {
         navigation={navigation}
         sections={sections}
         parentWallet={currentWallet}
+        onRemoveSelectedWallet={this.handleRemoveSelectedWallet}
       />
     )
   }

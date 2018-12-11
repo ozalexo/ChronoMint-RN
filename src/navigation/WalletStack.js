@@ -55,7 +55,7 @@ const WalletStack = createStackNavigator(
     'Wallet': {
       navigationOptions: ({ navigation }) => ({
         title: i18n.t('ScreensTitles.Wallet'),
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack()} tintColor='white' />,
+        headerLeft: <HeaderBackButton onPress={() => navigation.navigate('WalletList', { updated: true })} tintColor='white' />,
       }),
       screen: Wallet,
     },

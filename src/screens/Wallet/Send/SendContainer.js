@@ -8,8 +8,13 @@ import {
   Alert,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
+import {
+  createBitcoinTxDraft,
+  removeBitcoinTxDraft,
+} from '@chronobank/bitcoin/redux/thunks'
 import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { convertToWei } from '@chronobank/bitcoin/utils/amount'
@@ -30,10 +35,11 @@ const mapStateToProps = (state) => {
     BTCwallets: getBitcoinWallets(state),
   }
 }
-const mapDispatchToProps = () => {
-  return {
-  }
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  createBitcoinTxDraft,
+  removeBitcoinTxDraft,
+}, dispatch)
+
 class SendContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -64,11 +70,14 @@ class SendContainer extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
+      createBitcoinTxDraft: PropTypes.func,
+      removeBitcoinTxDraft: PropTypes.func,
       state: PropTypes.shape({
         params: PropTypes.shape({
           address: PropTypes.string,
           blockchain: PropTypes.string,
           selectedCurrency: PropTypes.string,
+          parentAddress: PropTypes.string,
         }),
       }),
     }),
@@ -351,6 +360,18 @@ class SendContainer extends React.Component {
     this.setState({ [name]: value })
   }
 
+  handleTxDraftCreate = () => {
+    const { createBitcoinTxDraft, navigation } = this.props
+    const { address, parentAddress } = navigation.state.params
+    createBitcoinTxDraft({ address, parentAddress })
+  }
+
+  handleTxDraftRemove = () => {
+    const { removeBitcoinTxDraft, navigation } = this.props
+    const { address, parentAddress } = navigation.state.params
+    removeBitcoinTxDraft({ address, parentAddress })
+  }
+
 
   render () {
     const {
@@ -402,6 +423,9 @@ class SendContainer extends React.Component {
         showPasswordModal={enterPasswordModal}
         showConfirmModal={confirmSendModal}
         error={error}
+        //txDraft
+        onTxDraftCreate={this.handleTxDraftCreate}
+        onTxDraftRemove={this.handleTxDraftRemove}
       />
     )
   }

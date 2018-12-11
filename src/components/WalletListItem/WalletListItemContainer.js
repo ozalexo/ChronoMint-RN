@@ -39,9 +39,10 @@ class WalletListItemContainer extends PureComponent {
       blockchain,
       address,
       selectedCurrency,
+      parentAddress,
     }
 
-    blockchain === DUCK_ETHEREUM ? null : selectBitcoinWallet({ address, parentAddress })
+    blockchain === DUCK_ETHEREUM ? null : selectBitcoinWallet({ address })
     navigation.navigate('Wallet', params)
   }
 

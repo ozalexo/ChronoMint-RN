@@ -35,6 +35,7 @@ class WalletContainer extends Component {
           address: PropTypes.string,
           blockchain: PropTypes.string,
           selectedCurrency: PropTypes.string,
+          parentAddress: PropTypes.string,
         }),
       }),
     }),
@@ -50,12 +51,14 @@ class WalletContainer extends Component {
       address,
       blockchain,
       selectedCurrency,
+      parentAddress,
     } = state.params
 
     const params = {
       address,
       blockchain,
       selectedCurrency,
+      parentAddress,
     }
 
     navigate('Send', params)

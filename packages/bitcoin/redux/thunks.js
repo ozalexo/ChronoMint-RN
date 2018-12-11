@@ -23,9 +23,16 @@ export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch) => {
   }
 }
 
-export const selectBitcoinWallet = ({ address, parentAddress }) => (dispatch) => {
+export const selectBitcoinWallet = ({ address }) => (dispatch) => {
   try {
     dispatch(bitcoinSelectWallet(address))
+    return Promise.resolve()
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
+export const createBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
+  try {
     dispatch(bitcoinCreateTxDraft({ address, parentAddress }))
     return Promise.resolve()
   } catch (e) {
@@ -33,9 +40,16 @@ export const selectBitcoinWallet = ({ address, parentAddress }) => (dispatch) =>
   }
 }
 
-export const dropSelectedWallet = ({ address, parentAddress }) => (dispatch) => {
+export const dropSelectedWallet = () => (dispatch) => {
   try {
     dispatch(bitcoinDropSelectedWallet())
+    return Promise.resolve()
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
+export const removeBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
+  try {
     dispatch(bitcoinDeleteTxDraft({ address, parentAddress }))
     return Promise.resolve()
   } catch (e) {

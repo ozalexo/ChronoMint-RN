@@ -18,6 +18,7 @@ import PrimaryButton from '../../../components/PrimaryButton'
 import FeeSlider from '../../../components/FeeSlider'
 import Input from '../../../components/Input'
 import Separator from '../../../components/Separator'
+import { NavigationEvents } from 'react-navigation'
 import {
   chevron_right,
   coin_time_small,
@@ -77,6 +78,9 @@ export default class Send extends PureComponent {
       selectedToken,
       selectedWallet,
       passProps,
+      //txDraft
+      onTxDraftCreate,
+      onTxDraftRemove,
     } = this.props
 
     const currentTokenBalance = selectedWallet.tokens ?
@@ -94,6 +98,10 @@ export default class Send extends PureComponent {
     }
     return (
       <ScrollView style={styles.scrollView}>
+        <NavigationEvents
+          onDidFocus={onTxDraftCreate}
+          onWillBlur={onTxDraftRemove}
+        />
         {showPasswordModal && <PasswordEnterModal
           passProps={passProps}
           visible={showPasswordModal}
