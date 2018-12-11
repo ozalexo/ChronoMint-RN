@@ -17,7 +17,6 @@ import i18n from '../../../locales/translation'
 import PrimaryButton from '../../../components/PrimaryButton'
 import FeeSlider from '../../../components/FeeSlider'
 import Input from '../../../components/Input'
-import SectionHeader from '../../../components/SectionHeader'
 import Separator from '../../../components/Separator'
 import {
   chevron_right,
@@ -77,6 +76,7 @@ export default class Send extends PureComponent {
       selectedCurrency,
       selectedToken,
       selectedWallet,
+      passProps,
     } = this.props
 
     const currentTokenBalance = selectedWallet.tokens ?
@@ -95,6 +95,7 @@ export default class Send extends PureComponent {
     return (
       <ScrollView style={styles.scrollView}>
         {showPasswordModal && <PasswordEnterModal
+          passProps={passProps}
           visible={showPasswordModal}
           modalToggle={onTogglePasswordModal}
           passwordChange={onPasswordChange}
@@ -164,7 +165,6 @@ export default class Send extends PureComponent {
               strings.sendBalance
             }
           </Text>
-          <SectionHeader title='Fee' />
           <FeeSlider
             tokenSymbol={selectedToken.symbol}
             selectedCurrency={selectedCurrency}
@@ -180,6 +180,7 @@ export default class Send extends PureComponent {
         <PrimaryButton
           label='Go to password entrance'
           onPress={onTogglePasswordModal}
+          style={styles.openModalButton}
         />
       </ScrollView>
     )

@@ -39,9 +39,7 @@ class WalletListContainer extends PureComponent {
     getAccountTransactions: PropTypes.func,
     updateBitcoinWalletBalance: PropTypes.func,
     currentWallet: PropTypes.string,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
+    navigation: PropTypes.shape({}),
     sections: PropTypes.arrayOf(
       PropTypes.shape({
         data: PropTypes.arrayOf(
@@ -80,7 +78,7 @@ class WalletListContainer extends PureComponent {
               rmqSubscribe({
                 channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
                 handler: (data) => {
-                  console.log("data: ...............",data)
+                  console.log("data: ...............", data)
                   updateBitcoinWalletBalance({
                     address: data.account,
                     parentAddress: currentWallet,
@@ -96,11 +94,12 @@ class WalletListContainer extends PureComponent {
   }
 
   render () {
-    const { navigation, sections } = this.props
+    const { navigation, sections, currentWallet } = this.props
     return (
       <WalletList
-        navigate={navigation.navigate}
+        navigation={navigation}
         sections={sections}
+        parentWallet={currentWallet}
       />
     )
   }

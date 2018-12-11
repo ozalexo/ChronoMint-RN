@@ -4,7 +4,7 @@
  */
 
  import BigNumber from 'bignumber.js'
- import web3Utils from 'web3-utils'
+ import web3utils from 'web3/lib/utils/utils'
 
 export const parseByDefaultBitcoinLikeBlockchainBalanceData = (response) => {
   const {
@@ -20,7 +20,7 @@ export const parseByDefaultBitcoinLikeBlockchainBalanceData = (response) => {
   return result.balance0 || result.balance6
 }
 
-export const convertToWei = (amount) => web3Utils.toWei(amount)
+export const convertToWei = (amount) => web3utils.toWei(amount)
 
 // const addDecimals = (amount) => {
 //   const amountBN = new BigNumber(amount.toString())

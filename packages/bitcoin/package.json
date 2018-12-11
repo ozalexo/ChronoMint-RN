@@ -2,7 +2,6 @@
   "name": "@chronobank/bitcoin",
   "version": "1.0.0",
   "dependencies": {
-    "bitcoinjs-lib": "^4.0.2",
-    "web3-utils": "^1.0.0-beta.37"
+    "bitcoinjs-lib": "^4.0.2"
   }
 }

@@ -14,34 +14,37 @@ import PrimaryButton from '../../../../../components/PrimaryButton'
 import Input from '../../../../../components/Input'
 import styles from './PasswordEnterModalStyles'
 
-const PasswordEnterModal = ({ visible, modalToggle, passwordChange, error, confirmPassword }) => (
-  <Modal
-    animationType="slide"
-    visible={visible}
-    onRequestClose={modalToggle}
-  >
-    <View style={styles.modal}>
-      <View style={styles.actions}>
-        <ActionButton
-          title='Go back'
-          onPress={modalToggle}
-        />
+const PasswordEnterModal = ({ visible, modalToggle, passwordChange, error, confirmPassword, passProps }) => {
+  console.log("passProps in modal: ", passProps)
+  return (
+    <Modal
+      animationType="slide"
+      visible={visible}
+      onRequestClose={modalToggle}
+    >
+      <View style={styles.modal}>
+        <View style={styles.actions}>
+          <ActionButton
+            title='Go back'
+            onPress={modalToggle}
+          />
+        </View>
+        <View>
+          <Input
+            label='Enter password'
+            name='password'
+            onChange={passwordChange}
+            error={error}
+          />
+          <PrimaryButton
+            label='Enter password'
+            onPress={confirmPassword}
+          />
+        </View>
       </View>
-      <View>
-        <Input
-          label='Enter password'
-          name='password'
-          onChange={passwordChange}
-          error={error}
-        />
-        <PrimaryButton
-          label='Enter password'
-          onPress={confirmPassword}
-        />
-      </View>
-    </View>
-  </Modal>
-)
+    </Modal>
+  )
+}
 
 PasswordEnterModal.propTypes = {
   visible: PropTypes.bool,

@@ -19,6 +19,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
+  openModalButton: {
+    marginVertical: 15,
+  },
   //styles from develop
   advancedFee: {
     color: '#786AB7',

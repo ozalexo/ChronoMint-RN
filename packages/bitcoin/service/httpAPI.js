@@ -21,7 +21,7 @@ export const requestSubscribeWalletByAddress = (address) => (dispatch) => {
       request: {
         method: 'POST',
         url: '/addr',
-        data: address,
+        data: {address},
       },
     },
   }

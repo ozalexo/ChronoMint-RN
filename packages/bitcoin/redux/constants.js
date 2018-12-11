@@ -8,7 +8,10 @@ export const DUCK_BITCOIN = 'bitcoin'
 
 export const BITCOIN_CREATE_WALLET = 'BITCOIN/CREATE_WALLET'
 export const BITCOIN_UPDATE_BALANCE = 'BITCOIN/BALANCE_UPDATE'
-
+export const BITCOIN_SELECT_WALLET = 'BITCOIN/SELECT_WALLET'
+export const BITCOIN_CREATE_TX_DRAFT = 'BITCOIN/CREATE_TX_DRAFT'
+export const BITCOIN_DELETE_TX_DRAFT = 'BITCOIN/DELETE_TX_DRAFT'
+export const BITCOIN_DROP_SELECTED_WALLET = 'BITCOIN/DROP_SELECTED_WALLET'
 
 // Actions to operate with preparation of a transaction Create/update, accept before send or reject.
 export const BITCOIN_TX_UPDATE = 'BITCOIN/TX/UPDATE'

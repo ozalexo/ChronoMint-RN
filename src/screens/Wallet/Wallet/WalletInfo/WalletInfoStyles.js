@@ -19,7 +19,7 @@ export default StyleSheet.create({
     height: 38,
   },
   walletDetailsSection: {
-    backgroundColor: colors.textContainer,
+    // backgroundColor: colors.textContainer,
     borderRadius: 3,
     alignItems: 'center',
     padding: 24,

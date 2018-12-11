@@ -23,6 +23,59 @@ const bitcoinRehydrate = (state, payload) => {
 const mutations = {
 
   [REHYDRATE]: bitcoinRehydrate,
+  [ActionsTypes.BITCOIN_DELETE_TX_DRAFT]: (state, { address, parentAddress }) => {
+    let list = Object.assign({}, state.list)
+    delete list[parentAddress][address].txDraft
+    list = {
+      ...list,
+      [parentAddress]: {
+        ...list[parentAddress],
+        [address]: {
+          ...list[parentAddress][address],
+        },
+      },
+    }
+    return {
+      ...state,
+      list,
+    }
+  },
+  [ActionsTypes.BITCOIN_CREATE_TX_DRAFT]: (state, { address, parentAddress }) => {
+    let list = Object.assign({}, state.list)
+    list = {
+      ...list,
+      [parentAddress]: {
+        ...list[parentAddress],
+        [address]: {
+          ...list[parentAddress][address],
+          txDraft: {
+            recipient: '',
+            amount: null,
+            token: {},
+            fee: 1,
+            unsignedTx: null,
+            signedTx: null,
+          },
+        },
+      },
+    }
+    return {
+      ...state,
+      list,
+    }
+  },
+  [ActionsTypes.BITCOIN_SELECT_WALLET]: (state, {address}) => {
+    return {
+      ...state,
+      selected: address,
+    }
+  },
+  [ActionsTypes.BITCOIN_DROP_SELECTED_WALLET]: (state) => {
+    return {
+      ...state,
+      selected: null,
+    }
+  },
   [ActionsTypes.BITCOIN_UPDATE_BALANCE]: (state, { address, parentAddress, balance, amount }) => {
     let list = Object.assign({}, state.list)
     list = {

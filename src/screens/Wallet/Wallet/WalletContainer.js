@@ -62,7 +62,6 @@ class WalletContainer extends Component {
   }
 
   handleReceive = () => {
-
     Alert.alert(
       'Work in progress',
       'Sorry, receiving is under construction still.',

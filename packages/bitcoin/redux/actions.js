@@ -11,6 +11,25 @@ export const bitcoinTxUpdate = (entry) => ({
   address: entry.tx.from,
   entry,
 })
+export const bitcoinCreateTxDraft = ({ address, parentAddress }) => ({
+  type: ActionsTypes.BITCOIN_CREATE_TX_DRAFT,
+  address,
+  parentAddress,
+})
+export const bitcoinDeleteTxDraft = ({ address, parentAddress }) => ({
+  type: ActionsTypes.BITCOIN_DELETE_TX_DRAFT,
+  address,
+  parentAddress,
+})
+
+export const bitcoinDropSelectedWallet = () => ({
+  type: ActionsTypes.BITCOIN_DROP_SELECTED_WALLET,
+})
+
+export const bitcoinSelectWallet = (address) => ({
+  type: ActionsTypes.BITCOIN_SELECT_WALLET,
+  address,
+})
 
 export const bitcoinTxAccept = (entry) => ({
   type: ActionsTypes.BITCOIN_TX_ACCEPT,
