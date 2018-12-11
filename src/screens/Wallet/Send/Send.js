@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
+import { DUCK_BITCOIN } from '@chronobank/bitcoin/redux/constants'
 import i18n from '../../../locales/translation'
 import PrimaryButton from '../../../components/PrimaryButton'
 import FeeSlider from '../../../components/FeeSlider'
@@ -21,6 +22,8 @@ import Separator from '../../../components/Separator'
 import { NavigationEvents } from 'react-navigation'
 import {
   chevron_right,
+  coin_bitcoin,
+  coin_ethereum,
   coin_time_small,
 } from '../../../images'
 import styles from './SendStyles'
@@ -96,6 +99,14 @@ export default class Send extends PureComponent {
       advancedFee: 'Advanced Fee',
       scanQr: 'Scan QR code',
     }
+
+    const cryptoImages = {
+      [DUCK_ETHEREUM]: coin_ethereum,
+      [DUCK_BITCOIN]: coin_bitcoin,
+    }
+    console.log("blockchain: ", blockchain)
+    console.log("cryptoImages: ", cryptoImages)
+    console.log("cryptoImages[blockchain]: ", cryptoImages[blockchain])
     return (
       <ScrollView style={styles.scrollView}>
         <NavigationEvents
@@ -154,7 +165,7 @@ export default class Send extends PureComponent {
         </View>
         <View style={styles.formBody}>
           <Image
-            source={coin_time_small}
+            source={cryptoImages[blockchain] || coin_time_small}
             style={styles.tokenImage}
           />
           <Input
