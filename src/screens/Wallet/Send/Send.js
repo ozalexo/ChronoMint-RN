@@ -104,9 +104,7 @@ export default class Send extends PureComponent {
       [DUCK_ETHEREUM]: coin_ethereum,
       [DUCK_BITCOIN]: coin_bitcoin,
     }
-    console.log("blockchain: ", blockchain)
-    console.log("cryptoImages: ", cryptoImages)
-    console.log("cryptoImages[blockchain]: ", cryptoImages[blockchain])
+    
     return (
       <ScrollView style={styles.scrollView}>
         <NavigationEvents
