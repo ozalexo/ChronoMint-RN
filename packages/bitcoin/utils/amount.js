@@ -3,8 +3,9 @@
  * Licensed under the AGPL Version 3 license.
  */
 
- import BigNumber from 'bignumber.js'
- import web3utils from 'web3/lib/utils/utils'
+import BigNumber from 'bignumber.js'
+import web3utils from 'web3/lib/utils/utils'
+import { DECIMALS } from '../constants'
 
 export const parseByDefaultBitcoinLikeBlockchainBalanceData = (response) => {
   const {
@@ -18,6 +19,14 @@ export const parseByDefaultBitcoinLikeBlockchainBalanceData = (response) => {
     balance6: new BigNumber(confirmations6.satoshis),
   }
   return result.balance0 || result.balance6
+}
+
+export const convertSatoshiToBTC = (satoshiAmount) => {
+  return new BigNumber(satoshiAmount / DECIMALS)
+}
+
+export const convertBTCToSatoshi = (BTC) => {
+  return new BigNumber(BTC * DECIMALS)
 }
 
 export const convertToWei = (amount) => web3utils.toWei(amount)

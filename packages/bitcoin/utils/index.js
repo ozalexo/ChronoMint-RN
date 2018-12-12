@@ -20,12 +20,10 @@ const getKeyPair = (privateKey) => {
 }
 
 export const selectCoins = (to, amount, feeRate, utxos) => {
-  console.log("SELECT COINS")
-  console.log("to, amount, feeRate, utxos: ", to, amount, feeRate, utxos)
   const targets = [
     {
       address: to,
-      value: amount,
+      value: amount.toNumber(),
     },
   ]
   const utxosArray = utxos.map((output) => ({
@@ -34,15 +32,9 @@ export const selectCoins = (to, amount, feeRate, utxos) => {
     value: Number.parseInt(output.satoshis),
   }))
 
-  console.log("utxosArray: ", utxosArray)
-  console.log("targets: ", targets)
-  console.log("Math.ceil(feeRate): ",  Math.ceil(feeRate))
-  console.log("coinselect(utxosArray, targets, Math.ceil(feeRate)): ",  coinselect(utxosArray, targets, Math.ceil(feeRate)))
-
   // An unspent transaction output (UTXO) selection
   const { inputs, outputs, fee } = coinselect(utxosArray, targets, Math.ceil(feeRate))
-
-  console.log("INSIDE: ", inputs, outputs, fee)
+  // const { inputs, outputs, fee } = coinselect(utxosArray, targets, Math.ceil(feeRate))
 
   // TODO: need to process a case, if some of inputs, outputs or fee is undefined... Here or outside
   return { inputs, outputs, fee }
@@ -52,7 +44,6 @@ export const describeBitcoinTransaction = (tx, options, utxos) => {
   const { to, from, value } = tx
   const { feeRate, blockchain, network } = options
   const bitcoinNetwork = bitcoin.networks[network['Bitcoin']]
-  console.log(bitcoinNetwork)
   const { inputs, outputs, fee } = selectCoins(to, value, feeRate, utxos)
 
   if (!inputs || !outputs) {
@@ -80,12 +71,7 @@ export const describeBitcoinTransaction = (tx, options, utxos) => {
   }
 }
 
-export const prepareBitcoinTransaction = ({tx, blockchain, feeRate, network, utxos, feeMultiplier = 1, satPerByte = null}) =>  {
-  console.log("tx: ", tx)
-  console.log("blockchain: ", blockchain)
-  console.log("feeRate: ", feeRate)
-  console.log("network: ", network)
-  console.log("utxos: ", utxos)
+export const prepareBitcoinTransaction = async ({ tx, blockchain, feeRate, network, utxos, feeMultiplier = 1, satPerByte = null }) => {
   const tokenRate = (satPerByte || feeRate) * feeMultiplier // TODO: What if satPerByte will be zero (not null)?
   const options = {
     from: tx.from,
@@ -93,15 +79,28 @@ export const prepareBitcoinTransaction = ({tx, blockchain, feeRate, network, utx
     blockchain,
     network,
   }
-  const prepared = describeBitcoinTransaction(tx, options, utxos)
+  const prepared = await describeBitcoinTransaction(tx, options, utxos)
 
   return {
     from: tx.from,
     to: tx.to,
-    amount: new BigNumber(tx.value),
+    amount: tx.value,
     fee: new BigNumber(prepared.fee),
     prepared: prepared.tx,
     inputs: prepared.inputs,
     outputs: prepared.outputs,
   }
+}
+
+export const signTransaction = ({ unsignedTxHex, network, privateKey }) => {
+  const txb = new bitcoin.TransactionBuilder
+    .fromTransaction(bitcoin.Transaction.fromHex(unsignedTxHex), network)
+  const key = checkPrivateKey(privateKey)
+  const keyPair = getKeyPair(key)
+
+  for (let i = 0; i < txb.__inputs.length; i++) {
+    txb.sign(i, keyPair)
+  }
+
+  return txb.build().toHex()
 }

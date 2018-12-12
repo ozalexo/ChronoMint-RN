@@ -10,18 +10,21 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import bitcoin from 'bitcoinjs-lib'
+import { networks } from 'bitcoinjs-lib'
+import * as Keychain from 'react-native-keychain'
 import BigNumber from 'bignumber.js'
 import {
   createBitcoinTxDraft,
   deleteBitcoinTxDraft,
 } from '@chronobank/bitcoin/redux/thunks'
+import { decryptWallet } from '@chronobank/ethereum/utils'
 import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
+import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { requestBitcoinUtxoByAddress } from '@chronobank/bitcoin/service/api'
-import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils/index'
+import { prepareBitcoinTransaction, signTransaction } from '@chronobank/bitcoin/utils'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
-import { convertToWei } from '@chronobank/bitcoin/utils/amount'
+import { convertToWei, convertBTCToSatoshi } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
@@ -38,6 +41,7 @@ const mapStateToProps = (state) => {
       },
     },
     // prices: selectMarketPrices(state),
+    currentWallet: getCurrentEthWallet(state),
     BTCwallets: getBitcoinWallets(state),
     network: getCurrentNetwork(state),
   }
@@ -94,8 +98,8 @@ class SendContainer extends React.Component {
   }
 
   handleGoToPasswordModal = () => {
-    const { address, selectedCurrency, blockchain } = this.props.navigation.state.params
-    const { requestBitcoinUtxoByAddress, network } = this.props
+    const { address, selectedCurrency, blockchain, parentAddress } = this.props.navigation.state.params
+    const { requestBitcoinUtxoByAddress, currentWallet } = this.props
     const {
       isRecipientInputValid,
       isAmountInputValid,
@@ -133,23 +137,38 @@ class SendContainer extends React.Component {
       const tx = {
         to: passProps.recipientAddress,
         from: address,
-        value: passProps.amountToSend.token,
+        value: convertBTCToSatoshi(passProps.amountToSend.token),
       }
 
       requestBitcoinUtxoByAddress(address)
         .then((results) => {
           console.log("RESULTS: ", results)
+          console.log("networks: ", networks)
           if (results && results.payload.data) {
             const feeRate = passProps.fee.token
             // const prepared = await dispatch(BitcoinUtils.prepareBitcoinTransaction(tx, token, network, utxos))
-            const transaction = prepareBitcoinTransaction({
+            prepareBitcoinTransaction({
               tx,
               blockchain,
               feeRate,
-              network,
+              network: networks.testnet,
               utxos: results.payload.data,
             })
-            console.log('herE is trANsaCTION: ', transaction)
+              .then((transaction) => {
+                console.log('HERE IS TRANSACTION: ', transaction)
+                console.log('HERE IS TRANSACTION.buildIncomplete().toHex(): ', transaction.prepared.buildIncomplete().toHex())
+                const unsignedTxHex = transaction.prepared.buildIncomplete().toHex()
+                Keychain.getInternetCredentials(parentAddress)
+                  .then((keychain) => {
+                    console.log("PASsWORD: ", keychain.password)
+                    decryptWallet(currentWallet.encrypted, keychain.password)
+                      .then((decrypted) => {
+                        console.log("decrypted: ", decrypted)
+                        const signedTX = signTransaction({ unsignedTxHex, network: networks.testnet, privateKey: decrypted.privateKey })
+                        console.log("SIGNED: ", signedTX)
+                      })
+                  })
+              })
           }
         })
 

@@ -95,7 +95,6 @@ class LoginContainer extends PureComponent {
   }
 
 
-
   handleLoginClick = async ({ password }) => {
     const {
       account,

@@ -90,7 +90,7 @@ class WalletListContainer extends PureComponent {
                 balance: balance.payload.data.confirmations6.satoshis,
                 amount: balance.payload.data.confirmations6.amount,
               })
-              console.log('balance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(balance))
+              console.log('balance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(balance).toNumber())
             })
         })
         .catch((error) => { console.log('HTTP response ERROR:', error) })
