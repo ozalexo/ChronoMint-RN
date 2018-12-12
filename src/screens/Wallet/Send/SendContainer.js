@@ -10,19 +10,25 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import bitcoin from 'bitcoinjs-lib'
 import BigNumber from 'bignumber.js'
 import {
   createBitcoinTxDraft,
   deleteBitcoinTxDraft,
 } from '@chronobank/bitcoin/redux/thunks'
 import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
+import { requestBitcoinUtxoByAddress } from '@chronobank/bitcoin/service/api'
+import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils/index'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
+import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { convertToWei } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
 import Send from './Send'
 
+// requestBitcoinUtxoByAddress(address)
+// .then((results) => console.log("UTXO RESULTS: ", results))
 
 const mapStateToProps = (state) => {
   return {
@@ -33,11 +39,15 @@ const mapStateToProps = (state) => {
     },
     // prices: selectMarketPrices(state),
     BTCwallets: getBitcoinWallets(state),
+    network: getCurrentNetwork(state),
   }
 }
+
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   createBitcoinTxDraft,
   deleteBitcoinTxDraft,
+  requestBitcoinUtxoByAddress,
 }, dispatch)
 
 class SendContainer extends React.Component {
@@ -84,6 +94,8 @@ class SendContainer extends React.Component {
   }
 
   handleGoToPasswordModal = () => {
+    const { address, selectedCurrency, blockchain } = this.props.navigation.state.params
+    const { requestBitcoinUtxoByAddress, network } = this.props
     const {
       isRecipientInputValid,
       isAmountInputValid,
@@ -96,8 +108,6 @@ class SendContainer extends React.Component {
       amount,
       firtsAvailableToken,
     } = this.state
-
-    const { selectedCurrency } = this.props.navigation.state.params
 
     if (isRecipientInputValid && isAmountInputValid) {
 
@@ -119,6 +129,29 @@ class SendContainer extends React.Component {
         },
         feeMultiplier,
       }
+
+      const tx = {
+        to: passProps.recipientAddress,
+        from: address,
+        value: passProps.amountToSend.token,
+      }
+
+      requestBitcoinUtxoByAddress(address)
+        .then((results) => {
+          console.log("RESULTS: ", results)
+          if (results && results.payload.data) {
+            const feeRate = passProps.fee.token
+            // const prepared = await dispatch(BitcoinUtils.prepareBitcoinTransaction(tx, token, network, utxos))
+            const transaction = prepareBitcoinTransaction({
+              tx,
+              blockchain,
+              feeRate,
+              network,
+              utxos: results.payload.data,
+            })
+            console.log('herE is trANsaCTION: ', transaction)
+          }
+        })
 
       this.setState({ passProps }, () => this.handleTogglePasswordModal())
 
