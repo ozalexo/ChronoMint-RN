@@ -9,8 +9,7 @@ import { headerHeight } from '../../../common/constants/screens'
 
 export default StyleSheet.create({
   container: {
-    // TODO: to investigate a "magic" with this 20
-    marginTop: 20,
+    marginTop: headerHeight,
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',

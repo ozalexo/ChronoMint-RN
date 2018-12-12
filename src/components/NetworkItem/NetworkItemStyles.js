@@ -26,4 +26,7 @@ export default StyleSheet.create({
   networkStatusOnline: {
     backgroundColor: colors.emerald,
   },
+  networkStatusOffline: {
+    backgroundColor: colors.red,
+  },
 })

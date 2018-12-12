@@ -21,6 +21,7 @@ export default class Web3Controller {
     dispatch,
     host,
     networkId,
+    networkIndex,
     provider
   ) {
     this.dispatch = dispatch
@@ -36,6 +37,7 @@ export default class Web3Controller {
     this.tokenSubscriptions = []
     this.contractSubscriptions = []
     this.syncStatusSubscription = null
+    this.networkIndex = networkIndex
   }
 
   reconnect () {
@@ -59,7 +61,7 @@ export default class Web3Controller {
 
   onEndHandler = (error) => {
     // console.log('onEndHandler error', error)
-    this.dispatch(Web3Actions.connectFailure(error))
+    this.dispatch(Web3Actions.connectFailure(this.networkIndex, this.networkIndex, error))
     this.provider && this.provider.disconnect()
 
     if (!this.web3) {
@@ -96,19 +98,19 @@ export default class Web3Controller {
                 .then((netId) => {
                   // console.log('Network id from Eth node:', netId)
                   if (netId === 1 || netId === 4) {
-                    this.dispatch(Web3Actions.connectSuccess(this.host))
+                    this.dispatch(Web3Actions.connectSuccess(this.networkIndex, this.host))
                     this.checkSyncStatus()
-                    this.initContracts()
+                    // this.initContracts()
                     // this.subscribeOnContractsEvents()
                   } else {
                     this.provider.disconnect()
                     this.web3 = null
                     this.provider = null
-                    this.dispatch(Web3Actions.incompatibleNetwork(netId))
+                    this.dispatch(Web3Actions.incompatibleNetwork(this.networkIndex, netId))
                   }
                 })
                 .catch(() => {
-                  this.dispatch(Web3Thunks.reconnect())
+                  this.dispatch(Web3Thunks.reconnect(this.networkIndex))
                 })
               return resolve()
             } else {
@@ -303,11 +305,11 @@ export default class Web3Controller {
       try {
         const address = Utils.getContractAddressByNetworkId(contract.networks, this.networkId, contractObjectName)
         this.contracts = this.contracts.set(contract.contractName, new this.web3.eth.Contract(abi, address))
-        this.dispatch(Web3Actions.appendContract(contractObjectName))
+        this.dispatch(Web3Actions.appendContract(this.networkIndex, contractObjectName))
       } catch (error) {
         if (abstractContracts.includes(contractObjectName)) {
           this.contracts.set(contract.contractName, (address) => new this.web3.eth.Contract(abi, address))
-          this.dispatch(Web3Actions.appendContract(contractObjectName))
+          this.dispatch(Web3Actions.appendContract(this.networkIndex, contractObjectName))
         } else {
           // TODO: to handle possible errors
           // eslint-disable-next-line no-console
