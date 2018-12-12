@@ -31,6 +31,7 @@ export const selectBitcoinWallet = ({ address }) => (dispatch) => {
     return Promise.reject(e)
   }
 }
+
 export const createBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
   try {
     dispatch(bitcoinCreateTxDraft({ address, parentAddress }))
@@ -40,7 +41,7 @@ export const createBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) =
   }
 }
 
-export const dropSelectedWallet = () => (dispatch) => {
+export const dropBitcoinSelectedWallet = () => (dispatch) => {
   try {
     dispatch(bitcoinDropSelectedWallet())
     return Promise.resolve()
@@ -48,7 +49,8 @@ export const dropSelectedWallet = () => (dispatch) => {
     return Promise.reject(e)
   }
 }
-export const removeBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
+
+export const deleteBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
   try {
     dispatch(bitcoinDeleteTxDraft({ address, parentAddress }))
     return Promise.resolve()
@@ -57,7 +59,7 @@ export const removeBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) =
   }
 }
 
-export const updateBitcoinWalletBalance = ({ address, parentAddress, balance, amount }) => (dispatch) => {
+export const updateBitcoinBalance = ({ address, parentAddress, balance, amount }) => (dispatch) => {
   try {
     dispatch(bitcoinUpdateBalance({ address, parentAddress, balance, amount }))
     return Promise.resolve()

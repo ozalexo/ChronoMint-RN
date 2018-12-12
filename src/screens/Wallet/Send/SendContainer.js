@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import {
   createBitcoinTxDraft,
-  removeBitcoinTxDraft,
+  deleteBitcoinTxDraft,
 } from '@chronobank/bitcoin/redux/thunks'
 import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   createBitcoinTxDraft,
-  removeBitcoinTxDraft,
+  deleteBitcoinTxDraft,
 }, dispatch)
 
 class SendContainer extends React.Component {
@@ -71,7 +71,7 @@ class SendContainer extends React.Component {
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       createBitcoinTxDraft: PropTypes.func,
-      removeBitcoinTxDraft: PropTypes.func,
+      deleteBitcoinTxDraft: PropTypes.func,
       state: PropTypes.shape({
         params: PropTypes.shape({
           address: PropTypes.string,
@@ -367,9 +367,9 @@ class SendContainer extends React.Component {
   }
 
   handleTxDraftRemove = () => {
-    const { removeBitcoinTxDraft, navigation } = this.props
+    const { deleteBitcoinTxDraft, navigation } = this.props
     const { address, parentAddress } = navigation.state.params
-    removeBitcoinTxDraft({ address, parentAddress })
+    deleteBitcoinTxDraft({ address, parentAddress })
   }
 
 

@@ -11,11 +11,13 @@ export const bitcoinTxUpdate = (entry) => ({
   address: entry.tx.from,
   entry,
 })
+
 export const bitcoinCreateTxDraft = ({ address, parentAddress }) => ({
   type: ActionsTypes.BITCOIN_CREATE_TX_DRAFT,
   address,
   parentAddress,
 })
+
 export const bitcoinDeleteTxDraft = ({ address, parentAddress }) => ({
   type: ActionsTypes.BITCOIN_DELETE_TX_DRAFT,
   address,

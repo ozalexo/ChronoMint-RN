@@ -12,7 +12,7 @@ import { getSections } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { updateBitcoinWalletBalance, dropSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
+import { updateBitcoinBalance, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
 import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => ({
   BTCwalletsList: getBitcoinWalletsList(state),
 })
 
-const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinWalletBalance, dropSelectedWallet }
+const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinBalance, dropBitcoinSelectedWallet }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
@@ -33,12 +33,12 @@ class WalletListContainer extends PureComponent {
     BTCwalletsList: PropTypes.arrayOf(
       PropTypes.string
     ),
-    dropSelectedWallet: PropTypes.func,
+    dropBitcoinSelectedWallet: PropTypes.func,
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
     requestBitcoinBalanceByAddress: PropTypes.func,
     rmqSubscribe: PropTypes.func,
     getAccountTransactions: PropTypes.func,
-    updateBitcoinWalletBalance: PropTypes.func,
+    updateBitcoinBalance: PropTypes.func,
     currentWallet: PropTypes.string,
     navigation: PropTypes.shape({}),
     sections: PropTypes.arrayOf(
@@ -55,42 +55,42 @@ class WalletListContainer extends PureComponent {
   }
 
   handleRemoveSelectedWallet = () => {
-    this.props.dropSelectedWallet()
+    this.props.dropBitcoinSelectedWallet()
   }
 
   componentDidMount () {
     const {
       requestBitcoinSubscribeWalletByAddress,
       requestBitcoinBalanceByAddress,
-      updateBitcoinWalletBalance,
+      updateBitcoinBalance,
       rmqSubscribe,
       currentWallet,
       BTCwalletsList,
     } = this.props
     BTCwalletsList.forEach((address) => {
+      rmqSubscribe({
+        channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
+        handler: (data) => {
+          console.log("data: ...............", data)
+          updateBitcoinBalance({
+            address: data.account,
+            parentAddress: currentWallet,
+            balance: data.balance.balance6.satoshis,
+            amount: data.balance.balance6.amount,
+          })
+        },
+      })
       requestBitcoinSubscribeWalletByAddress(address)
         .then(() => {
           requestBitcoinBalanceByAddress(address)
             .then((balance) => {
-              updateBitcoinWalletBalance({
+              updateBitcoinBalance({
                 address,
                 parentAddress: currentWallet,
                 balance: balance.payload.data.confirmations6.satoshis,
                 amount: balance.payload.data.confirmations6.amount,
               })
               console.log('balance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(balance))
-              rmqSubscribe({
-                channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
-                handler: (data) => {
-                  console.log("data: ...............", data)
-                  updateBitcoinWalletBalance({
-                    address: data.account,
-                    parentAddress: currentWallet,
-                    balance: data.balance.balance6.satoshis,
-                    amount: data.balance.balance6.amount,
-                  })
-                },
-              })
             })
         })
         .catch((error) => { console.log('HTTP response ERROR:', error) })
