@@ -123,47 +123,28 @@ export default class SetAccountPassword extends PureComponent {
   handleKeyboardDismiss = () => Keyboard.dismiss()
 
   render () {
-    const keyboardVerticalOffset = -headerHeight
+    // const keyboardVerticalOffset = -headerHeight
 
     const {
       onDone = () => { },
     } = this.props
     return (
-      <TouchableWithoutFeedback
-        onPress={this.handleKeyboardDismiss}
-      >
-        <View style={styles.kavContainer}>
-          <KeyboardAvoidingView
-            behavior='position'
-            style={styles.container}
-            contentContainerStyle={styles.container}
-            keyboardVerticalOffset={keyboardVerticalOffset}
-          >
-            <View {...this.props} style={styles.inputsContainer}>
-              <Image
-                source={ChronoWalletIcon}
-                style={styles.logo}
-              />
-              <Image
-                source={ChronoWalletText}
-                style={styles.logoText}
-              />
-              <Formik
-                initialValues={{
-                  password: '',
-                  confirmPassword: '',
-                }}
-                validationSchema={this.enterPasswordValidationSchema}
-                onSubmit={onDone}
-                render={this.renderEnterPasswordForm}
-              />
-            </View>
-          </KeyboardAvoidingView>
-          <Text style={styles.copyright}>
-            {i18n.t('SetAccountPassword.copyright')}
-          </Text>
+      <View style={styles.container}>
+        <View {...this.props} style={styles.inputsContainer}>
+          <Formik
+            initialValues={{
+              password: '',
+              confirmPassword: '',
+            }}
+            validationSchema={this.enterPasswordValidationSchema}
+            onSubmit={onDone}
+            render={this.renderEnterPasswordForm}
+          />
         </View>
-      </TouchableWithoutFeedback>
+        <Text style={styles.copyright}>
+          {i18n.t('SetAccountPassword.copyright')}
+        </Text>
+      </View>
     )
   }
 }

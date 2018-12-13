@@ -25,6 +25,7 @@ export default () => {
       'MIDDLEWARE/CRYPTOCOMPARE',
       'REQ/GET/CRYPTOCOMPARE',
       'WEB3/LISTENER/APPEND_CONTRACT',
+      'MIDDLEWARE_CRYPTOCOMPARE',
     ]
     // Note: logger must be the last middleware in chain, otherwise it will log thunk and promise, not actual actions
     middleware.push(createLogger({
