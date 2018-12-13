@@ -56,7 +56,6 @@ class RmqManager {
         this.client = new Client()
         this.client.configure(stompConfig)
         this.client.activate()
-        return resolve()
       } catch (error) {
         return reject(error)
       }

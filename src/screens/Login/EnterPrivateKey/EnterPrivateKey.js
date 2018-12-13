@@ -8,6 +8,7 @@ import { View } from 'react-native'
 import PropTypes from 'prop-types'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
+import i18n from '../../../locales/translation'
 import styles from './EnterPrivateKeyStyles'
 
 export default class EnterPrivateKey extends PureComponent {
@@ -28,7 +29,7 @@ export default class EnterPrivateKey extends PureComponent {
           error={error}
         />
         <PrimaryButton
-          label='Add account'
+          label={i18n.t('EnterPrivateKey.login')}
           onPress={onDone}
         />
       </View>

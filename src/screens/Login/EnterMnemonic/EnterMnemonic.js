@@ -8,6 +8,7 @@ import { View } from 'react-native'
 import PropTypes from 'prop-types'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
+import i18n from '../../../locales/translation'
 import styles from './EnterMnemonicStyles'
 
 export default class EnterMnemonic extends PureComponent {
@@ -35,7 +36,7 @@ export default class EnterMnemonic extends PureComponent {
         />
         <PrimaryButton
           style={styles.button}
-          label='Log in'
+          label={i18n.t('EnterMnemonic.login')}
           onPress={onLogin}
         />
       </View>

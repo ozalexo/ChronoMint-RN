@@ -8,7 +8,7 @@ import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { createAccount } from '@chronobank/ethereum/redux/thunks'
+import { createAccountByMnemonic } from '@chronobank/ethereum/redux/thunks'
 import { getEthAccountList } from '@chronobank/ethereum/redux/selectors'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import i18n from '../../../locales/translation'
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  createAccount,
+  createAccountByMnemonic,
 }, dispatch)
 
 class ConfirmMnemonicContainer extends PureComponent {
@@ -37,7 +37,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     } = this.props.navigation.state.params
     const {
       navigation,
-      createAccount,
+      createAccountByMnemonic,
       accounts,
     } = this.props
 
@@ -46,7 +46,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     //   return this.resetState()
     // }
 
-    createAccount(mnemonic, password)
+    createAccountByMnemonic(mnemonic, password)
       .then(() => {
         const [account] = accounts.slice(-1)
         const params = account ? { account } : null
@@ -105,7 +105,7 @@ ConfirmMnemonicContainer.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.shape({
     address: PropTypes.string,
   })),
-  createAccount: PropTypes.func,
+  createAccountByMnemonic: PropTypes.func,
   navigation: PropTypes.shape({
     state: PropTypes.shape({
       params: PropTypes.shape({

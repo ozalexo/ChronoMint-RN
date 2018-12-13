@@ -6,21 +6,37 @@
 import React, { PureComponent } from 'react'
 import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { loginThunk } from '@chronobank/session/redux/thunks'
 import SetAccountPassword from './SetAccountPassword'
+import { createAccountByMnemonic, createAccountByPrivateKey } from '@chronobank/ethereum/redux/thunks'
 
 let lastAccount = false
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  createAccountByMnemonic,
+  createAccountByPrivateKey,
+  loginThunk,
+}, dispatch)
+
 class SetAccountPasswordContainer extends PureComponent {
   static propTypes = {
+    loginThunk: PropTypes.func,
+    createAccountByMnemonic: PropTypes.func,
+    createAccountByPrivateKey: PropTypes.func,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
       state: PropTypes.shape({
         params: PropTypes.shape({
+          mnemonic: PropTypes.string,
           privateKey: PropTypes.string,
+          ethereumMainAddress: PropTypes.string,
         }),
       }),
     }).isRequired,
     isCreatingNewWallet: PropTypes.bool,
+    lastAccount: PropTypes.string,
   }
 
   static navigatorStyle = {
@@ -45,17 +61,37 @@ class SetAccountPasswordContainer extends PureComponent {
   handleDone = () => {
     const {
       privateKey,
+      mnemonic,
+      ethereumMainAddress,
     } = this.props.navigation.state.params
     const { navigate } = this.props.navigation
 
-    const { password } = this.state
-
-    const params = {
-      privateKey,
-      password,
+    if (mnemonic) {
+      this.props.createAccountByMnemonic(mnemonic, this.state.password)
+        .then((privateKey) => {
+          this.props.loginThunk(ethereumMainAddress, privateKey)
+            .then(() => {
+              navigate('WalletList')
+            })
+        })
+        .catch((error) => {
+          // TODO: need to think about correct way of error handling
+          Alert.alert('Error has occured: ' + error.message)
+        })
+    } else {
+      this.props.createAccountByPrivateKey(privateKey, this.state.password)
+        .then(() => {
+          this.props.loginThunk(ethereumMainAddress, privateKey)
+            .then(() => {
+              navigate('WalletList')
+            })
+        })
+        .catch((error) => {
+          // TODO: need to think about correct way of error handling
+          Alert.alert('Error has occured: ' + error.message)
+        })
     }
 
-    navigate('WalletBackup', params)
   }
 
   handleUseWallet = () => {
@@ -75,11 +111,6 @@ class SetAccountPasswordContainer extends PureComponent {
     lastAccount = true
 
     navigate('EnterPin')
-
-    // passProps: {
-    //   isLogin: true,
-    //   account: this.props.lastAccount
-    // }
   }
 
   addError = (error) => {
@@ -108,4 +139,4 @@ class SetAccountPasswordContainer extends PureComponent {
   }
 }
 
-export default SetAccountPasswordContainer
+export default connect(null, mapDispatchToProps)(SetAccountPasswordContainer)
