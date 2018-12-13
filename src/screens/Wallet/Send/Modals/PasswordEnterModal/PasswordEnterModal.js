@@ -15,7 +15,7 @@ import Input from '../../../../../components/Input'
 import styles from './PasswordEnterModalStyles'
 
 const PasswordEnterModal = ({ visible, modalToggle, passwordChange, error, confirmPassword, passProps }) => {
-  console.log("passProps in modal: ", passProps)
+  console.log("passProps im MODAL: ", passProps)
   return (
     <Modal
       animationType="slide"

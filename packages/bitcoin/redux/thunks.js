@@ -11,6 +11,13 @@ import {
   bitcoinCreateTxDraft,
   bitcoinDropSelectedWallet,
   bitcoinDeleteTxDraft,
+  bitcoinTxDraftUpdateRecipient,
+  bitcoinTxDraftUpdateAmount,
+  bitcoinTxDraftUpdateToken,
+  bitcoinTxDraftUpdateFee,
+  bitcoinTxDraftUpdateFeeMultiplier,
+  bitcoinTxDraftUpdateUnsignedTx,
+  bitcoinTxDraftUpdateSignedTx,
 } from './actions'
 
 export const createBitcoinWallet = (privateKey, ethAddress, network) => (dispatch) => {
@@ -29,6 +36,83 @@ export const selectBitcoinWallet = ({ address }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
       dispatch(bitcoinSelectWallet(address))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftRecipient = ({ address, parentAddress, recipient }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateRecipient({ address, parentAddress, recipient }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftAmount = ({ address, parentAddress, amount }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateAmount({ address, parentAddress, amount }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftToken = ({ address, parentAddress, token }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateToken({ address, parentAddress, token }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftFee = ({ address, parentAddress, fee }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateFee({ address, parentAddress, fee }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftFeeMultiplier = ({ address, parentAddress, feeMultiplier }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateFeeMultiplier({ address, parentAddress, feeMultiplier }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftUnsignedTx = ({ address, parentAddress, unsignedTx }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateUnsignedTx({ address, parentAddress, unsignedTx }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const updateBitcoinTxDraftSignedTx = ({ address, parentAddress, signedTx }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxDraftUpdateSignedTx({ address, parentAddress, signedTx }))
       return resolve()
     } catch (e) {
       return reject(e)

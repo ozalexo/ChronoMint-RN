@@ -56,7 +56,6 @@ export default class Send extends PureComponent {
     const {
       onTogglePasswordModal,
       onCloseConfirmModal,
-      onPasswordChange,
       onPasswordConfirm,
       onSendConfirm,
       PasswordEnterModal,
@@ -115,7 +114,6 @@ export default class Send extends PureComponent {
           passProps={passProps}
           visible={showPasswordModal}
           modalToggle={onTogglePasswordModal}
-          passwordChange={onPasswordChange}
           error={error}
           confirmPassword={onPasswordConfirm}
         />
@@ -208,7 +206,6 @@ export default class Send extends PureComponent {
 Send.propTypes = {
   onTogglePasswordModal: PropTypes.func,
   onCloseConfirmModal: PropTypes.func,
-  onPasswordChange: PropTypes.func,
   onPasswordConfirm: PropTypes.func,
   onSendConfirm: PropTypes.func,
   PasswordEnterModal: PropTypes.func,

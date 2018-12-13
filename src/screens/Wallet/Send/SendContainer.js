@@ -10,17 +10,21 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import * as Keychain from 'react-native-keychain'
 import BigNumber from 'bignumber.js'
 import {
   createBitcoinTxDraft,
   deleteBitcoinTxDraft,
+  updateBitcoinTxDraftRecipient,
+  updateBitcoinTxDraftAmount,
+  updateBitcoinTxDraftToken,
+  updateBitcoinTxDraftFee,
+  updateBitcoinTxDraftUnsignedTx,
+  updateBitcoinTxDraftSignedTx,
 } from '@chronobank/bitcoin/redux/thunks'
-import { decryptWallet } from '@chronobank/ethereum/utils'
 import { BLOCKCHAIN_ETHEREUMUM } from '@chronobank/ethereum/constants'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { requestBitcoinUtxoByAddress } from '@chronobank/bitcoin/service/api'
-import { prepareBitcoinTransaction, signTransaction } from '@chronobank/bitcoin/utils'
+import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { convertToWei, convertBTCToSatoshi } from '@chronobank/bitcoin/utils/amount'
@@ -48,6 +52,12 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   createBitcoinTxDraft,
   deleteBitcoinTxDraft,
   requestBitcoinUtxoByAddress,
+  updateBitcoinTxDraftRecipient,
+  updateBitcoinTxDraftAmount,
+  updateBitcoinTxDraftToken,
+  updateBitcoinTxDraftFee,
+  updateBitcoinTxDraftUnsignedTx,
+  updateBitcoinTxDraftSignedTx,
 }, dispatch)
 
 class SendContainer extends React.Component {
@@ -81,6 +91,13 @@ class SendContainer extends React.Component {
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       createBitcoinTxDraft: PropTypes.func,
+      updateBitcoinTxDraftRecipient: PropTypes.func,
+      updateBitcoinTxDraftAmount: PropTypes.func,
+      updateBitcoinTxDraftToken: PropTypes.func,
+      updateBitcoinTxDraftFee: PropTypes.func,
+      updateBitcoinTxDraftFeeMultiplier: PropTypes.func,
+      updateBitcoinTxDraftUnsignedTx: PropTypes.func,
+      updateBitcoinTxDraftSignedTx: PropTypes.func,
       deleteBitcoinTxDraft: PropTypes.func,
       state: PropTypes.shape({
         params: PropTypes.shape({
@@ -94,8 +111,19 @@ class SendContainer extends React.Component {
   }
 
   handleGoToPasswordModal = () => {
-    const { address, selectedCurrency, blockchain, parentAddress } = this.props.navigation.state.params
-    const { requestBitcoinUtxoByAddress, currentWallet, network } = this.props
+    const {
+      address,
+      selectedCurrency,
+      blockchain,
+      parentAddress,
+    } = this.props.navigation.state.params
+    const {
+      requestBitcoinUtxoByAddress,
+      currentWallet,
+      network,
+      updateBitcoinTxDraftToken,
+      updateBitcoinTxDraftUnsignedTx,
+    } = this.props
     const {
       isRecipientInputValid,
       isAmountInputValid,
@@ -110,6 +138,11 @@ class SendContainer extends React.Component {
     } = this.state
 
     if (isRecipientInputValid && isAmountInputValid) {
+      updateBitcoinTxDraftToken({
+        address,
+        parentAddress,
+        token: selectedToken.symbol,
+      })
 
       const passProps = {
         recipientAddress: recipient,
@@ -140,7 +173,6 @@ class SendContainer extends React.Component {
         .then((results) => {
           if (results && results.payload.data) {
             const feeRate = passProps.fee.token
-            // const prepared = await dispatch(BitcoinUtils.prepareBitcoinTransaction(tx, token, network, utxos))
             prepareBitcoinTransaction({
               tx,
               blockchain,
@@ -149,23 +181,30 @@ class SendContainer extends React.Component {
               utxos: results.payload.data,
             })
               .then((transaction) => {
-                const unsignedTxHex = transaction.prepared.buildIncomplete().toHex()
-                Keychain.getInternetCredentials(parentAddress)
-                  .then((keychain) => {
-                    decryptWallet(currentWallet.encrypted, keychain.password)
-                      .then((decrypted) => {
-                        const signedTX = signTransaction({ unsignedTxHex, network: network.networkType, privateKey: decrypted.privateKey })
-                        console.log("SIGNED: ", signedTX)
-                      })
-                  })
+                updateBitcoinTxDraftUnsignedTx({
+                  address,
+                  parentAddress,
+                  unsignedTx: transaction.prepared.buildIncomplete().toHex(),
+                })
+
+                const modalProps = {
+                  parentAddress,
+                  currentWallet,
+                  transaction,
+                  network,
+                }
+
+                this.setState({ modalProps }, () => this.handleTogglePasswordModal())
+              })
+              .catch((error) => {
+                console.warn(error)
               })
           }
         })
-        .catch((error) =>  {
-          throw new Error(error)
+        .catch((error) => {
+          console.warn(error)
         })
 
-      this.setState({ passProps }, () => this.handleTogglePasswordModal())
 
     } else {
       Alert.alert('Input error', 'Please fill address and amount', [
@@ -176,7 +215,8 @@ class SendContainer extends React.Component {
 
   handleChangeRecipient = (name, value) => {
     if (typeof value === 'string') {
-      const { blockchain } = this.props.navigation.state.params
+      const { blockchain, address, parentAddress } = this.props.navigation.state.params
+      const { updateBitcoinTxDraftRecipient } = this.props
       const {
         isAmountInputValid,
         recipient,
@@ -199,6 +239,11 @@ class SendContainer extends React.Component {
           isRecipientInputValid: dummyValidationOfRecipientInput,
         },
         () => {
+          updateBitcoinTxDraftRecipient({
+            address,
+            parentAddress,
+            recipient,
+          })
           if (isAmountInputValid) {
             if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
               this.requestGasEstimations(recipient, amount)
@@ -213,8 +258,8 @@ class SendContainer extends React.Component {
 
   handleChangeAmount = (name, value) => {
     if (typeof value === 'string') {
-      const { prices } = this.props
-      const { selectedCurrency, blockchain } = this.props.navigation.state.params
+      const { prices, updateBitcoinTxDraftAmount } = this.props
+      const { selectedCurrency, blockchain, address, parentAddress } = this.props.navigation.state.params
       const {
         selectedToken,
         recipient,
@@ -237,6 +282,11 @@ class SendContainer extends React.Component {
             isAmountInputValid: dummyValidationOfAmountInput,
           },
           () => {
+            updateBitcoinTxDraftAmount({
+              address,
+              parentAddress,
+              amount,
+            })
             if (this.state.isRecipientInputValid) {
               if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
                 this.requestGasEstimations(recipient, amount)
@@ -251,6 +301,12 @@ class SendContainer extends React.Component {
           amount: value ? parseFloat(value.replace(',', '.').replace(' ', '')) : null,
           amountInCurrency: 0,
           isAmountInputValid: false,
+        }, () => {
+          updateBitcoinTxDraftAmount({
+            address,
+            parentAddress,
+            amount,
+          })
         })
       }
     }
@@ -265,10 +321,13 @@ class SendContainer extends React.Component {
     } = this.state
     const {
       prices,
+      updateBitcoinTxDraftFeeMultiplier,
     } = this.props
     const {
       blockchain,
       selectedCurrency,
+      address,
+      parentAddress,
     } = this.props.navigation.state.params
     if (gasFee !== null) {
       if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
@@ -308,6 +367,12 @@ class SendContainer extends React.Component {
     } else {
       this.setState({
         feeMultiplier: value,
+      }, () => {
+        updateBitcoinTxDraftFeeMultiplier({
+          address,
+          parentAddress,
+          feeMultiplier,
+        })
       })
     }
   }
@@ -317,15 +382,18 @@ class SendContainer extends React.Component {
       address,
       blockchain,
       selectedCurrency,
+      parentAddress,
     } = this.props.navigation.state.params
     const {
       prices,
+      updateBitcoinTxDraftFee,
     } = this.props
     const {
       recipient,
       amount,
       feeMultiplier,
       selectedToken,
+      gasFee,
     } = this.state
     const params = {
       address,
@@ -338,7 +406,7 @@ class SendContainer extends React.Component {
     // const feeBtc = this.props.tokensDuck
     // .getBySymbol(getPrimaryToken(this.props.selectedWallet.blockchain))
     // .removeDecimals(fee)
-    const feeBtc = 0.00001
+    const feeBtc = 5
     const tokenPrice =
       (prices &&
         selectedToken &&
@@ -351,6 +419,12 @@ class SendContainer extends React.Component {
       gasFee: feeBtc,
       gasFeeAmount: feeBtc,
       gasFeeAmountInCurrency: newBcFeePrice,
+    }, () => {
+      updateBitcoinTxDraftFee({
+        address,
+        parentAddress,
+        fee: gasFee,
+      })
     })
   }
 
@@ -401,10 +475,6 @@ class SendContainer extends React.Component {
     this.handleCloseConfirmModal()
   }
 
-  handlePasswordChange = (name, value) => {
-    this.setState({ [name]: value })
-  }
-
   handleTxDraftCreate = () => {
     const { createBitcoinTxDraft, navigation } = this.props
     const { address, parentAddress } = navigation.state.params
@@ -430,7 +500,7 @@ class SendContainer extends React.Component {
       gasFeeAmountInCurrency,
       recipient,
       selectedToken,
-      passProps,
+      modalProps,
     } = this.state
     const {
       blockchain,
@@ -454,12 +524,11 @@ class SendContainer extends React.Component {
         selectedCurrency={selectedCurrency}
         selectedToken={selectedToken}
         selectedWallet={BTCwallets[address]}
-        passProps={passProps}
+        passProps={modalProps}
         //
 
         onTogglePasswordModal={this.handleGoToPasswordModal}
         onCloseConfirmModal={this.handleCloseConfirmModal}
-        onPasswordChange={this.handlePasswordChange}
         onPasswordConfirm={this.handlePasswordConfirm}
         onSendConfirm={this.handleSendConfirm}
         PasswordEnterModal={PasswordEnterModal}

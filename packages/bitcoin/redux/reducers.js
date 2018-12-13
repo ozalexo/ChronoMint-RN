@@ -51,6 +51,7 @@ const bitcoinCreateTxDraft = (state, { address, parentAddress }) => {
           amount: null,
           token: {},
           fee: 1,
+          feeMultiplier: 1,
           unsignedTx: null,
           signedTx: null,
         },
@@ -126,9 +127,163 @@ const bitcoinCreateWallet = (state, { parentAddress, address }) => {
   }
 }
 
+const bitcoinTxUpdateRecipient = (state, { recipient, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          recipient,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateSignedTx = (state, { signedTx, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          signedTx,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateUnsignedTx = (state, { unsignedTx, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          unsignedTx,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateFee = (state, { fee, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          fee,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateFeeMultiplier = (state, { feeMultiplier, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          feeMultiplier,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateToken = (state, { token, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          token,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateAmount= (state, { amount, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          amount,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
 const mutations = {
 
   [REHYDRATE]: bitcoinRehydrate,
+  [ActionsTypes.BITCOIN_TX_UPDATE_RECIPIENT]: bitcoinTxUpdateRecipient,
+  [ActionsTypes.BITCOIN_TX_UPDATE_AMOUNT]: bitcoinTxUpdateAmount,
+  [ActionsTypes.BITCOIN_TX_UPDATE_TOKEN]: bitcoinTxUpdateToken,
+  [ActionsTypes.BITCOIN_TX_UPDATE_FEE]: bitcoinTxUpdateFee,
+  [ActionsTypes.BITCOIN_TX_UPDATE_FEE_MULTIPLIER]: bitcoinTxUpdateFeeMultiplier,
+  [ActionsTypes.BITCOIN_TX_UPDATE_UNSIGNED_TX]: bitcoinTxUpdateUnsignedTx,
+  [ActionsTypes.BITCOIN_TX_UPDATE_SIGNED_TX]: bitcoinTxUpdateSignedTx,
   [ActionsTypes.BITCOIN_DELETE_TX_DRAFT]: bitcoinDeleteTxDraft,
   [ActionsTypes.BITCOIN_CREATE_TX_DRAFT]: bitcoinCreateTxDraft,
   [ActionsTypes.BITCOIN_SELECT_WALLET]: bitcoinSelectWallet,

@@ -117,7 +117,7 @@ class LoginContainer extends PureComponent {
     const pass = password ? password : this.state.password
     const isPasswordValid = await this.checkPassword(pass)
     if (isPasswordValid) {
-      decryptWallet(account.encrypted, password)
+      decryptWallet(account.encrypted, pass)
         .then((results) => {
           this.handleLogin({
             address: results.address,
