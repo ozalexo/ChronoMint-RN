@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js'
 import web3utils from 'web3/lib/utils/utils'
 import { DECIMALS } from '../constants'
 
-export const parseByDefaultBitcoinLikeBlockchainBalanceData = (response) => {
+export const parseBitcoinBalanceData = (response) => {
   const {
     confirmations0,
     confirmations3,

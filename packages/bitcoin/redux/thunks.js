@@ -13,57 +13,69 @@ import {
   bitcoinDeleteTxDraft,
 } from './actions'
 
-export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch) => {
-  try {
-    const bitcoinAddress = getAddress(privateKey)
-    dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
-    return Promise.resolve()
-  } catch (e) {
-    return Promise.reject(e)
-  }
+export const createBitcoinWallet = (privateKey, ethAddress, network) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const bitcoinAddress = getAddress(privateKey, network)
+      dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
 }
 
 export const selectBitcoinWallet = ({ address }) => (dispatch) => {
-  try {
-    dispatch(bitcoinSelectWallet(address))
-    return Promise.resolve()
-  } catch (e) {
-    return Promise.reject(e)
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinSelectWallet(address))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
 }
 
 export const createBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
-  try {
-    dispatch(bitcoinCreateTxDraft({ address, parentAddress }))
-    return Promise.resolve()
-  } catch (e) {
-    return Promise.reject(e)
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinCreateTxDraft({ address, parentAddress }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
 }
 
 export const dropBitcoinSelectedWallet = () => (dispatch) => {
-  try {
-    dispatch(bitcoinDropSelectedWallet())
-    return Promise.resolve()
-  } catch (e) {
-    return Promise.reject(e)
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinDropSelectedWallet())
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
 }
 
 export const deleteBitcoinTxDraft = ({ address, parentAddress }) => (dispatch) => {
-  try {
-    dispatch(bitcoinDeleteTxDraft({ address, parentAddress }))
-    return Promise.resolve()
-  } catch (e) {
-    return Promise.reject(e)
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinDeleteTxDraft({ address, parentAddress }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
 }
 
 export const updateBitcoinBalance = ({ address, parentAddress, balance, amount }) => (dispatch) => {
-  try {
-    dispatch(bitcoinUpdateBalance({ address, parentAddress, balance, amount }))
-    return Promise.resolve()
-  } catch (e) {
-    return Promise.reject(e)
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinUpdateBalance({ address, parentAddress, balance, amount }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
 }

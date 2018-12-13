@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
-import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
+import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
 // import { selectWallet } from '@chronobank/core/redux/wallet/actions'
 import { selectBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
 import WalletListItem from './WalletListItem'
@@ -42,7 +42,7 @@ class WalletListItemContainer extends PureComponent {
       parentAddress,
     }
 
-    blockchain === DUCK_ETHEREUM ? null : selectBitcoinWallet({ address })
+    blockchain === BLOCKCHAIN_ETHEREUM  ? null : selectBitcoinWallet({ address })
     navigation.navigate('Wallet', params)
   }
 
@@ -65,7 +65,9 @@ class WalletListItemContainer extends PureComponent {
 }
 
 WalletListItemContainer.propTypes = {
-  navigation: PropTypes.shape({}),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
   parentAddress: PropTypes.string,
   address: PropTypes.string,
   blockchain: PropTypes.string,

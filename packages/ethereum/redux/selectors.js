@@ -7,6 +7,7 @@ import { createSelector } from 'reselect'
 import { getBitcoinWalletsForSections } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { DUCK_ETHEREUM } from './constants'
+import { BLOCKCHAIN_ETHEREUM  } from '../constants'
 
 const flatten = (list) => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
@@ -52,7 +53,7 @@ const getEthereumWallets = () => createSelector(
           data: [
             {
               address: ethereum.list[key].address,
-              blockchain: DUCK_ETHEREUM,
+              blockchain: BLOCKCHAIN_ETHEREUM ,
             },
           ],
           title: key,

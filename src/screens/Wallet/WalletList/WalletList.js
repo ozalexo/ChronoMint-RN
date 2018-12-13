@@ -74,7 +74,9 @@ export default class WalletList extends PureComponent {
 }
 
 WalletList.propTypes = {
-  navigation: PropTypes.shape({}),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
   parentWallet: PropTypes.string,
   onRemoveSelectedWallet: PropTypes.func,
   sections: PropTypes.arrayOf(

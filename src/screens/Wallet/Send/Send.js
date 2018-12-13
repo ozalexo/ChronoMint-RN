@@ -12,8 +12,8 @@ import {
   Text,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
-import { DUCK_BITCOIN } from '@chronobank/bitcoin/redux/constants'
+import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
+import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
 import i18n from '../../../locales/translation'
 import PrimaryButton from '../../../components/PrimaryButton'
 import FeeSlider from '../../../components/FeeSlider'
@@ -101,10 +101,10 @@ export default class Send extends PureComponent {
     }
 
     const cryptoImages = {
-      [DUCK_ETHEREUM]: coin_ethereum,
-      [DUCK_BITCOIN]: coin_bitcoin,
+      [BLOCKCHAIN_ETHEREUM ]: coin_ethereum,
+      [BLOCKCHAIN_BITCOIN ]: coin_bitcoin,
     }
-    
+
     return (
       <ScrollView style={styles.scrollView}>
         <NavigationEvents
@@ -126,6 +126,12 @@ export default class Send extends PureComponent {
           sendConfirm={onSendConfirm}
         />
         }
+
+        <PrimaryButton
+          label='Done'
+          onPress={onTogglePasswordModal}
+          style={styles.openModalButton}
+        />
         <View style={styles.formHeader}>
           <Text style={styles.walletTitle}>
             {
@@ -138,7 +144,7 @@ export default class Send extends PureComponent {
             }
           </Text>
           {
-            (blockchain === DUCK_ETHEREUM)
+            (blockchain === BLOCKCHAIN_ETHEREUM )
               ? (
                 <View>
                   <Separator style={styles.separatorDark} />
@@ -194,11 +200,6 @@ export default class Send extends PureComponent {
             handleValueChange={onFeeSliderChange}
           />
         </View>
-        <PrimaryButton
-          label='Go to password entrance'
-          onPress={onTogglePasswordModal}
-          style={styles.openModalButton}
-        />
       </ScrollView>
     )
   }

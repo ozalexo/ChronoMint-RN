@@ -10,10 +10,18 @@ import { Alert } from 'react-native'
 import TouchID from 'react-native-touch-id'
 import * as Keychain from 'react-native-keychain'
 import PropTypes from 'prop-types'
+import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { decryptWallet } from '@chronobank/ethereum/utils'
 import { loginThunk } from '@chronobank/session/redux/thunks'
 import { name as appName } from '../../../../app.json'
 import Login from './Login'
+
+
+const mapStateToProps = (state) => {
+  return {
+    network: getCurrentNetwork(state),
+  }
+}
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   loginThunk,
@@ -21,6 +29,13 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 class LoginContainer extends PureComponent {
   static propTypes = {
+    network: PropTypes.shape({
+      blockchain: PropTypes.shape({
+        Bitcoin: PropTypes.shape({
+          bcNetworkId: PropTypes.string,
+        }),
+      }),
+    }),
     loginThunk: PropTypes.func,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
@@ -114,7 +129,8 @@ class LoginContainer extends PureComponent {
 
   handleLogin = ({ address, privateKey }) => {
     const { navigate } = this.props.navigation
-    this.props.loginThunk(address, privateKey)
+    const { network, loginThunk } = this.props
+    loginThunk(address, privateKey, { network: network.networkType })
       .then(() => {
         navigate('WalletList')
       })
@@ -143,5 +159,5 @@ class LoginContainer extends PureComponent {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
 

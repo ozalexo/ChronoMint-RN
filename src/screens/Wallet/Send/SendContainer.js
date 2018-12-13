@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { networks } from 'bitcoinjs-lib'
 import * as Keychain from 'react-native-keychain'
 import BigNumber from 'bignumber.js'
 import {
@@ -18,7 +17,7 @@ import {
   deleteBitcoinTxDraft,
 } from '@chronobank/bitcoin/redux/thunks'
 import { decryptWallet } from '@chronobank/ethereum/utils'
-import { DUCK_ETHEREUM } from '@chronobank/ethereum/redux/constants'
+import { BLOCKCHAIN_ETHEREUMUM } from '@chronobank/ethereum/constants'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { requestBitcoinUtxoByAddress } from '@chronobank/bitcoin/service/api'
 import { prepareBitcoinTransaction, signTransaction } from '@chronobank/bitcoin/utils'
@@ -30,14 +29,11 @@ import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
 import Send from './Send'
 
-// requestBitcoinUtxoByAddress(address)
-// .then((results) => console.log("UTXO RESULTS: ", results))
-
 const mapStateToProps = (state) => {
   return {
     prices: {
       BTC: {
-        USD: 0.00001,
+        USD: 1499,
       },
     },
     // prices: selectMarketPrices(state),
@@ -99,7 +95,7 @@ class SendContainer extends React.Component {
 
   handleGoToPasswordModal = () => {
     const { address, selectedCurrency, blockchain, parentAddress } = this.props.navigation.state.params
-    const { requestBitcoinUtxoByAddress, currentWallet } = this.props
+    const { requestBitcoinUtxoByAddress, currentWallet, network } = this.props
     const {
       isRecipientInputValid,
       isAmountInputValid,
@@ -142,8 +138,6 @@ class SendContainer extends React.Component {
 
       requestBitcoinUtxoByAddress(address)
         .then((results) => {
-          console.log("RESULTS: ", results)
-          console.log("networks: ", networks)
           if (results && results.payload.data) {
             const feeRate = passProps.fee.token
             // const prepared = await dispatch(BitcoinUtils.prepareBitcoinTransaction(tx, token, network, utxos))
@@ -151,25 +145,24 @@ class SendContainer extends React.Component {
               tx,
               blockchain,
               feeRate,
-              network: networks.testnet,
+              network: network.networkType,
               utxos: results.payload.data,
             })
               .then((transaction) => {
-                console.log('HERE IS TRANSACTION: ', transaction)
-                console.log('HERE IS TRANSACTION.buildIncomplete().toHex(): ', transaction.prepared.buildIncomplete().toHex())
                 const unsignedTxHex = transaction.prepared.buildIncomplete().toHex()
                 Keychain.getInternetCredentials(parentAddress)
                   .then((keychain) => {
-                    console.log("PASsWORD: ", keychain.password)
                     decryptWallet(currentWallet.encrypted, keychain.password)
                       .then((decrypted) => {
-                        console.log("decrypted: ", decrypted)
-                        const signedTX = signTransaction({ unsignedTxHex, network: networks.testnet, privateKey: decrypted.privateKey })
+                        const signedTX = signTransaction({ unsignedTxHex, network: network.networkType, privateKey: decrypted.privateKey })
                         console.log("SIGNED: ", signedTX)
                       })
                   })
               })
           }
+        })
+        .catch((error) =>  {
+          throw new Error(error)
         })
 
       this.setState({ passProps }, () => this.handleTogglePasswordModal())
@@ -197,7 +190,7 @@ class SendContainer extends React.Component {
         value.startsWith('0x')
 
       // Check for BitCoin-based
-      if (blockchain !== DUCK_ETHEREUM) {
+      if (blockchain !== BLOCKCHAIN_ETHEREUMUM) {
         dummyValidationOfRecipientInput = value !== null && value !== '' && value.length === 34
       }
       this.setState(
@@ -207,7 +200,7 @@ class SendContainer extends React.Component {
         },
         () => {
           if (isAmountInputValid) {
-            if (blockchain === DUCK_ETHEREUM) {
+            if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
               this.requestGasEstimations(recipient, amount)
             } else {
               this.requestBcFeeEstimations()
@@ -245,7 +238,7 @@ class SendContainer extends React.Component {
           },
           () => {
             if (this.state.isRecipientInputValid) {
-              if (blockchain === DUCK_ETHEREUM) {
+              if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
                 this.requestGasEstimations(recipient, amount)
               } else {
                 this.requestBcFeeEstimations()
@@ -278,7 +271,7 @@ class SendContainer extends React.Component {
       selectedCurrency,
     } = this.props.navigation.state.params
     if (gasFee !== null) {
-      if (blockchain === DUCK_ETHEREUM) {
+      if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
         const newGasFee =
           gasFee &&
           // this.state.selectedDAO &&

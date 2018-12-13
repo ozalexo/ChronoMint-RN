@@ -13,7 +13,7 @@ import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinBalance, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
-import { parseByDefaultBitcoinLikeBlockchainBalanceData } from '@chronobank/bitcoin/utils/amount'
+import { parseBitcoinBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
 
 
@@ -40,7 +40,9 @@ class WalletListContainer extends PureComponent {
     getAccountTransactions: PropTypes.func,
     updateBitcoinBalance: PropTypes.func,
     currentWallet: PropTypes.string,
-    navigation: PropTypes.shape({}),
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }),
     sections: PropTypes.arrayOf(
       PropTypes.shape({
         data: PropTypes.arrayOf(
@@ -75,8 +77,8 @@ class WalletListContainer extends PureComponent {
           updateBitcoinBalance({
             address: data.account,
             parentAddress: currentWallet,
-            balance: data.balance.balance6.satoshis,
-            amount: data.balance.balance6.amount,
+            balance: data.balance.balance0.satoshis || data.balance.balance6.satoshis,
+            amount: data.balance.balance0.amount || data.balance.balance6.amount,
           })
         },
       })
@@ -87,10 +89,9 @@ class WalletListContainer extends PureComponent {
               updateBitcoinBalance({
                 address,
                 parentAddress: currentWallet,
-                balance: balance.payload.data.confirmations6.satoshis,
-                amount: balance.payload.data.confirmations6.amount,
+                balance: parseBitcoinBalanceData(balance).toNumber(),
+                amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
               })
-              console.log('balance: ', parseByDefaultBitcoinLikeBlockchainBalanceData(balance).toNumber())
             })
         })
         .catch((error) => { console.log('HTTP response ERROR:', error) })
