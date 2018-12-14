@@ -77,7 +77,9 @@ class LoginContainer extends PureComponent {
           this.setState({ biometryType: 'TouchID' }) //For Android
         }
       })
-      .then(this.authenticate)
+      .then(() => {
+        this.authenticate()
+      })
       .catch(() => {
         Alert.alert('You do not support the ability to scan.')
       })
@@ -91,7 +93,9 @@ class LoginContainer extends PureComponent {
         } = this.props.navigation.state.params
         return Keychain.getInternetCredentials(account.address)
       })
-      .then((keychain) => this.handleLoginClick({ password: keychain.password }))
+      .then((keychain) => {
+        this.handleLoginClick({ password: keychain.password })
+      })
       .catch(() => { })
   }
 
@@ -99,8 +103,9 @@ class LoginContainer extends PureComponent {
     const {
       account,
     } = this.props.navigation.state.params
+
     return decryptWallet(account.encrypted, password)
-      .then((wallet) => {
+      .then(() => {
         return true
       })
       .catch((error) => {
@@ -124,6 +129,9 @@ class LoginContainer extends PureComponent {
             privateKey: results.privateKey,
           })
         })
+        .catch((error) => {
+          console.warn('Can\'t decrypt wallet. Verify your password.')
+        })
     }
   }
 
@@ -136,7 +144,7 @@ class LoginContainer extends PureComponent {
         navigate('WalletList')
       })
       .catch((error) => {
-        Alert.alert('Login failture: ', error.message)
+        Alert.alert('Login failure', error.message)
       })
   }
 

@@ -56,6 +56,8 @@ export const createEthWallet = (privateKey) => {
 }
 
 export const encryptWallet = async (wallet, password) => {
+  // Simplified encryption to speedup decription on mobile devices
+  // Original: const encryptWallet = await wallet.encrypt(password)
   const encryptWallet = await wallet.encrypt(password, { n: 128, r: 1, p: 1 })
   return encryptWallet
 }

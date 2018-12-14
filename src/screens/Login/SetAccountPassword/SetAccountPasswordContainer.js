@@ -43,11 +43,6 @@ class SetAccountPasswordContainer extends PureComponent {
     navBarHidden: true,
   }
 
-  state = {
-    password: '',
-    passwordConfirmation: '',
-  }
-
   handleSelectNetwork = () => {
     const { navigate } = this.props.navigation
     navigate('SelectNetwork')
@@ -58,37 +53,44 @@ class SetAccountPasswordContainer extends PureComponent {
     navigate('SelectLanguage')
   }
 
-  handleDone = () => {
+  handleDone = (values) => {
     const {
       privateKey,
       mnemonic,
       ethereumMainAddress,
     } = this.props.navigation.state.params
+    const { password } = values
     const { navigate } = this.props.navigation
 
     if (mnemonic) {
-      this.props.createAccountByMnemonic(mnemonic, this.state.password)
+      this.props.createAccountByMnemonic(mnemonic, password)
         .then((privateKey) => {
           this.props.loginThunk(ethereumMainAddress, privateKey)
             .then(() => {
               navigate('WalletList')
             })
+            .catch((error) => {
+              // console.warn(error)
+            })
         })
         .catch((error) => {
           // TODO: need to think about correct way of error handling
-          Alert.alert('Error has occured: ' + error.message)
+          // console.warn(error)
         })
     } else {
-      this.props.createAccountByPrivateKey(privateKey, this.state.password)
+      this.props.createAccountByPrivateKey(privateKey, password)
         .then(() => {
           this.props.loginThunk(ethereumMainAddress, privateKey)
             .then(() => {
               navigate('WalletList')
             })
+            .catch((error) => {
+              // console.warn('handleDone loginThunk catch', error)
+            })
         })
         .catch((error) => {
           // TODO: need to think about correct way of error handling
-          Alert.alert('Error has occured: ' + error.message)
+          // console.warn('handleDone createAccountByPrivateKey catch: ', error)
         })
     }
 
