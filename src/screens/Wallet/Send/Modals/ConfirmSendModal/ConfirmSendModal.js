@@ -13,7 +13,7 @@ import ActionButton from '../../../../../components/ActionButton'
 import PrimaryButton from '../../../../../components/PrimaryButton'
 import styles from './ConfirmSendModalStyles'
 
-const ConfirmSendModal = ({ visible, modalToggle, sendConfirm }) => (
+const ConfirmSendModal = ({ visible, modalToggle, onConfirmSend }) => (
   <Modal
     animationType="slide"
     visible={visible}
@@ -29,7 +29,7 @@ const ConfirmSendModal = ({ visible, modalToggle, sendConfirm }) => (
       <View style={styles.confirmButtons}>
         <PrimaryButton
           label='Confirm Send'
-          onPress={sendConfirm}
+          onPress={onConfirmSend}
         />
       </View>
     </View>
@@ -39,8 +39,7 @@ const ConfirmSendModal = ({ visible, modalToggle, sendConfirm }) => (
 ConfirmSendModal.propTypes = {
   visible: PropTypes.bool,
   modalToggle: PropTypes.func,
-  sendConfirm: PropTypes.func,
-  styles: PropTypes.shape({}),
+  onConfirmSend: PropTypes.func,
 }
 
 export default ConfirmSendModal

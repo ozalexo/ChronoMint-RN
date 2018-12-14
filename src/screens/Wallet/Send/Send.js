@@ -12,7 +12,7 @@ import {
   Text,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
 import i18n from '../../../locales/translation'
 import PrimaryButton from '../../../components/PrimaryButton'
@@ -64,7 +64,6 @@ export default class Send extends PureComponent {
       showConfirmModal,
       error,
       //
-      amount,
       amountInCurrency,
       blockchain,
       // currentTokenBalance,
@@ -75,7 +74,6 @@ export default class Send extends PureComponent {
       onChangeRecipient = () => { },
       onFeeSliderChange = () => { },
       onSelectToken,
-      recipient,
       selectedCurrency,
       selectedToken,
       selectedWallet,
@@ -100,8 +98,8 @@ export default class Send extends PureComponent {
     }
 
     const cryptoImages = {
-      [BLOCKCHAIN_ETHEREUM ]: coin_ethereum,
-      [BLOCKCHAIN_BITCOIN ]: coin_bitcoin,
+      [BLOCKCHAIN_ETHEREUM]: coin_ethereum,
+      [BLOCKCHAIN_BITCOIN]: coin_bitcoin,
     }
 
     return (
@@ -122,6 +120,7 @@ export default class Send extends PureComponent {
           visible={showConfirmModal}
           modalToggle={onCloseConfirmModal}
           sendConfirm={onSendConfirm}
+          onTxDraftRemove={onTxDraftRemove}
         />
         }
 
@@ -142,7 +141,7 @@ export default class Send extends PureComponent {
             }
           </Text>
           {
-            (blockchain === BLOCKCHAIN_ETHEREUM )
+            (blockchain === BLOCKCHAIN_ETHEREUM)
               ? (
                 <View>
                   <Separator style={styles.separatorDark} />
