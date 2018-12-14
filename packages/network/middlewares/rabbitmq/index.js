@@ -58,12 +58,7 @@ const createRmqMiddleware = () => {
       onConnect,
       onStompError,
       onWebSocketClose,
-      // We do not need it (yet?). Let's keep it commented here.
-      // onDisconnect: (r) => {
-      //   console.log('\n\n\n\n>>>>>>>>>>> RMQ M: onDisconnect r:', r)
-      // },
     }
-
     return RmqManager.connect(BASE_URL, USER, PASSWORD, handlers)
       .then(() => {
         next(Actions.rmqConnectSuccess())

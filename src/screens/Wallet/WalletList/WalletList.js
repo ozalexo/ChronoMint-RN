@@ -36,7 +36,7 @@ export default class WalletList extends PureComponent {
 
   renderSectionHeader = ({ section }) => (
     <SectionHeader
-      title={`My ${section.title} wallets`}
+      title={`My ${section.blockchain} wallets`}
       isDark
     />
   )

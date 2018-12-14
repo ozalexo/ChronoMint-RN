@@ -5,26 +5,18 @@
 
 import React, { PureComponent } from 'react'
 import {
-  Image,
   Keyboard,
-  KeyboardAvoidingView,
   Text,
-  View,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import PropTypes from 'prop-types'
-import {
-  ChronoWalletIcon,
-  ChronoWalletText,
-} from '../../../images'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
-import { headerHeight } from '../../../common/constants/screens'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
-import TextButton from '../../../components/TextButton'
 import styles from './SetAccountPasswordStyles'
 
 export default class SetAccountPassword extends PureComponent {
@@ -54,8 +46,6 @@ export default class SetAccountPassword extends PureComponent {
 
   renderEnterPasswordForm = ({
     handleSubmit,
-    isCreatingNewWallet,
-    onUseWallet,
     errors,
     isSubmitting,
     isValid,
@@ -90,32 +80,12 @@ export default class SetAccountPassword extends PureComponent {
           style={styles.input}
           value={values.confirmPassword}
         />
-        {isCreatingNewWallet
-          ?
-          <View>
-            <PrimaryButton
-              label={i18n.t('SetAccountPassword.createWallet')}
-              onPress={handleSubmit}
-              style={styles.primaryButton}
-              disabled={!isValid || isSubmitting}
-              upperCase
-            />
-            <Text style={styles.or}>
-              {i18n.t('SetAccountPassword.or')}
-            </Text>
-            <TextButton
-              label={i18n.t('SetAccountPassword.useExistingWallet')}
-              onPress={onUseWallet}
-            />
-          </View>
-          :
-          <PrimaryButton
-            label={i18n.t('SetAccountPassword.setPassword')}
-            onPress={handleSubmit}
-            style={styles.primaryButton}
-            disabled={!isValid || isSubmitting}
-          />
-        }
+        <PrimaryButton
+          label={i18n.t('SetAccountPassword.setPassword')}
+          onPress={handleSubmit}
+          style={styles.primaryButton}
+          disabled={!isValid || isSubmitting}
+        />
       </React.Fragment>
     )
   }
@@ -129,22 +99,26 @@ export default class SetAccountPassword extends PureComponent {
       onDone = () => { },
     } = this.props
     return (
-      <View style={styles.container}>
-        <View {...this.props} style={styles.inputsContainer}>
-          <Formik
-            initialValues={{
-              password: '',
-              confirmPassword: '',
-            }}
-            validationSchema={this.enterPasswordValidationSchema}
-            onSubmit={onDone}
-            render={this.renderEnterPasswordForm}
-          />
+      <TouchableWithoutFeedback
+        onPress={this.handleKeyboardDismiss}
+      >
+        <View style={styles.container}>
+          <View {...this.props} style={styles.inputsContainer}>
+            <Formik
+              initialValues={{
+                password: '',
+                confirmPassword: '',
+              }}
+              validationSchema={this.enterPasswordValidationSchema}
+              onSubmit={onDone}
+              render={this.renderEnterPasswordForm}
+            />
+          </View>
+          <Text style={styles.copyright}>
+            {i18n.t('SetAccountPassword.copyright')}
+          </Text>
         </View>
-        <Text style={styles.copyright}>
-          {i18n.t('SetAccountPassword.copyright')}
-        </Text>
-      </View>
+      </TouchableWithoutFeedback>
     )
   }
 }

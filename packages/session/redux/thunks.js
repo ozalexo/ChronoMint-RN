@@ -28,8 +28,14 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
             .then(() => {
               dispatch(login(ethAddress))
               dispatch(savePrivateKey(privateKey))
+              return resolve()
             })
-          return resolve()
+            .catch((error) => {
+              return reject(error)
+            })
+        })
+        .catch((error) => {
+          return reject(error)
         })
     } catch (error) {
       return reject(error)

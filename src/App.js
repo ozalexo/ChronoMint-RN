@@ -20,9 +20,7 @@ import styles from './AppStyles'
 const { store, persistor } = configureStore()
 
 const initAfterRehydration = () => {
-  // Initializers.initI18N(store)
   try {
-    // Initializers.initMarket(store)
     Initializers.initWeb3(store)
   } catch (error) {
     // TODO: Q: automatic switch to another available node? But what if user tried to connect to custom node?
