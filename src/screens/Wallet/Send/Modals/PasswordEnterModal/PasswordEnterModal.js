@@ -11,10 +11,21 @@ import {
 import PropTypes from 'prop-types'
 import ActionButton from '../../../../../components/ActionButton'
 import PrimaryButton from '../../../../../components/PrimaryButton'
+import TextButton from '../../../../../components/TextButton'
 import Input from '../../../../../components/Input'
+
 import styles from './PasswordEnterModalStyles'
 
-const PasswordEnterModal = ({ visible, modalToggle, passwordChange, error, confirmPassword, passProps }) => {
+const PasswordEnterModal = ({
+  visible,
+  modalToggle,
+  onConfirmPassword,
+  onPasswordChange,
+  error,
+  passProps,
+  biometryType,
+  onScan,
+}) => {
   console.log("passProps im MODAL: ", passProps)
   return (
     <Modal
@@ -33,13 +44,21 @@ const PasswordEnterModal = ({ visible, modalToggle, passwordChange, error, confi
           <Input
             label='Enter password'
             name='password'
-            onChange={passwordChange}
+            onChange={onPasswordChange}
             error={error}
           />
           <PrimaryButton
             label='Enter password'
-            onPress={confirmPassword}
+            onPress={onConfirmPassword}
           />
+          {
+            biometryType &&
+            <TextButton
+              style={styles.authButton}
+              label={`${biometryType} Auth`}
+              onPress={onScan}
+            />
+          }
         </View>
       </View>
     </Modal>
@@ -49,10 +68,16 @@ const PasswordEnterModal = ({ visible, modalToggle, passwordChange, error, confi
 PasswordEnterModal.propTypes = {
   visible: PropTypes.bool,
   modalToggle: PropTypes.func,
-  passwordChange: PropTypes.func,
+  onScan: PropTypes.func,
+  onPasswordChange: PropTypes.func,
+  onConfirmPassword: PropTypes.func,
   error: PropTypes.string,
-  confirmPassword: PropTypes.func,
+  biometryType: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
   styles: PropTypes.shape({}),
+  passProps: PropTypes.shape({}),
 }
 
 export default PasswordEnterModal

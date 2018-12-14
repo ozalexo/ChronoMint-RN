@@ -11,9 +11,14 @@ import { BLOCKCHAIN_BITCOIN } from '../constants'
 export const getDuckBitcoin = (state) =>
   state[DUCK_BITCOIN]
 
-export const getBitcoinPending = (blockchain) => createSelector(
+export const getBitcoinPending = createSelector(
   getDuckBitcoin,
-  (scope) => scope[blockchain].pending,
+  (bitcoin) => bitcoin.pending,
+)
+
+export const getBitcoinSelectedWalletAddress = createSelector(
+  getDuckBitcoin,
+  (bitcoin) => bitcoin.selected,
 )
 
 export const getBitcoinWalletsForSections = createSelector(
@@ -50,6 +55,13 @@ export const getBitcoinWalletsList = createSelector(
   getDuckBitcoin,
   getCurrentWallet,
   (bitcoin, ethAddress) => Object.keys(bitcoin.list[ethAddress])
+)
+
+export const getBitcoinCurrentWallet = createSelector(
+  getDuckBitcoin,
+  getCurrentWallet,
+  getBitcoinSelectedWalletAddress,
+  (bitcoin, ethAddress, btcAddress) => bitcoin.list[ethAddress][btcAddress]
 )
 
 export const getEntryPending = (address, key, blockchain) => createSelector(

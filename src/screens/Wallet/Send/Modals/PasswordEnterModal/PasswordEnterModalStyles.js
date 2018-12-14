@@ -15,4 +15,7 @@ export default StyleSheet.create({
     backgroundColor: colors.primary,
     flexDirection: 'row',
   },
+  authButton: {
+    color: colors.grayDark,
+  },
 })

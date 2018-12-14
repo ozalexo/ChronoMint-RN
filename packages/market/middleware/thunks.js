@@ -104,7 +104,7 @@ export const startMarket = () => (dispatch) => {
       dispatch(MarketMiddlewareActions.setEventHandler('disconnect', (isGraceful) => {
         if (!isGraceful) {
           dispatch(MarketMiddlewareActions.connectFailure())
-          dispatch(startMarket())
+          // dispatch(startMarket())
         }
       }))
       dispatch(MarketMiddlewareActions.subscribe())

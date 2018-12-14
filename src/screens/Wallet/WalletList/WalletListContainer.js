@@ -17,12 +17,13 @@ import { parseBitcoinBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
 
 
-const mapStateToProps = (state) => ({
-  sections: getSections(state),
-  currentWallet: getCurrentWallet(state),
-  BTCwalletsList: getBitcoinWalletsList(state),
-})
-
+const mapStateToProps = (state) => {
+  return {
+    sections: getSections(state),
+    currentWallet: getCurrentWallet(state),
+    BTCwalletsList: getBitcoinWalletsList(state),
+  }
+}
 const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinBalance, dropBitcoinSelectedWallet }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)

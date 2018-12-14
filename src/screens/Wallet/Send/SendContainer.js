@@ -18,11 +18,10 @@ import {
   updateBitcoinTxDraftAmount,
   updateBitcoinTxDraftToken,
   updateBitcoinTxDraftFee,
+  updateBitcoinTxDraftFeeMultiplier,
   updateBitcoinTxDraftUnsignedTx,
-  updateBitcoinTxDraftSignedTx,
 } from '@chronobank/bitcoin/redux/thunks'
 import { BLOCKCHAIN_ETHEREUMUM } from '@chronobank/ethereum/constants'
-import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { requestBitcoinUtxoByAddress } from '@chronobank/bitcoin/service/api'
 import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
@@ -41,7 +40,6 @@ const mapStateToProps = (state) => {
       },
     },
     // prices: selectMarketPrices(state),
-    currentWallet: getCurrentEthWallet(state),
     BTCwallets: getBitcoinWallets(state),
     network: getCurrentNetwork(state),
   }
@@ -56,8 +54,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateBitcoinTxDraftAmount,
   updateBitcoinTxDraftToken,
   updateBitcoinTxDraftFee,
+  updateBitcoinTxDraftFeeMultiplier,
   updateBitcoinTxDraftUnsignedTx,
-  updateBitcoinTxDraftSignedTx,
 }, dispatch)
 
 class SendContainer extends React.Component {
@@ -97,7 +95,6 @@ class SendContainer extends React.Component {
       updateBitcoinTxDraftFee: PropTypes.func,
       updateBitcoinTxDraftFeeMultiplier: PropTypes.func,
       updateBitcoinTxDraftUnsignedTx: PropTypes.func,
-      updateBitcoinTxDraftSignedTx: PropTypes.func,
       deleteBitcoinTxDraft: PropTypes.func,
       state: PropTypes.shape({
         params: PropTypes.shape({
@@ -119,7 +116,6 @@ class SendContainer extends React.Component {
     } = this.props.navigation.state.params
     const {
       requestBitcoinUtxoByAddress,
-      currentWallet,
       network,
       updateBitcoinTxDraftToken,
       updateBitcoinTxDraftUnsignedTx,
@@ -189,8 +185,6 @@ class SendContainer extends React.Component {
 
                 const modalProps = {
                   parentAddress,
-                  currentWallet,
-                  transaction,
                   network,
                 }
 
@@ -217,11 +211,6 @@ class SendContainer extends React.Component {
     if (typeof value === 'string') {
       const { blockchain, address, parentAddress } = this.props.navigation.state.params
       const { updateBitcoinTxDraftRecipient } = this.props
-      const {
-        isAmountInputValid,
-        recipient,
-        amount,
-      } = this.state
       // Check for Ethereum
       let dummyValidationOfRecipientInput =
         value !== null &&
@@ -242,11 +231,11 @@ class SendContainer extends React.Component {
           updateBitcoinTxDraftRecipient({
             address,
             parentAddress,
-            recipient,
+            recipient: this.state.recipient,
           })
-          if (isAmountInputValid) {
+          if (this.state.isAmountInputValid) {
             if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
-              this.requestGasEstimations(recipient, amount)
+              this.requestGasEstimations(this.state.recipient, this.state.amount)
             } else {
               this.requestBcFeeEstimations()
             }
@@ -260,18 +249,13 @@ class SendContainer extends React.Component {
     if (typeof value === 'string') {
       const { prices, updateBitcoinTxDraftAmount } = this.props
       const { selectedCurrency, blockchain, address, parentAddress } = this.props.navigation.state.params
-      const {
-        selectedToken,
-        recipient,
-        amount,
-      } = this.state
       if (!(value.endsWith(',') || value.endsWith('.'))) {
         const localeValue = parseFloat(value.replace(',', '.').replace(' ', ''))
         const tokenPrice =
           (prices &&
-            selectedToken &&
-            prices[selectedToken.symbol] &&
-            prices[selectedToken.symbol][selectedCurrency]) ||
+            this.state.selectedToken &&
+            prices[this.state.selectedToken.symbol] &&
+            prices[this.state.selectedToken.symbol][selectedCurrency]) ||
           0 // TODO: handle wrong values correctly
         const dummyValidationOfAmountInput =
           localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0
@@ -285,11 +269,11 @@ class SendContainer extends React.Component {
             updateBitcoinTxDraftAmount({
               address,
               parentAddress,
-              amount,
+              amount: this.state.amount,
             })
             if (this.state.isRecipientInputValid) {
               if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
-                this.requestGasEstimations(recipient, amount)
+                this.requestGasEstimations(this.state.recipient, this.state.amount)
               } else {
                 this.requestBcFeeEstimations()
               }
@@ -305,7 +289,7 @@ class SendContainer extends React.Component {
           updateBitcoinTxDraftAmount({
             address,
             parentAddress,
-            amount,
+            amount: this.state.amount,
           })
         })
       }
@@ -362,6 +346,12 @@ class SendContainer extends React.Component {
           feeMultiplier: value,
           gasFeeAmount: newGasFee,
           gasFeeAmountInCurrency: newGasFeePrice,
+        }, () => {
+          updateBitcoinTxDraftFeeMultiplier({
+            address,
+            parentAddress,
+            feeMultiplier,
+          })
         })
       }
     } else {

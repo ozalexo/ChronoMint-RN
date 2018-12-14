@@ -131,7 +131,8 @@ class LoginContainer extends PureComponent {
     const { navigate } = this.props.navigation
     const { network, loginThunk } = this.props
     loginThunk(address, privateKey, { network: network.networkType })
-      .then(() => {
+      .then((result) => {
+        console.log(result)
         navigate('WalletList')
       })
       .catch((error) => {

@@ -27,10 +27,16 @@ export default class PrimaryBalance extends PureComponent {
   }
 
   render () {
-    const { selectedCurrency, balance } = this.props
+    const {
+      // selectedCurrency,
+      // blockchain,
+      wallet,
+    } = this.props
+    const tokensList = wallet && Object.keys(wallet.tokens)[0]
+    const balance = wallet && wallet.tokens[tokensList].amount
 
     const displayPrimaryBalanceText = [
-      selectedCurrency,
+      tokensList,
       PrimaryBalance.getFormattedBalance(balance),
     ].join(' ')
 
@@ -45,6 +51,7 @@ export default class PrimaryBalance extends PureComponent {
 }
 
 PrimaryBalance.propTypes = {
-  balance: PropTypes.number,
+  wallet: PropTypes.shape({}),
+  blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
 }

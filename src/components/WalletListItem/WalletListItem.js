@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 import {
   indicator_receiving_0,
 } from '../../images'
+import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
 import TokensCounter from '../TokensCounter'
 import PrimaryToken from '../PrimaryToken'
 import PrimaryBalance from '../PrimaryBalance'
@@ -55,6 +56,7 @@ export default class WalletListItem extends PureComponent {
       blockchain,
       selectedCurrency,
       onItemPress = () => { },
+      bitcoinWallet,
     } = this.props
 
     return (
@@ -93,6 +95,7 @@ export default class WalletListItem extends PureComponent {
                 <PrimaryBalanceContainer
                   blockchain={blockchain}
                   selectedCurrency={selectedCurrency}
+                  wallet={blockchain === BLOCKCHAIN_ETHEREUM ? null : bitcoinWallet} 
                 />
                 <TokensListContainer
                   blockchain={blockchain}
@@ -107,6 +110,7 @@ export default class WalletListItem extends PureComponent {
 }
 
 WalletListItem.propTypes = {
+  bitcoinWallet: PropTypes.shape({}),
   address: PropTypes.string,
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
