@@ -86,16 +86,19 @@ class SendContainer extends React.Component {
   }
 
   static propTypes = {
+    createBitcoinTxDraft: PropTypes.func,
+    updateBitcoinTxDraftRecipient: PropTypes.func,
+    updateBitcoinTxDraftAmount: PropTypes.func,
+    updateBitcoinTxDraftToken: PropTypes.func,
+    updateBitcoinTxDraftFee: PropTypes.func,
+    updateBitcoinTxDraftFeeMultiplier: PropTypes.func,
+    updateBitcoinTxDraftUnsignedTx: PropTypes.func,
+    deleteBitcoinTxDraft: PropTypes.func,
+    requestBitcoinUtxoByAddress: PropTypes.func,
+    network: PropTypes.shape({}),
+    prices: PropTypes.shape({}),
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
-      createBitcoinTxDraft: PropTypes.func,
-      updateBitcoinTxDraftRecipient: PropTypes.func,
-      updateBitcoinTxDraftAmount: PropTypes.func,
-      updateBitcoinTxDraftToken: PropTypes.func,
-      updateBitcoinTxDraftFee: PropTypes.func,
-      updateBitcoinTxDraftFeeMultiplier: PropTypes.func,
-      updateBitcoinTxDraftUnsignedTx: PropTypes.func,
-      deleteBitcoinTxDraft: PropTypes.func,
       state: PropTypes.shape({
         params: PropTypes.shape({
           address: PropTypes.string,
@@ -190,14 +193,10 @@ class SendContainer extends React.Component {
 
                 this.setState({ modalProps }, () => this.handleTogglePasswordModal())
               })
-              .catch((error) => {
-                console.warn(error)
-              })
+              .catch((error) => console.warn(error))
           }
         })
-        .catch((error) => {
-          console.warn(error)
-        })
+        .catch((error) => console.warn(error))
 
 
     } else {
