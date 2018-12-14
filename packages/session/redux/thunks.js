@@ -21,7 +21,7 @@ import {
 export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      // dispatch(startMarket())
+      dispatch(startMarket())
       dispatch(rmqConnect())
         .then(() => {
           dispatch(createBitcoinWallet(privateKey, ethAddress))
@@ -30,6 +30,12 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
               dispatch(savePrivateKey(privateKey))
               return resolve()
             })
+            .catch((error) => {
+              return reject(error)
+            })
+        })
+        .catch((error) => {
+          return reject(error)
         })
     } catch (error) {
       return reject(error)

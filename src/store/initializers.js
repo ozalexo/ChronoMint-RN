@@ -6,6 +6,7 @@
 import { autoSelectNetwork } from '@chronobank/network/redux/thunks'
 import { init } from '@chronobank/ethereum/middleware/thunks'
 
+// eslint-disable-next-line import/prefer-default-export
 export const initWeb3 = (store) => {
   store.dispatch(init())
   store.dispatch(autoSelectNetwork())
