@@ -10,7 +10,6 @@ import { Alert } from 'react-native'
 import TouchID from 'react-native-touch-id'
 import * as Keychain from 'react-native-keychain'
 import PropTypes from 'prop-types'
-import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { decryptWallet } from '@chronobank/ethereum/utils'
 import { loginThunk } from '@chronobank/session/redux/thunks'
 import { name as appName } from '../../../../app.json'
@@ -19,7 +18,6 @@ import Login from './Login'
 
 const mapStateToProps = (state) => {
   return {
-    network: getCurrentNetwork(state),
   }
 }
 
@@ -91,12 +89,13 @@ class LoginContainer extends PureComponent {
         const {
           account,
         } = this.props.navigation.state.params
-        return Keychain.getInternetCredentials(account.address)
+        Keychain.getInternetCredentials(account.address)
+          .then((keychain) => {
+            this.handleLoginClick({ password: keychain.password })
+          })
+          .catch((error) => console.warn(error))
       })
-      .then((keychain) => {
-        this.handleLoginClick({ password: keychain.password })
-      })
-      .catch(() => { })
+      .catch((error) => console.warn(error))
   }
 
   checkPassword = (password) => {
@@ -137,10 +136,9 @@ class LoginContainer extends PureComponent {
 
   handleLogin = ({ address, privateKey }) => {
     const { navigate } = this.props.navigation
-    const { network, loginThunk } = this.props
-    loginThunk(address, privateKey, { network: network.networkType })
-      .then((result) => {
-        console.log(result)
+    const { loginThunk } = this.props
+    loginThunk(address, privateKey)
+      .then(() => {
         navigate('WalletList')
       })
       .catch((error) => {

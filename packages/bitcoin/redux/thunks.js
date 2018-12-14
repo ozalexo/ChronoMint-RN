@@ -3,6 +3,7 @@
  * Licensed under the AGPL Version 3 license.
  */
 
+import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { getAddress } from '../utils'
 import {
   bitcoinCreateWallet,
@@ -20,9 +21,10 @@ import {
   bitcoinTxDraftUpdateSignedTx,
 } from './actions'
 
-export const createBitcoinWallet = (privateKey, ethAddress, network) => (dispatch) => {
+export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     try {
+      const network = getCurrentNetwork(getState()).networkType
       const bitcoinAddress = getAddress(privateKey, network)
       dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
       return resolve()

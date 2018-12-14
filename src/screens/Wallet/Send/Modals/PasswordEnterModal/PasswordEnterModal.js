@@ -54,7 +54,7 @@ const PasswordEnterModal = ({
           {
             biometryType &&
             <TextButton
-              style={styles.authButton}
+              texStyle={styles.authButton}
               label={`${biometryType} Auth`}
               onPress={onScan}
             />
