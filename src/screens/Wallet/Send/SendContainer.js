@@ -22,11 +22,14 @@ import {
   updateBitcoinTxDraftUnsignedTx,
 } from '@chronobank/bitcoin/redux/thunks'
 import { BLOCKCHAIN_ETHEREUMUM } from '@chronobank/ethereum/constants'
-import { requestBitcoinUtxoByAddress } from '@chronobank/bitcoin/service/api'
+import {
+  requestBitcoinUtxoByAddress,
+  requestBitcoinEstimateFeeRate,
+} from '@chronobank/bitcoin/service/api'
 import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
-import { convertToWei, convertBTCToSatoshi } from '@chronobank/bitcoin/utils/amount'
+import { convertToWei, convertBTCToSatoshi, convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
@@ -50,6 +53,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   createBitcoinTxDraft,
   deleteBitcoinTxDraft,
   requestBitcoinUtxoByAddress,
+  requestBitcoinEstimateFeeRate,
   updateBitcoinTxDraftRecipient,
   updateBitcoinTxDraftAmount,
   updateBitcoinTxDraftToken,
@@ -74,7 +78,10 @@ class SendContainer extends React.Component {
       error: null,
       amount: null,
       amountInCurrency: 0,
+      fee: null,
+      feeInCurrency: null,
       feeMultiplier: 1,
+      feeEstimation: 1,
       gasFee: null,
       gasFeeAmount: null,
       gasFeeAmountInCurrency: null,
@@ -95,6 +102,7 @@ class SendContainer extends React.Component {
     updateBitcoinTxDraftUnsignedTx: PropTypes.func,
     deleteBitcoinTxDraft: PropTypes.func,
     requestBitcoinUtxoByAddress: PropTypes.func,
+    requestBitcoinEstimateFeeRate: PropTypes.func,
     network: PropTypes.shape({}),
     prices: PropTypes.shape({}),
     navigation: PropTypes.shape({
@@ -113,7 +121,6 @@ class SendContainer extends React.Component {
   handleGoToPasswordModal = () => {
     const {
       address,
-      selectedCurrency,
       blockchain,
       parentAddress,
     } = this.props.navigation.state.params
@@ -127,13 +134,10 @@ class SendContainer extends React.Component {
       isRecipientInputValid,
       isAmountInputValid,
       recipient,
-      amountInCurrency,
-      gasFeeAmount,
-      gasFeeAmountInCurrency,
       feeMultiplier,
+      feeEstimation,
       selectedToken,
       amount,
-      firtsAvailableToken,
     } = this.state
 
     if (isRecipientInputValid && isAmountInputValid) {
@@ -143,39 +147,20 @@ class SendContainer extends React.Component {
         token: selectedToken.symbol,
       })
 
-      const passProps = {
-        recipientAddress: recipient,
-        selectedCurrency,
-        currentToken: selectedToken.symbol,
-        amountToSend: {
-          token: amount,
-          currency: amountInCurrency,
-        },
-        fee: {
-          token: gasFeeAmount,
-          currency: gasFeeAmountInCurrency,
-        },
-        balance: {
-          token: amount,
-          currency: firtsAvailableToken.balance,
-        },
-        feeMultiplier,
-      }
-
       const tx = {
-        to: passProps.recipientAddress,
+        to: recipient,
         from: address,
-        value: convertBTCToSatoshi(passProps.amountToSend.token),
+        value: convertBTCToSatoshi(amount),
       }
 
       requestBitcoinUtxoByAddress(address)
         .then((results) => {
           if (results && results.payload.data) {
-            const feeRate = passProps.fee.token
+            const fee = feeEstimation * feeMultiplier
             prepareBitcoinTransaction({
               tx,
               blockchain,
-              feeRate,
+              feeRate: fee,
               network: network.networkType,
               utxos: results.payload.data,
             })
@@ -299,6 +284,7 @@ class SendContainer extends React.Component {
     const {
       prices,
       updateBitcoinTxDraftFeeMultiplier,
+      updateBitcoinTxDraftFee,
     } = this.props
     const {
       blockchain,
@@ -306,7 +292,7 @@ class SendContainer extends React.Component {
       address,
       parentAddress,
     } = this.props.navigation.state.params
-    if (this.state.gasFee !== null) {
+    if (this.state.fee !== null) {
       if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
         const newGasFee =
           this.state.gasFee &&
@@ -327,23 +313,28 @@ class SendContainer extends React.Component {
           gasFeeAmountInCurrency: newGasFeePrice,
         })
       } else {
-        const newGasFee =
-          this.state.gasFeeAmount && this.state.gasFeeAmount * this.state.feeMultiplier
+        const fee =
+          this.state.feeEstimation && this.state.feeEstimation * this.state.feeMultiplier
         const tokenPrice =
           (prices &&
             this.state.selectedToken &&
             prices[this.state.selectedToken.symbol][selectedCurrency]) ||
           0 // TODO: handle wrong values correctly
-        const newGasFeePrice = newGasFee ? newGasFee * tokenPrice : null
+        const newFeePrice = fee ? fee * tokenPrice : null
         this.setState({
           feeMultiplier: value,
-          gasFeeAmount: newGasFee,
-          gasFeeAmountInCurrency: newGasFeePrice,
+          fee,
+          feeInCurrency: newFeePrice,
         }, () => {
           updateBitcoinTxDraftFeeMultiplier({
             address,
             parentAddress,
             feeMultiplier: this.state.feeMultiplier,
+          })
+          updateBitcoinTxDraftFee({
+            address,
+            parentAddress,
+            fee: this.state.feeEstimation * this.state.feeMultiplier,
           })
         })
       }
@@ -351,10 +342,21 @@ class SendContainer extends React.Component {
       this.setState({
         feeMultiplier: value,
       }, () => {
+
+        const fee = this.state.feeEstimation * this.state.feeMultiplier
+
         updateBitcoinTxDraftFeeMultiplier({
           address,
           parentAddress,
           feeMultiplier: this.state.feeMultiplier,
+        })
+        updateBitcoinTxDraftFee({
+          address,
+          parentAddress,
+          fee,
+        })
+        this.setState({
+          fee,
         })
       })
     }
@@ -362,43 +364,38 @@ class SendContainer extends React.Component {
 
   requestBcFeeEstimations = () => {
     const {
-      address,
-      blockchain,
       selectedCurrency,
+      address,
       parentAddress,
     } = this.props.navigation.state.params
     const {
       prices,
-      updateBitcoinTxDraftFee,
+      requestBitcoinEstimateFeeRate,
     } = this.props
-    const params = {
-      address,
-      recipient: this.state.recipient,
-      amount: this.state.amount,
-      formFee: this.state.feeMultiplier,
-      blockchain,
+    if (this.state.selectedToken) {
+      requestBitcoinEstimateFeeRate()
+        .then((results) => {
+          const feeEstimation = convertSatoshiToBTC(results.payload.data.avgFee).toNumber()
+          const tokenPrice =
+            (prices &&
+              this.state.selectedToken &&
+              this.state.selectedToken.symbol &&
+              prices[this.state.selectedToken.symbol][selectedCurrency]) ||
+            0 // TODO: handle wrong values correctly
+          const newFeePrice = feeEstimation ? feeEstimation * tokenPrice : null
+          this.setState({
+            feeEstimation,
+            fee: feeEstimation,
+            feeInCurrency: newFeePrice,
+          }, () => {
+            this.props.updateBitcoinTxDraftFee({
+              address,
+              parentAddress,
+              fee: feeEstimation,
+            })
+          })
+        })
     }
-    
-    const feeBtc = this.state.amount/20 //Need information about fee calculation
-    const tokenPrice =
-      (prices &&
-        this.state.selectedToken &&
-        prices[this.state.selectedToken.symbol] &&
-        prices[this.state.selectedToken.symbol][selectedCurrency]) ||
-      0 // TODO: handle wrong values correctly
-    const newBcFeePrice = feeBtc ? feeBtc * tokenPrice : null
-
-    this.setState({
-      gasFee: feeBtc,
-      gasFeeAmount: feeBtc,
-      gasFeeAmountInCurrency: newBcFeePrice,
-    }, () => {
-      updateBitcoinTxDraftFee({
-        address,
-        parentAddress,
-        fee: this.state.gasFee,
-      })
-    })
   }
 
   requestGasEstimations = (to, value) => {
@@ -467,6 +464,8 @@ class SendContainer extends React.Component {
       amount,
       amountInCurrency,
       feeMultiplier,
+      feeInCurrency,
+      fee,
       gasFeeAmount,
       gasFeeAmountInCurrency,
       recipient,
@@ -480,16 +479,16 @@ class SendContainer extends React.Component {
     } = this.props.navigation.state.params
     const { BTCwallets, prices } = this.props
     const blockchainPrice = prices &&
-    prices[selectedToken.symbol] &&
-    prices[selectedToken.symbol][selectedCurrency]
+      prices[selectedToken.symbol] &&
+      prices[selectedToken.symbol][selectedCurrency]
     return (
       <Send
         amount={amount}
         amountInCurrency={amountInCurrency}
         blockchain={blockchain}
         feeMultiplier={feeMultiplier}
-        gasFeeAmount={gasFeeAmount}
-        gasFeeAmountInCurrency={gasFeeAmountInCurrency}
+        fee={fee}
+        feeInCurrency={feeInCurrency}
         onChangeAmount={this.handleChangeAmount}
         onChangeRecipient={this.handleChangeRecipient}
         onFeeSliderChange={this.handleFeeSliderChange}

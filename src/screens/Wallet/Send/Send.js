@@ -69,8 +69,10 @@ export default class Send extends PureComponent {
       price,
       // currentTokenBalance,
       feeMultiplier,
-      gasFeeAmount,
-      gasFeeAmountInCurrency,
+      // gasFeeAmount,
+      // gasFeeAmountInCurrency,
+      fee,
+      feeInCurrency,
       onChangeAmount = () => { },
       onChangeRecipient = () => { },
       onFeeSliderChange = () => { },
@@ -190,8 +192,8 @@ export default class Send extends PureComponent {
           <FeeSlider
             tokenSymbol={selectedToken.symbol}
             selectedCurrency={selectedCurrency}
-            calculatedFeeValue={gasFeeAmount}
-            calculatedFeeValueInSelectedCurrency={gasFeeAmountInCurrency}
+            calculatedFeeValue={fee}
+            calculatedFeeValueInSelectedCurrency={feeInCurrency}
             maximumValue={1.9}
             minimumValue={0.1}
             value={feeMultiplier}
@@ -205,6 +207,8 @@ export default class Send extends PureComponent {
 }
 
 Send.propTypes = {
+  fee: PropTypes.number,
+  feeInCurrency: PropTypes.number,
   onTogglePasswordModal: PropTypes.func,
   onCloseConfirmModal: PropTypes.func,
   onPasswordConfirm: PropTypes.func,
