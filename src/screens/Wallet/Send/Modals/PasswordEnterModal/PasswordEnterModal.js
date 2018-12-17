@@ -25,45 +25,42 @@ const PasswordEnterModal = ({
   passProps,
   biometryType,
   onScan,
-}) => {
-  console.log("passProps im MODAL: ", passProps)
-  return (
-    <Modal
-      animationType="slide"
-      visible={visible}
-      onRequestClose={modalToggle}
-    >
-      <View style={styles.modal}>
-        <View style={styles.actions}>
-          <ActionButton
-            title='Go back'
-            onPress={modalToggle}
-          />
-        </View>
-        <View>
-          <Input
-            label='Enter password'
-            name='password'
-            onChange={onPasswordChange}
-            error={error}
-          />
-          <PrimaryButton
-            label='Enter password'
-            onPress={onConfirmPassword}
-          />
-          {
-            biometryType &&
-            <TextButton
-              texStyle={styles.authButton}
-              label={`${biometryType} Auth`}
-              onPress={onScan}
-            />
-          }
-        </View>
+}) => (
+  <Modal
+    animationType="slide"
+    visible={visible}
+    onRequestClose={modalToggle}
+  >
+    <View style={styles.modal}>
+      <View style={styles.actions}>
+        <ActionButton
+          title='Go back'
+          onPress={modalToggle}
+        />
       </View>
-    </Modal>
-  )
-}
+      <View>
+        <Input
+          label='Enter password'
+          name='password'
+          onChange={onPasswordChange}
+          error={error}
+        />
+        <PrimaryButton
+          label='Enter password'
+          onPress={onConfirmPassword}
+        />
+        {
+          biometryType &&
+          <TextButton
+            texStyle={styles.authButton}
+            label={`${biometryType} Auth`}
+            onPress={onScan}
+          />
+        }
+      </View>
+    </View>
+  </Modal>
+)
 
 PasswordEnterModal.propTypes = {
   visible: PropTypes.bool,

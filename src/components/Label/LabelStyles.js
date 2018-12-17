@@ -11,6 +11,7 @@ import colors from '../../common/colors'
 export default StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 30,
   },
   defaultText: {
     color: colors.greySubLight,

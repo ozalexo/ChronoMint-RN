@@ -66,6 +66,7 @@ export default class Send extends PureComponent {
       //
       amountInCurrency,
       blockchain,
+      price,
       // currentTokenBalance,
       feeMultiplier,
       gasFeeAmount,
@@ -84,14 +85,15 @@ export default class Send extends PureComponent {
     } = this.props
 
     const currentTokenBalance = selectedWallet.tokens ?
-      selectedWallet.tokens[Object.keys(selectedWallet.tokens)[0]].balance :
+      selectedWallet.tokens[Object.keys(selectedWallet.tokens)[0]].amount :
       null
+
 
     const strings = {
       amountInput: `Amount, ${selectedToken.symbol || ''}`,
       walletValue: selectedToken && [selectedToken.symbol, selectedToken.amount].join(' '),
       walletTitle: `My ${blockchain} Wallet`,
-      walletBalance: `${selectedCurrency} ${currentTokenBalance && currentTokenBalance.toFixed(2)}`,
+      walletBalance: `${selectedCurrency} ${currentTokenBalance && price && (price*currentTokenBalance).toFixed(2)}`,
       sendBalance: `${selectedCurrency} ${amountInCurrency.toFixed(2)}`,
       advancedFee: 'Advanced Fee',
       scanQr: 'Scan QR code',
