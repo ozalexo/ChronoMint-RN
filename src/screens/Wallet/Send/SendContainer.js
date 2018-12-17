@@ -443,6 +443,7 @@ class SendContainer extends React.Component {
   handleSendConfirm = () => {
     Alert.alert('SEND CONFIRMED')
     this.handleCloseConfirmModal()
+    this.props.navigation.navigate('Wallet')
   }
 
   handleTxDraftCreate = () => {
