@@ -85,7 +85,7 @@ class PasswordEnterModalContainer extends React.Component {
       currentWallet,
     } = this.props
     return decryptWallet(currentWallet.encrypted, password)
-      .then((wallet) => {
+      .then(() => {
         return true
       })
       .catch((error) => {
@@ -142,10 +142,11 @@ class PasswordEnterModalContainer extends React.Component {
       modalToggle,
       error,
     } = this.props
+
     return (
       <PasswordEnterModal
         onPasswordChange={this.handlePasswordChange}
-        onConfirmPassword={this.handlePasswordConfirm}
+        onConfirmPassword={this.handleConfirmClick}
         onScan={this.handleScan}
         biometryType={biometryType}
         passProps={passProps}

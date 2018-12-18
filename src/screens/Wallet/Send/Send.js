@@ -92,7 +92,7 @@ export default class Send extends PureComponent {
 
 
     const strings = {
-      amountInput: `Amount, ${selectedToken.symbol || ''}`,
+      amountInput: `Amount, ${selectedToken && selectedToken.symbol || ''}`,
       walletValue: selectedToken && [selectedToken.symbol, selectedToken.amount].join(' '),
       walletTitle: `My ${blockchain} Wallet`,
       walletBalance: `${selectedCurrency} ${currentTokenBalance && price && (price*currentTokenBalance).toFixed(2)}`,
@@ -112,22 +112,23 @@ export default class Send extends PureComponent {
           onDidFocus={onTxDraftCreate}
           onWillBlur={onTxDraftRemove}
         />
-        {showPasswordModal && <PasswordEnterModal
-          passProps={passProps}
-          visible={showPasswordModal}
-          modalToggle={onTogglePasswordModal}
-          error={error}
-          confirmPassword={onPasswordConfirm}
-        />
+        {
+          showPasswordModal && <PasswordEnterModal
+            passProps={passProps}
+            visible={showPasswordModal}
+            modalToggle={onTogglePasswordModal}
+            error={error}
+            confirmPassword={onPasswordConfirm}
+          />
         }
-        {showConfirmModal && <ConfirmSendModal
-          visible={showConfirmModal}
-          modalToggle={onCloseConfirmModal}
-          sendConfirm={onSendConfirm}
-          onTxDraftRemove={onTxDraftRemove}
-        />
+        {
+          showConfirmModal && <ConfirmSendModal
+            visible={showConfirmModal}
+            modalToggle={onCloseConfirmModal}
+            sendConfirm={onSendConfirm}
+            onTxDraftRemove={onTxDraftRemove}
+          />
         }
-
         <PrimaryButton
           label='Done'
           onPress={onTogglePasswordModal}

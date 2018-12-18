@@ -188,14 +188,13 @@ class SendContainer extends React.Component {
       const { updateBitcoinTxDraftRecipient } = this.props
       // Check for Ethereum
       let dummyValidationOfRecipientInput =
-        value !== null &&
-        value !== '' &&
+        value &&
         (value.length >= 40 || value.length <= 44) &&
         value.startsWith('0x')
 
       // Check for BitCoin-based
       if (blockchain !== BLOCKCHAIN_ETHEREUMUM) {
-        dummyValidationOfRecipientInput = value !== null && value !== '' && value.length === 34
+        dummyValidationOfRecipientInput = value && value.length === 34
       }
       this.setState(
         {
@@ -397,6 +396,7 @@ class SendContainer extends React.Component {
       prices,
     } = this.props
     const weiValue = convertToWei(value)
+
     if (this.state.selectedToken) {
       const tokenPrice =
         (prices &&
@@ -415,21 +415,24 @@ class SendContainer extends React.Component {
   }
 
   handleTogglePasswordModal = () => {
-    this.setState({ enterPasswordModal: !this.state.enterPasswordModal })
+    this.setState({
+      enterPasswordModal: !this.state.enterPasswordModal,
+      confirmSendModal: false,
+    })
   }
 
   handleCloseConfirmModal = () => {
-    this.setState({ enterPasswordModal: false }, () => {
-      this.setState({ confirmSendModal: false })
+    this.setState({
+      enterPasswordModal: false,
+      confirmSendModal: false,
     })
   }
 
   handlePasswordConfirm = () => {
-    this.setState({ confirmSendModal: !this.state.confirmSendModal })
+    this.setState({ confirmSendModal: false })
   }
 
   handleSendConfirm = () => {
-    Alert.alert('SEND CONFIRMED')
     this.handleCloseConfirmModal()
     this.props.navigation.navigate('Wallet')
   }

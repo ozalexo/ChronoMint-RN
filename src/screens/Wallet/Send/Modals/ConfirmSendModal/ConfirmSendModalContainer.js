@@ -38,6 +38,11 @@ class ConfirmSendModalContainer extends React.Component {
 
   componentDidMount () {
     const { selectedCurrency, currentBTCWallet, prices } = this.props
+
+    if (!currentBTCWallet || !currentBTCWallet.txDraft) {
+      return
+    }
+
     const { txDraft, tokens } = currentBTCWallet
     const currency = prices &&
       prices[txDraft.token] &&
@@ -55,6 +60,7 @@ class ConfirmSendModalContainer extends React.Component {
       token: tokens[txDraft.token].amount,
       currency: currency * tokens[txDraft.token].amount,
     }
+
     this.setState({
       amountToSend,
       fee,
@@ -67,13 +73,16 @@ class ConfirmSendModalContainer extends React.Component {
       currentBTCWallet,
       requestBitcoinSendRawTransaction,
       sendConfirm,
-      onTxDraftRemove,
     } = this.props
     const { signedTx } = currentBTCWallet.txDraft
     requestBitcoinSendRawTransaction(signedTx)
-      .then((sendTxRespone) => {
+      .then((/*sendTxRespone*/) => {
         sendConfirm()
-        onTxDraftRemove()
+        this.props.modalToggle()
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.warn(error)
       })
   }
 
@@ -85,7 +94,12 @@ class ConfirmSendModalContainer extends React.Component {
       currentBTCWallet,
       selectedCurrency,
     } = this.props
+
+    if (!currentBTCWallet || !currentBTCWallet.txDraft) {
+      return null
+    }
     const { recipient, token } = currentBTCWallet.txDraft
+
     return (
       <ConfirmSendModal
         onConfirmSend={this.handleConfirmSendClick}
@@ -106,7 +120,6 @@ ConfirmSendModalContainer.propTypes = {
   visible: PropTypes.bool,
   modalToggle: PropTypes.func,
   sendConfirm: PropTypes.func,
-  onTxDraftRemove: PropTypes.func,
   currentBTCWallet: PropTypes.shape({}),
   requestBitcoinSendRawTransaction: PropTypes.func,
 }

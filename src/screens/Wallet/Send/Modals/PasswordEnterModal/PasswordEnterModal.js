@@ -7,6 +7,7 @@ import React from 'react'
 import {
   View,
   Modal,
+  StatusBar,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import ActionButton from '../../../../../components/ActionButton'
@@ -22,7 +23,6 @@ const PasswordEnterModal = ({
   onConfirmPassword,
   onPasswordChange,
   error,
-  passProps,
   biometryType,
   onScan,
 }) => (
@@ -31,6 +31,7 @@ const PasswordEnterModal = ({
     visible={visible}
     onRequestClose={modalToggle}
   >
+    <StatusBar barStyle='light-content' />
     <View style={styles.modal}>
       <View style={styles.actions}>
         <ActionButton

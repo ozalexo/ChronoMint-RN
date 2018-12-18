@@ -55,7 +55,7 @@ const ConfirmSendModal = ({
             </Text>
           </LabeledItem>
           <LabeledItem
-            labelText={`${currentToken} ${amountToSend.token}`}
+            labelText={`${currentToken} ${amountToSend && amountToSend.token}`}
             labelType='currencyColored'
             labelAlign='top'
           >
@@ -71,7 +71,7 @@ const ConfirmSendModal = ({
           >
             <Text>
               {
-                `${currentToken} ${fee.token}`
+                `${currentToken} ${fee && fee.token}`
               }
               <Text style={styles.lightGreyText}>
                 {
@@ -86,7 +86,7 @@ const ConfirmSendModal = ({
           >
             <Text>
               {
-                `${currentToken}  ${balance.token}`
+                `${currentToken}  ${balance && balance.token}`
               }
               <Text style={styles.lightGreyText}>
                 {
