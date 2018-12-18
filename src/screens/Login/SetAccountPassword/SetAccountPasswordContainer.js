@@ -118,9 +118,6 @@ class SetAccountPasswordContainer extends PureComponent {
     navigate('EnterPin')
   }
 
-  addError = (error) => {
-  }
-
   render () {
     const {
       isCreatingNewWallet,
