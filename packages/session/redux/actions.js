@@ -17,9 +17,3 @@ export const logout = () => {
     type: ActionTypes.SESSION_LOGOUT,
   }
 }
-export const savePrivateKey = (privateKey) => {
-  return {
-    type: ActionTypes.SESSION_SAVE_KEY,
-    privateKey,
-  }
-}

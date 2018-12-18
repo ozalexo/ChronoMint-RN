@@ -15,12 +15,25 @@ import { loginThunk } from '@chronobank/session/redux/thunks'
 import { name as appName } from '../../../../app.json'
 import Login from './Login'
 
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   loginThunk,
 }, dispatch)
 
 class LoginContainer extends PureComponent {
   static propTypes = {
+    network: PropTypes.shape({
+      blockchain: PropTypes.shape({
+        Bitcoin: PropTypes.shape({
+          bcNetworkId: PropTypes.string,
+        }),
+      }),
+    }),
     loginThunk: PropTypes.func,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
@@ -28,6 +41,7 @@ class LoginContainer extends PureComponent {
         params: PropTypes.shape({
           account: PropTypes.shape({
             address: PropTypes.string,
+            privateKey: PropTypes.string,
             encrypted: PropTypes.shape({}),
           }),
         }),
@@ -61,7 +75,9 @@ class LoginContainer extends PureComponent {
           this.setState({ biometryType: 'TouchID' }) //For Android
         }
       })
-      .then(this.authenticate)
+      .then(() => {
+        this.authenticate()
+      })
       .catch(() => {
         Alert.alert('You do not support the ability to scan.')
       })
@@ -73,38 +89,42 @@ class LoginContainer extends PureComponent {
         const {
           account,
         } = this.props.navigation.state.params
-        this.handleLogin(account.address)
+        Keychain.getInternetCredentials(account.address)
+          .then((keychain) => {
+            this.handleLoginClick({ password: keychain.password })
+          })
+          .catch((error) => console.warn(error))
       })
-      .catch(() => { })
+      .catch((error) => console.warn(error))
   }
 
-  checkPassword = async (password) => {
-    try {
-      const {
-        account,
-      } = this.props.navigation.state.params
-      const credentials = await Keychain.getInternetCredentials(account.address)
-      const results = await decryptWallet(account.encrypted, password)
-      if (password === credentials.password && results) {
-        return results.address
-      }
-    } catch (e) {
-      this.setState({ error: e.message })
-    }
+  handleLoginClick = async ({ password }) => {
+    const {
+      account,
+    } = this.props.navigation.state.params
+    const pass = password ? password : this.state.password
+    decryptWallet(account.encrypted, pass)
+      .then((results) => {
+        this.handleLogin({
+          address: results.address,
+          privateKey: results.privateKey,
+        })
+      })
+      .catch((error) => {
+        Alert.alert('Login failure', error.message)
+      })
   }
 
-  handleLoginClick = async () => {
-    const { password } = this.state
-    const address = await this.checkPassword(password)
-    if (address) {
-      this.handleLogin(address)
-    }
-  }
-
-  handleLogin = (address) => {
+  handleLogin = ({ address, privateKey }) => {
     const { navigate } = this.props.navigation
-    this.props.loginThunk(address)
-    navigate('WalletList')
+    const { loginThunk } = this.props
+    loginThunk(address, privateKey)
+      .then(() => {
+        navigate('WalletList')
+      })
+      .catch((error) => {
+        Alert.alert('Login failure', error.message)
+      })
   }
 
   render () {
@@ -127,5 +147,5 @@ class LoginContainer extends PureComponent {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
 

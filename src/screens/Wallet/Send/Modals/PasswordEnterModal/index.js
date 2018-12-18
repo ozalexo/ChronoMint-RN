@@ -3,4 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export default from './PasswordEnterModal'
+export default from './PasswordEnterModalContainer'

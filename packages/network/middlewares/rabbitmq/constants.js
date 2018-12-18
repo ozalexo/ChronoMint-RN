@@ -5,12 +5,12 @@
 
 export const DUCK_RMQ_MIDDLEWARE = 'rmq_middleware'
 
-export const BASE_URL = 'https://rabbitmq-webstomp.chronobank.io/stomp/websocket'
+export const BASE_URL = 'https://rabbitmq-webstomp.chronobank.io/stomp'
 export const USER = 'rabbitmq_user'
 export const PASSWORD = '38309100024'
 
-/* INFO
- *
+/*
+ * INFO:
  * MW_* actions handled by middleware and do not redispatch (no changes in store)
  * RMQ_* actions are changing store
  * 

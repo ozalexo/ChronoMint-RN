@@ -10,8 +10,9 @@ import styles from './TextButtonStyles'
 
 export default class TextButton extends React.Component {
   render () {
-    const { label, onPress, style, ...restProps } = this.props
-    const buttonStyle = {...styles.container, ...style}
+    const { label, onPress, style, texStyle, ...restProps } = this.props
+    const buttonStyle = { ...styles.container, ...style }
+    const texStyles = { ...styles.label, ...texStyle }
 
     return (
       <TouchableOpacity
@@ -19,7 +20,7 @@ export default class TextButton extends React.Component {
         onPress={onPress}
         {...restProps}
       >
-        <Text style={styles.label}>
+        <Text style={texStyles}>
           {label}
         </Text>
       </TouchableOpacity>

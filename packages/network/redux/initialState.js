@@ -36,11 +36,11 @@ const availableChronoBankMiddlewareNodes = {
   },
   [TESTNET]: {
     // [BLOCKCHAIN_BITCOINCASH]: 'middleware_bitcoincash_testnet_rest',
-    [BLOCKCHAIN_BITCOIN]: 'middleware_bitcoin_mainnet_rest',
-    [BLOCKCHAIN_ETHEREUM]: 'middleware_ethereum_mainnet_rest',
-    // [BLOCKCHAIN_LITECOIN]: 'middleware_litecoin_mainnet_rest',
-    // [BLOCKCHAIN_NEM]: 'middleware_nem_mainnet_rest',
-    // [BLOCKCHAIN_WAVES]: 'middleware_waves_mainnet_rest',
+    [BLOCKCHAIN_BITCOIN]: 'middleware_bitcoin_testnet_rest',
+    [BLOCKCHAIN_ETHEREUM]: 'middleware_ethereum_testnet_rest',
+    // [BLOCKCHAIN_LITECOIN]: 'middleware_litecoin_testnet_rest',
+    // [BLOCKCHAIN_NEM]: 'middleware_nem_testnet_rest',
+    // [BLOCKCHAIN_WAVES]: 'middleware_waves_testnet_rest',
   },
 }
 

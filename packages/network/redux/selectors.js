@@ -56,3 +56,12 @@ export const getAvailableNetworkList = createSelector(
     return flatten(list)
   }
 )
+
+/**
+ * get count of flattened network.displaySections.%section%.networks
+ * @param {object} state
+ */
+export const getAvailableNetworkCount = createSelector(
+  getAvailableNetworks,
+  (availableNetworks) => availableNetworks && availableNetworks.length
+)

@@ -4,32 +4,42 @@
  */
 
 import React, { PureComponent } from 'react'
-import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { loginThunk } from '@chronobank/session/redux/thunks'
 import SetAccountPassword from './SetAccountPassword'
+import { createAccountByMnemonic, createAccountByPrivateKey } from '@chronobank/ethereum/redux/thunks'
 
 let lastAccount = false
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  createAccountByMnemonic,
+  createAccountByPrivateKey,
+  loginThunk,
+}, dispatch)
+
 class SetAccountPasswordContainer extends PureComponent {
   static propTypes = {
+    loginThunk: PropTypes.func,
+    createAccountByMnemonic: PropTypes.func,
+    createAccountByPrivateKey: PropTypes.func,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
       state: PropTypes.shape({
         params: PropTypes.shape({
+          mnemonic: PropTypes.string,
           privateKey: PropTypes.string,
+          ethereumMainAddress: PropTypes.string,
         }),
       }),
     }).isRequired,
     isCreatingNewWallet: PropTypes.bool,
+    lastAccount: PropTypes.string,
   }
 
   static navigatorStyle = {
     navBarHidden: true,
-  }
-
-  state = {
-    password: '',
-    passwordConfirmation: '',
   }
 
   handleSelectNetwork = () => {
@@ -42,20 +52,51 @@ class SetAccountPasswordContainer extends PureComponent {
     navigate('SelectLanguage')
   }
 
-  handleDone = () => {
+  handleDone = (values) => {
     const {
       privateKey,
+      mnemonic,
+      ethereumMainAddress,
     } = this.props.navigation.state.params
+    const { password } = values
     const { navigate } = this.props.navigation
 
-    const { password } = this.state
-
-    const params = {
-      privateKey,
-      password,
+    if (mnemonic) {
+      this.props.createAccountByMnemonic(mnemonic, password)
+        .then((derivedPrivateKey) => {
+          this.props.loginThunk(ethereumMainAddress, derivedPrivateKey)
+            .then(() => {
+              navigate('WalletList')
+            })
+            .catch((error) => {
+              // eslint-disable-next-line no-console
+              console.warn(error)
+            })
+        })
+        .catch((error) => {
+          // TODO: need to think about correct way of error handling
+          // eslint-disable-next-line no-console
+          console.warn(error)
+        })
+    } else {
+      this.props.createAccountByPrivateKey(privateKey, password)
+        .then((derivedPrivateKey) => {
+          this.props.loginThunk(ethereumMainAddress, derivedPrivateKey)
+            .then(() => {
+              navigate('WalletList')
+            })
+            .catch((error) => {
+              // eslint-disable-next-line no-console
+              console.warn(error)
+            })
+        })
+        .catch((error) => {
+          // TODO: need to think about correct way of error handling
+          // eslint-disable-next-line no-console
+          console.warn(error)
+        })
     }
 
-    navigate('WalletBackup', params)
   }
 
   handleUseWallet = () => {
@@ -75,15 +116,6 @@ class SetAccountPasswordContainer extends PureComponent {
     lastAccount = true
 
     navigate('EnterPin')
-
-    // passProps: {
-    //   isLogin: true,
-    //   account: this.props.lastAccount
-    // }
-  }
-
-  addError = (error) => {
-    Alert.alert(error)
   }
 
   render () {
@@ -108,4 +140,4 @@ class SetAccountPasswordContainer extends PureComponent {
   }
 }
 
-export default SetAccountPasswordContainer
+export default connect(null, mapDispatchToProps)(SetAccountPasswordContainer)

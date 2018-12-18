@@ -7,5 +7,4 @@ export const DUCK_SESSION = 'session'
 
 export const SESSION_LOGIN = 'SESSION/LOGIN'
 export const SESSION_LOGOUT = 'SESSION/LOGOUT'
-export const SESSION_SAVE_KEY = 'SESSION/SAVE_PRIVATE_KEY'
 

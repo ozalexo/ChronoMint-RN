@@ -5,18 +5,21 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   Alert,
 } from 'react-native'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
 
-
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
+    currentWallet: getCurrentWallet(state),
   }
 }
 
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
 class WalletContainer extends Component {
   constructor (props) {
@@ -25,8 +28,6 @@ class WalletContainer extends Component {
 
   static propTypes = {
     getAccountTransactions: PropTypes.func,
-    address: PropTypes.string,
-    blockchain: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       state: PropTypes.shape({
@@ -34,6 +35,7 @@ class WalletContainer extends Component {
           address: PropTypes.string,
           blockchain: PropTypes.string,
           selectedCurrency: PropTypes.string,
+          parentAddress: PropTypes.string,
         }),
       }),
     }),
@@ -45,11 +47,18 @@ class WalletContainer extends Component {
       navigate,
       state,
     } = this.props.navigation
-    const { address, blockchain } = state.params
+    const {
+      address,
+      blockchain,
+      selectedCurrency,
+      parentAddress,
+    } = state.params
 
     const params = {
       address,
       blockchain,
+      selectedCurrency,
+      parentAddress,
     }
 
     navigate('Send', params)
@@ -88,4 +97,4 @@ class WalletContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(WalletContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(WalletContainer)

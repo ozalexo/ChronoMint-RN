@@ -5,20 +5,26 @@
 
 import { connect } from 'react-redux'
 import { getAvailableNetworkList } from '@chronobank/network/redux/selectors'
-import { networkSelect, rmqConnect, rmqDisconnect } from '@chronobank/network/redux/thunks'
+import { getNetworkStatusList } from '@chronobank/ethereum/middleware/selectors.js' 
+import { networkSelect } from '@chronobank/network/redux/thunks'
 import DrawerNetwork from '../../components/DrawerNetwork'
-import {} from '@chronobank/network/middlewares/rabbitmq/actions'
 
 const mapStateToProps = (ownState) => {
+  const networks = getAvailableNetworkList(ownState)
+  const networkStates = getNetworkStatusList(ownState)
+
+  networks.forEach((item, index) => {
+    networks[index].status = networkStates[index]
+  })
+
   return {
-    networks: getAvailableNetworkList(ownState),
+    networks,
+    networkStates,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    rmqConnect: () => dispatch(rmqConnect()),
-    rmqDisconnect: () => dispatch(rmqDisconnect()),
     onSelectNetwork: (networkIndex) => () => dispatch(networkSelect(networkIndex)),
   }
 }

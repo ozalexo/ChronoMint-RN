@@ -36,6 +36,7 @@ export default class Start extends PureComponent {
   static propTypes = {
     accounts: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
+      encrypted: PropTypes.shape({}),
     })),
     onClickUseExistingButton: PropTypes.func.isRequired,
     onClickCreateWalletButton: PropTypes.func.isRequired,

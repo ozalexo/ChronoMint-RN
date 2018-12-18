@@ -5,18 +5,17 @@
 
 import Web3Controller from './Web3Controller'
 import { NETWORK_SELECT } from '@chronobank/network/redux/constants'
-// import * as Actions from './actions'
-// import * as ActionTypes from './constants'
 import { getNetworkByIndex } from '@chronobank/network/redux/selectors'
 
 let w3c = null
 
 const connect = async (store, action, next) => {
   const state = store.getState()
-  const networkData = getNetworkByIndex(action.networkIndex)(state)
+  const networkIndex = action.networkIndex
+  const networkData = getNetworkByIndex(networkIndex)(state)
   const primaryNodeURL = networkData.primaryNode.ws
 
-  w3c = new Web3Controller(store.dispatch, primaryNodeURL, networkData.networkId.toString())
+  w3c = new Web3Controller(store.dispatch, primaryNodeURL, networkData.networkId.toString(), networkIndex)
   try {
     await w3c.initController()
     next(action)
@@ -87,7 +86,6 @@ const connect = async (store, action, next) => {
 const mutations = {
 
   [NETWORK_SELECT]: connect,
-  // [ActionTypes.WEB3_RECONNECT]: web3Reconnect,
 
 }
 

@@ -5,43 +5,115 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { getSections } from '@chronobank/ethereum/redux/selectors'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { rmqSubscribe } from '@chronobank/network/redux/thunks'
+import { getSections } from '@chronobank/ethereum/redux/selectors'
+import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
+import * as apiBTC from '@chronobank/bitcoin/service/api'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { updateBitcoinBalance, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
+import { parseBitcoinBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
+
+
+const mapStateToProps = (state) => {
+  return {
+    sections: getSections(state),
+    currentWallet: getCurrentWallet(state),
+    BTCwalletsList: getBitcoinWalletsList(state),
+  }
+}
+const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinBalance, dropBitcoinSelectedWallet }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
 class WalletListContainer extends PureComponent {
 
+  static propTypes = {
+    BTCwalletsList: PropTypes.arrayOf(
+      PropTypes.string
+    ),
+    dropBitcoinSelectedWallet: PropTypes.func,
+    requestBitcoinSubscribeWalletByAddress: PropTypes.func,
+    requestBitcoinBalanceByAddress: PropTypes.func,
+    rmqSubscribe: PropTypes.func,
+    getAccountTransactions: PropTypes.func,
+    updateBitcoinBalance: PropTypes.func,
+    currentWallet: PropTypes.string,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }),
+    sections: PropTypes.arrayOf(
+      PropTypes.shape({
+        data: PropTypes.arrayOf(
+          PropTypes.shape({
+            address: PropTypes.string,
+            blockchain: PropTypes.string,
+          })
+        ),
+        title: PropTypes.string,
+      })
+    ),
+  }
+
+  handleRemoveSelectedWallet = () => {
+    this.props.dropBitcoinSelectedWallet()
+  }
+
+  componentDidMount () {
+    const {
+      requestBitcoinSubscribeWalletByAddress,
+      requestBitcoinBalanceByAddress,
+      updateBitcoinBalance,
+      rmqSubscribe,
+      currentWallet,
+      BTCwalletsList,
+    } = this.props
+    BTCwalletsList.forEach((address) => {
+      rmqSubscribe({
+        channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
+        handler: (data) => {
+          updateBitcoinBalance({
+            address: data.account,
+            parentAddress: currentWallet,
+            balance: data.balance.balance0.satoshis || data.balance.balance6.satoshis,
+            amount: data.balance.balance0.amount || data.balance.balance6.amount,
+          })
+        },
+      })
+      requestBitcoinSubscribeWalletByAddress(address)
+        .then(() => {
+          requestBitcoinBalanceByAddress(address)
+            .then((balance) => {
+              updateBitcoinBalance({
+                address,
+                parentAddress: currentWallet,
+                balance: parseBitcoinBalanceData(balance).toNumber(),
+                amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
+              })
+            })
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.warn('HTTP response ERROR:', error)
+        })
+    })
+  }
+
   render () {
-    const { navigation, sections} = this.props
+    const { navigation, sections, currentWallet } = this.props
+
     return (
       <WalletList
-        navigate={navigation.navigate}
+        navigation={navigation}
         sections={sections}
+        parentWallet={currentWallet}
+        onRemoveSelectedWallet={this.handleRemoveSelectedWallet}
       />
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  sections: getSections(state),
-})
 
-WalletListContainer.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  sections: PropTypes.arrayOf(
-    PropTypes.shape({
-      data: PropTypes.arrayOf(
-        PropTypes.shape({
-          address: PropTypes.string,
-          blockchain: PropTypes.string,
-        })
-      ),
-      title: PropTypes.string,
-    })
-  ),
-}
-
-
-export default connect(mapStateToProps, null)(WalletListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(WalletListContainer)

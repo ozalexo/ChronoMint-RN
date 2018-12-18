@@ -12,6 +12,76 @@ export const bitcoinTxUpdate = (entry) => ({
   entry,
 })
 
+export const bitcoinTxDraftUpdateRecipient = ({ address, parentAddress, recipient }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_RECIPIENT,
+  recipient,
+  address,
+  parentAddress,
+})
+
+export const bitcoinTxDraftUpdateAmount = ({ address, parentAddress, amount }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_AMOUNT,
+  amount,
+  address,
+  parentAddress,
+})
+
+export const bitcoinTxDraftUpdateToken = ({ address, parentAddress, token }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_TOKEN,
+  token,
+  address,
+  parentAddress,
+})
+
+export const bitcoinTxDraftUpdateFee = ({ address, parentAddress, fee }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_FEE,
+  fee,
+  address,
+  parentAddress,
+})
+
+export const bitcoinTxDraftUpdateFeeMultiplier = ({ address, parentAddress, feeMultiplier }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_FEE_MULTIPLIER,
+  feeMultiplier,
+  address,
+  parentAddress,
+})
+
+export const bitcoinTxDraftUpdateUnsignedTx = ({ address, parentAddress, unsignedTx }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_UNSIGNED_TX,
+  unsignedTx,
+  address,
+  parentAddress,
+})
+
+export const bitcoinTxDraftUpdateSignedTx = ({ address, parentAddress, signedTx }) => ({
+  type: ActionsTypes.BITCOIN_TX_UPDATE_SIGNED_TX,
+  signedTx,
+  address,
+  parentAddress,
+})
+
+export const bitcoinCreateTxDraft = ({ address, parentAddress }) => ({
+  type: ActionsTypes.BITCOIN_CREATE_TX_DRAFT,
+  address,
+  parentAddress,
+})
+
+export const bitcoinDeleteTxDraft = ({ address, parentAddress }) => ({
+  type: ActionsTypes.BITCOIN_DELETE_TX_DRAFT,
+  address,
+  parentAddress,
+})
+
+export const bitcoinDropSelectedWallet = () => ({
+  type: ActionsTypes.BITCOIN_DROP_SELECTED_WALLET,
+})
+
+export const bitcoinSelectWallet = (address) => ({
+  type: ActionsTypes.BITCOIN_SELECT_WALLET,
+  address,
+})
+
 export const bitcoinTxAccept = (entry) => ({
   type: ActionsTypes.BITCOIN_TX_ACCEPT,
   entry,
@@ -23,6 +93,14 @@ export const bitcoinCreateWallet = (parentAddress, address) => ({
   type: ActionsTypes.BITCOIN_CREATE_WALLET,
   parentAddress,
   address,
+})
+
+export const bitcoinUpdateBalance = ({ address, parentAddress, balance, amount }) => ({
+  type: ActionsTypes.BITCOIN_UPDATE_BALANCE,
+  address,
+  parentAddress,
+  balance,
+  amount,
 })
 
 export const bitcoinHttpGetBlocksHeight = () => ({

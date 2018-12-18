@@ -4,28 +4,41 @@
  */
 
 import * as Keychain from 'react-native-keychain'
-import { getAddress } from '@chronobank/bitcoin/utils'
-import { login, savePrivateKey } from '@chronobank/session/redux/actions'
-import { bitcoinCreateWallet } from '@chronobank/bitcoin/redux/actions'
-import { encryptWallet, decryptWallet } from '../utils'
+import { encryptWallet, createEthWallet, mnemonicToPrivateKeyAndAddress } from '../utils'
 import { ethereumCreateWallet } from './actions'
 
 // eslint-disable-next-line import/prefer-default-export
-export const createAccount = (mnemonic, password) => async (dispatch) => {
-  try {
-    const encryptedWallet = await encryptWallet(mnemonic, password)
-    const decryptedWallet = await decryptWallet(encryptedWallet, password)
-    const ethAddress = decryptedWallet.address
-    const bitcoinAddress = getAddress(decryptedWallet.privateKey)
+export const createAccountByMnemonic = (mnemonic, password) => async (dispatch) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { privateKey } = mnemonicToPrivateKeyAndAddress(mnemonic)
+      const derivedPrivateKey = await dispatch(createAccountByPrivateKey(privateKey, password))
+      return resolve(derivedPrivateKey)
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
 
-    await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
+export const createAccountByPrivateKey = (privateKey, password) => (dispatch) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const decryptedWallet = createEthWallet(privateKey)
+      const ethAddress = decryptedWallet.address
+      const encryptedWallet = await encryptWallet(decryptedWallet, password)
 
-    dispatch(ethereumCreateWallet(ethAddress, encryptedWallet))
-    dispatch(savePrivateKey(decryptedWallet.privateKey))
-
-    dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
-    dispatch(login(ethAddress))
-  } catch (e) {
-    return Promise.reject(e)
-  }
+      if (!ethAddress) {
+        return reject('0001: No ETH address!')
+      }
+      if (!encryptedWallet) {
+        return reject('0002: No ETH encrypted wallet!')
+      }
+      dispatch(ethereumCreateWallet(ethAddress, encryptedWallet))
+      await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
+  
+      return resolve(decryptedWallet.privateKey)
+    } catch (error) {
+      return reject(error)
+    }
+  })
 }

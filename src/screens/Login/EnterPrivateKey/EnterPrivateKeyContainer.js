@@ -5,6 +5,7 @@
 
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { getAddress } from '@chronobank/ethereum/utils'
 import EnterPrivateKey from './EnterPrivateKey'
 
 class EnterPrivateKeyContainer extends PureComponent {
@@ -30,8 +31,10 @@ class EnterPrivateKeyContainer extends PureComponent {
       // onPrivateKeyLogin,
     } = this.props
     const { privateKey } = this.state
+    const ethereumMainAddress = getAddress(privateKey)
     const params = {
       privateKey,
+      ethereumMainAddress,
     }
     // onPrivateKeyLogin(privateKey)
     if (privateKey.length <= 6) {

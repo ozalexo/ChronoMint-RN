@@ -6,8 +6,9 @@
 import React, { PureComponent } from 'react'
 import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
-import { getAddress } from '@chronobank/bitcoin/utils'
-import { getPrivateKeyByMnemonic } from '@chronobank/ethereum/utils'
+import { getAddress } from '@chronobank/ethereum/utils'
+import { mnemonicToPrivateKeyAndAddress } from '@chronobank/ethereum/utils'
+import { createAccountByMnemonic } from '@chronobank/ethereum/redux/thunks'
 import i18n from '../../../locales/translation'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import EnterMnemonic from './EnterMnemonic'
@@ -31,28 +32,30 @@ class EnterMnemonicContainer extends PureComponent {
   handleLogin = () => {
     const { mnemonic } = this.state
     const { navigate } = this.props.navigation
-    const mnemonicWords = mnemonic.trim().split(' ')
+    const mnemonicWords = mnemonic && mnemonic.trim().split(' ')
 
-    const privateKey = getPrivateKeyByMnemonic(mnemonic)
-    const address = getAddress(privateKey)
+    try {
+      const { privateKey } = mnemonicToPrivateKeyAndAddress(mnemonic)
+      const ethereumMainAddress = getAddress(privateKey)
 
+      if (!ethereumMainAddress || !privateKey || mnemonicWords.length !== MNEMONIC_LENGTH) {
+        return Alert.alert(i18n.t('EnterMnemonic.wrongMnemonic'))
+      }
 
-    if (!address || !privateKey || mnemonicWords.length !== MNEMONIC_LENGTH) {
-      return this.addError(i18n.t('EnterMnemonic.wrongMnemonic'))
+      const params = {
+        privateKey,
+        ethereumMainAddress,
+      }
+      createAccountByMnemonic(mnemonic)
+      navigate('SetAccountPassword', params)
+    } catch (error) {
+      return Alert.alert(i18n.t('EnterMnemonic.wrongMnemonic'))
     }
-    const params = {
-      privateKey,
-    }
 
-    navigate('SetAccountPassword', params)
   }
 
   resetState = () => {
-    this.setState({ mnemonicWords: [] })
-  }
-
-  addError = (error) => {
-    Alert.alert(error)
+    this.setState({ mnemonic: '' })
   }
 
   render () {

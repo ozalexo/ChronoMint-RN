@@ -3,85 +3,76 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import { Client } from '@stomp/stompjs'
+import SockJS from 'sockjs-client'
+import webstomp from 'webstomp-client'
 
 class RmqManager {
   constructor () {
+    this.ws = null
     this.client = null
     this.subscriptions = []
+    this.resolved = false
   }
 
   connect (baseUrl, user, password, handlers) {
-    /* See
-     * https://stomp-js.github.io/api-docs/latest/classes/Client.html#active
-     * https://stomp-js.github.io/api-docs/latest/classes/Client.html#connected
-     */
-    if (this.client && this.client.active) {
-      return Promise.resolve()
-    }
-
+    this.disconnect()
     return new Promise((resolve, reject) => {
-      const stompConfig = {
-        brokerURL: baseUrl,
-        connectHeaders: {
-          login: user,
-          passcode: password,
-        },
-        // Incoming HeartBeats must be disabled, unsupported on server
-        heartbeatIncoming: 0,
-        /* Outgoing HeartBeats must be enabled,
-         * otherwise WebSocket will be closed with code 1001 "Going Away"
-         * Default reconnect delay is 5000 (5 seconds),
-         * that is why heartbeatOutgoing equal to 4000 (4 seconds)
-         * But you may configure it right here, e.g. "reconnectDelay: 10000"
-         */
-        heartbeatOutgoing: 4000,
-        ...handlers,
-        // onConnect handler overriden, because we need to return Promise here
-        onConnect: () => {
-          handlers.onConnect()
-          return resolve()
-        },
-      }
-  
-      // eslint-disable-next-line no-undef
-      if (__DEV__) {
-        stompConfig.debug = (str) => {
-          // eslint-disable-next-line no-console
-          console.log('STOMP DEBUG:', str)
-        }
+      try {
+        this.ws =  new SockJS(baseUrl)
+      } catch (error) {
+        return reject(error.message)
       }
 
+      this.client = webstomp.over(this.ws, {
+        heartbeat: false,
+        debug: false,
+      })
+
+      this.client.connect(
+        user,
+        password,
+        () => {
+          handlers.onConnect()
+          this.resolved = true
+          this.resubscribeAll()
+            .then(() => {
+              return resolve()
+            })
+        },
+        (error) => {
+          if (!this.resolved) {
+            return reject(error.message)
+          } else {
+            this.connect(baseUrl, user, password, handlers)
+          }
+        },
+      )
+    })
+  }
+
+  disconnect () {
+    return new Promise((resolve, reject) => {
       try {
-        this.client = new Client()
-        this.client.configure(stompConfig)
-        this.client.activate()
-        return resolve()
+        this.unsubscribeAll()
+          .then(() => {
+            if (this.client && this.client.close) {
+              this.client.close()
+              this.client = null
+            }
+            this.webstomp && this.webstomp.disconnect && this.webstomp.disconnect(() => {
+              this.webstomp = null
+              return resolve()
+            })
+          })
       } catch (error) {
         return reject(error)
       }
     })
   }
 
-  disconnect () {
-    try {
-      this.unsubscribeAll()
-      if (this.client) {
-        this.client.deactivate()
-        this.client = null
-      }
-      return Promise.resolve()
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  }
-
   subscribe (channel, handler) {
     return new Promise((resolve, reject) => {
       if (!this.client) {
-        return reject('RmqManager subscribe error: no connection to RabbitMQ host')
-      }
-      if (this.client && !this.client.connected) {
         return reject('RmqManager subscribe error: no connection to RabbitMQ host')
       }
       try {

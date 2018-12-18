@@ -4,6 +4,7 @@
  */
 
 import { REHYDRATE } from 'redux-persist'
+import { DECIMALS, BTC_PRIMARY_TOKEN } from '../constants'
 import * as ActionsTypes from './constants'
 import initialState from './initialState'
 
@@ -19,25 +20,276 @@ const bitcoinRehydrate = (state, payload) => {
   }
 }
 
+const bitcoinDeleteTxDraft = (state, { address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  delete list[parentAddress][address].txDraft
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinCreateTxDraft = (state, { address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          recipient: '',
+          amount: null,
+          token: {},
+          fee: 1,
+          feeMultiplier: 1,
+          unsignedTx: null,
+          signedTx: null,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinSelectWallet = (state, { address }) => {
+  return {
+    ...state,
+    selected: address,
+  }
+}
+
+const bitcoinDropSelectedWallet = (state) => {
+  return {
+    ...state,
+    selected: null,
+  }
+}
+
+const bitcoinUpdateWalletBalance = (state, { address, parentAddress, balance, amount }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        address,
+        tokens: {
+          [BTC_PRIMARY_TOKEN]: {
+            ...list[parentAddress][address].tokens[BTC_PRIMARY_TOKEN],
+            balance,
+            amount,
+          },
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinCreateWallet = (state, { parentAddress, address }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        address,
+        tokens: {
+          [BTC_PRIMARY_TOKEN]: {
+            balance: null,
+            symbol: BTC_PRIMARY_TOKEN,
+            amount: null,
+            decimals: DECIMALS,
+          },
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateRecipient = (state, { recipient, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          recipient,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateSignedTx = (state, { signedTx, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          signedTx,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateUnsignedTx = (state, { unsignedTx, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          unsignedTx,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateFee = (state, { fee, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          fee,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateFeeMultiplier = (state, { feeMultiplier, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          feeMultiplier,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateToken = (state, { token, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          token,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
+const bitcoinTxUpdateAmount= (state, { amount, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        txDraft: {
+          ...list[parentAddress][address].txDraft,
+          amount,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
 const mutations = {
 
   [REHYDRATE]: bitcoinRehydrate,
-  [ActionsTypes.BITCOIN_CREATE_WALLET]: (state, { parentAddress, address }) => {
-    let list = Object.assign({}, state.list)
-    list = {
-      ...list,
-      [parentAddress]: {
-        ...list[parentAddress],
-        [address]: {
-          address,
-        },
-      },
-    }
-    return {
-      ...state,
-      list,
-    }
-  },
+  [ActionsTypes.BITCOIN_TX_UPDATE_RECIPIENT]: bitcoinTxUpdateRecipient,
+  [ActionsTypes.BITCOIN_TX_UPDATE_AMOUNT]: bitcoinTxUpdateAmount,
+  [ActionsTypes.BITCOIN_TX_UPDATE_TOKEN]: bitcoinTxUpdateToken,
+  [ActionsTypes.BITCOIN_TX_UPDATE_FEE]: bitcoinTxUpdateFee,
+  [ActionsTypes.BITCOIN_TX_UPDATE_FEE_MULTIPLIER]: bitcoinTxUpdateFeeMultiplier,
+  [ActionsTypes.BITCOIN_TX_UPDATE_UNSIGNED_TX]: bitcoinTxUpdateUnsignedTx,
+  [ActionsTypes.BITCOIN_TX_UPDATE_SIGNED_TX]: bitcoinTxUpdateSignedTx,
+  [ActionsTypes.BITCOIN_DELETE_TX_DRAFT]: bitcoinDeleteTxDraft,
+  [ActionsTypes.BITCOIN_CREATE_TX_DRAFT]: bitcoinCreateTxDraft,
+  [ActionsTypes.BITCOIN_SELECT_WALLET]: bitcoinSelectWallet,
+  [ActionsTypes.BITCOIN_DROP_SELECTED_WALLET]: bitcoinDropSelectedWallet,
+  [ActionsTypes.BITCOIN_UPDATE_BALANCE]: bitcoinUpdateWalletBalance,
+  [ActionsTypes.BITCOIN_CREATE_WALLET]: bitcoinCreateWallet,
   // GET UTXOS
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS]: (state) => state,
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS_SUCCESS]: (state, data) => ({

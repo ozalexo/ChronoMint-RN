@@ -5,5 +5,4 @@
 
 export default {
   currentWallet: null,
-  privateKey: null,
 }

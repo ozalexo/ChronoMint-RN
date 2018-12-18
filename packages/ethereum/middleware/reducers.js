@@ -9,36 +9,59 @@ import initialState from './initialState'
 
 const infoReducer = (state) => state
 
-const appendContract = (state, payload) => {
-  return {
-    ...state,
-    contracts: {
-      ...state.contracts,
-      list: [...state.contracts.list, payload.contractName],
-    },
-  }
+const appendContract = (state, { networkIndex, contractName }) => {
+  return state.map((netState, index) =>
+    index === networkIndex
+      ? {
+        ...netState,
+        contracts: {
+          list: [...netState.contracts.list, contractName],
+        },
+      }
+      : netState
+  )
 }
 
-const connectSuccess = (state) => ({
-  ...state,
-  isConnecting: false,
-  isConnected: true,
-})
+const connectSuccess = (state, { networkIndex }) => {
+  return state.map((netState, index) =>
+    index === networkIndex
+      ? {
+        ...netState,
+        isConnecting: false,
+        isConnected: true,
+      }
+      : netState
+  )
+}
 
-const connectFailure = (state) => ({
-  ...state,
-  isConnecting: false,
-  isConnected: false,
-})
+const connectFailure = (state, { networkIndex }) => {
+  return state.map((netState, index) =>
+    index === networkIndex
+      ? {
+        ...netState,
+        isConnecting: false,
+        isConnected: false,
+      }
+      : netState
+  )
+}
 
-const connect = (state, payload) => ({
-  ...state,
-  isConnecting: payload.isConnecting,
-})
+const connect = (state, { networkIndex, isConnecting }) => {
+  return state.map((netState, index) =>
+    index === networkIndex
+      ? {
+        ...netState,
+        isConnecting: isConnecting,
+      }
+      : netState
+  )
+}
 
 const reset = () => {
   return initialState
 }
+
+const web3MiddlewareInit = (state, { networksInitialState }) => [...networksInitialState]
 
 export const mutations = {
 
@@ -48,6 +71,7 @@ export const mutations = {
   [ActionTypes.WEB3_MIDDLEWARE_CONNECT_SUCCESS]: connectSuccess,
   [ActionTypes.WEB3_MIDDLEWARE_CONNECT_FAILURE]: connectFailure,
   [ActionTypes.WEB3_MIDDLEWARE_INCOMPATIBLE_NETWORK]: infoReducer,
+  [ActionTypes.WEB3_MIDDLEWARE_INIT]: web3MiddlewareInit,
   [NETWORK_SELECT]: connect,
 
 }

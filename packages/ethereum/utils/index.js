@@ -8,14 +8,13 @@ import hdKey from 'ethereumjs-wallet/hdkey'
 import Accounts from 'web3-eth-accounts'
 import { WALLET_HD_PATH } from '../constants'
 
-const getDerivedWallet = (mnemonic, path) => {
-  const walletPath = !path ? WALLET_HD_PATH : path
+const getDerivedWalletByPrivateKey = (privateKey, path = WALLET_HD_PATH) => {
   const accounts = new Accounts()
   const wallets = accounts.wallet.create()
-
-  const hdWallet = hdKey.fromMasterSeed(mnemonic)
-  const wallet = hdWallet.derivePath(walletPath).getWallet()
+  const hdWallet = hdKey.fromMasterSeed(Buffer.from(privateKey, 'hex'))
+  const wallet = hdWallet.derivePath(path).getWallet()
   const account = accounts.privateKeyToAccount(`0x${wallet.getPrivateKey().toString('hex')}`)
+
   wallets.add(account)
 
   return wallets[0]
@@ -27,14 +26,6 @@ export const generateMnemonic = async () => {
   return phrase
 }
 
-export const getAddressByMnemonic = (mnemonic) => {
-  return getDerivedWallet(mnemonic).address
-}
-
-export const getPrivateKeyByMnemonic = (mnemonic) => {
-  return getDerivedWallet(mnemonic).privateKey
-}
-
 export const decryptWallet = async (entry, password) => {
   const accounts = new Accounts()
   const wallet = await accounts.wallet.decrypt([entry], password)
@@ -42,9 +33,42 @@ export const decryptWallet = async (entry, password) => {
   return wallet[0]
 }
 
-export const encryptWallet = async (mnemonic, password) => {
-  const wallet = getDerivedWallet(mnemonic)
-  const encryptWallet = await wallet.encrypt(password)
+export const mnemonicToPrivateKeyAndAddress = (mnemonic, path = WALLET_HD_PATH) => {
+  const accounts = new Accounts()
+  const wallets = accounts.wallet.create()
+  const mnemonicSeed = new Mnemonic(mnemonic.split(' '), Mnemonic.Words.ENGLISH)
+  const hdWallet = hdKey.fromMasterSeed(mnemonicSeed)
+  const wallet = hdWallet.derivePath(path).getWallet()
+  const account = accounts.privateKeyToAccount(`0x${wallet.getPrivateKey().toString('hex')}`)
+
+  wallets.add(account)
+
+  const walletAccount = wallets[0]
+
+  return {
+    address: walletAccount.address,
+    privateKey: walletAccount.privateKey,
+  }
+}
+
+export const createEthWallet = (privateKey) => {
+  const wallet = getDerivedWalletByPrivateKey(privateKey)
+  return wallet
+}
+
+export const getAddress = (privateKey) => {
+  if (!privateKey) {
+    throw new Error('0004: Can\'t create ETH wallet without privateKey')
+  }
+
+  const wallet = createEthWallet(privateKey)
+  return wallet.address
+}
+
+export const encryptWallet = async (wallet, password) => {
+  // Simplified encryption to speedup decription on mobile devices
+  // Original: const encryptWallet = await wallet.encrypt(password)
+  const encryptWallet = await wallet.encrypt(password, { n: 128, r: 1, p: 1 })
   return encryptWallet
 }
 

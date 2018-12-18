@@ -18,9 +18,8 @@ export default class NetworkItem extends PureComponent {
   static propTypes = {
     name: PropTypes.string,
     onPress: PropTypes.func,
-    status: PropTypes.string,
+    status: PropTypes.bool,
   }
-
   render () {
     const {
       name,
@@ -30,9 +29,9 @@ export default class NetworkItem extends PureComponent {
 
     const onlineStatusStyle = [
       styles.networkStatus,
-      (status === 'online')
+      status
         ? styles.networkStatusOnline
-        : null,
+        : styles.networkStatusOffline,
     ]
 
     return (

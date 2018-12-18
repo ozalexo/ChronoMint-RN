@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
 import TokensCounter from '../../../../components/TokensCounter'
 import PrimaryToken from '../../../../components/PrimaryToken'
 import PrimaryBalance from '../../../../components/PrimaryBalance'
@@ -33,6 +34,7 @@ export default class WalletInfo extends PureComponent {
     const {
       address,
       blockchain,
+      bitcoinWallet,
       selectedCurrency,
     } = this.props
     return (
@@ -55,6 +57,7 @@ export default class WalletInfo extends PureComponent {
           <PrimaryBalanceContainer
             blockchain={blockchain}
             selectedCurrency={selectedCurrency}
+            wallet={blockchain === BLOCKCHAIN_ETHEREUM ? null : bitcoinWallet}
           />
           <TokensListContainer
             blockchain={blockchain}

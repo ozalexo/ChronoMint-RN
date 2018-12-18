@@ -4,9 +4,10 @@
 */
 
 import { createSelector } from 'reselect'
-import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
+import { getBitcoinWalletsForSections } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { DUCK_ETHEREUM } from './constants'
+import { BLOCKCHAIN_ETHEREUM  } from '../constants'
 
 const flatten = (list) => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
@@ -15,14 +16,20 @@ const flatten = (list) => list.reduce(
 export const getDuckEthereum = () => (state) =>
   state[DUCK_ETHEREUM]
 
-export const getEthAccounts = createSelector(
+
+export const getCurrentEthWallet = createSelector(
+  getDuckEthereum(),
+  getCurrentWallet,
+  (ethereum, ethAddress) => ethereum.list[ethAddress]
+)
+export const getEthAccountList = createSelector(
   getDuckEthereum(),
   (ethereum) => {
     const accounts = []
     for (const key in ethereum.list) {
       accounts.push(ethereum.list[key])
     }
-    return accounts.length === 0 ? null : accounts
+    return accounts
   }
 )
 export const getDerivedEthWallets = createSelector(
@@ -32,7 +39,7 @@ export const getDerivedEthWallets = createSelector(
     if (ethereum.list[ethAddress] && ethereum.list[ethAddress].deriveds) {
       return Object.keys(ethereum.list[ethAddress].deriveds)
     }
-    return null
+    return []
   }
 )
 const getEthereumWallets = () => createSelector(
@@ -46,10 +53,10 @@ const getEthereumWallets = () => createSelector(
           data: [
             {
               address: ethereum.list[key].address,
-              blockchain: DUCK_ETHEREUM,
+              blockchain: BLOCKCHAIN_ETHEREUM ,
             },
           ],
-          title: key,
+          title: BLOCKCHAIN_ETHEREUM,
         },
       ]
     }
@@ -59,25 +66,9 @@ const getEthereumWallets = () => createSelector(
 )
 
 export const getSections = createSelector(
-  getBitcoinWallets,
+  getBitcoinWalletsForSections,
   getEthereumWallets(),
   (bitWallets, ethWallets) => {
-    const combinedSections = [], walletObj = {}
-    let wallets = []
-    wallets = [...wallets, bitWallets, ethWallets]
-    flatten(wallets).forEach((wallet) => {
-      if (!walletObj[wallet.title]) {
-        walletObj[wallet.title] = wallet.data
-      } else {
-        walletObj[wallet.title] = walletObj[wallet.title].concat(wallet.data)
-      }
-    })
-    for (const key in walletObj) {
-      combinedSections.push({
-        data: walletObj[key],
-        title: key,
-      })
-    }
-    return combinedSections
+    return [...ethWallets, ...bitWallets]
   }
 )

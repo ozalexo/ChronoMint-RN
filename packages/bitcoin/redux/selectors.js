@@ -6,17 +6,23 @@
 import { createSelector } from 'reselect'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { DUCK_BITCOIN } from './constants'
+import { BLOCKCHAIN_BITCOIN } from '../constants'
 
-export const getDuckBitcoin = () => (state) =>
+export const getDuckBitcoin = (state) =>
   state[DUCK_BITCOIN]
 
-export const getBitcoinPending = (blockchain) => createSelector(
-  getDuckBitcoin(),
-  (scope) => scope[blockchain].pending,
+export const getBitcoinPending = createSelector(
+  getDuckBitcoin,
+  (bitcoin) => bitcoin.pending,
 )
 
-export const getBitcoinWallets = createSelector(
-  getDuckBitcoin(),
+export const getBitcoinSelectedWalletAddress = createSelector(
+  getDuckBitcoin,
+  (bitcoin) => bitcoin.selected,
+)
+
+export const getBitcoinWalletsForSections = createSelector(
+  getDuckBitcoin,
   getCurrentWallet,
   (bitcoin, ethAddress) => {
     let bitcoinWallets = []
@@ -27,16 +33,35 @@ export const getBitcoinWallets = createSelector(
           data: [
             {
               address: bitcoin.list[ethAddress][key].address,
-              blockchain: DUCK_BITCOIN,
+              blockchain: BLOCKCHAIN_BITCOIN,
             },
           ],
-          title: ethAddress,
+          title: BLOCKCHAIN_BITCOIN,
         },
       ]
     }
 
     return bitcoinWallets
   }
+)
+
+export const getBitcoinWallets = createSelector(
+  getDuckBitcoin,
+  getCurrentWallet,
+  (bitcoin, ethAddress) => bitcoin.list[ethAddress]
+)
+
+export const getBitcoinWalletsList = createSelector(
+  getDuckBitcoin,
+  getCurrentWallet,
+  (bitcoin, ethAddress) => Object.keys(bitcoin.list[ethAddress])
+)
+
+export const getBitcoinCurrentWallet = createSelector(
+  getDuckBitcoin,
+  getCurrentWallet,
+  getBitcoinSelectedWalletAddress,
+  (bitcoin, ethAddress, btcAddress) => bitcoin.list[ethAddress][btcAddress]
 )
 
 export const getEntryPending = (address, key, blockchain) => createSelector(

@@ -5,51 +5,66 @@
 
 import * as ActionTypes from './constants'
 
-export const connect = () => ({
+export const init = (networksInitialState) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_INIT,
+  networksInitialState,
+})
+
+export const connect = (networkIndex) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_CONNECT,
+  networkIndex,
 })
 
-export const connectSuccess = () => ({
+export const connectSuccess = (networkIndex) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_CONNECT_SUCCESS,
+  networkIndex,
 })
 
-export const connectFailure = (error) => ({
+export const connectFailure = (networkIndex, error) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_CONNECT_FAILURE,
   error,
+  networkIndex,
 })
 
-export const disconnect = () => ({
+export const disconnect = (networkIndex) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_DISCONNECT,
+  networkIndex,
 })
 
-export const incompatibleNetwork = () => ({
+export const incompatibleNetwork = (networkIndex) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_INCOMPATIBLE_NETWORK,
+  networkIndex,
 })
 
-export const subscribe = (channel, onMessageThunk) => ({
+export const subscribe = (networkIndex, channel, onMessageThunk) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_SUBSCRIBE,
   channel,
   onMessageThunk,
+  networkIndex,
 })
 
-export const subscribeSuccess = (channel) => ({
+export const subscribeSuccess = (networkIndex, channel) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_SUBSCRIBE_SUCCESS,
   channel,
+  networkIndex,
 })
 
-export const subscribeFailure = (error) => ({
+export const subscribeFailure = (networkIndex, error) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_SUBSCRIBE_FAILURE,
   error,
+  networkIndex,
 })
 
-export const unsubscribe = (channel) => ({
+export const unsubscribe = (networkIndex, channel) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_UNSUBSCRIBE,
   channel,
+  networkIndex,
 })
 
-export const appendContract = (contractName) => ({
+export const appendContract = (networkIndex, contractName) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_APPEND_CONTRACT,
   contractName,
+  networkIndex,
 })
 
 export const reset = () => ({
