@@ -130,37 +130,28 @@ class SendContainer extends React.Component {
       updateBitcoinTxDraftToken,
       updateBitcoinTxDraftUnsignedTx,
     } = this.props
-    const {
-      isRecipientInputValid,
-      isAmountInputValid,
-      recipient,
-      feeMultiplier,
-      feeEstimation,
-      selectedToken,
-      amount,
-    } = this.state
 
-    if (isRecipientInputValid && isAmountInputValid) {
+    if (this.state.isRecipientInputValid && this.state.isAmountInputValid) {
       updateBitcoinTxDraftToken({
         address,
         parentAddress,
-        token: selectedToken.symbol,
+        token: this.state.selectedToken.symbol,
       })
 
       const tx = {
-        to: recipient,
+        to: this.state.recipient,
         from: address,
-        value: convertBTCToSatoshi(amount),
+        value: convertBTCToSatoshi(this.state.amount),
       }
 
       requestBitcoinUtxoByAddress(address)
         .then((results) => {
           if (results && results.payload.data) {
-            const fee = feeEstimation * feeMultiplier
             prepareBitcoinTransaction({
               tx,
               blockchain,
-              feeRate: fee,
+              feeRate: this.state.feeEstimation,
+              feeMultiplier: this.state.feeMultiplier,
               network: network.networkType,
               utxos: results.payload.data,
             })

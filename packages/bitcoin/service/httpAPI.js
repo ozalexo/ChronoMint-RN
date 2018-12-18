@@ -113,9 +113,9 @@ export const requestUtxoByAddress = (address) => (dispatch) => {
 
 /**
  * broadcast new transaction to network
- * @param {string} rawTx
+ * @param {string} tx
  */
-export const requestSendRawTransaction = (rawTx) => (dispatch) => {
+export const requestSendRawTransaction = (tx) => (dispatch) => {
   const action = {
     type: 'REQ/MIDDLEWARE/BITCOIN/POST/SEND_RAW_TRANSACTION',
     payload: {
@@ -123,7 +123,7 @@ export const requestSendRawTransaction = (rawTx) => (dispatch) => {
       request: {
         method: 'POST',
         url: '/tx/send',
-        data: rawTx,
+        data: {tx},
       },
     },
   }
