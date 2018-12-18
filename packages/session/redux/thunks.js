@@ -7,7 +7,6 @@ import { createBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
 import {
   login,
   logout,
-  savePrivateKey,
 } from './actions'
 import {
   startMarket,
@@ -20,6 +19,10 @@ import {
 
 export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
   return new Promise((resolve, reject) => {
+    if (!ethAddress || !privateKey) {
+      return reject('0003: No ETH address or privateKey provided!')
+    }
+
     try {
       dispatch(startMarket())
       dispatch(rmqConnect())
@@ -27,7 +30,6 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
           dispatch(createBitcoinWallet(privateKey, ethAddress))
             .then(() => {
               dispatch(login(ethAddress))
-              dispatch(savePrivateKey(privateKey))
               return resolve()
             })
             .catch((error) => {

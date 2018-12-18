@@ -55,6 +55,15 @@ export const createEthWallet = (privateKey) => {
   return wallet
 }
 
+export const getAddress = (privateKey) => {
+  if (!privateKey) {
+    throw new Error('0004: Can\'t create ETH wallet without privateKey')
+  }
+
+  const wallet = createEthWallet(privateKey)
+  return wallet.address
+}
+
 export const encryptWallet = async (wallet, password) => {
   // Simplified encryption to speedup decription on mobile devices
   // Original: const encryptWallet = await wallet.encrypt(password)

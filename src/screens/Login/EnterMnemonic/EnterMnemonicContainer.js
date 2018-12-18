@@ -5,26 +5,17 @@
 
 import React, { PureComponent } from 'react'
 import { Alert } from 'react-native'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { getAddress } from '@chronobank/bitcoin/utils'
-import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
+import { getAddress } from '@chronobank/ethereum/utils'
 import { mnemonicToPrivateKeyAndAddress } from '@chronobank/ethereum/utils'
 import { createAccountByMnemonic } from '@chronobank/ethereum/redux/thunks'
 import i18n from '../../../locales/translation'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import EnterMnemonic from './EnterMnemonic'
 
-const mapStateToProps = (state) => {
-  return{
-    network: getCurrentNetwork(state),
-  }
-}
-
 class EnterMnemonicContainer extends PureComponent {
   
   static propTypes = {
-    network: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
@@ -40,7 +31,6 @@ class EnterMnemonicContainer extends PureComponent {
 
   handleLogin = () => {
     const { mnemonic } = this.state
-    const { network } = this.props
     const { navigate } = this.props.navigation
     const mnemonicWords = mnemonic && mnemonic.trim().split(' ')
 
@@ -80,4 +70,4 @@ class EnterMnemonicContainer extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, null)(EnterMnemonicContainer)
+export default EnterMnemonicContainer

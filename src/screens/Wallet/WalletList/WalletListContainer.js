@@ -74,7 +74,6 @@ class WalletListContainer extends PureComponent {
       rmqSubscribe({
         channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
         handler: (data) => {
-          console.log("data: ...............", data)
           updateBitcoinBalance({
             address: data.account,
             parentAddress: currentWallet,
@@ -101,6 +100,7 @@ class WalletListContainer extends PureComponent {
 
   render () {
     const { navigation, sections, currentWallet } = this.props
+    console.log(sections)
     return (
       <WalletList
         navigation={navigation}

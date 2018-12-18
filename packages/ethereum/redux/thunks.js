@@ -12,10 +12,14 @@ export const createAccountByMnemonic = (mnemonic, password) => async (dispatch) 
   return new Promise(async (resolve, reject) => {
     try {
       const { privateKey } = mnemonicToPrivateKeyAndAddress(mnemonic)
-      await dispatch(createAccountByPrivateKey(privateKey, password))
+      try {
+        await dispatch(createAccountByPrivateKey(privateKey, password))
+      } catch (error) {
+        return reject(error)
+      }
       return resolve(privateKey)
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -27,6 +31,12 @@ export const createAccountByPrivateKey = (privateKey, password) => (dispatch) =>
       const ethAddress = decryptedWallet.address
       const encryptedWallet = await encryptWallet(decryptedWallet, password)
 
+      if (!ethAddress) {
+        throw new Error('0001: No ETH address!')
+      }
+      if (!encryptedWallet) {
+        throw new Error('0002: No ETH encrypted wallet!')
+      }
       dispatch(ethereumCreateWallet(ethAddress, encryptedWallet))
       await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
   

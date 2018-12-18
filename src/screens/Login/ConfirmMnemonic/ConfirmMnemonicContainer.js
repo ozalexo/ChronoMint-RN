@@ -10,8 +10,6 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { createAccountByMnemonic } from '@chronobank/ethereum/redux/thunks'
 import { getEthAccountList } from '@chronobank/ethereum/redux/selectors'
-import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
-import i18n from '../../../locales/translation'
 import ConfirmMnemonic from './ConfirmMnemonic'
 
 const mapStateToProps = (state) => {
@@ -52,6 +50,9 @@ class ConfirmMnemonicContainer extends PureComponent {
         const params = account ? { account } : null
         const page = params ? 'Login' : 'Start'
         navigation.navigate(page, params)
+      })
+      .catch((error) => {
+        Alert.alert(error)
       })
   }
 

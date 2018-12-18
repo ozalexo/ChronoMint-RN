@@ -59,6 +59,7 @@ class SetAccountPasswordContainer extends PureComponent {
       mnemonic,
       ethereumMainAddress,
     } = this.props.navigation.state.params
+    console.log('SetAccountPasswordContainer params', this.props.navigation.state.params)
     const { password } = values
     const { navigate } = this.props.navigation
 
@@ -70,12 +71,14 @@ class SetAccountPasswordContainer extends PureComponent {
               navigate('WalletList')
             })
             .catch((error) => {
-              // console.warn(error)
+              // eslint-disable-next-line no-console
+              console.warn(error)
             })
         })
         .catch((error) => {
           // TODO: need to think about correct way of error handling
-          // console.warn(error)
+          // eslint-disable-next-line no-console
+          console.warn(error)
         })
     } else {
       this.props.createAccountByPrivateKey(privateKey, password)
@@ -85,12 +88,14 @@ class SetAccountPasswordContainer extends PureComponent {
               navigate('WalletList')
             })
             .catch((error) => {
-              // console.warn('handleDone loginThunk catch', error)
+              // eslint-disable-next-line no-console
+              console.warn(error)
             })
         })
         .catch((error) => {
           // TODO: need to think about correct way of error handling
-          // console.warn('handleDone createAccountByPrivateKey catch: ', error)
+          // eslint-disable-next-line no-console
+          console.warn(error)
         })
     }
 
@@ -116,7 +121,6 @@ class SetAccountPasswordContainer extends PureComponent {
   }
 
   addError = (error) => {
-    Alert.alert(error)
   }
 
   render () {
