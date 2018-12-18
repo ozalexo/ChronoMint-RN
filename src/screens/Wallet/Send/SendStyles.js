@@ -10,7 +10,6 @@ import colors from '../../../common/colors'
 export default StyleSheet.create({
   scrollView: {
     marginTop: headerHeight + 20,
-    paddingHorizontal: 20,
     flexGrow: 1,
     marginBottom: 20,
   },
@@ -37,6 +36,7 @@ export default StyleSheet.create({
   },
   formHeader: {
     flexGrow: 1,
+    paddingHorizontal: 20,
     paddingBottom: 30,
   },
   scanQR: {

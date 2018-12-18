@@ -5,6 +5,7 @@
 
 import React from 'react'
 import {
+  SafeAreaView,
   View,
   Text,
   Modal,
@@ -31,7 +32,7 @@ const ConfirmSendModal = ({
       visible={visible}
       onRequestClose={modalToggle}
     >
-      <View style={styles.modal}>
+      <SafeAreaView style={styles.modal}>
         <View style={styles.actions}>
           <ActionButton
             title='Cancel'
@@ -96,7 +97,7 @@ const ConfirmSendModal = ({
             </Text>
           </LabeledItem>
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   )
 

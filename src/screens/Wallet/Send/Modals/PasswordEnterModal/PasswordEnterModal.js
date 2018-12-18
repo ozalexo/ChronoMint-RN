@@ -5,9 +5,9 @@
 
 import React from 'react'
 import {
+  SafeAreaView,
   View,
   Modal,
-  StatusBar,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import ActionButton from '../../../../../components/ActionButton'
@@ -31,8 +31,7 @@ const PasswordEnterModal = ({
     visible={visible}
     onRequestClose={modalToggle}
   >
-    <StatusBar barStyle='light-content' />
-    <View style={styles.modal}>
+    <SafeAreaView style={styles.modal}>
       <View style={styles.actions}>
         <ActionButton
           title='Go back'
@@ -59,7 +58,7 @@ const PasswordEnterModal = ({
           />
         }
       </View>
-    </View>
+    </SafeAreaView>
   </Modal>
 )
 
