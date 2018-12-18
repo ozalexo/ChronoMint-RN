@@ -98,40 +98,22 @@ class LoginContainer extends PureComponent {
       .catch((error) => console.warn(error))
   }
 
-  checkPassword = (password) => {
-    const {
-      account,
-    } = this.props.navigation.state.params
-
-    return decryptWallet(account.encrypted, password)
-      .then(() => {
-        return true
-      })
-      .catch((error) => {
-        this.setState({ error: error.message })
-        return false
-      })
-  }
-
-
   handleLoginClick = async ({ password }) => {
     const {
       account,
     } = this.props.navigation.state.params
     const pass = password ? password : this.state.password
-    const isPasswordValid = await this.checkPassword(pass)
-    if (isPasswordValid) {
-      decryptWallet(account.encrypted, pass)
-        .then((results) => {
-          this.handleLogin({
-            address: results.address,
-            privateKey: results.privateKey,
-          })
+    decryptWallet(account.encrypted, pass)
+      .then((results) => {
+        console.log('DECRYPT:', results)
+        this.handleLogin({
+          address: results.address,
+          privateKey: results.privateKey,
         })
-        .catch((error) => {
-          console.warn('Can\'t decrypt wallet. Verify your password.')
-        })
-    }
+      })
+      .catch((error) => {
+        Alert.alert('Login failure', error.message)
+      })
   }
 
   handleLogin = ({ address, privateKey }) => {

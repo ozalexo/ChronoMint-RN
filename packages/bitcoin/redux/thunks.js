@@ -22,10 +22,13 @@ import {
 } from './actions'
 
 export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getState) => {
+
   return new Promise((resolve, reject) => {
     try {
       const network = getCurrentNetwork(getState()).networkType
       const bitcoinAddress = getAddress(privateKey, network)
+      console.log('CREATE BTC')
+      console.log(privateKey, ethAddress, network, bitcoinAddress)
       dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
       return resolve()
     } catch (e) {

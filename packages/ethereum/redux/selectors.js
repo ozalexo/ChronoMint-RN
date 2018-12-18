@@ -56,7 +56,7 @@ const getEthereumWallets = () => createSelector(
               blockchain: BLOCKCHAIN_ETHEREUM ,
             },
           ],
-          title: key,
+          title: BLOCKCHAIN_ETHEREUM,
         },
       ]
     }
@@ -69,22 +69,6 @@ export const getSections = createSelector(
   getBitcoinWalletsForSections,
   getEthereumWallets(),
   (bitWallets, ethWallets) => {
-    const combinedSections = [], walletObj = {}
-    let wallets = []
-    wallets = [...wallets, bitWallets, ethWallets]
-    flatten(wallets).forEach((wallet) => {
-      if (!walletObj[wallet.title]) {
-        walletObj[wallet.title] = wallet.data
-      } else {
-        walletObj[wallet.title] = walletObj[wallet.title].concat(wallet.data)
-      }
-    })
-    for (const key in walletObj) {
-      combinedSections.push({
-        data: walletObj[key],
-        title: key,
-      })
-    }
-    return combinedSections
+    return [...ethWallets, ...bitWallets]
   }
 )

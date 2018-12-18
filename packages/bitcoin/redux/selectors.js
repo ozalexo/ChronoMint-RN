@@ -36,7 +36,7 @@ export const getBitcoinWalletsForSections = createSelector(
               blockchain: BLOCKCHAIN_BITCOIN,
             },
           ],
-          title: ethAddress,
+          title: BLOCKCHAIN_BITCOIN,
         },
       ]
     }

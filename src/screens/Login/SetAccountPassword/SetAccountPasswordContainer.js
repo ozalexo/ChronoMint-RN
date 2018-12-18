@@ -4,7 +4,6 @@
  */
 
 import React, { PureComponent } from 'react'
-import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -59,7 +58,6 @@ class SetAccountPasswordContainer extends PureComponent {
       mnemonic,
       ethereumMainAddress,
     } = this.props.navigation.state.params
-    console.log('SetAccountPasswordContainer params', this.props.navigation.state.params)
     const { password } = values
     const { navigate } = this.props.navigation
 
