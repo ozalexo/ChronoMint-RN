@@ -6,6 +6,7 @@
 import React from 'react'
 import {
   Alert,
+  Button,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -92,6 +93,21 @@ class SendContainer extends React.Component {
     }
   }
 
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+
+    return {
+      ...params,
+      headerRight: (
+        <Button
+          onPress={() => params.handleGoToPasswordModal()}
+          title='Done'
+          color='#fff'
+        />
+      ),
+    }
+  }
+
   static propTypes = {
     createBitcoinTxDraft: PropTypes.func,
     updateBitcoinTxDraftRecipient: PropTypes.func,
@@ -106,6 +122,8 @@ class SendContainer extends React.Component {
     network: PropTypes.shape({}),
     prices: PropTypes.shape({}),
     navigation: PropTypes.shape({
+      getParam: PropTypes.func,
+      setParams: PropTypes.func,
       navigate: PropTypes.func,
       state: PropTypes.shape({
         params: PropTypes.shape({
@@ -116,6 +134,10 @@ class SendContainer extends React.Component {
         }),
       }),
     }),
+  }
+
+  componentDidMount () {
+    this.props.navigation.setParams({ handleGoToPasswordModal: this.handleGoToPasswordModal })
   }
 
   handleGoToPasswordModal = () => {

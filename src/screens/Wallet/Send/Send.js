@@ -15,7 +15,6 @@ import PropTypes from 'prop-types'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
 import i18n from '../../../locales/translation'
-import PrimaryButton from '../../../components/PrimaryButton'
 import FeeSlider from '../../../components/FeeSlider'
 import Input from '../../../components/Input'
 import Separator from '../../../components/Separator'
@@ -129,11 +128,6 @@ export default class Send extends PureComponent {
             onTxDraftRemove={onTxDraftRemove}
           />
         }
-        <PrimaryButton
-          label='Done'
-          onPress={onTogglePasswordModal}
-          style={styles.openModalButton}
-        />
         <View style={styles.formHeader}>
           <Text style={styles.walletTitle}>
             {
