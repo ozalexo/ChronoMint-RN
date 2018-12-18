@@ -105,7 +105,6 @@ class LoginContainer extends PureComponent {
     const pass = password ? password : this.state.password
     decryptWallet(account.encrypted, pass)
       .then((results) => {
-        console.log('DECRYPT:', results)
         this.handleLogin({
           address: results.address,
           privateKey: results.privateKey,

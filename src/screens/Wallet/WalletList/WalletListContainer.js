@@ -94,13 +94,16 @@ class WalletListContainer extends PureComponent {
               })
             })
         })
-        .catch((error) => { console.log('HTTP response ERROR:', error) })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.warn('HTTP response ERROR:', error)
+        })
     })
   }
 
   render () {
     const { navigation, sections, currentWallet } = this.props
-    console.log(sections)
+
     return (
       <WalletList
         navigation={navigation}

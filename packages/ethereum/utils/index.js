@@ -36,7 +36,8 @@ export const decryptWallet = async (entry, password) => {
 export const mnemonicToPrivateKeyAndAddress = (mnemonic, path = WALLET_HD_PATH) => {
   const accounts = new Accounts()
   const wallets = accounts.wallet.create()
-  const hdWallet = hdKey.fromMasterSeed(mnemonic)
+  const mnemonicSeed = new Mnemonic(mnemonic.split(' '), Mnemonic.Words.ENGLISH)
+  const hdWallet = hdKey.fromMasterSeed(mnemonicSeed)
   const wallet = hdWallet.derivePath(path).getWallet()
   const account = accounts.privateKeyToAccount(`0x${wallet.getPrivateKey().toString('hex')}`)
 

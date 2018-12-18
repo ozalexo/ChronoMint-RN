@@ -72,7 +72,6 @@ class ConfirmSendModalContainer extends React.Component {
     const { signedTx } = currentBTCWallet.txDraft
     requestBitcoinSendRawTransaction(signedTx)
       .then((sendTxRespone) => {
-        console.log('sendTxRespone: ', sendTxRespone)
         sendConfirm()
         onTxDraftRemove()
       })

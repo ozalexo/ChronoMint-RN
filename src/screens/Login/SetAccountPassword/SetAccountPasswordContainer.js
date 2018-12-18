@@ -63,8 +63,8 @@ class SetAccountPasswordContainer extends PureComponent {
 
     if (mnemonic) {
       this.props.createAccountByMnemonic(mnemonic, password)
-        .then((privateKey) => {
-          this.props.loginThunk(ethereumMainAddress, privateKey)
+        .then((derivedPrivateKey) => {
+          this.props.loginThunk(ethereumMainAddress, derivedPrivateKey)
             .then(() => {
               navigate('WalletList')
             })
@@ -80,8 +80,8 @@ class SetAccountPasswordContainer extends PureComponent {
         })
     } else {
       this.props.createAccountByPrivateKey(privateKey, password)
-        .then(() => {
-          this.props.loginThunk(ethereumMainAddress, privateKey)
+        .then((derivedPrivateKey) => {
+          this.props.loginThunk(ethereumMainAddress, derivedPrivateKey)
             .then(() => {
               navigate('WalletList')
             })
