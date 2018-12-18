@@ -417,19 +417,20 @@ class SendContainer extends React.Component {
   handleTogglePasswordModal = () => {
     this.setState({
       enterPasswordModal: !this.state.enterPasswordModal,
-      confirmSendModal: false,
     })
   }
 
   handleCloseConfirmModal = () => {
     this.setState({
-      enterPasswordModal: false,
       confirmSendModal: false,
     })
   }
 
   handlePasswordConfirm = () => {
-    this.setState({ confirmSendModal: false })
+    this.setState({
+      confirmSendModal: true,
+      enterPasswordModal: false,
+    })
   }
 
   handleSendConfirm = () => {
