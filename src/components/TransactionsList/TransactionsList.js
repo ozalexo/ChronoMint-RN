@@ -20,7 +20,7 @@ import Separator from '../Separator'
 import TransactionIcon from '../TransactionIcon'
 import styles from './TransactionsListStyles'
 
-const Symbols = {
+const tokenSymbols = {
   [BLOCKCHAIN_BITCOIN]: BTC_PRIMARY_TOKEN,
   [BLOCKCHAIN_ETHEREUM]: ETHEREUM_PRIMARY_TOKEN,
 }
@@ -42,7 +42,7 @@ export default class TransactionsList extends PureComponent {
   renderItem = ({item}) => {
     const { address, blockchain, navigation } = this.props
     const type = address === item.from ? 'sending' : 'receiving'
-    const symbol = Symbols[blockchain]
+    const symbol = tokenSymbols[blockchain]
     return (
       <TransactionItem item={item} type={type} symbol={symbol} navigation={navigation} />
     )

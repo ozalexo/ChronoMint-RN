@@ -13,7 +13,7 @@ import {
   requestBitcoinTransactionsHistoryByAddress,
 } from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { createBitcoinTxHistory } from '@chronobank/bitcoin/redux/thunks'
+import { updateBitcoinTxHistory } from '@chronobank/bitcoin/redux/thunks'
 import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import PropTypes from 'prop-types'
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   requestBitcoinTransactionsHistoryByAddress,
-  createBitcoinTxHistory,
+  updateBitcoinTxHistory,
 }, dispatch)
 
 class WalletContainer extends Component {
@@ -54,7 +54,7 @@ class WalletContainer extends Component {
 
   componentDidMount () {
     const { address, parentAddress } = this.props.navigation.state.params
-    const { createBitcoinTxHistory, requestBitcoinTransactionsHistoryByAddress } = this.props
+    const { updateBitcoinTxHistory, requestBitcoinTransactionsHistoryByAddress } = this.props
     requestBitcoinTransactionsHistoryByAddress(address)
       .then((response) => {
         const timestamps = []
@@ -70,7 +70,7 @@ class WalletContainer extends Component {
             confirmations: tx.confirmations,
           }
         })
-        createBitcoinTxHistory({
+        updateBitcoinTxHistory({
           address,
           parentAddress,
           txList,
