@@ -12,12 +12,18 @@ import {
   View,
 } from 'react-native'
 import i18n from '../../locales/translation'
+import { BLOCKCHAIN_ETHEREUM, ETHEREUM_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
+import { BLOCKCHAIN_BITCOIN, BTC_PRIMARY_TOKEN } from '@chronobank/bitcoin/constants'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import Separator from '../Separator'
 import TransactionIcon from '../TransactionIcon'
 import styles from './TransactionsListStyles'
 
+const tokenSymbols = {
+  [BLOCKCHAIN_BITCOIN]: BTC_PRIMARY_TOKEN,
+  [BLOCKCHAIN_ETHEREUM]: ETHEREUM_PRIMARY_TOKEN,
+}
 
 export default class TransactionsList extends PureComponent {
 
@@ -33,7 +39,14 @@ export default class TransactionsList extends PureComponent {
   keyExtractor = (item, index) =>
     '' + item.address + '_' + item.blockNumber + '_' + index
 
-  renderItem = (item) => <TransactionItem {...item} navigation={this.props.navigation} />
+  renderItem = ({item}) => {
+    const { address, blockchain, navigation } = this.props
+    const type = address === item.from ? 'sending' : 'receiving'
+    const symbol = tokenSymbols[blockchain]
+    return (
+      <TransactionItem item={item} type={type} symbol={symbol} navigation={navigation} />
+    )
+  }
 
 
   render () {
@@ -42,9 +55,9 @@ export default class TransactionsList extends PureComponent {
       mainWalletTransactionLoadingStatus,
       latestTransactionDate,
     } = this.props
-
+    
     const lastTransactionDate = latestTransactionDate
-      && moment(latestTransactionDate).format('DD MMMM YYYY')
+      && moment.unix(latestTransactionDate).format('DD MMMM YYYY')
       || 'No date info available'
 
     const TransactionsLoading = () => (
@@ -123,10 +136,8 @@ TransactionsList.propTypes = {
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       address: PropTypes.string,
-      amount: PropTypes.number,
+      balance: PropTypes.number,
       confirmations: PropTypes.number,
-      symbol: PropTypes.string,
-      type: PropTypes.oneOf(['receiving', 'sending']),
     })
   ),
   refreshTransactionsList: PropTypes.func,
@@ -134,39 +145,42 @@ TransactionsList.propTypes = {
 
 class TransactionItem extends PureComponent {
 
-  static getFormattedBalance = (amount, symbol, type) => {
-    const isAmountTooSmall = amount > 0 && amount < 0.01
-    let format = isAmountTooSmall ? '%u%n+' : '%u%n  '
+  static getFormattedBalance = (balance, symbol, type) => {
+    const isbalanceTooSmall = balance > 0 && balance < 0.01
+    let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
     format = [
       (type === 'sending' ? '-' : '+'),
       format,
     ].join(' ')
 
-    return i18n.toCurrency(amount, { precision: 2, unit: ` ${symbol} `, format })
+    return i18n.toCurrency(balance, { precision: 2, unit: ` ${symbol} `, format })
 
   }
 
   handleTransactionClick = () => {
     // const {
     //   address,
-    //   amount,
+    //   balance,
     //   blockNumber,
     //   confirmations,
     //   fee,
-    //   symbol,
+    //   blockchain,
     //   txDate,
     //   type,
     // } = props.item
   }
 
   render () {
+    const { type, symbol, navigation, item } = this.props
     const {
-      address,
+      from,
+      to,
       confirmations,
-      symbol,
-      type,
-      amount,
-    } = this.props.item
+      balance,
+    } = item
+
+    const address = type === 'sending' ? to : from
+
 
     const transactionStyle = type === 'sending'
       ? styles.sending
@@ -179,6 +193,7 @@ class TransactionItem extends PureComponent {
         onPress={this.handleTransactionClick}
       >
         <View style={styles.item}>
+          <Separator />
           <View style={styles.leftPart}>
             <TransactionIcon
               type={type}
@@ -200,7 +215,7 @@ class TransactionItem extends PureComponent {
           </View>
           <Text style={transactionStyle}>
             {
-              TransactionItem.getFormattedBalance(amount, symbol, type)
+              TransactionItem.getFormattedBalance(balance, symbol, type)
             }
           </Text>
         </View>
@@ -211,10 +226,11 @@ class TransactionItem extends PureComponent {
 
 TransactionItem.propTypes = {
   item: PropTypes.shape({
-    address: PropTypes.string,
-    amount: PropTypes.number,
+    from: PropTypes.string,
+    to: PropTypes.string,
+    balance: PropTypes.number,
     confirmations: PropTypes.number,
-    symbol: PropTypes.string,
-    type: PropTypes.oneOf(['receiving', 'sending']),
   }),
+  symbol: PropTypes.string,
+  type: PropTypes.oneOf(['receiving', 'sending']),
 }
