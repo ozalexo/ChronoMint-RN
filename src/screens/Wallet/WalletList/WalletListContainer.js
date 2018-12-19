@@ -49,6 +49,7 @@ class WalletListContainer extends PureComponent {
     ),
     dropBitcoinSelectedWallet: PropTypes.func,
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
+    updateBitcoinTxHistory: PropTypes.func,
     requestBitcoinBalanceByAddress: PropTypes.func,
     rmqSubscribe: PropTypes.func,
     getBalance: PropTypes.func,
@@ -84,6 +85,7 @@ class WalletListContainer extends PureComponent {
       BTCwalletsList,
       getBalance,
       updateEthereumBalance,
+      updateBitcoinTxHistory,
     } = this.props
 
     getBalance(currentWallet)
@@ -107,7 +109,7 @@ class WalletListContainer extends PureComponent {
           }
           try {
             const data = JSON.parse(body)
-            const confirmations0 = data.balances.confirmations0 
+            const confirmations0 = data.balances.confirmations0
             const confirmations6 = data.balances.confirmations6
             const balance0 = convertSatoshiToBTC(confirmations0)
             const balance6 = convertSatoshiToBTC(confirmations6)
@@ -117,6 +119,44 @@ class WalletListContainer extends PureComponent {
               parentAddress: currentWallet,
               balance: balance0 || balance6,
               amount: confirmations0 || confirmations6,
+            })
+          } catch (error) {
+            // TODO: to handle any errors here
+            // Silently ignore any errors for now.
+            // eslint-disable-next-line no-console
+            console.log(error)
+          }
+        },
+      })
+      //subscribe on transactions
+      rmqSubscribe({
+        // TODO: need to get channel name from store
+        channel: `/exchange/events/testnet-bitcoin-middleware-chronobank-io_transaction.${address}`,
+        handler: ({ body }) => {
+          if (!body) {
+            // TODO: need to handle possible errors in reply
+            return
+          }
+          try {
+            const data = JSON.parse(body)
+            const timestamps = []
+            const txList = data.map((tx) => {
+              timestamps.push(tx.timestamp)
+              return {
+                from: tx.inputs[0].address,
+                to: tx.outputs[0].address,
+                amount: tx.outputs[0].value,
+                balance: convertSatoshiToBTC(tx.outputs[0].value).toNumber(),
+                timestamp: tx.timestamp,
+                hash: tx.hash,
+                confirmations: tx.confirmations,
+              }
+            })
+            updateBitcoinTxHistory({
+              address,
+              parentAddress: currentWallet,
+              txList,
+              latestTxDate: Math.max(...timestamps),
             })
           } catch (error) {
             // TODO: to handle any errors here
