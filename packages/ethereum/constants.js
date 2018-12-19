@@ -5,6 +5,7 @@
 
 export const BLOCKCHAIN_ETHEREUM = 'Ethereum'
 export const ETH_PRIMARY_TOKEN = 'ETH'
+export const DECIMALS = 18
 
 /**
  * See all available coin types here:

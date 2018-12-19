@@ -5,6 +5,7 @@
 
 import Web3Controller from './Web3Controller'
 import { NETWORK_SELECT } from '@chronobank/network/redux/constants'
+import { WEB3_MIDDLEWARE_METHOD_GET_BALANCE } from './constants'
 import { getNetworkByIndex } from '@chronobank/network/redux/selectors'
 
 let w3c = null
@@ -24,6 +25,9 @@ const connect = async (store, action, next) => {
     // return Promise.reject(error)
   }
 }
+
+const getBalance = (store, { address }) =>
+  w3c.getBalance(address)
 
 // const getWeb3Instance = (store, action, next) => {
 //   next(action)
@@ -86,6 +90,7 @@ const connect = async (store, action, next) => {
 const mutations = {
 
   [NETWORK_SELECT]: connect,
+  [WEB3_MIDDLEWARE_METHOD_GET_BALANCE]: getBalance,
 
 }
 

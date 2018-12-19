@@ -70,3 +70,8 @@ export const appendContract = (networkIndex, contractName) => ({
 export const reset = () => ({
   type: ActionTypes.WEB3_MIDDLEWARE_RESET,
 })
+
+export const getBalance = (address) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BALANCE,
+  address,
+})

@@ -5,7 +5,7 @@
 
 import * as Keychain from 'react-native-keychain'
 import { encryptWallet, createEthWallet, mnemonicToPrivateKeyAndAddress } from '../utils'
-import { ethereumCreateWallet } from './actions'
+import * as Actions from './actions'
 
 // eslint-disable-next-line import/prefer-default-export
 export const createAccountByMnemonic = (mnemonic, password) => async (dispatch) => {
@@ -33,12 +33,23 @@ export const createAccountByPrivateKey = (privateKey, password) => (dispatch) =>
       if (!encryptedWallet) {
         return reject('0002: No ETH encrypted wallet!')
       }
-      dispatch(ethereumCreateWallet(ethAddress, encryptedWallet))
+      dispatch(Actions.ethereumCreateWallet(ethAddress, encryptedWallet))
       await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
   
       return resolve(decryptedWallet.privateKey)
     } catch (error) {
       return reject(error)
+    }
+  })
+}
+
+export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.ethereumUpdateBalance({ tokenSymbol, address, balance, amount }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
     }
   })
 }

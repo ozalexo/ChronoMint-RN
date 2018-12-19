@@ -45,3 +45,6 @@ export const reconnect = (/*isConnecting*/) => (/*dispatch, getState*/) => {
   //   dispatch(Actions.middlewareReconnect(isConnecting))
   // }
 }
+
+export const getBalance = (address) => (dispatch) =>
+  dispatch(Actions.getBalance(address))

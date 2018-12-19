@@ -8,20 +8,25 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
-import { getSections } from '@chronobank/ethereum/redux/selectors'
+import { getSections, getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
+import { getBalance } from '@chronobank/ethereum/middleware/thunks'
+import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinBalance, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
 import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { parseBitcoinBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
+import * as EthAmountUtils from '@chronobank/ethereum/utils/amount'
 
 const ActionCreators = {
   ...apiBTC,
   rmqSubscribe,
   updateBitcoinBalance,
   dropBitcoinSelectedWallet,
+  getBalance,
+  updateEthereumBalance,
 }
 
 const mapDispatchToProps = (dispatch) =>
@@ -32,6 +37,7 @@ const mapStateToProps = (state) => {
     sections: getSections(state),
     currentWallet: getCurrentWallet(state),
     BTCwalletsList: getBitcoinWalletsList(state),
+    ETHwalletsList: getEthereumWalletList(state),
   }
 }
 
@@ -45,7 +51,7 @@ class WalletListContainer extends PureComponent {
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
     requestBitcoinBalanceByAddress: PropTypes.func,
     rmqSubscribe: PropTypes.func,
-    getAccountTransactions: PropTypes.func,
+    getBalance: PropTypes.func,
     updateBitcoinBalance: PropTypes.func,
     currentWallet: PropTypes.string,
     navigation: PropTypes.shape({
@@ -76,7 +82,20 @@ class WalletListContainer extends PureComponent {
       rmqSubscribe,
       currentWallet,
       BTCwalletsList,
+      getBalance,
+      updateEthereumBalance,
     } = this.props
+
+    getBalance(currentWallet)
+      .then((amount) => {
+        const balance = EthAmountUtils.amountToBalance(amount)
+        updateEthereumBalance({ tokenSymbol: 'ETH', address: currentWallet, balance, amount })
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log('Requiesting ETH balance error', error)
+      })
+
     BTCwalletsList.forEach((address) => {
       rmqSubscribe({
         // TODO: need to get channel name from store
