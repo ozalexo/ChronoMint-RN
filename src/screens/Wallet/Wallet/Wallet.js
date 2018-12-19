@@ -41,6 +41,8 @@ export default class Wallet extends PureComponent {
       address,
       blockchain,
       selectedCurrency,
+      transactions,
+      latestTransactionDate,
     } = this.props
     return (
       <View style={styles.screenView}>
@@ -52,6 +54,10 @@ export default class Wallet extends PureComponent {
           />
           <TransactionsList
             navigation={navigation}
+            transactions={transactions}
+            latestTransactionDate={latestTransactionDate}
+            address={address}
+            blockchain={blockchain}
             mainWalletTransactionLoadingStatus={{ isFetched: true, isFetching: false, isInited: true }} //for Testing
           />
         </ScrollView>

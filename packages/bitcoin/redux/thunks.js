@@ -19,6 +19,7 @@ import {
   bitcoinTxDraftUpdateFeeMultiplier,
   bitcoinTxDraftUpdateUnsignedTx,
   bitcoinTxDraftUpdateSignedTx,
+  bitcoinTxCreateHistory,
 } from './actions'
 
 export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getState) => {
@@ -61,6 +62,17 @@ export const updateBitcoinTxDraftAmount = ({ address, parentAddress, amount }) =
   return new Promise((resolve, reject) => {
     try {
       dispatch(bitcoinTxDraftUpdateAmount({ address, parentAddress, amount }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const createBitcoinTxHistory = ({ latestTxDate, txList, parentAddress, address }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(bitcoinTxCreateHistory({ latestTxDate, txList, parentAddress, address }))
       return resolve()
     } catch (e) {
       return reject(e)

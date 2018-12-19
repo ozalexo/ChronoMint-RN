@@ -9,17 +9,27 @@ import { bindActionCreators } from 'redux'
 import {
   Alert,
 } from 'react-native'
+import {
+  requestBitcoinTransactionsHistoryByAddress,
+} from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { createBitcoinTxHistory } from '@chronobank/bitcoin/redux/thunks'
+import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
+import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import PropTypes from 'prop-types'
 import Wallet from './Wallet'
 
 const mapStateToProps = (state) => {
   return {
     currentWallet: getCurrentWallet(state),
+    currentBTCWallet: getBitcoinCurrentWallet(state),
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  requestBitcoinTransactionsHistoryByAddress,
+  createBitcoinTxHistory,
+}, dispatch)
 
 class WalletContainer extends Component {
   constructor (props) {
@@ -27,7 +37,8 @@ class WalletContainer extends Component {
   }
 
   static propTypes = {
-    getAccountTransactions: PropTypes.func,
+    requestBitcoinTransactionsHistoryByAddress: PropTypes.func,
+    createBitcoinTxHistory: PropTypes.func,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       state: PropTypes.shape({
@@ -39,6 +50,33 @@ class WalletContainer extends Component {
         }),
       }),
     }),
+  }
+
+  componentDidMount () {
+    const { address, parentAddress } = this.props.navigation.state.params
+    const { createBitcoinTxHistory, requestBitcoinTransactionsHistoryByAddress } = this.props
+    requestBitcoinTransactionsHistoryByAddress(address)
+      .then((response) => {
+        const timestamps = []
+        const txList = response.payload.data.map((tx) => {
+          timestamps.push(tx.timestamp)
+          return {
+            from: tx.inputs[0].address,
+            to: tx.outputs[0].address,
+            amount: tx.outputs[0].value,
+            balance: convertSatoshiToBTC(tx.outputs[0].value).toNumber(),
+            timestamp: tx.timestamp,
+            hash: tx.hash,
+            confirmations: tx.confirmations,
+          }
+        })
+        createBitcoinTxHistory({
+          address,
+          parentAddress,
+          txList,
+          latestTxDate: Math.max(...timestamps),
+        })
+      })
   }
 
   handleSend = () => {
@@ -85,9 +123,23 @@ class WalletContainer extends Component {
       address,
       selectedCurrency,
     } = this.props.navigation.state.params
+    const { currentBTCWallet, navigation } = this.props
     return (
       <Wallet
         blockchain={blockchain}
+        navigation={navigation}
+        latestTransactionDate={
+          currentBTCWallet &&
+          currentBTCWallet.transactions &&
+          currentBTCWallet.transactions.latestTxDate
+          || null
+        }
+        transactions={
+          currentBTCWallet &&
+          currentBTCWallet.transactions &&
+          currentBTCWallet.transactions.txList
+          || []
+        }
         address={address}
         selectedCurrency={selectedCurrency}
         onSend={this.handleSend}

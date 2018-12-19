@@ -40,6 +40,14 @@ export const bitcoinTxDraftUpdateFee = ({ address, parentAddress, fee }) => ({
   parentAddress,
 })
 
+export const bitcoinTxCreateHistory = ({ address, parentAddress, latestTxDate, txList }) => ({
+  type: ActionsTypes.BITCOIN_TX_GET_HISTORY,
+  latestTxDate,
+  txList,
+  address,
+  parentAddress,
+})
+
 export const bitcoinTxDraftUpdateFeeMultiplier = ({ address, parentAddress, feeMultiplier }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_FEE_MULTIPLIER,
   feeMultiplier,

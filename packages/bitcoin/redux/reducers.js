@@ -148,6 +148,27 @@ const bitcoinTxUpdateRecipient = (state, { recipient, address, parentAddress }) 
   }
 }
 
+const bitcoinTxCreateHistory = (state, { latestTxDate, txList, address, parentAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [parentAddress]: {
+      ...list[parentAddress],
+      [address]: {
+        ...list[parentAddress][address],
+        transactions: {
+          latestTxDate,
+          txList,
+        },
+      },
+    },
+  }
+  return {
+    ...state,
+    list,
+  }
+}
+
 const bitcoinTxUpdateSignedTx = (state, { signedTx, address, parentAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
@@ -253,7 +274,7 @@ const bitcoinTxUpdateToken = (state, { token, address, parentAddress }) => {
   }
 }
 
-const bitcoinTxUpdateAmount= (state, { amount, address, parentAddress }) => {
+const bitcoinTxUpdateAmount = (state, { amount, address, parentAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
@@ -290,6 +311,7 @@ const mutations = {
   [ActionsTypes.BITCOIN_DROP_SELECTED_WALLET]: bitcoinDropSelectedWallet,
   [ActionsTypes.BITCOIN_UPDATE_BALANCE]: bitcoinUpdateWalletBalance,
   [ActionsTypes.BITCOIN_CREATE_WALLET]: bitcoinCreateWallet,
+  [ActionsTypes.BITCOIN_TX_GET_HISTORY]: bitcoinTxCreateHistory,
   // GET UTXOS
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS]: (state) => state,
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS_SUCCESS]: (state, data) => ({

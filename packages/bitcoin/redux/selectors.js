@@ -48,20 +48,20 @@ export const getBitcoinWalletsForSections = createSelector(
 export const getBitcoinWallets = createSelector(
   getDuckBitcoin,
   getCurrentWallet,
-  (bitcoin, ethAddress) => bitcoin.list[ethAddress]
+  (bitcoin, ethAddress) => bitcoin.list[ethAddress] 
 )
 
 export const getBitcoinWalletsList = createSelector(
   getDuckBitcoin,
   getCurrentWallet,
-  (bitcoin, ethAddress) => Object.keys(bitcoin.list[ethAddress])
+  (bitcoin, ethAddress) => Object.keys(bitcoin.list[ethAddress]) || []
 )
 
 export const getBitcoinCurrentWallet = createSelector(
   getDuckBitcoin,
   getCurrentWallet,
   getBitcoinSelectedWalletAddress,
-  (bitcoin, ethAddress, btcAddress) => bitcoin.list[ethAddress][btcAddress]
+  (bitcoin, ethAddress, btcAddress) => bitcoin.list[ethAddress][btcAddress] || {}
 )
 
 export const getEntryPending = (address, key, blockchain) => createSelector(

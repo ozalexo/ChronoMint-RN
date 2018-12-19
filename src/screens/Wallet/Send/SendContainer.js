@@ -102,7 +102,6 @@ class SendContainer extends React.Component {
         <Button
           onPress={() => params.handleGoToPasswordModal()}
           title='Done'
-          color='#fff'
         />
       ),
     }
