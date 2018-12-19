@@ -16,3 +16,11 @@ export const ethereumCreateDerivedWallet = (parentAddress, address) => ({
   parentAddress,
   address,
 })
+
+export const ethereumUpdateBalance = ({ tokenSymbol, address, balance, amount }) => ({
+  type: ActionsTypes.ETHEREUM_UPDATE_BALANCE,
+  address,
+  amount,
+  balance,
+  tokenSymbol,
+})
