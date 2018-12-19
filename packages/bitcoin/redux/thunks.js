@@ -5,22 +5,7 @@
 
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { getAddress } from '../utils'
-import {
-  bitcoinCreateWallet,
-  bitcoinUpdateBalance,
-  bitcoinSelectWallet,
-  bitcoinCreateTxDraft,
-  bitcoinDropSelectedWallet,
-  bitcoinDeleteTxDraft,
-  bitcoinTxDraftUpdateRecipient,
-  bitcoinTxDraftUpdateAmount,
-  bitcoinTxDraftUpdateToken,
-  bitcoinTxDraftUpdateFee,
-  bitcoinTxDraftUpdateFeeMultiplier,
-  bitcoinTxDraftUpdateUnsignedTx,
-  bitcoinTxDraftUpdateSignedTx,
-  bitcoinTxUpdateHistory,
-} from './actions'
+import * as Actions from './actions'
 
 export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getState) => {
 
@@ -28,7 +13,7 @@ export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getSta
     try {
       const network = getCurrentNetwork(getState()).networkType
       const bitcoinAddress = getAddress(privateKey, network)
-      dispatch(bitcoinCreateWallet(ethAddress, bitcoinAddress))
+      dispatch(Actions.bitcoinCreateWallet(ethAddress, bitcoinAddress))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -39,7 +24,7 @@ export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getSta
 export const selectBitcoinWallet = ({ address }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinSelectWallet(address))
+      dispatch(Actions.bitcoinSelectWallet(address))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -50,7 +35,7 @@ export const selectBitcoinWallet = ({ address }) => (dispatch) => {
 export const updateBitcoinTxDraftRecipient = ({ address, masterWalletAddress, recipient }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateRecipient({ address, masterWalletAddress, recipient }))
+      dispatch(Actions.bitcoinTxDraftUpdateRecipient({ address, masterWalletAddress, recipient }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -61,7 +46,7 @@ export const updateBitcoinTxDraftRecipient = ({ address, masterWalletAddress, re
 export const updateBitcoinTxDraftAmount = ({ address, masterWalletAddress, amount }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateAmount({ address, masterWalletAddress, amount }))
+      dispatch(Actions.bitcoinTxDraftUpdateAmount({ address, masterWalletAddress, amount }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -83,7 +68,7 @@ export const updateBitcoinTxHistory = ({ latestTxDate, txList, parentAddress, ad
 export const updateBitcoinTxDraftToken = ({ address, masterWalletAddress, token }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateToken({ address, masterWalletAddress, token }))
+      dispatch(Actions.bitcoinTxDraftUpdateToken({ address, masterWalletAddress, token }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -94,7 +79,7 @@ export const updateBitcoinTxDraftToken = ({ address, masterWalletAddress, token 
 export const updateBitcoinTxDraftFee = ({ address, masterWalletAddress, fee }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateFee({ address, masterWalletAddress, fee }))
+      dispatch(Actions.bitcoinTxDraftUpdateFee({ address, masterWalletAddress, fee }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -105,7 +90,7 @@ export const updateBitcoinTxDraftFee = ({ address, masterWalletAddress, fee }) =
 export const updateBitcoinTxDraftFeeMultiplier = ({ address, masterWalletAddress, feeMultiplier }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateFeeMultiplier({ address, masterWalletAddress, feeMultiplier }))
+      dispatch(Actions.bitcoinTxDraftUpdateFeeMultiplier({ address, masterWalletAddress, feeMultiplier }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -116,7 +101,7 @@ export const updateBitcoinTxDraftFeeMultiplier = ({ address, masterWalletAddress
 export const updateBitcoinTxDraftUnsignedTx = ({ address, masterWalletAddress, unsignedTx }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateUnsignedTx({ address, masterWalletAddress, unsignedTx }))
+      dispatch(Actions.bitcoinTxDraftUpdateUnsignedTx({ address, masterWalletAddress, unsignedTx }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -127,7 +112,7 @@ export const updateBitcoinTxDraftUnsignedTx = ({ address, masterWalletAddress, u
 export const updateBitcoinTxDraftSignedTx = ({ address, masterWalletAddress, signedTx }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxDraftUpdateSignedTx({ address, masterWalletAddress, signedTx }))
+      dispatch(Actions.bitcoinTxDraftUpdateSignedTx({ address, masterWalletAddress, signedTx }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -138,7 +123,7 @@ export const updateBitcoinTxDraftSignedTx = ({ address, masterWalletAddress, sig
 export const createBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinCreateTxDraft({ address, masterWalletAddress }))
+      dispatch(Actions.bitcoinCreateTxDraft({ address, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -149,7 +134,7 @@ export const createBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispa
 export const dropBitcoinSelectedWallet = () => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinDropSelectedWallet())
+      dispatch(Actions.bitcoinDropSelectedWallet())
       return resolve()
     } catch (e) {
       return reject(e)
@@ -160,7 +145,7 @@ export const dropBitcoinSelectedWallet = () => (dispatch) => {
 export const deleteBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinDeleteTxDraft({ address, masterWalletAddress }))
+      dispatch(Actions.bitcoinDeleteTxDraft({ address, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -171,7 +156,7 @@ export const deleteBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispa
 export const updateBitcoinBalance = ({ address, masterWalletAddress, balance, amount }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinUpdateBalance({ address, masterWalletAddress, balance, amount }))
+      dispatch(Actions.bitcoinUpdateBalance({ address, masterWalletAddress, balance, amount }))
       return resolve()
     } catch (e) {
       return reject(e)

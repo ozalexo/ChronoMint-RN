@@ -113,12 +113,12 @@ class WalletListContainer extends PureComponent {
             const data = JSON.parse(body)
             const confirmations0 = data.balances.confirmations0
             const confirmations6 = data.balances.confirmations6
-            const balance0 = convertSatoshiToBTC(confirmations0).toNumber()
-            const balance6 = convertSatoshiToBTC(confirmations6).toNumber()
+            const balance0 = convertSatoshiToBTC(confirmations0)
+            const balance6 = convertSatoshiToBTC(confirmations6)
 
             updateBitcoinBalance({
               address: data.address,
-              masterWalletAddress: masterWalletAddress,
+              masterWalletAddress,
               balance: balance0 || balance6,
               amount: confirmations0 || confirmations6,
             })
@@ -173,8 +173,8 @@ class WalletListContainer extends PureComponent {
             .then((balance) => {
               updateBitcoinBalance({
                 address,
-                masterWalletAddress: masterWalletAddress,
-                balance: parseBitcoinBalanceData(balance).toNumber(),
+                masterWalletAddress,
+                balance: parseBitcoinBalanceData(balance),
                 amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
               })
             })
