@@ -30,13 +30,3 @@ export const convertBTCToSatoshi = (BTC) => {
 }
 
 export const convertToWei = (amount) => web3utils.toWei(amount)
-
-// const addDecimals = (amount) => {
-//   const amountBN = new BigNumber(amount.toString())
-//   return amountBN.mul(Math.pow(10, this.decimals()))
-// }
-
-// const removeDecimals = (amount) => {
-//   const amountBN = new BigNumber(amount)
-//   return amountBN.div(Math.pow(10, this.decimals()))
-// }
