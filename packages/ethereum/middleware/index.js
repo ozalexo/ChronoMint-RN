@@ -26,8 +26,8 @@ const connect = async (store, action, next) => {
   }
 }
 
-const getBalance = (store, action) =>
-  w3c.getBalance(action.address)
+const getBalance = (store, { address }) =>
+  w3c.getBalance(address)
 
 // const getWeb3Instance = (store, action, next) => {
 //   next(action)
