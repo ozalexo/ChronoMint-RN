@@ -13,9 +13,19 @@ import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinBalance, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
+import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { parseBitcoinBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
 
+const ActionCreators = {
+  ...apiBTC,
+  rmqSubscribe,
+  updateBitcoinBalance,
+  dropBitcoinSelectedWallet,
+}
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(ActionCreators, dispatch)
 
 const mapStateToProps = (state) => {
   return {
@@ -24,9 +34,6 @@ const mapStateToProps = (state) => {
     BTCwalletsList: getBitcoinWalletsList(state),
   }
 }
-const ActionCreators = { ...apiBTC, rmqSubscribe, updateBitcoinBalance, dropBitcoinSelectedWallet }
-
-const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
 class WalletListContainer extends PureComponent {
 
@@ -72,16 +79,35 @@ class WalletListContainer extends PureComponent {
     } = this.props
     BTCwalletsList.forEach((address) => {
       rmqSubscribe({
-        channel: `/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
-        handler: (data) => {
-          updateBitcoinBalance({
-            address: data.account,
-            parentAddress: currentWallet,
-            balance: data.balance.balance0.satoshis || data.balance.balance6.satoshis,
-            amount: data.balance.balance0.amount || data.balance.balance6.amount,
-          })
+        // TODO: need to get channel name from store
+        channel: `/exchange/events/testnet-bitcoin-middleware-chronobank-io_balance.${address}`,
+        handler: ({ body }) => {
+          if (!body) {
+            // TODO: need to handle possible errors in reply
+            return
+          }
+          try {
+            const data = JSON.parse(body)
+            const confirmations0 = data.balances.confirmations0 
+            const confirmations6 = data.balances.confirmations6
+            const balance0 = convertSatoshiToBTC(confirmations0)
+            const balance6 = convertSatoshiToBTC(confirmations6)
+
+            updateBitcoinBalance({
+              address: data.address,
+              parentAddress: currentWallet,
+              balance: balance0 || balance6,
+              amount: confirmations0 || confirmations6,
+            })
+          } catch (error) {
+            // TODO: to handle any errors here
+            // Silently ignore any errors for now.
+            // eslint-disable-next-line no-console
+            console.log(error)
+          }
         },
       })
+
       requestBitcoinSubscribeWalletByAddress(address)
         .then(() => {
           requestBitcoinBalanceByAddress(address)

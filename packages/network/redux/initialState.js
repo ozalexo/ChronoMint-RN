@@ -113,9 +113,9 @@ const blockchainMainnet ={
   //   coinType: null,
   //   symbol: 'BTC',
   //   channels: {
-  //     balance: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance',
-  //     transaction: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_transaction',
-  //     block: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_block',
+  //     balance: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_balance',
+  //     transaction: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_transaction',
+  //     block: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_block',
   //   },
   // },
   [BLOCKCHAIN_BITCOIN]: {
@@ -177,9 +177,9 @@ const blockchainTestnet ={
   //   coinType: null,
   //   symbol: 'BCC',
   //   channels: {
-  //     balance: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance',
-  //     transaction: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_transaction',
-  //     block: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_block',
+  //     balance: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_balance',
+  //     transaction: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_transaction',
+  //     block: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_block',
   //   },
   // },
   [BLOCKCHAIN_BITCOIN]: {
@@ -188,9 +188,9 @@ const blockchainTestnet ={
     coinType: COIN_TYPE_BTC_TESTNET,
     symbol: 'BTC',
     channels: {
-      balance: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_balance',
-      transaction: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_transaction',
-      block: '/exchange/events/internal-testnet-bitcoin-middleware-chronobank-io_block',
+      balance: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_balance',
+      transaction: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_transaction',
+      block: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_block',
     },
   },
   // [BLOCKCHAIN_LITECOIN]: {
