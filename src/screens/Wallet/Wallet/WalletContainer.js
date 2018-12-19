@@ -6,6 +6,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 import {
   Alert,
 } from 'react-native'
@@ -17,12 +18,13 @@ import { updateBitcoinTxHistory } from '@chronobank/bitcoin/redux/thunks'
 import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import PropTypes from 'prop-types'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import Wallet from './Wallet'
 
 const mapStateToProps = (state) => {
   return {
-    currentWallet: getCurrentWallet(state),
     currentBTCWallet: getBitcoinCurrentWallet(state),
+    masterWalletAddress: getCurrentWallet(state),
   }
 }
 
@@ -46,7 +48,7 @@ class WalletContainer extends Component {
           address: PropTypes.string,
           blockchain: PropTypes.string,
           selectedCurrency: PropTypes.string,
-          parentAddress: PropTypes.string,
+          masterWalletAddress: PropTypes.string,
         }),
       }),
     }),
@@ -89,17 +91,19 @@ class WalletContainer extends Component {
       address,
       blockchain,
       selectedCurrency,
-      parentAddress,
+      masterWalletAddress,
     } = state.params
 
     const params = {
       address,
       blockchain,
       selectedCurrency,
-      parentAddress,
+      masterWalletAddress,
     }
 
-    navigate('Send', params)
+    blockchain === BLOCKCHAIN_ETHEREUM
+      ? navigate('SendEth', params)
+      : navigate('Send', params)
   }
 
   handleReceive = () => {

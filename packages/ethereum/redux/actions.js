@@ -11,9 +11,9 @@ export const ethereumCreateWallet = (address, encrypted) => ({
   encrypted,
 })
 
-export const ethereumCreateDerivedWallet = (parentAddress, address) => ({
+export const ethereumCreateDerivedWallet = (masterWalletAddress, address) => ({
   type: ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET,
-  parentAddress,
+  masterWalletAddress,
   address,
 })
 
@@ -23,4 +23,9 @@ export const ethereumUpdateBalance = ({ tokenSymbol, address, balance, amount })
   amount,
   balance,
   tokenSymbol,
+})
+
+export const selectEthereumWallet = ({ address }) => ({
+  type: ActionsTypes.ETHEREUM_SELECT_WALLET,
+  address,
 })

@@ -7,10 +7,10 @@ import * as ActionTypes from './constants'
 import initialState from './initialState'
 
 const mutations = {
-  [ActionTypes.SESSION_LOGIN]: (state, { currentWallet }) => {
+  [ActionTypes.SESSION_LOGIN]: (state, { masterWalletAddress }) => {
     return {
       ...state,
-      currentWallet,
+      masterWalletAddress,
     }
   },
   [ActionTypes.SESSION_LOGOUT]: (state) => {

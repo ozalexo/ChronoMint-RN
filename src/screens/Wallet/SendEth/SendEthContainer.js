@@ -34,7 +34,7 @@ import { convertToWei, convertBTCToSatoshi, convertSatoshiToBTC } from '@chronob
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
-import Send from './Send'
+import SendEth from './SendEth'
 
 const mapStateToProps = (state) => {
   return {
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateBitcoinTxDraftUnsignedTx,
 }, dispatch)
 
-class SendContainer extends React.Component {
+class SendEthContainer extends React.Component {
   constructor (props) {
     super(props)
     const first = Object.keys(props.BTCwallets[props.navigation.state.params.address].tokens)[0]
@@ -102,6 +102,7 @@ class SendContainer extends React.Component {
         <Button
           onPress={() => params.handleGoToPasswordModal()}
           title='Done'
+          color='#fff'
         />
       ),
     }
@@ -190,10 +191,16 @@ class SendContainer extends React.Component {
 
                 this.setState({ modalProps }, () => this.handleTogglePasswordModal())
               })
-              .catch((error) => console.warn(error))
+              .catch((error) => {
+                // eslint-disable-next-line no-console
+                console.warn(error)
+              })
           }
         })
-        .catch((error) => console.warn(error))
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.warn(error)
+        })
 
 
     } else {
@@ -498,7 +505,7 @@ class SendContainer extends React.Component {
       prices[selectedToken.symbol] &&
       prices[selectedToken.symbol][selectedCurrency]
     return (
-      <Send
+      <SendEth
         amount={amount}
         amountInCurrency={amountInCurrency}
         blockchain={blockchain}
@@ -536,4 +543,4 @@ class SendContainer extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SendContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(SendEthContainer)

@@ -12,32 +12,32 @@ export const bitcoinTxUpdate = (entry) => ({
   entry,
 })
 
-export const bitcoinTxDraftUpdateRecipient = ({ address, parentAddress, recipient }) => ({
+export const bitcoinTxDraftUpdateRecipient = ({ address, masterWalletAddress, recipient }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_RECIPIENT,
   recipient,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinTxDraftUpdateAmount = ({ address, parentAddress, amount }) => ({
+export const bitcoinTxDraftUpdateAmount = ({ address, masterWalletAddress, amount }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_AMOUNT,
   amount,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinTxDraftUpdateToken = ({ address, parentAddress, token }) => ({
+export const bitcoinTxDraftUpdateToken = ({ address, masterWalletAddress, token }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_TOKEN,
   token,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinTxDraftUpdateFee = ({ address, parentAddress, fee }) => ({
+export const bitcoinTxDraftUpdateFee = ({ address, masterWalletAddress, fee }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_FEE,
   fee,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
 export const bitcoinTxUpdateHistory = ({ address, parentAddress, latestTxDate, txList }) => ({
@@ -48,37 +48,37 @@ export const bitcoinTxUpdateHistory = ({ address, parentAddress, latestTxDate, t
   parentAddress,
 })
 
-export const bitcoinTxDraftUpdateFeeMultiplier = ({ address, parentAddress, feeMultiplier }) => ({
+export const bitcoinTxDraftUpdateFeeMultiplier = ({ address, masterWalletAddress, feeMultiplier }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_FEE_MULTIPLIER,
   feeMultiplier,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinTxDraftUpdateUnsignedTx = ({ address, parentAddress, unsignedTx }) => ({
+export const bitcoinTxDraftUpdateUnsignedTx = ({ address, masterWalletAddress, unsignedTx }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_UNSIGNED_TX,
   unsignedTx,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinTxDraftUpdateSignedTx = ({ address, parentAddress, signedTx }) => ({
+export const bitcoinTxDraftUpdateSignedTx = ({ address, masterWalletAddress, signedTx }) => ({
   type: ActionsTypes.BITCOIN_TX_UPDATE_SIGNED_TX,
   signedTx,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinCreateTxDraft = ({ address, parentAddress }) => ({
+export const bitcoinCreateTxDraft = ({ address, masterWalletAddress }) => ({
   type: ActionsTypes.BITCOIN_CREATE_TX_DRAFT,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
-export const bitcoinDeleteTxDraft = ({ address, parentAddress }) => ({
+export const bitcoinDeleteTxDraft = ({ address, masterWalletAddress }) => ({
   type: ActionsTypes.BITCOIN_DELETE_TX_DRAFT,
   address,
-  parentAddress,
+  masterWalletAddress,
 })
 
 export const bitcoinDropSelectedWallet = () => ({
@@ -97,16 +97,16 @@ export const bitcoinTxAccept = (entry) => ({
   isPending: true,
 })
 
-export const bitcoinCreateWallet = (parentAddress, address) => ({
+export const bitcoinCreateWallet = (masterWalletAddress, address) => ({
   type: ActionsTypes.BITCOIN_CREATE_WALLET,
-  parentAddress,
+  masterWalletAddress,
   address,
 })
 
-export const bitcoinUpdateBalance = ({ address, parentAddress, balance, amount }) => ({
+export const bitcoinUpdateBalance = ({ address, masterWalletAddress, balance, amount }) => ({
   type: ActionsTypes.BITCOIN_UPDATE_BALANCE,
   address,
-  parentAddress,
+  masterWalletAddress,
   balance,
   amount,
 })

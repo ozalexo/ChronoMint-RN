@@ -43,14 +43,14 @@ const ethereumCreateWallet = (state, { address, encrypted }) => {
   }
 }
 
-const ethereumCreateDerivedWallet = (state, { parentAddress, address }) => {
+const ethereumCreateDerivedWallet = (state, { masterWalletAddress, address }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       deriveds: {
-        ...list[parentAddress].deriveds,
+        ...list[masterWalletAddress].deriveds,
         [address]: { address },
       },
     },
@@ -81,11 +81,17 @@ const updateEthereumBalance = (state, { tokenSymbol, address, balance, amount })
   }
 }
 
+const selectEthereumWallet = (state, { address }) => ({
+  ...state,
+  selected: address,
+})
+
 const mutations = {
 
   [REHYDRATE]: ethereumRehydrate,
-  [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
   [ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET]: ethereumCreateDerivedWallet,
+  [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
+  [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
   [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
 }
 

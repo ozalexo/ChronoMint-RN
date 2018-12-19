@@ -28,7 +28,7 @@ export default class WalletList extends PureComponent {
           address={item.address}
           blockchain={item.blockchain}
           navigation={this.props.navigation}
-          parentAddress={this.props.parentWallet}
+          masterWalletAddress={this.props.masterWalletAddress}
         />
       </View>
     )
@@ -77,7 +77,7 @@ WalletList.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }),
-  parentWallet: PropTypes.string,
+  masterWalletAddress: PropTypes.string,
   onRemoveSelectedWallet: PropTypes.func,
   sections: PropTypes.arrayOf(
     PropTypes.shape({

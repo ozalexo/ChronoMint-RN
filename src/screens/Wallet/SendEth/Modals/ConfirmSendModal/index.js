@@ -3,6 +3,4 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-export default {
-  masterWalletAddress: null,
-}
+export default from './ConfirmSendModalContainer'

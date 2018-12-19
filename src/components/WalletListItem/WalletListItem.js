@@ -18,7 +18,7 @@ import {
   indicator_receiving_0,
 } from '../../images'
 import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
-import TokensCounter from '../TokensCounter'
+// import TokensCounter from '../TokensCounter'
 import PrimaryToken from '../PrimaryToken'
 import PrimaryBalance from '../PrimaryBalance'
 import WalletImage from '../WalletImage'
@@ -39,14 +39,6 @@ const Transactions = ({ transactions }) => !transactions ? null : (
       </View>
     )
 )
-
-
-const TokensListContainer = TokensCounter
-const PrimaryTokenContainer = PrimaryToken
-const PrimaryBalanceContainer = PrimaryBalance
-// const TokensListContainer = TokensListContainerFactory(TokensCounter)
-// const PrimaryTokenContainer = PrimaryTokenContainerFactory(PrimaryToken)
-// const PrimaryBalanceContainer = PrimaryBalanceContainerFactory(PrimaryBalance)
 
 export default class WalletListItem extends PureComponent {
 
@@ -88,18 +80,18 @@ export default class WalletListItem extends PureComponent {
                   address
                 }
               </Text>
-              <PrimaryTokenContainer
+              <PrimaryToken
                 blockchain={blockchain}
               />
               <View style={styles.balanceAndTokensRow}>
-                <PrimaryBalanceContainer
+                <PrimaryBalance
                   blockchain={blockchain}
                   selectedCurrency={selectedCurrency}
                   wallet={blockchain === BLOCKCHAIN_ETHEREUM ? null : bitcoinWallet} 
                 />
-                <TokensListContainer
+                {/* <TokensCounter
                   blockchain={blockchain}
-                />
+                /> */}
               </View>
             </View>
           </View>

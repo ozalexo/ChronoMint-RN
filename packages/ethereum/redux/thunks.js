@@ -53,3 +53,14 @@ export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount })
     }
   })
 }
+
+export const selectEthereumWallet = ({ address }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.selectEthereumWallet(address))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}

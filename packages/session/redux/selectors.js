@@ -11,5 +11,5 @@ export const getDuckSession = () => (state) =>
 
 export const getCurrentWallet = createSelector(
   getDuckSession(),
-  (session) => session.currentWallet
+  (session) => session.masterWalletAddress
 )

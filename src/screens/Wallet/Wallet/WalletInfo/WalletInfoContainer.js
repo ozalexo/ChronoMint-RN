@@ -41,7 +41,7 @@ WalletInfoContainer.propTypes = {
     navigate: PropTypes.func,
   }),
   bitcoinWallets: PropTypes.shape({}),
-  parentAddress: PropTypes.string,
+  masterWalletAddress: PropTypes.string,
   address: PropTypes.string,
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
