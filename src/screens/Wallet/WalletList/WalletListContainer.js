@@ -14,7 +14,7 @@ import { getBalance } from '@chronobank/ethereum/middleware/thunks'
 import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { updateBitcoinBalance, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
+import { updateBitcoinBalance, updateBitcoinTxHistory, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
 import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { parseBitcoinBalanceData } from '@chronobank/bitcoin/utils/amount'
 import WalletList from './WalletList'
@@ -24,6 +24,7 @@ const ActionCreators = {
   ...apiBTC,
   rmqSubscribe,
   updateBitcoinBalance,
+  updateBitcoinTxHistory,
   dropBitcoinSelectedWallet,
   getBalance,
   updateEthereumBalance,
@@ -80,12 +81,12 @@ class WalletListContainer extends PureComponent {
       requestBitcoinSubscribeWalletByAddress,
       requestBitcoinBalanceByAddress,
       updateBitcoinBalance,
+      updateBitcoinTxHistory,
       rmqSubscribe,
       currentWallet,
       BTCwalletsList,
       getBalance,
       updateEthereumBalance,
-      updateBitcoinTxHistory,
     } = this.props
 
     getBalance(currentWallet)
@@ -139,24 +140,22 @@ class WalletListContainer extends PureComponent {
           }
           try {
             const data = JSON.parse(body)
-            const timestamps = []
-            const txList = data.map((tx) => {
-              timestamps.push(tx.timestamp)
-              return {
-                from: tx.inputs[0].address,
-                to: tx.outputs[0].address,
-                amount: tx.outputs[0].value,
-                balance: convertSatoshiToBTC(tx.outputs[0].value).toNumber(),
-                timestamp: tx.timestamp,
-                hash: tx.hash,
-                confirmations: tx.confirmations,
-              }
-            })
+            const txList = [
+              {
+                from: data.inputs[0].address,
+                to: data.outputs[0].address,
+                amount: data.outputs[0].value,
+                balance: convertSatoshiToBTC(data.outputs[0].value).toNumber(),
+                timestamp: data.timestamp,
+                hash: body.hash,
+                confirmations: data.confirmations,
+              },
+            ]
             updateBitcoinTxHistory({
               address,
               parentAddress: currentWallet,
               txList,
-              latestTxDate: Math.max(...timestamps),
+              latestTxDate: data.timestamp,
             })
           } catch (error) {
             // TODO: to handle any errors here
