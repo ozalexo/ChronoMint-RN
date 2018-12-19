@@ -63,13 +63,3 @@ export const getBitcoinCurrentWallet = createSelector(
   getBitcoinSelectedWalletAddress,
   (bitcoin, ethAddress, btcAddress) => bitcoin.list[ethAddress][btcAddress] || {}
 )
-
-export const getEntryPending = (address, key, blockchain) => createSelector(
-  getBitcoinPending(blockchain),
-  (pending) => {
-    if (address in pending) {
-      return pending[address][key] || null
-    }
-    return null
-  },
-)
