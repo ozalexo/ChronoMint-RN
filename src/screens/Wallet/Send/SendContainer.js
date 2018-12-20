@@ -30,6 +30,7 @@ import {
 import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { convertToWei, convertBTCToSatoshi, convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
@@ -37,6 +38,8 @@ import PasswordEnterModal from './Modals/PasswordEnterModal'
 import Send from './Send'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
     prices: {
       BTC: {
@@ -44,7 +47,7 @@ const mapStateToProps = (state) => {
       },
     },
     // prices: selectMarketPrices(state),
-    BTCwallets: getBitcoinWallets(state),
+    BTCwallets: getBitcoinWallets(masterWalletAddress)(state),
     network: getCurrentNetwork(state),
   }
 }
@@ -190,10 +193,16 @@ class SendContainer extends React.Component {
 
                 this.setState({ modalProps }, () => this.handleTogglePasswordModal())
               })
-              .catch((error) => console.warn(error))
+              .catch((error) => {
+                // eslint-disable-next-line no-console
+                console.warn(error)
+              })
           }
         })
-        .catch((error) => console.warn(error))
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.warn(error)
+        })
 
 
     } else {

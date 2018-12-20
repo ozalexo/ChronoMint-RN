@@ -43,8 +43,14 @@ export default class TransactionsList extends PureComponent {
     const { address, blockchain, navigation } = this.props
     const type = address === item.from ? 'sending' : 'receiving'
     const symbol = tokenSymbols[blockchain]
+
     return (
-      <TransactionItem item={item} type={type} symbol={symbol} navigation={navigation} />
+      <TransactionItem
+        item={item}
+        type={type}
+        symbol={symbol}
+        navigation={navigation}
+      />
     )
   }
 
@@ -171,7 +177,7 @@ class TransactionItem extends PureComponent {
   }
 
   render () {
-    const { type, symbol, navigation, item } = this.props
+    const { type, symbol, item/*, navigation*/ } = this.props
     const {
       from,
       to,
@@ -225,6 +231,12 @@ class TransactionItem extends PureComponent {
 }
 
 TransactionItem.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+  latestTransactionDate: PropTypes.number,
+  blockchain: PropTypes.string,
+  address: PropTypes.string,
   item: PropTypes.shape({
     from: PropTypes.string,
     to: PropTypes.string,

@@ -4,22 +4,18 @@
 */
 
 import { createSelector } from 'reselect'
-import { getBitcoinWalletsForSections } from '@chronobank/bitcoin/redux/selectors'
-import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { DUCK_ETHEREUM } from './constants'
 import { BLOCKCHAIN_ETHEREUM  } from '../constants'
 
-export const getDuckEthereum = () => (state) =>
+export const getDuckEthereum = (state) =>
   state[DUCK_ETHEREUM]
 
-
-export const getCurrentEthWallet = createSelector(
-  getDuckEthereum(),
-  getCurrentWallet,
-  (ethereum, ethAddress) => ethereum.list[ethAddress]
+export const getCurrentEthWallet = (ethAddress) => createSelector(
+  getDuckEthereum,
+  (ethereum) => ethereum.list[ethAddress]
 )
 export const getEthAccountList = createSelector(
-  getDuckEthereum(),
+  getDuckEthereum,
   (ethereum) => {
     const accounts = []
     for (const key in ethereum.list) {
@@ -28,23 +24,13 @@ export const getEthAccountList = createSelector(
     return accounts
   }
 )
-export const getDerivedEthWallets = createSelector(
-  getDuckEthereum(),
-  getCurrentWallet,
-  (ethereum, ethAddress) => {
-    if (ethereum.list[ethAddress] && ethereum.list[ethAddress].deriveds) {
-      return Object.keys(ethereum.list[ethAddress].deriveds)
-    }
-    return []
-  }
-)
 
 export const getEthereumWalletList = createSelector(
-  getDuckEthereum(),
+  getDuckEthereum,
   (ethereum) => ethereum && ethereum.list
 )
 
-const getEthereumWallets = createSelector(
+export const getEthereumWallets = createSelector(
   getEthereumWalletList,
   (ethereumList) => {
     let ethereumWallets = []
@@ -64,13 +50,5 @@ const getEthereumWallets = createSelector(
     }
 
     return ethereumWallets
-  }
-)
-
-export const getSections = createSelector(
-  getBitcoinWalletsForSections,
-  getEthereumWallets,
-  (bitWallets, ethWallets) => {
-    return [...ethWallets, ...bitWallets]
   }
 )

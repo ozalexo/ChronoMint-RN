@@ -13,7 +13,7 @@
     "storybook:rn": "react-native start --reset-cache --projectRoot storybook",
     "storybook:web": "NODE_ENV=development BABEL_ENV=development storybook start -p 7007 -c .storybook -h 0.0.0.0",
     "build-storybook-web": "storybook build -s public",
-    "lint:errors": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx --quiet ."
+    "lint:errors": "node ./node_modules/eslint/bin/eslint.js --ext .js --quiet ."
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",

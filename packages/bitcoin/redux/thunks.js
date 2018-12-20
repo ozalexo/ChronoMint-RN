@@ -54,10 +54,10 @@ export const updateBitcoinTxDraftAmount = ({ address, masterWalletAddress, amoun
   })
 }
 
-export const updateBitcoinTxHistory = ({ latestTxDate, txList, parentAddress, address }) => (dispatch) => {
+export const updateBitcoinTxHistory = ({ latestTxDate, txList, masterWalletAddress, address }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(bitcoinTxUpdateHistory({ latestTxDate, txList, parentAddress, address }))
+      dispatch(Actions.bitcoinTxUpdateHistory({ latestTxDate, txList, masterWalletAddress, address }))
       return resolve()
     } catch (e) {
       return reject(e)

@@ -12,12 +12,15 @@ import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { selectBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
 import { selectEthereumWallet } from '@chronobank/ethereum/redux/thunks'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import WalletListItem from './WalletListItem'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
     selectedCurrency: selectCurrentCurrency(state),
-    bitcoinWallets: getBitcoinWallets(state),
+    bitcoinWallets: getBitcoinWallets(masterWalletAddress)(state),
   }
 }
 

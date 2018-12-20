@@ -17,13 +17,14 @@ import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinTxHistory } from '@chronobank/bitcoin/redux/thunks'
 import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
-import PropTypes from 'prop-types'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import Wallet from './Wallet'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    currentBTCWallet: getBitcoinCurrentWallet(state),
+    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
     masterWalletAddress: getCurrentWallet(state),
   }
 }
@@ -55,7 +56,7 @@ class WalletContainer extends Component {
   }
 
   componentDidMount () {
-    const { address, parentAddress } = this.props.navigation.state.params
+    const { address, masterWalletAddress } = this.props.navigation.state.params
     const { updateBitcoinTxHistory, requestBitcoinTransactionsHistoryByAddress } = this.props
     requestBitcoinTransactionsHistoryByAddress(address)
       .then((response) => {
@@ -74,7 +75,7 @@ class WalletContainer extends Component {
         })
         updateBitcoinTxHistory({
           address,
-          parentAddress,
+          masterWalletAddress,
           txList,
           latestTxDate: Math.max(...timestamps),
         })

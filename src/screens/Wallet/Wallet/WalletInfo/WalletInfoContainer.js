@@ -7,11 +7,14 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import WalletInfo from './WalletInfo'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    bitcoinWallets: getBitcoinWallets(state),
+    bitcoinWallets: getBitcoinWallets(masterWalletAddress)(state),
   }
 }
 

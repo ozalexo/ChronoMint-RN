@@ -14,7 +14,7 @@ import {
 import PropTypes from 'prop-types'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
-import i18n from '../../../locales/translation'
+// import i18n from '../../../locales/translation'
 import FeeSlider from '../../../components/FeeSlider'
 import Input from '../../../components/Input'
 import Separator from '../../../components/Separator'

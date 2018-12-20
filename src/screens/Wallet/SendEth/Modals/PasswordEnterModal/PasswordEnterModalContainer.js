@@ -6,7 +6,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
-import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import { updateBitcoinTxDraftSignedTx } from '@chronobank/bitcoin/redux/thunks'
 import { connect } from 'react-redux'
@@ -19,9 +19,11 @@ import { name as appName } from '../../../../../../app.json'
 import PasswordEnterModal from './PasswordEnterModal'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    masterWalletAddress: getCurrentEthWallet(state),
-    currentBTCWallet: getBitcoinCurrentWallet(state),
+    masterWalletAddress: getCurrentWallet(state),
+    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
   }
 }
 

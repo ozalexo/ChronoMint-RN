@@ -32,11 +32,14 @@ import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { convertToWei, convertBTCToSatoshi, convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
 import SendEth from './SendEth'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
     prices: {
       BTC: {
@@ -44,7 +47,7 @@ const mapStateToProps = (state) => {
       },
     },
     // prices: selectMarketPrices(state),
-    BTCwallets: getBitcoinWallets(state),
+    BTCwallets: getBitcoinWallets(masterWalletAddress)(state),
     network: getCurrentNetwork(state),
   }
 }

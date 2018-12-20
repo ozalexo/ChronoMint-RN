@@ -56,7 +56,7 @@ class ConfirmMnemonicContainer extends PureComponent {
       })
   }
 
-  handleWord = (word) => () => {
+  handleWord = (/*word*/) => () => {
     // if (word) {
     //   this.setState(({ words, mnemonic }) => {
     //     words[words.indexOf(word)] = ''

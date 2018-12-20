@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
-import { getSections, getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
+import { getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
+import { getSections } from '@chronobank/session/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import { getBalance } from '@chronobank/ethereum/middleware/thunks'
 import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
@@ -34,10 +35,12 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(ActionCreators, dispatch)
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    sections: getSections(state),
-    masterWalletAddress: getCurrentWallet(state),
-    BTCwalletsList: getBitcoinWalletsList(state),
+    sections: getSections(masterWalletAddress)(state),
+    masterWalletAddress,
+    BTCwalletsList: getBitcoinWalletsList(masterWalletAddress)(state),
     ETHwalletsList: getEthereumWalletList(state),
   }
 }
@@ -109,6 +112,7 @@ class WalletListContainer extends PureComponent {
             // TODO: need to handle possible errors in reply
             return
           }
+
           try {
             const data = JSON.parse(body)
             const confirmations0 = data.balances.confirmations0
@@ -130,6 +134,7 @@ class WalletListContainer extends PureComponent {
           }
         },
       })
+
       //subscribe on transactions
       rmqSubscribe({
         // TODO: need to get channel name from store
@@ -154,7 +159,7 @@ class WalletListContainer extends PureComponent {
             ]
             updateBitcoinTxHistory({
               address,
-              parentAddress: currentWallet,
+              masterWalletAddress,
               txList,
               latestTxDate: data.timestamp,
             })
