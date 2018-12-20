@@ -12,15 +12,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
-import * as EthereumThunks from '@chronobank/ethereum/redux/thunks'
+import * as TxThunks from '@chronobank/ethereum/redux/thunks'
 import {
-  estimateGas,
-  getChainId,
-  getGasPrice,
   getNonce,
-  sendSignedTransaction,
+  estimateGas,
+  getGasPrice,
+  getChainId,
 } from '@chronobank/ethereum/middleware/thunks'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
+import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
@@ -38,14 +38,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ActionCreators = {
-  ...EthereumThunks,
-  getNonce,
-  estimateGas,
-  getGasPrice,
-  getChainId,
-  sendSignedTransaction,
-}
+const ActionCreators = { ...TxThunks, getNonce, estimateGas, getGasPrice, getChainId }
 const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
 class SendEthContainer extends React.Component {
@@ -114,41 +107,7 @@ class SendEthContainer extends React.Component {
 
   componentDidMount () {
     this.props.navigation.setParams({ handleGoToPasswordModal: this.handleGoToPasswordModal })
-
-  }
-
-  getDataForGasEstimation = () => {
-    const {
-      getNonce,
-      getGasPrice,
-      getChainId,
-      navigation,
-      updateEthereumTxDraftNonce,
-      updateEthereumTxDraftGasPrice,
-      updateEthereumTxDraftChainId,
-    } = this.props
-    const { masterWalletAddress } = navigation.state.params
-
-    Promise.all([
-      getGasPrice(),
-      getChainId(),
-      getNonce(masterWalletAddress),
-    ])
-      .then((results) => {
-        updateEthereumTxDraftGasPrice({
-          masterWalletAddress,
-          gasPrice: results[0],
-        })
-        updateEthereumTxDraftChainId({
-          masterWalletAddress,
-          chainId: results[1],
-        })
-        updateEthereumTxDraftNonce({
-          masterWalletAddress,
-          nonce: results[2],
-        })
-      })
-      .catch((error) => console.log(error))
+    this.requestGasEstimations()
   }
 
   handleGoToPasswordModal = () => {
@@ -303,30 +262,13 @@ class SendEthContainer extends React.Component {
 
   requestGasEstimations = () => {
     const {
+      getNonce,
       estimateGas,
-      currentEthWallet,
+      getGasPrice,
+      getChainId,
     } = this.props
-    const {
-      from,
-      to,
-      value,
-      gasPrice,
-      nonce,
-    } = currentEthWallet.txDraft
-    console.log('from,: ', from)
-    console.log('to,: ', to)
-    console.log('value,: ', value)
-    console.log('gasPrice,: ', gasPrice)
-    console.log('nonce,: ', nonce)
-    estimateGas({
-      from,
-      to,
-      value,
-      gasPrice,
-      nonce,
-    })
-      .then((results) => console.log('estimate results', results))
-      .catch((error) => console.log(error))
+    getGasPrice().then((results) => console.log('getGasPrice: ', results))
+    getChainId().then((results) => console.log('getChainId: ', results))
     // const {
     //   selectedCurrency,
     // } = this.props.navigation.state.params
@@ -380,7 +322,6 @@ class SendEthContainer extends React.Component {
     const { createEthereumTxDraft, navigation } = this.props
     const { masterWalletAddress } = navigation.state.params
     createEthereumTxDraft({ masterWalletAddress })
-    this.getDataForGasEstimation()
   }
 
   handleTxDraftRemove = () => {
