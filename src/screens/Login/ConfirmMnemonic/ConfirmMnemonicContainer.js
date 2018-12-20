@@ -34,9 +34,7 @@ class ConfirmMnemonicContainer extends PureComponent {
       password,
     } = this.props.navigation.state.params
     const {
-      navigation,
       createAccountByMnemonic,
-      accounts,
     } = this.props
 
     // if (mnemonic !== this.state.mnemonic.join(' ')) {
@@ -46,14 +44,22 @@ class ConfirmMnemonicContainer extends PureComponent {
 
     createAccountByMnemonic(mnemonic, password)
       .then(() => {
-        const [account] = accounts.slice(-1)
-        const params = account ? { account } : null
-        const page = params ? 'Login' : 'Start'
-        navigation.navigate(page, params)
+        this.navigateToStartPage()
       })
       .catch((error) => {
         Alert.alert(error)
       })
+  }
+
+  navigateToStartPage () {
+    const {
+      navigation,
+      accounts,
+    } = this.props
+    const [account] = accounts.slice(-1)
+    const params = account ? { account } : null
+    const page = params ? 'Login' : 'Start'
+    navigation.navigate(page, params)
   }
 
   handleWord = (/*word*/) => () => {

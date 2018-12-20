@@ -23,11 +23,11 @@ const mapStateToProps = (state) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
+    masterWalletAddress,
     masterWallet: getCurrentEthWallet(masterWalletAddress)(state),
     currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateBitcoinTxDraftSignedTx,
