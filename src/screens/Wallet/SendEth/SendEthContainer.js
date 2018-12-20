@@ -420,7 +420,6 @@ class SendEthContainer extends React.Component {
     const {
       blockchain,
       selectedCurrency,
-      address,
     } = this.props.navigation.state.params
     const { currentEthWallet, prices } = this.props
     const blockchainPrice = prices &&

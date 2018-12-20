@@ -109,6 +109,177 @@ const ethereumCreateTxDraft = (state, { masterWalletAddress }) => {
   }
 }
 
+const ethereumTxUpdateNonce = (state, { nonce, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        nonce,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateGasLimit = (state, { gasLimit, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        gasLimit,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateGasPrice = (state, { gasPrice, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        gasPrice,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateChainId = (state, { chainId, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        chainId,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateTo = (state, { to, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        to,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateValue = (state, { value, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        value,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateData = (state, { data, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        data,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateUnsignedTx = (state, { unsignedTx, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        unsignedTx,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumTxUpdateSignedTx = (state, { signedTx, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        ...list[masterWalletAddress].txDraft,
+        signedTx,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
 const selectEthereumWallet = (state, { address }) => ({
   ...state,
   selected: address,
@@ -122,6 +293,15 @@ const mutations = {
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
   [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
   [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_NONCE]: ethereumTxUpdateNonce,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_GAS_LIMIT]: ethereumTxUpdateGasLimit,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_GAS_PRICE]: ethereumTxUpdateGasPrice,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_CHAIN_ID]: ethereumTxUpdateChainId,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_TO]: ethereumTxUpdateTo,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_VALUE]: ethereumTxUpdateValue,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_DATA]: ethereumTxUpdateData,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_UNSIGNED_TX]: ethereumTxUpdateUnsignedTx,
+  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX]: ethereumTxUpdateSignedTx,
 }
 
 export default (state = initialState, { type, ...other }) => {

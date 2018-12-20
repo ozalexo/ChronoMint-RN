@@ -36,3 +36,57 @@ export const createEthereumTxDraft = ({ address, masterWalletAddress }) => ({
   address,
   masterWalletAddress,
 })
+
+export const updateEthereumTxDraftNonce = ({ nonce, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_NONCE,
+  nonce,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftGasLimit = ({ gasLimit, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_GAS_LIMIT,
+  gasLimit,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftGasPrice = ({ gasPrice, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_GAS_PRICE,
+  gasPrice,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftChainId = ({ chainId, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_CHAIN_ID,
+  chainId,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftTo = ({ to, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_TO,
+  to,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftValue = ({ value, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_VALUE,
+  value,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_DATA,
+  data,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_UNSIGNED_TX,
+  unsignedTx,
+  masterWalletAddress,
+})
+
+export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_UPDATE_TX_SIGNED_TX,
+  signedTx,
+  masterWalletAddress,
+})
