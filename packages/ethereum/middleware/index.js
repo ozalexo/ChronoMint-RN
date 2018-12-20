@@ -35,6 +35,9 @@ const getNonceHex = (store, { address }) =>
 const getNonce = (store, { address }) =>
   w3c.getNonce(address)
 
+const getChainId = () =>
+  w3c.getChainId()
+
 const estimateGas = (store, { from, to, value, data, gasPrice, nonce }) =>
   w3c.estimateGas({ from, to, value, data, gasPrice, nonce })
 
@@ -107,6 +110,7 @@ const mutations = {
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE]: getGasPrice,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX]: getNonceHex,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE]: getNonce,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_CHAIN_ID]: getChainId,
 
 }
 

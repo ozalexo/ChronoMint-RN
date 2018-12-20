@@ -360,6 +360,19 @@ export default class Web3Controller {
     })
   }
 
+  getChainId () {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.net.getId()
+        .then((chainId) => {
+          return resolve(chainId)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+  }
+
   estimateGas ({ from, to, value, data, gasPrice, nonce }) {
     return new Promise((resolve, reject) => {
       this.web3.eth.estimateGas({ from, to, value, data, gasPrice, nonce })

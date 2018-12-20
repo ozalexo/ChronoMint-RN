@@ -60,3 +60,6 @@ export const estimateGas = ({ from, to, value, data, gasPrice, nonce }) => (disp
 
 export const getGasPrice = () => (dispatch) =>
   dispatch(Actions.getGasPrice())
+
+export const getChainId = () => (dispatch) =>
+  dispatch(Actions.getChainId())
