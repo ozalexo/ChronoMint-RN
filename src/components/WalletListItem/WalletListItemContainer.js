@@ -12,15 +12,16 @@ import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { selectBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
 import { selectEthereumWallet } from '@chronobank/ethereum/redux/thunks'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
-import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { getCurrentWallet, getWalletByBlockchainAndAddress } from '@chronobank/session/redux/selectors'
 import WalletListItem from './WalletListItem'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
     selectedCurrency: selectCurrentCurrency(state),
     bitcoinWallets: getBitcoinWallets(masterWalletAddress)(state),
+    wallet: getWalletByBlockchainAndAddress(props.blockchain, props.address, props.masterWalletAddress)(state),
   }
 }
 
@@ -60,7 +61,7 @@ class WalletListItemContainer extends PureComponent {
       address,
       blockchain,
       selectedCurrency,
-      bitcoinWallets,
+      wallet,
     } = this.props
 
     return (
@@ -69,7 +70,7 @@ class WalletListItemContainer extends PureComponent {
         blockchain={blockchain}
         onItemPress={this.handleItemPress}
         selectedCurrency={selectedCurrency}
-        bitcoinWallet={bitcoinWallets[address]}
+        wallet={wallet}
       />
     )
   }
@@ -79,7 +80,7 @@ WalletListItemContainer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }),
-  bitcoinWallets: PropTypes.shape({}),
+  wallet: PropTypes.shape({}),
   masterWalletAddress: PropTypes.string,
   address: PropTypes.string,
   blockchain: PropTypes.string,

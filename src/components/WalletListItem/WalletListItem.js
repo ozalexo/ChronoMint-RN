@@ -11,13 +11,9 @@ import {
   View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-// import PrimaryBalanceContainerFactory from '../containers/PrimaryBalanceContainerFactory'
-// import PrimaryTokenContainerFactory from '../containers/PrimaryTokenContainerFactory'
-// import TokensListContainerFactory from '../containers/TokensListContainerFactory'
 import {
   indicator_receiving_0,
 } from '../../images'
-import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
 // import TokensCounter from '../TokensCounter'
 import PrimaryToken from '../PrimaryToken'
 import PrimaryBalance from '../PrimaryBalance'
@@ -48,7 +44,7 @@ export default class WalletListItem extends PureComponent {
       blockchain,
       selectedCurrency,
       onItemPress = () => { },
-      bitcoinWallet,
+      wallet,
     } = this.props
 
     return (
@@ -87,7 +83,7 @@ export default class WalletListItem extends PureComponent {
                 <PrimaryBalance
                   blockchain={blockchain}
                   selectedCurrency={selectedCurrency}
-                  wallet={blockchain === BLOCKCHAIN_ETHEREUM ? null : bitcoinWallet} 
+                  wallet={wallet} 
                 />
                 {/* <TokensCounter
                   blockchain={blockchain}
@@ -102,7 +98,7 @@ export default class WalletListItem extends PureComponent {
 }
 
 WalletListItem.propTypes = {
-  bitcoinWallet: PropTypes.shape({}),
+  wallet: PropTypes.shape({}),
   address: PropTypes.string,
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
