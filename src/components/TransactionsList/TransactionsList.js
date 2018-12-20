@@ -11,11 +11,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import i18n from '../../locales/translation'
+import BigNumber from 'bignumber.js'
 import { BLOCKCHAIN_ETHEREUM, ETHEREUM_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN, BTC_PRIMARY_TOKEN } from '@chronobank/bitcoin/constants'
 import moment from 'moment'
+import isNumber from '../../common/utils/numeric'
 import PropTypes from 'prop-types'
+import i18n from '../../locales/translation'
 import Separator from '../Separator'
 import TransactionIcon from '../TransactionIcon'
 import styles from './TransactionsListStyles'
@@ -155,7 +157,17 @@ class TransactionItem extends PureComponent {
     if (!balance) {
       return '-.--'
     }
-    const numBalance = parseInt(balance)
+    let numBalance
+    if (isNumber(balance)) {
+      numBalance = balance
+    } else {
+      if (balance instanceof BigNumber) {
+        numBalance = balance.toNumber()
+      } else {
+        numBalance = parseInt(balance)
+      }
+    }
+    console.log('&&&&', balance, numBalance)
     const isbalanceTooSmall = numBalance > 0 && numBalance < 0.01
     let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
     format = [
