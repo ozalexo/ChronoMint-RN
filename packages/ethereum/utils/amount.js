@@ -4,6 +4,7 @@
  */
 
 import BigNumber from 'bignumber.js'
+import web3utils from 'web3/lib/utils/utils'
 import { DECIMALS } from '../constants'
 
 // short to long (with no dot)
@@ -17,3 +18,5 @@ export const amountToBalance = (amount) => {
   const balanceBN = new BigNumber(amount)
   return balanceBN.dividedBy(Math.pow(10, DECIMALS))
 }
+
+export const convertToWei = (amount) => web3utils.toWei(amount)

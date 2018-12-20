@@ -22,15 +22,14 @@ import {
   updateBitcoinTxDraftFeeMultiplier,
   updateBitcoinTxDraftUnsignedTx,
 } from '@chronobank/bitcoin/redux/thunks'
-import { BLOCKCHAIN_ETHEREUMUM } from '@chronobank/ethereum/constants'
+import { convertToWei } from '@chronobank/ethereum/utils/amount'
+import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import {
   requestBitcoinUtxoByAddress,
   requestBitcoinEstimateFeeRate,
 } from '@chronobank/bitcoin/service/api'
 import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
-import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
-import { convertToWei, convertBTCToSatoshi, convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import ConfirmSendModal from './Modals/ConfirmSendModal'
@@ -41,13 +40,8 @@ const mapStateToProps = (state) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
-    prices: {
-      BTC: {
-        USD: 1499,
-      },
-    },
-    // prices: selectMarketPrices(state),
-    BTCwallets: getBitcoinWallets(masterWalletAddress)(state),
+    prices: selectMarketPrices(state),
+    currentEthWallet: getCurrentEthWallet(masterWalletAddress)(state),
     network: getCurrentNetwork(state),
   }
 }
@@ -69,8 +63,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 class SendEthContainer extends React.Component {
   constructor (props) {
     super(props)
-    const first = Object.keys(props.BTCwallets[props.navigation.state.params.address].tokens)[0]
-    const firtsAvailableToken = props.BTCwallets[props.navigation.state.params.address].tokens[first]
+    const first = Object.keys(props.currentEthWallet.tokens)[0]
+    const firtsAvailableToken = props.currentEthWallet.tokens[first]
     const selectedToken = {
       symbol: firtsAvailableToken.symbol,
       amount: firtsAvailableToken.amount,
@@ -122,6 +116,7 @@ class SendEthContainer extends React.Component {
     deleteBitcoinTxDraft: PropTypes.func,
     requestBitcoinUtxoByAddress: PropTypes.func,
     requestBitcoinEstimateFeeRate: PropTypes.func,
+    currentEthWallet: PropTypes.shape({}),
     network: PropTypes.shape({}),
     prices: PropTypes.shape({}),
     navigation: PropTypes.shape({
@@ -166,7 +161,7 @@ class SendEthContainer extends React.Component {
       const tx = {
         to: this.state.recipient,
         from: address,
-        value: convertBTCToSatoshi(this.state.amount),
+        value: this.state.amount,
       }
 
       requestBitcoinUtxoByAddress(address)
@@ -215,18 +210,14 @@ class SendEthContainer extends React.Component {
 
   handleChangeRecipient = (name, value) => {
     if (typeof value === 'string') {
-      const { blockchain, address, masterWalletAddress } = this.props.navigation.state.params
+      const { address, masterWalletAddress } = this.props.navigation.state.params
       const { updateBitcoinTxDraftRecipient } = this.props
       // Check for Ethereum
-      let dummyValidationOfRecipientInput =
+      const dummyValidationOfRecipientInput =
         value &&
         (value.length >= 40 || value.length <= 44) &&
         value.startsWith('0x')
 
-      // Check for BitCoin-based
-      if (blockchain !== BLOCKCHAIN_ETHEREUMUM) {
-        dummyValidationOfRecipientInput = value && value.length === 34
-      }
       this.setState(
         {
           recipient: value,
@@ -239,11 +230,7 @@ class SendEthContainer extends React.Component {
             recipient: this.state.recipient,
           })
           if (this.state.isAmountInputValid) {
-            if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
-              this.requestGasEstimations(this.state.recipient, this.state.amount)
-            } else {
-              this.requestBcFeeEstimations()
-            }
+            this.requestGasEstimations(this.state.recipient, this.state.amount)
           }
         }
       )
@@ -253,7 +240,7 @@ class SendEthContainer extends React.Component {
   handleChangeAmount = (name, value) => {
     if (typeof value === 'string') {
       const { prices, updateBitcoinTxDraftAmount } = this.props
-      const { selectedCurrency, blockchain, address, masterWalletAddress } = this.props.navigation.state.params
+      const { selectedCurrency, address, masterWalletAddress } = this.props.navigation.state.params
       if (!(value.endsWith(',') || value.endsWith('.'))) {
         const localeValue = new BigNumber(parseFloat(value.replace(',', '.').replace(' ', ''))).toNumber()
         const tokenPrice =
@@ -277,11 +264,7 @@ class SendEthContainer extends React.Component {
               amount: localeValue,
             })
             if (this.state.isRecipientInputValid) {
-              if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
-                this.requestGasEstimations(this.state.recipient, this.state.amount)
-              } else {
-                this.requestBcFeeEstimations()
-              }
+              this.requestGasEstimations(this.state.recipient, this.state.amount)
             }
           }
         )
@@ -308,57 +291,29 @@ class SendEthContainer extends React.Component {
       updateBitcoinTxDraftFee,
     } = this.props
     const {
-      blockchain,
       selectedCurrency,
       address,
       masterWalletAddress,
     } = this.props.navigation.state.params
     if (this.state.fee !== null) {
-      if (blockchain === BLOCKCHAIN_ETHEREUMUM) {
-        const newGasFee =
-          this.state.gasFee &&
-          // this.state.selectedDAO &&
-          0.0002
+      const newGasFee =
+        this.state.gasFee &&
+        // this.state.selectedDAO &&
+        0.0002
 
-        const tokenPrice =
-          (prices &&
-            this.state.selectedToken &&
-            prices[this.state.selectedToken.symbol][selectedCurrency]) ||
-          0 // TODO: handle wrong values correctly
+      const tokenPrice =
+        (prices &&
+          this.state.selectedToken &&
+          prices[this.state.selectedToken.symbol][selectedCurrency]) ||
+        0 // TODO: handle wrong values correctly
 
-        const newGasFeePrice = newGasFee ? newGasFee * tokenPrice : null
+      const newGasFeePrice = newGasFee ? newGasFee * tokenPrice : null
 
-        this.setState({
-          feeMultiplier: value,
-          gasFeeAmount: newGasFee,
-          gasFeeAmountInCurrency: newGasFeePrice,
-        })
-      } else {
-        const fee =
-          this.state.feeEstimation && this.state.feeEstimation * this.state.feeMultiplier
-        const tokenPrice =
-          (prices &&
-            this.state.selectedToken &&
-            prices[this.state.selectedToken.symbol][selectedCurrency]) ||
-          0 // TODO: handle wrong values correctly
-        const newFeePrice = fee ? fee * tokenPrice : null
-        this.setState({
-          feeMultiplier: value,
-          fee,
-          feeInCurrency: newFeePrice,
-        }, () => {
-          updateBitcoinTxDraftFeeMultiplier({
-            address,
-            masterWalletAddress,
-            feeMultiplier: this.state.feeMultiplier,
-          })
-          updateBitcoinTxDraftFee({
-            address,
-            masterWalletAddress,
-            fee: this.state.feeEstimation * this.state.feeMultiplier,
-          })
-        })
-      }
+      this.setState({
+        feeMultiplier: value,
+        gasFeeAmount: newGasFee,
+        gasFeeAmountInCurrency: newGasFeePrice,
+      })
     } else {
       this.setState({
         feeMultiplier: value,
@@ -380,42 +335,6 @@ class SendEthContainer extends React.Component {
           fee,
         })
       })
-    }
-  }
-
-  requestBcFeeEstimations = () => {
-    const {
-      selectedCurrency,
-      address,
-      masterWalletAddress,
-    } = this.props.navigation.state.params
-    const {
-      prices,
-      requestBitcoinEstimateFeeRate,
-    } = this.props
-    if (this.state.selectedToken) {
-      requestBitcoinEstimateFeeRate()
-        .then((results) => {
-          const feeEstimation = convertSatoshiToBTC(results.payload.data.avgFee).toNumber()
-          const tokenPrice =
-            (prices &&
-              this.state.selectedToken &&
-              this.state.selectedToken.symbol &&
-              prices[this.state.selectedToken.symbol][selectedCurrency]) ||
-            0 // TODO: handle wrong values correctly
-          const newFeePrice = feeEstimation ? feeEstimation * tokenPrice : null
-          this.setState({
-            feeEstimation,
-            fee: feeEstimation,
-            feeInCurrency: newFeePrice,
-          }, () => {
-            this.props.updateBitcoinTxDraftFee({
-              address,
-              masterWalletAddress,
-              fee: feeEstimation,
-            })
-          })
-        })
     }
   }
 
@@ -503,7 +422,7 @@ class SendEthContainer extends React.Component {
       selectedCurrency,
       address,
     } = this.props.navigation.state.params
-    const { BTCwallets, prices } = this.props
+    const { currentEthWallet, prices } = this.props
     const blockchainPrice = prices &&
       prices[selectedToken.symbol] &&
       prices[selectedToken.symbol][selectedCurrency]
@@ -522,7 +441,7 @@ class SendEthContainer extends React.Component {
         recipient={recipient}
         selectedCurrency={selectedCurrency}
         selectedToken={selectedToken}
-        selectedWallet={BTCwallets[address]}
+        selectedWallet={currentEthWallet}
         passProps={modalProps}
         //
         price={blockchainPrice}
