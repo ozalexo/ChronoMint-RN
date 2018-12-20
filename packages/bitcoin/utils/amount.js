@@ -4,7 +4,6 @@
  */
 
 import BigNumber from 'bignumber.js'
-import web3utils from 'web3/lib/utils/utils'
 import { DECIMALS } from '../constants'
 
 export const parseBitcoinBalanceData = (response) => {
@@ -29,4 +28,3 @@ export const convertBTCToSatoshi = (BTC) => {
   return new BigNumber(BTC * DECIMALS)
 }
 
-export const convertToWei = (amount) => web3utils.toWei(amount)

@@ -17,7 +17,9 @@ export const getEthereumWalletList = createSelector(
 
 export const getCurrentEthWallet = (ethAddress) => createSelector(
   getEthereumWalletList,
-  (ethereumList) => ethereumList[ethAddress]
+  (ethereumList) => {
+    return ethereumList[ethAddress]
+  }
 )
 export const getEthAccountList = createSelector(
   getEthereumWalletList,
@@ -26,7 +28,6 @@ export const getEthAccountList = createSelector(
       .map((ethAddress) =>
         ethereumList[ethAddress]
       )
-    console.log('getEthAccountList', result)
     return result
   }
 )

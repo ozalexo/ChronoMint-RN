@@ -121,7 +121,7 @@ class WalletListContainer extends PureComponent {
             const balance6 = convertSatoshiToBTC(confirmations6)
 
             updateBitcoinBalance({
-              address: data.address,
+              address,
               masterWalletAddress,
               balance: balance0 || balance6,
               amount: confirmations0 || confirmations6,
