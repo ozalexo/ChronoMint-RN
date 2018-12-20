@@ -94,7 +94,7 @@ const ethereumCreateTxDraft = (state, { masterWalletAddress }) => {
         gasPrice: null,
         chainId: null,
         to: '',
-        from: '',
+        from: masterWalletAddress,
         value: null,
         data: '',
         unsignedTx: null,
