@@ -26,7 +26,7 @@ export const getAddress = (privateKey, network) => {
 }
 
 const getKeyPair = (privateKey, network) => {
-  return new bitcoin.ECPair.fromPrivateKey(Buffer.from(privateKey, "hex"), { network })
+  return new bitcoin.ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'), { network })
 }
 
 export const selectCoins = (to, amount, feeRate, utxos) => {

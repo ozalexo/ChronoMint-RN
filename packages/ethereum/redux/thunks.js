@@ -34,7 +34,7 @@ export const createAccountByPrivateKey = (privateKey, password) => (dispatch) =>
         return reject('0002: No ETH encrypted wallet!')
       }
 
-      dispatch(Actions.ethereumCreateWallet(ethAddress, encryptedWallet))
+      dispatch(Actions.ethereumCreateWallet(ethAddress, encryptedWallet, decryptedWallet.path))
       await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
   
       return resolve(decryptedWallet.privateKey)

@@ -5,10 +5,11 @@
 
 import * as ActionTypes from './constants'
 
-export const ethereumCreateWallet = (address, encrypted) => ({
+export const ethereumCreateWallet = (address, encrypted, path) => ({
   type: ActionTypes.ETHEREUM_CREATE_WALLET,
   address,
   encrypted,
+  path,
 })
 
 export const ethereumCreateDerivedWallet = (masterWalletAddress, address) => ({

@@ -20,12 +20,13 @@ const ethereumRehydrate = (state, payload) => {
   }
 }
 
-const ethereumCreateWallet = (state, { address, encrypted }) => {
+const ethereumCreateWallet = (state, { address, encrypted, path }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
     [address]: {
       address,
+      path,
       tokens: {
         [ETH_PRIMARY_TOKEN]: {
           balance: null,

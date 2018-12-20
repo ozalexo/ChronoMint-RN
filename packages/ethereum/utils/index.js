@@ -16,8 +16,10 @@ const getDerivedWalletByPrivateKey = (privateKey, path = WALLET_HD_PATH) => {
   const account = accounts.privateKeyToAccount(`0x${wallet.getPrivateKey().toString('hex')}`)
 
   wallets.add(account)
+  const newWallet = wallets[0]
+  newWallet.path = path
 
-  return wallets[0]
+  return newWallet
 }
 
 export const generateMnemonic = async () => {
