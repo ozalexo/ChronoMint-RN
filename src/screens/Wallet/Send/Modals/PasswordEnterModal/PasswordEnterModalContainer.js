@@ -7,6 +7,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import { updateBitcoinTxDraftSignedTx } from '@chronobank/bitcoin/redux/thunks'
 import { connect } from 'react-redux'
@@ -22,7 +23,7 @@ const mapStateToProps = (state) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
-    masterWalletAddress: getCurrentWallet(state),
+    masterWallet: getCurrentEthWallet(masterWalletAddress)(state),
     currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
   }
 }
@@ -84,9 +85,9 @@ class PasswordEnterModalContainer extends React.Component {
 
   checkPassword = (password) => {
     const {
-      masterWalletAddress,
+      masterWallet,
     } = this.props
-    return decryptWallet(masterWalletAddress.encrypted, password)
+    return decryptWallet(masterWallet.encrypted, password)
       .then(() => {
         return true
       })
@@ -98,12 +99,12 @@ class PasswordEnterModalContainer extends React.Component {
 
   handleConfirmClick = async ({ password }) => {
     const {
-      masterWalletAddress,
+      masterWallet,
     } = this.props
     const pass = password ? password : this.state.password
     const isPasswordValid = await this.checkPassword(pass)
     if (isPasswordValid) {
-      decryptWallet(masterWalletAddress.encrypted, pass)
+      decryptWallet(masterWallet.encrypted, pass)
         .then((results) => {
           this.handleSign({
             privateKey: results.privateKey,
