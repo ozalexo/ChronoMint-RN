@@ -336,6 +336,42 @@ export default class Web3Controller {
     })
   }
 
+  getNonceHex (address) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getTransactionCount(address)
+        .then((nonce) => {
+          return resolve(this.web3.utils.toHex(nonce))
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  estimateGas ({ to, value }) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.estimateGas({ to, value })
+        .then((gasLimit) => {
+          return resolve(gasLimit)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  getGasPrice () {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getGasPrice()
+        .then((gasPrice) => {
+          return resolve(gasPrice)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
   getWeb3CurrentProvider () {
     return this.web3.currentProvider
   }

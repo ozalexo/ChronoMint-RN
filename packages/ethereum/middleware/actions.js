@@ -75,3 +75,18 @@ export const getBalance = (address) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BALANCE,
   address,
 })
+
+export const getNonceHex = (address) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX,
+  address,
+})
+
+export const estimateGas = ({ to, value }) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_ESTIMATE_GAS,
+  to,
+  value,
+})
+
+export const getGasPrice = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE,
+})
