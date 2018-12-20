@@ -109,6 +109,21 @@ const ethereumCreateTxDraft = (state, { masterWalletAddress }) => {
   }
 }
 
+const ethereumDeleteTxDraft = (state, { masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
 const ethereumTxUpdateNonce = (state, { nonce, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
@@ -293,6 +308,7 @@ const mutations = {
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
   [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
   [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
+  [ActionsTypes.ETHEREUM_DELETE_TX_DRAFT]: ethereumDeleteTxDraft,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_NONCE]: ethereumTxUpdateNonce,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_GAS_LIMIT]: ethereumTxUpdateGasLimit,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_GAS_PRICE]: ethereumTxUpdateGasPrice,

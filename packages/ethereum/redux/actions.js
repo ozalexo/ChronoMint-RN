@@ -37,6 +37,11 @@ export const createEthereumTxDraft = ({ address, masterWalletAddress }) => ({
   masterWalletAddress,
 })
 
+export const deleteEthereumTxDraft = ({ masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_DELETE_TX_DRAFT,
+  masterWalletAddress,
+})
+
 export const updateEthereumTxDraftNonce = ({ nonce, masterWalletAddress }) => ({
   type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_NONCE,
   nonce,

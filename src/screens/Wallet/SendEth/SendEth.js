@@ -46,7 +46,7 @@ const TokenSelector = ({ onPress = () => { }, selectedToken }) => (
 
 TokenSelector.propTypes = {
   onPress: PropTypes.func,
-  selectedToken: PropTypes.string,
+  selectedToken: PropTypes.shape({}),
 }
 
 export default class SendEth extends PureComponent {
