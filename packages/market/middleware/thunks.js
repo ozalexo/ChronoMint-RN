@@ -75,7 +75,7 @@ export const requestMarketPrices = () => async (dispatch, getState) => {
   } else {
     try {
       const response  = await requestPrices(tokenList, currencyList)
-      prices.data = response.payload.data
+      prices.data = response.data
     } catch (error) {
       dispatch(MarketMiddlewareActions.updateMarketPricesFailure(error))
       return
