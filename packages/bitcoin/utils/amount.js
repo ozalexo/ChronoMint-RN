@@ -13,9 +13,9 @@ export const parseBitcoinBalanceData = (response) => {
     confirmations6,
   } = response.payload.data
   const result = {
-    balance0: new BigNumber(confirmations0.satoshis).toString(),
-    balance3: new BigNumber(confirmations3.satoshis).toString(),
-    balance6: new BigNumber(confirmations6.satoshis).toString(),
+    balance0: new BigNumber(convertSatoshiToBTC(confirmations0.satoshis)).toString(),
+    balance3: new BigNumber(convertSatoshiToBTC(confirmations3.satoshis)).toString(),
+    balance6: new BigNumber(convertSatoshiToBTC(confirmations6.satoshis)).toString(),
   }
   return result.balance0 || result.balance6
 }

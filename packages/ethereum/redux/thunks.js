@@ -77,6 +77,17 @@ export const createEthereumTxDraft = ({ address, masterWalletAddress }) => (disp
   })
 }
 
+export const deleteEthereumTxDraft = ({ masterWalletAddress }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.deleteEthereumTxDraft({ masterWalletAddress }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
 export const updateEthereumTxDraftNonce = ({ nonce, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
