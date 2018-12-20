@@ -33,6 +33,7 @@ export const createAccountByPrivateKey = (privateKey, password) => (dispatch) =>
       if (!encryptedWallet) {
         return reject('0002: No ETH encrypted wallet!')
       }
+
       dispatch(Actions.ethereumCreateWallet(ethAddress, encryptedWallet))
       await Keychain.setInternetCredentials(ethAddress, ethAddress, password)
   
@@ -58,6 +59,17 @@ export const selectEthereumWallet = ({ address }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
       dispatch(Actions.selectEthereumWallet(address))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const createEthereumTxDraft = ({ address, masterWalletAddress }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.createEthereumTxDraft({ address, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)

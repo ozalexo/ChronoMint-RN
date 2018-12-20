@@ -10,24 +10,25 @@ import { BLOCKCHAIN_ETHEREUM  } from '../constants'
 export const getDuckEthereum = (state) =>
   state[DUCK_ETHEREUM]
 
-export const getCurrentEthWallet = (ethAddress) => createSelector(
-  getDuckEthereum,
-  (ethereum) => ethereum.list[ethAddress]
-)
-export const getEthAccountList = createSelector(
-  getDuckEthereum,
-  (ethereum) => {
-    const accounts = []
-    for (const key in ethereum.list) {
-      accounts.push(ethereum.list[key])
-    }
-    return accounts
-  }
-)
-
 export const getEthereumWalletList = createSelector(
   getDuckEthereum,
-  (ethereum) => ethereum && ethereum.list
+  (duckEthereum) => duckEthereum && duckEthereum.list
+)
+
+export const getCurrentEthWallet = (ethAddress) => createSelector(
+  getEthereumWalletList,
+  (ethereumList) => ethereumList[ethAddress]
+)
+export const getEthAccountList = createSelector(
+  getEthereumWalletList,
+  (ethereumList) => {
+    const result = Object.keys(ethereumList)
+      .map((ethAddress) =>
+        ethereumList[ethAddress]
+      )
+    console.log('getEthAccountList', result)
+    return result
+  }
 )
 
 export const getEthereumWallets = createSelector(

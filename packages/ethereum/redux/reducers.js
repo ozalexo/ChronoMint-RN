@@ -81,6 +81,33 @@ const updateEthereumBalance = (state, { tokenSymbol, address, balance, amount })
   }
 }
 
+const ethereumCreateTxDraft = (state, { masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      txDraft: {
+        nonce: null,
+        gasLimit: null,
+        gasPrice: null,
+        chainId: null,
+        to: '',
+        from: '',
+        value: null,
+        data: '',
+        unsignedTx: null,
+        signedTx: null,
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
 const selectEthereumWallet = (state, { address }) => ({
   ...state,
   selected: address,
@@ -93,6 +120,7 @@ const mutations = {
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
   [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
+  [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
 }
 
 export default (state = initialState, { type, ...other }) => {

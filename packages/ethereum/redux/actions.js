@@ -3,22 +3,22 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import * as ActionsTypes from './constants'
+import * as ActionTypes from './constants'
 
 export const ethereumCreateWallet = (address, encrypted) => ({
-  type: ActionsTypes.ETHEREUM_CREATE_WALLET,
+  type: ActionTypes.ETHEREUM_CREATE_WALLET,
   address,
   encrypted,
 })
 
 export const ethereumCreateDerivedWallet = (masterWalletAddress, address) => ({
-  type: ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET,
+  type: ActionTypes.ETHEREUM_CREATE_DERIVED_WALLET,
   masterWalletAddress,
   address,
 })
 
 export const ethereumUpdateBalance = ({ tokenSymbol, address, balance, amount }) => ({
-  type: ActionsTypes.ETHEREUM_UPDATE_BALANCE,
+  type: ActionTypes.ETHEREUM_UPDATE_BALANCE,
   address,
   amount,
   balance,
@@ -26,6 +26,12 @@ export const ethereumUpdateBalance = ({ tokenSymbol, address, balance, amount })
 })
 
 export const selectEthereumWallet = ({ address }) => ({
-  type: ActionsTypes.ETHEREUM_SELECT_WALLET,
+  type: ActionTypes.ETHEREUM_SELECT_WALLET,
   address,
+})
+
+export const createEthereumTxDraft = ({ address, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_CREATE_TX_DRAFT,
+  address,
+  masterWalletAddress,
 })
