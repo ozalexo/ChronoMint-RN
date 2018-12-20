@@ -8,32 +8,41 @@ import {
   Text,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import BigNumber from 'bignumber.js'
 import isNumber from '../../common/utils/numeric'
 import styles from './PrimaryBalanceStyles'
 
 export default class PrimaryBalance extends PureComponent {
 
   static getFormattedBalance = (balance) => {
-    if (!isNumber(balance)) {
+    let numberBalance
+    if (!balance) {
       return '-.--'
-    }
-
-    if (balance > 0 && balance < 0.01) {
-      return '0.00+'
     } else {
-      return balance.toFixed(2)
+      if (!isNumber(balance)) {
+        if (balance instanceof BigNumber) {
+          numberBalance = balance.toNumber()
+        } else {
+          return '-.--'
+        }
+      } else {
+        numberBalance = parseFloat(balance)
+      }
+  
+      if (numberBalance > 0 && numberBalance < 0.01) {
+        return '0.00+'
+      } else {
+        return numberBalance.toFixed(2)
+      }
     }
-
   }
 
   render () {
     const {
-      // selectedCurrency,
-      // blockchain,
       wallet,
     } = this.props
     const tokensList = wallet && Object.keys(wallet.tokens)[0]
-    const balance = wallet && wallet.tokens[tokensList].amount
+    const balance = wallet && wallet.tokens[tokensList].balance
 
     const displayPrimaryBalanceText = [
       tokensList,

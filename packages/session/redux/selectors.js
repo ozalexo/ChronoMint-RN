@@ -4,8 +4,9 @@
  * Licensed under the AGPL Version 3 license.
  */
 import { createSelector } from 'reselect'
-import { getBitcoinWalletsForSections } from '@chronobank/bitcoin/redux/selectors'
-import { getEthereumWallets } from '@chronobank/ethereum/redux/selectors'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
+import { getBitcoinWalletsForSections, getBitcoinListByMasterAddress } from '@chronobank/bitcoin/redux/selectors'
+import { getEthereumWallets, getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { DUCK_SESSION } from './constants'
 
 export const getDuckSession = (state) =>
@@ -21,5 +22,18 @@ export const getSections = (masterWalletAddress) => createSelector(
   getEthereumWallets,
   (bitWallets, ethWallets) => {
     return [...ethWallets, ...bitWallets]
+  }
+)
+
+export const getWalletByBlockchainAndAddress = (blockchain, address, masterAddress) => createSelector(
+  getEthereumWalletList,
+  getBitcoinListByMasterAddress(masterAddress),
+  (ethereumWallets, bitcoinWallets) => {
+    // TODO: to be refactored in the future
+    if (blockchain === BLOCKCHAIN_ETHEREUM) {
+      return ethereumWallets[address]
+    } else {
+      return bitcoinWallets[address]
+    }
   }
 )

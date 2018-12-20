@@ -72,7 +72,7 @@ class WalletContainer extends Component {
               from: tx.inputs[0].address,
               to: tx.outputs[0].address,
               amount: tx.outputs[0].value,
-              balance: convertSatoshiToBTC(tx.outputs[0].value).toNumber(),
+              balance: convertSatoshiToBTC(tx.outputs[0].value),
               timestamp: tx.timestamp,
               hash: tx.hash,
               confirmations: tx.confirmations,

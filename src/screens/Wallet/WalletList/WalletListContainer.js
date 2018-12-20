@@ -151,7 +151,7 @@ class WalletListContainer extends PureComponent {
                 from: data.inputs[0].address,
                 to: data.outputs[0].address,
                 amount: data.outputs[0].value,
-                balance: convertSatoshiToBTC(data.outputs[0].value).toNumber(),
+                balance: convertSatoshiToBTC(data.outputs[0].value),
                 timestamp: data.timestamp,
                 hash: body.hash,
                 confirmations: data.confirmations,

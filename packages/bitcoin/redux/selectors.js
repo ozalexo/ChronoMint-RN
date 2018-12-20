@@ -20,6 +20,11 @@ export const getBitcoinList = createSelector(
   (duckBitcoin) => duckBitcoin.list
 )
 
+export const getBitcoinListByMasterAddress = (masterAddress) => createSelector(
+  getBitcoinList,
+  (bitcoinList) => bitcoinList[masterAddress]
+)
+
 export const getBitcoinSelectedWalletAddress = createSelector(
   getDuckBitcoin,
   (duckBitcoin) => duckBitcoin.selected,

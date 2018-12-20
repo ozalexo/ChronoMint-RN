@@ -52,7 +52,7 @@ export default class Web3Provider {
           if (hasReturned) {
             this.connection.close()
           } else {
-            this.pingInterval = setInterval(this.ping, 5000)
+            // this.pingInterval = setInterval(this.ping, 5000)
             return resolve(this)
           }
         }

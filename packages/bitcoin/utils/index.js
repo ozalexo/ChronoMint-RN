@@ -8,6 +8,7 @@ import { checkPrivateKey } from '@chronobank/ethereum/utils'
 import coinselect from 'coinselect'
 import BigNumber from 'bignumber.js'
 
+// TODO: this info may be obtained from Redux store (see network)
 export const convertToBlockchainNet = (networkType) => {
   if (networkType === 'mainet') {
     return 'bitcoin'
