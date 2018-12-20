@@ -52,8 +52,11 @@ export const getBalance = (address) => (dispatch) =>
 export const getNonceHex = (address) => (dispatch) =>
   dispatch(Actions.getNonceHex(address))
 
-export const estimateGas = ({ to, value }) => (dispatch) =>
-  dispatch(Actions.estimateGas({ to, value }))
+export const getNonce = (address) => (dispatch) =>
+  dispatch(Actions.getNonce(address))
+
+export const estimateGas = ({ from, to, value, data, gasPrice, nonce }) => (dispatch) =>
+  dispatch(Actions.estimateGas({ from, to, value, data, gasPrice, nonce }))
 
 export const getGasPrice = () => (dispatch) =>
   dispatch(Actions.getGasPrice())

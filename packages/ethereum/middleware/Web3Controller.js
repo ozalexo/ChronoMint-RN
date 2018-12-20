@@ -348,9 +348,21 @@ export default class Web3Controller {
     })
   }
 
-  estimateGas ({ to, value }) {
+  getNonce (address) {
     return new Promise((resolve, reject) => {
-      this.web3.eth.estimateGas({ to, value })
+      this.web3.eth.getTransactionCount(address)
+        .then((nonce) => {
+          return resolve(nonce)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  estimateGas ({ from, to, value, data, gasPrice, nonce }) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.estimateGas({ from, to, value, data, gasPrice, nonce })
         .then((gasLimit) => {
           return resolve(gasLimit)
         })

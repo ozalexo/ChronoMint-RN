@@ -32,8 +32,11 @@ const getBalance = (store, { address }) =>
 const getNonceHex = (store, { address }) =>
   w3c.getNonceHex(address)
 
-const estimateGas = (store, { to, value }) =>
-  w3c.estimateGas({ to, value })
+const getNonce = (store, { address }) =>
+  w3c.getNonce(address)
+
+const estimateGas = (store, { from, to, value, data, gasPrice, nonce }) =>
+  w3c.estimateGas({ from, to, value, data, gasPrice, nonce })
 
 const getGasPrice = () =>
   w3c.getGasPrice()
@@ -103,6 +106,7 @@ const mutations = {
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BALANCE]: getBalance,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE]: getGasPrice,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX]: getNonceHex,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE]: getNonce,
 
 }
 

@@ -81,10 +81,19 @@ export const getNonceHex = (address) => ({
   address,
 })
 
-export const estimateGas = ({ to, value }) => ({
+export const getNonce = (address) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE,
+  address,
+})
+
+export const estimateGas = ({ from, to, value, data, gasPrice, nonce }) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_METHOD_ESTIMATE_GAS,
+  from,
   to,
   value,
+  data,
+  gasPrice,
+  nonce,
 })
 
 export const getGasPrice = () => ({
