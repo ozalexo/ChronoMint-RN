@@ -142,7 +142,7 @@ TransactionsList.propTypes = {
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       address: PropTypes.string,
-      balance: PropTypes.number,
+      balance: PropTypes.string,
       confirmations: PropTypes.number,
     })
   ),
@@ -152,14 +152,18 @@ TransactionsList.propTypes = {
 class TransactionItem extends PureComponent {
 
   static getFormattedBalance = (balance, symbol, type) => {
-    const isbalanceTooSmall = balance > 0 && balance < 0.01
+    if (!balance) {
+      return '-.--'
+    }
+    const numBalance = parseInt(balance)
+    const isbalanceTooSmall = numBalance > 0 && numBalance < 0.01
     let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
     format = [
       (type === 'sending' ? '-' : '+'),
       format,
     ].join(' ')
 
-    return i18n.toCurrency(balance, { precision: 2, unit: ` ${symbol} `, format })
+    return i18n.toCurrency(numBalance, { precision: 2, unit: ` ${symbol} `, format })
 
   }
 
@@ -240,7 +244,7 @@ TransactionItem.propTypes = {
   item: PropTypes.shape({
     from: PropTypes.string,
     to: PropTypes.string,
-    balance: PropTypes.number,
+    balance: PropTypes.string,
     confirmations: PropTypes.number,
   }),
   symbol: PropTypes.string,
