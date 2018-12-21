@@ -14,13 +14,13 @@ import PropTypes from 'prop-types'
 import BigNumber from 'bignumber.js'
 import * as EthereumThunks from '@chronobank/ethereum/redux/thunks'
 import {
-  getNonce,
   estimateGas,
-  getGasPrice,
   getChainId,
+  getGasPrice,
+  getNonce,
+  sendSignedTransaction,
 } from '@chronobank/ethereum/middleware/thunks'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
-import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
@@ -38,7 +38,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ActionCreators = { ...EthereumThunks, getNonce, estimateGas, getGasPrice, getChainId }
+const ActionCreators = {
+  ...EthereumThunks,
+  getNonce,
+  estimateGas,
+  getGasPrice,
+  getChainId,
+  sendSignedTransaction,
+}
 const mapDispatchToProps = (dispatch) => bindActionCreators(ActionCreators, dispatch)
 
 class SendEthContainer extends React.Component {

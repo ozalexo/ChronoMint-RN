@@ -52,6 +52,9 @@ export const getBalance = (address) => (dispatch) =>
 export const getNonceHex = (address) => (dispatch) =>
   dispatch(Actions.getNonceHex(address))
 
+export const sendSignedTransaction = ({ signedTx }) => (dispatch) =>
+  dispatch(Actions.sendSignedTransaction({ signedTx }))
+
 export const getNonce = (address) => (dispatch) =>
   dispatch(Actions.getNonce(address))
 

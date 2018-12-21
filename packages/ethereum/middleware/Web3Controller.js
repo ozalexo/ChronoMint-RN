@@ -336,6 +336,18 @@ export default class Web3Controller {
     })
   }
 
+  sendSignedTransaction ({ signedTx }) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.sendSignedTransaction(signedTx)
+        .then((result) => {
+          return resolve(result)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
   getNonceHex (address) {
     return new Promise((resolve, reject) => {
       this.web3.eth.getTransactionCount(address)

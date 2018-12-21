@@ -29,6 +29,9 @@ const connect = async (store, action, next) => {
 const getBalance = (store, { address }) =>
   w3c.getBalance(address)
 
+const sendSignedTransaction = (store, { signedTx }) =>
+  w3c.sendSignedTransaction({ signedTx })
+
 const getNonceHex = (store, { address }) =>
   w3c.getNonceHex(address)
 
@@ -107,10 +110,11 @@ const mutations = {
   [NETWORK_SELECT]: connect,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_ESTIMATE_GAS]: estimateGas,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BALANCE]: getBalance,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_CHAIN_ID]: getChainId,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE]: getGasPrice,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX]: getNonceHex,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE]: getNonce,
-  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_CHAIN_ID]: getChainId,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_SEND_SIGNED_TX]: sendSignedTransaction,
 
 }
 

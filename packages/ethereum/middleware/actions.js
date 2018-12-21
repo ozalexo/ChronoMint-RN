@@ -76,6 +76,11 @@ export const getBalance = (address) => ({
   address,
 })
 
+export const sendSignedTransaction = ({ signedTx }) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_SEND_SIGNED_TX,
+  signedTx,
+})
+
 export const getNonceHex = (address) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX,
   address,
