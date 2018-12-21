@@ -357,7 +357,7 @@ class SendContainer extends React.Component {
     if (this.state.selectedToken) {
       requestBitcoinEstimateFeeRate()
         .then((results) => {
-          const feeEstimation = convertSatoshiToBTC(results.payload.data.avgFee).toNumber()
+          const feeEstimation = parseFloat(convertSatoshiToBTC(results.payload.data.avgFee))
           const tokenPrice =
             (prices &&
               this.state.selectedToken &&

@@ -34,7 +34,7 @@ export const selectCoins = (to, amount, feeRate, utxos) => {
   const targets = [
     {
       address: to,
-      value: amount.toNumber(),
+      value: parseFloat(amount),
     },
   ]
   const utxosArray = utxos.map((output) => ({
