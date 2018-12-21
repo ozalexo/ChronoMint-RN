@@ -5,11 +5,12 @@
 
 import React, { PureComponent } from 'react'
 import {
-  ScrollView,
-  View,
-  TouchableOpacity,
   Image,
+  KeyboardAvoidingView,
+  ScrollView,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
@@ -106,97 +107,101 @@ export default class SendEth extends PureComponent {
     }
 
     return (
-      <ScrollView style={styles.scrollView}>
-        <NavigationEvents
-          onDidFocus={onTxDraftCreate}
-          onWillBlur={onTxDraftRemove}
-        />
-        {
-          showPasswordModal && <PasswordEnterModal
-            passProps={passProps}
-            visible={showPasswordModal}
-            modalToggle={onTogglePasswordModal}
-            error={error}
-            confirmPassword={onPasswordConfirm}
+      <KeyboardAvoidingView
+        behavior='height'
+      >
+        <ScrollView style={styles.scrollView}>
+          <NavigationEvents
+            onDidFocus={onTxDraftCreate}
+            onWillBlur={onTxDraftRemove}
           />
-        }
-        {
-          showConfirmModal && <ConfirmSendModal
-            visible={showConfirmModal}
-            modalToggle={onCloseConfirmModal}
-            sendConfirm={onSendConfirm}
-            onTxDraftRemove={onTxDraftRemove}
-          />
-        }
-        <View style={styles.formHeader}>
-          <Text style={styles.walletTitle}>
-            {
-              strings.walletTitle
-            }
-          </Text>
-          <Text style={styles.walletAddress}>
-            {
-              selectedWallet.address
-            }
-          </Text>
           {
-            (blockchain === BLOCKCHAIN_ETHEREUM)
-              ? (
-                <View>
-                  <Separator style={styles.separatorDark} />
-                  <TokenSelector
-                    selectedToken={selectedToken}
-                    onPress={onSelectToken}
-                  />
-                </View>
-              ) : null
+            showPasswordModal && <PasswordEnterModal
+              passProps={passProps}
+              visible={showPasswordModal}
+              modalToggle={onTogglePasswordModal}
+              error={error}
+              confirmPassword={onPasswordConfirm}
+            />
           }
-          <Separator style={styles.separatorDark} />
-          <Text style={styles.walletValue}>
+          {
+            showConfirmModal && <ConfirmSendModal
+              visible={showConfirmModal}
+              modalToggle={onCloseConfirmModal}
+              sendConfirm={onSendConfirm}
+              onTxDraftRemove={onTxDraftRemove}
+            />
+          }
+          <View style={styles.formHeader}>
+            <Text style={styles.walletTitle}>
+              {
+                strings.walletTitle
+              }
+            </Text>
+            <Text style={styles.walletAddress}>
+              {
+                selectedWallet.address
+              }
+            </Text>
             {
-              strings.walletValue
+              (blockchain === BLOCKCHAIN_ETHEREUM)
+                ? (
+                  <View>
+                    <Separator style={styles.separatorDark} />
+                    <TokenSelector
+                      selectedToken={selectedToken}
+                      onPress={onSelectToken}
+                    />
+                  </View>
+                ) : null
             }
-          </Text>
-          <Text style={styles.walletBalance}>
-            {
-              strings.walletBalance
-            }
-          </Text>
-        </View>
-        <View style={styles.formBody}>
-          <Image
-            source={cryptoImages[blockchain] || coin_time_small}
-            style={styles.tokenImage}
-          />
-          <Input
-            placeholder='Recipient Address'
-            onChange={onChangeRecipient}
-            name='recipient'
-          />
-          <Input
-            placeholder={strings.amountInput}
-            keyboardType='numeric'
-            onChange={onChangeAmount}
-            name='amount'
-          />
-          <Text style={styles.sendBalance}>
-            {
-              strings.sendBalance
-            }
-          </Text>
-          <FeeSlider
-            tokenSymbol={selectedToken.symbol}
-            selectedCurrency={selectedCurrency}
-            calculatedFeeValue={fee}
-            calculatedFeeValueInSelectedCurrency={feeInCurrency}
-            maximumValue={1.9}
-            minimumValue={0.1}
-            value={feeMultiplier}
-            step={0.1}
-            handleValueChange={onFeeSliderChange}
-          />
-        </View>
-      </ScrollView>
+            <Separator style={styles.separatorDark} />
+            <Text style={styles.walletValue}>
+              {
+                strings.walletValue
+              }
+            </Text>
+            <Text style={styles.walletBalance}>
+              {
+                strings.walletBalance
+              }
+            </Text>
+          </View>
+          <View style={styles.formBody}>
+            <Image
+              source={cryptoImages[blockchain] || coin_time_small}
+              style={styles.tokenImage}
+            />
+            <Input
+              placeholder='Recipient Address'
+              onChange={onChangeRecipient}
+              name='recipient'
+            />
+            <Input
+              placeholder={strings.amountInput}
+              keyboardType='numeric'
+              onChange={onChangeAmount}
+              name='amount'
+            />
+            <Text style={styles.sendBalance}>
+              {
+                strings.sendBalance
+              }
+            </Text>
+            <FeeSlider
+              tokenSymbol={selectedToken.symbol}
+              selectedCurrency={selectedCurrency}
+              calculatedFeeValue={fee}
+              calculatedFeeValueInSelectedCurrency={feeInCurrency}
+              maximumValue={1.9}
+              minimumValue={0.1}
+              value={feeMultiplier}
+              step={0.1}
+              handleValueChange={onFeeSliderChange}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     )
   }
 }
