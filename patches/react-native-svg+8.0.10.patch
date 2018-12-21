@@ -1,0 +1,23 @@
+patch-package
+new file mode 100644
+Binary files /dev/null and b/node_modules/react-native-svg/.DS_Store differ
+--- a/node_modules/react-native-svg/android/build.gradle
++++ b/node_modules/react-native-svg/android/build.gradle
+@@ -4,8 +4,8 @@ def safeExtGet(prop, fallback) {
+ 
+ buildscript {
+     repositories {
+-        jcenter()
+         google()
++        jcenter()
+         maven {
+             url 'https://maven.google.com/'
+             name 'Google'
+@@ -23,7 +23,6 @@ apply plugin: 'com.android.library'
+ android {
+     compileSdkVersion safeExtGet('compileSdkVersion', 27)
+     //noinspection GradleDependency
+-    buildToolsVersion safeExtGet('buildToolsVersion', '27.0.3')
+ 
+     defaultConfig {
+         minSdkVersion safeExtGet('minSdkVersion', 16)
