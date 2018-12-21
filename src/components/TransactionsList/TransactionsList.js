@@ -167,7 +167,6 @@ class TransactionItem extends PureComponent {
         numBalance = parseInt(balance)
       }
     }
-    console.log('&&&&', balance, numBalance)
     const isbalanceTooSmall = numBalance > 0 && numBalance < 0.01
     let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
     format = [

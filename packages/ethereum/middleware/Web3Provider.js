@@ -52,7 +52,7 @@ export default class Web3Provider {
           if (hasReturned) {
             this.connection.close()
           } else {
-            // this.pingInterval = setInterval(this.ping, 5000)
+            this.pingInterval = setInterval(this.ping, 10000)
             return resolve(this)
           }
         }
@@ -253,7 +253,7 @@ export default class Web3Provider {
       if (this.connection && this.connection.readyState === WebSocket.OPEN) {  // and if the connection is still open
         this.connection.onclose(new Error('Ping timed out'))  // close the connection
       }
-    }, 1000)
+    }, 4000)
   }
 
   removeListener = (type, callback) => {
