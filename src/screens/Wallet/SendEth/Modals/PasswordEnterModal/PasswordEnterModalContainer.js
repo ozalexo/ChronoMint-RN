@@ -7,14 +7,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
-import { updateBitcoinTxDraftSignedTx } from '@chronobank/bitcoin/redux/thunks'
+import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
+import { updateEthereumTxDraftSignedTx } from '@chronobank/ethereum/redux/thunks'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TouchID from 'react-native-touch-id'
 import * as Keychain from 'react-native-keychain'
-import { decryptWallet } from '@chronobank/ethereum/utils'
-import { signTransaction } from '@chronobank/bitcoin/utils'
+import { decryptWallet, signEthTransaction } from '@chronobank/ethereum/utils'
+import { balanceToAmount } from '@chronobank/ethereum/utils/amount'
 import { name as appName } from '../../../../../../app.json'
 import PasswordEnterModal from './PasswordEnterModal'
 
@@ -22,14 +22,14 @@ const mapStateToProps = (state) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
-    masterWalletAddress: getCurrentWallet(state),
-    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
+    masterWalletAddress,
+    currentEthWallet: getCurrentEthWallet(masterWalletAddress)(state),
   }
 }
 
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateBitcoinTxDraftSignedTx,
+  updateEthereumTxDraftSignedTx,
 }, dispatch)
 
 class PasswordEnterModalContainer extends React.Component {
@@ -75,62 +75,69 @@ class PasswordEnterModalContainer extends React.Component {
       .then(() => {
         const {
           masterWalletAddress,
-        } = this.props.passProps
+        } = this.props
         return Keychain.getInternetCredentials(masterWalletAddress)
       })
       .then((keychain) => this.handleConfirmClick({ password: keychain.password }))
       .catch(() => { })
   }
 
-  checkPassword = (password) => {
+  handleConfirmClick = async ({ password }) => {
     const {
-      masterWalletAddress,
+      currentEthWallet,
     } = this.props
-    return decryptWallet(masterWalletAddress.encrypted, password)
-      .then(() => {
-        return true
+    const pass = password ? password : this.state.password
+    decryptWallet(currentEthWallet.encrypted, pass)
+      .then((results) => {
+        this.handleSign({
+          privateKey: results.privateKey,
+        })
       })
       .catch((error) => {
         this.setState({ error: error.message })
-        return false
       })
-  }
-
-  handleConfirmClick = async ({ password }) => {
-    const {
-      masterWalletAddress,
-    } = this.props
-    const pass = password ? password : this.state.password
-    const isPasswordValid = await this.checkPassword(pass)
-    if (isPasswordValid) {
-      decryptWallet(masterWalletAddress.encrypted, pass)
-        .then((results) => {
-          this.handleSign({
-            privateKey: results.privateKey,
-          })
-        })
-    }
   }
 
   handleSign = ({ privateKey }) => {
     const {
-      updateBitcoinTxDraftSignedTx,
-      passProps,
-      currentBTCWallet,
+      updateEthereumTxDraftSignedTx,
+      currentEthWallet,
+      masterWalletAddress,
     } = this.props
-    const signedTx = signTransaction({
-      unsignedTxHex: currentBTCWallet.txDraft.unsignedTx,
-      network: passProps.network.networkType,
+    const {
+      nonce,
+      gasLimit,
+      gasPrice,
+      chainId,
+      to,
+      from,
+      value,
+      data,
+    } = currentEthWallet.txDraft
+    const tx = {
+      to,
+      from,
+      data,
+      value: balanceToAmount(value).toNumber(),
+      nonce,
+      gas: gasLimit,
+      gasPrice,
+      chainId,
+    }
+
+    signEthTransaction({
+      tx,
       privateKey,
     })
-    if (signedTx) {
-      updateBitcoinTxDraftSignedTx({
-        address: currentBTCWallet.address,
-        masterWalletAddress: passProps.masterWalletAddress,
-        signedTx,
+      .then((signedTXresults) => {
+        updateEthereumTxDraftSignedTx({
+          masterWalletAddress,
+          signedTx: signedTXresults.rawTransaction,
+        })
+          .then(() => this.props.confirmPassword())
+          .catch((error) => console.log(error))
       })
-      this.props.confirmPassword()
-    }
+      .catch((error) => console.log(error))
   }
 
 
@@ -139,7 +146,6 @@ class PasswordEnterModalContainer extends React.Component {
       biometryType,
     } = this.state
     const {
-      passProps,
       visible,
       modalToggle,
       error,
@@ -151,7 +157,6 @@ class PasswordEnterModalContainer extends React.Component {
         onConfirmPassword={this.handleConfirmClick}
         onScan={this.handleScan}
         biometryType={biometryType}
-        passProps={passProps}
         visible={visible}
         modalToggle={modalToggle}
         error={error}

@@ -69,10 +69,8 @@ export default class SendEth extends PureComponent {
       price,
       // currentTokenBalance,
       feeMultiplier,
-      // gasFeeAmount,
-      // gasFeeAmountInCurrency,
-      fee,
-      feeInCurrency,
+      gasLimit,
+      gasLimitInCurrency,
       onChangeAmount = () => { },
       onChangeRecipient = () => { },
       onFeeSliderChange = () => { },
@@ -191,8 +189,8 @@ export default class SendEth extends PureComponent {
             <FeeSlider
               tokenSymbol={selectedToken.symbol}
               selectedCurrency={selectedCurrency}
-              calculatedFeeValue={fee}
-              calculatedFeeValueInSelectedCurrency={feeInCurrency}
+              calculatedFeeValue={gasLimit}
+              calculatedFeeValueInSelectedCurrency={gasLimitInCurrency}
               maximumValue={1.9}
               minimumValue={0.1}
               value={feeMultiplier}

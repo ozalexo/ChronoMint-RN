@@ -300,12 +300,20 @@ const selectEthereumWallet = (state, { address }) => ({
   selected: address,
 })
 
+const dropEthereumSelectedWallet = (state) => {
+  return {
+    ...state,
+    selected: null,
+  }
+}
+
 const mutations = {
 
   [REHYDRATE]: ethereumRehydrate,
   [ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET]: ethereumCreateDerivedWallet,
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
+  [ActionsTypes.ETHEREUM_DROP_SELECTED_WALLET]: dropEthereumSelectedWallet,
   [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
   [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
   [ActionsTypes.ETHEREUM_DELETE_TX_DRAFT]: ethereumDeleteTxDraft,

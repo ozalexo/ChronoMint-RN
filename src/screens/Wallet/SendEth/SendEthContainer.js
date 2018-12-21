@@ -20,7 +20,7 @@ import {
   getChainId,
 } from '@chronobank/ethereum/middleware/thunks'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
-import { prepareBitcoinTransaction } from '@chronobank/bitcoin/utils'
+import { balanceToAmount } from '@chronobank/ethereum/utils/amount'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
@@ -32,6 +32,7 @@ const mapStateToProps = (state) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
+    masterWalletAddress,
     prices: selectMarketPrices(state),
     currentEthWallet: getCurrentEthWallet(masterWalletAddress)(state),
     network: getCurrentNetwork(state),
@@ -56,13 +57,9 @@ class SendEthContainer extends React.Component {
       confirmSendModal: false,
       enterPasswordModal: false,
       error: null,
-      fee: null,
-      feeEstimation: 1,
-      feeInCurrency: null,
+      gasLimit: null,
+      gasLimitInCurrency: null,
       feeMultiplier: 1,
-      gasFee: null,
-      gasFeeAmount: null,
-      gasFeeAmountInCurrency: null,
       isAmountInputValid: false,
       isRecipientInputValid: false,
       recipient: '',
@@ -87,6 +84,8 @@ class SendEthContainer extends React.Component {
   }
 
   static propTypes = {
+    updateEthereumTxDraftGasPriceChainIdNonce: PropTypes.func,
+    masterWalletAddress: PropTypes.string,
     currentEthWallet: PropTypes.shape({}),
     network: PropTypes.shape({}),
     prices: PropTypes.shape({}),
@@ -115,12 +114,9 @@ class SendEthContainer extends React.Component {
       getNonce,
       getGasPrice,
       getChainId,
-      navigation,
-      updateEthereumTxDraftNonce,
-      updateEthereumTxDraftGasPrice,
-      updateEthereumTxDraftChainId,
+      updateEthereumTxDraftGasPriceChainIdNonce,
+      masterWalletAddress,
     } = this.props
-    const { masterWalletAddress } = navigation.state.params
 
     Promise.all([
       getGasPrice(),
@@ -128,16 +124,10 @@ class SendEthContainer extends React.Component {
       getNonce(masterWalletAddress),
     ])
       .then((results) => {
-        updateEthereumTxDraftGasPrice({
+        updateEthereumTxDraftGasPriceChainIdNonce({
           masterWalletAddress,
           gasPrice: results[0],
-        })
-        updateEthereumTxDraftChainId({
-          masterWalletAddress,
           chainId: results[1],
-        })
-        updateEthereumTxDraftNonce({
-          masterWalletAddress,
           nonce: results[2],
         })
       })
@@ -145,27 +135,10 @@ class SendEthContainer extends React.Component {
   }
 
   handleGoToPasswordModal = () => {
-    const {
-      address,
-      masterWalletAddress,
-    } = this.props.navigation.state.params
-    const {
-      network,
-    } = this.props
 
     if (this.state.isRecipientInputValid && this.state.isAmountInputValid) {
 
-      const tx = {
-        to: this.state.recipient,
-        from: address,
-        value: this.state.amount,
-      }
-
-      const modalProps = {
-        masterWalletAddress,
-        network,
-      }
-
+      this.handleTogglePasswordModal()
 
     } else {
       Alert.alert('Input error', 'Please fill address and amount', [
@@ -176,8 +149,10 @@ class SendEthContainer extends React.Component {
 
   handleChangeRecipient = (name, value) => {
     if (typeof value === 'string') {
-      const { masterWalletAddress } = this.props.navigation.state.params
-      const { updateEthereumTxDraftTo } = this.props
+      const {
+        updateEthereumTxDraftTo,
+        masterWalletAddress,
+      } = this.props
       // Check for Ethereum
       const dummyValidationOfRecipientInput =
         value &&
@@ -204,10 +179,14 @@ class SendEthContainer extends React.Component {
 
   handleChangeAmount = (name, value) => {
     if (typeof value === 'string') {
-      const { prices, updateEthereumTxDraftValue } = this.props
-      const { selectedCurrency, masterWalletAddress } = this.props.navigation.state.params
+      const {
+        prices,
+        updateEthereumTxDraftValue,
+        masterWalletAddress,
+      } = this.props
+      const { selectedCurrency } = this.props.navigation.state.params
       if (!(value.endsWith(',') || value.endsWith('.'))) {
-        const localeValue = new BigNumber(parseFloat(value.replace(',', '.').replace(' ', '')))
+        const localeValue = new BigNumber(parseFloat(value.replace(',', '.').replace(' ', ''))).toNumber()
         const tokenPrice =
           (prices &&
             this.state.selectedToken &&
@@ -250,17 +229,13 @@ class SendEthContainer extends React.Component {
   handleFeeSliderChange = (value) => {
     const {
       prices,
+      updateEthereumTxDraftGasLimit,
+      masterWalletAddress,
     } = this.props
     const {
       selectedCurrency,
-      address,
-      masterWalletAddress,
     } = this.props.navigation.state.params
-    if (this.state.fee !== null) {
-      const newGasFee =
-        this.state.gasFee &&
-        // this.state.selectedDAO &&
-        0.0002
+    if (this.state.gasLimit !== null) {
 
       const tokenPrice =
         (prices &&
@@ -268,29 +243,21 @@ class SendEthContainer extends React.Component {
           prices[this.state.selectedToken.symbol][selectedCurrency]) ||
         0 // TODO: handle wrong values correctly
 
-      const newGasFeePrice = newGasFee ? newGasFee * tokenPrice : null
+      const newGasLimit = this.state.gasLimit ? this.state.gasLimit * this.state.feeMultiplier : null
+      const newGasPrice = newGasLimit ? newGasLimit * tokenPrice : null
 
       this.setState({
         feeMultiplier: value,
-        gasFeeAmount: newGasFee,
-        gasFeeAmountInCurrency: newGasFeePrice,
-      })
-    } else {
-      this.setState({
-        feeMultiplier: value,
+        gasLimit: newGasLimit,
+        gasLimitInCurrency: newGasPrice,
       }, () => {
-
-        const fee = this.state.feeEstimation * this.state.feeMultiplier
-
-        // updateBitcoinTxDraftFee({
-        //   address,
-        //   masterWalletAddress,
-        //   fee,
-        // })
-        this.setState({
-          fee,
+        updateEthereumTxDraftGasLimit({
+          masterWalletAddress,
+          gasLimit: newGasLimit,
         })
       })
+    } else {
+      this.setState({ feeMultiplier: value })
     }
   }
 
@@ -298,51 +265,34 @@ class SendEthContainer extends React.Component {
     const {
       estimateGas,
       currentEthWallet,
+      updateEthereumTxDraftGasLimit,
+      masterWalletAddress,
     } = this.props
     const {
       from,
       to,
-      value,
       gasPrice,
       nonce,
     } = currentEthWallet.txDraft
-    console.log('from,: ', from)
-    console.log('to,: ', to)
-    console.log('value,: ', value)
-    console.log('gasPrice,: ', gasPrice)
-    console.log('nonce,: ', nonce)
-    estimateGas({
+    const estimationGasArguments = {
       from,
       to,
-      value,
+      value: balanceToAmount(this.state.amount),
       gasPrice,
       nonce,
-    })
-      .then((results) => console.log('estimate results', results))
+    }
+    estimateGas(estimationGasArguments)
+      .then((results) => {
+        this.setState({
+          gasLimit: results,
+        }, () => {
+          updateEthereumTxDraftGasLimit({
+            masterWalletAddress,
+            gasLimit: results,
+          })
+        })
+      })
       .catch((error) => console.log(error))
-    // const {
-    //   selectedCurrency,
-    // } = this.props.navigation.state.params
-    // const {
-    //   prices,
-    // } = this.props
-    // const weiValue = convertToWei(value)
-
-    // if (this.state.selectedToken) {
-    //   const tokenPrice =
-    //     (prices &&
-    //       this.state.selectedToken &&
-    //       this.state.selectedToken.symbol &&
-    //       prices[this.state.selectedToken.symbol][selectedCurrency]) ||
-    //     0 // TODO: handle wrong values correctly
-    //   const newGasFeePrice = newGasFee ? newGasFee * tokenPrice : null
-
-    //   this.setState({
-    //     // gasFee,
-    //     // gasFeeAmount: newGasFee,
-    //     gasFeeAmountInCurrency: newGasFeePrice,
-    //   })
-    // }
   }
 
   handleTogglePasswordModal = () => {
@@ -370,15 +320,13 @@ class SendEthContainer extends React.Component {
   }
 
   handleTxDraftCreate = () => {
-    const { createEthereumTxDraft, navigation } = this.props
-    const { masterWalletAddress } = navigation.state.params
+    const { createEthereumTxDraft, masterWalletAddress } = this.props
     createEthereumTxDraft({ masterWalletAddress })
     this.getDataForGasEstimation()
   }
 
   handleTxDraftRemove = () => {
-    const { deleteEthereumTxDraft, navigation } = this.props
-    const { masterWalletAddress } = navigation.state.params
+    const { deleteEthereumTxDraft, masterWalletAddress } = this.props
     deleteEthereumTxDraft({ masterWalletAddress })
   }
 
@@ -391,10 +339,8 @@ class SendEthContainer extends React.Component {
       amount,
       amountInCurrency,
       feeMultiplier,
-      feeInCurrency,
-      fee,
-      gasFeeAmount,
-      gasFeeAmountInCurrency,
+      gasLimitInCurrency,
+      gasLimit,
       recipient,
       selectedToken,
       modalProps,
@@ -413,8 +359,8 @@ class SendEthContainer extends React.Component {
         amountInCurrency={amountInCurrency}
         blockchain={blockchain}
         feeMultiplier={feeMultiplier}
-        fee={fee}
-        feeInCurrency={feeInCurrency}
+        gasLimit={gasLimit}
+        gasLimitInCurrency={gasLimitInCurrency}
         onChangeAmount={this.handleChangeAmount}
         onChangeRecipient={this.handleChangeRecipient}
         onFeeSliderChange={this.handleFeeSliderChange}

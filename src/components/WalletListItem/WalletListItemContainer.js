@@ -48,6 +48,7 @@ class WalletListItemContainer extends PureComponent {
       masterWalletAddress,
     }
 
+
     blockchain === BLOCKCHAIN_ETHEREUM
       ? selectEthereumWallet({ address })
       : selectBitcoinWallet({ address })

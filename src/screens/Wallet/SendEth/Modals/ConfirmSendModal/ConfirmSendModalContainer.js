@@ -7,9 +7,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {
+  sendSignedTransaction,
+} from '@chronobank/ethereum/middleware/thunks'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
-import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
-import { requestBitcoinSendRawTransaction } from '@chronobank/bitcoin/service/api'
+import { selectMarketPrices } from '@chronobank/market/redux/selectors'
+import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import ConfirmSendModal from './ConfirmSendModal'
 
@@ -17,18 +20,14 @@ const mapStateToProps = (state) => {
   const masterWalletAddress = getCurrentWallet(state)
 
   return {
-    prices: {
-      BTC: {
-        USD: 1499,
-      },
-    },
-    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
+    prices: selectMarketPrices(state),
+    currentEthWallet: getCurrentEthWallet(masterWalletAddress)(state),
     selectedCurrency: selectCurrentCurrency(state),
   }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  requestBitcoinSendRawTransaction,
+  sendSignedTransaction,
 }, dispatch)
 
 class ConfirmSendModalContainer extends React.Component {
@@ -40,28 +39,29 @@ class ConfirmSendModalContainer extends React.Component {
   }
 
   componentDidMount () {
-    const { selectedCurrency, currentBTCWallet, prices } = this.props
+    const { selectedCurrency, currentEthWallet, prices } = this.props
 
-    if (!currentBTCWallet || !currentBTCWallet.txDraft) {
+    if (!currentEthWallet || !currentEthWallet.txDraft) {
       return
     }
 
-    const { txDraft, tokens } = currentBTCWallet
+    const { txDraft, tokens } = currentEthWallet
+    const token = 'ETH' //for testing
     const currency = prices &&
-      prices[txDraft.token] &&
-      prices[txDraft.token][selectedCurrency]
+      prices[token] &&
+      prices[token][selectedCurrency]
     const amountToSend = {
-      token: txDraft.amount,
-      currency: currency * txDraft.amount,
+      token: txDraft.value,
+      currency: currency * txDraft.value,
     }
-    const totalFee = txDraft.fee * txDraft.feeMultiplier
+    const totalFee = txDraft.gasLimit
     const fee = {
       token: totalFee,
       currency: currency * totalFee,
     }
     const balance = {
-      token: tokens[txDraft.token].amount,
-      currency: currency * tokens[txDraft.token].amount,
+      token: tokens[token].balance.toNumber(),
+      currency: currency * tokens[token].balance,
     }
 
     this.setState({
@@ -73,15 +73,16 @@ class ConfirmSendModalContainer extends React.Component {
 
   handleConfirmSendClick = () => {
     const {
-      currentBTCWallet,
-      requestBitcoinSendRawTransaction,
+      currentEthWallet,
+      sendSignedTransaction,
       sendConfirm,
+      modalToggle,
     } = this.props
-    const { signedTx } = currentBTCWallet.txDraft
-    requestBitcoinSendRawTransaction(signedTx)
+    const { signedTx } = currentEthWallet.txDraft
+    sendSignedTransaction({signedTx})
       .then((/*sendTxRespone*/) => {
         sendConfirm()
-        this.props.modalToggle()
+        modalToggle()
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
@@ -94,22 +95,22 @@ class ConfirmSendModalContainer extends React.Component {
     const {
       visible,
       modalToggle,
-      currentBTCWallet,
+      currentEthWallet,
       selectedCurrency,
     } = this.props
 
-    if (!currentBTCWallet || !currentBTCWallet.txDraft) {
+    if (!currentEthWallet || !currentEthWallet.txDraft) {
       return null
     }
-    const { recipient, token } = currentBTCWallet.txDraft
+    const { to } = currentEthWallet.txDraft
 
     return (
       <ConfirmSendModal
         onConfirmSend={this.handleConfirmSendClick}
         visible={visible}
         modalToggle={modalToggle}
-        recipientAddress={recipient}
-        currentToken={token}
+        recipientAddress={to}
+        currentToken='ETH'
         selectedCurrency={selectedCurrency}
         amountToSend={this.state.amountToSend}
         fee={this.state.fee}
@@ -123,7 +124,7 @@ ConfirmSendModalContainer.propTypes = {
   visible: PropTypes.bool,
   modalToggle: PropTypes.func,
   sendConfirm: PropTypes.func,
-  currentBTCWallet: PropTypes.shape({}),
+  currentEthWallet: PropTypes.shape({}),
   requestBitcoinSendRawTransaction: PropTypes.func,
 }
 
