@@ -257,25 +257,6 @@ const ethereumTxUpdateData = (state, { data, masterWalletAddress }) => {
   }
 }
 
-const ethereumTxUpdateUnsignedTx = (state, { unsignedTx, masterWalletAddress }) => {
-  let list = Object.assign({}, state.list)
-  list = {
-    ...list,
-    [masterWalletAddress]: {
-      ...list[masterWalletAddress],
-      txDraft: {
-        ...list[masterWalletAddress].txDraft,
-        unsignedTx,
-      },
-    },
-  }
-
-  return {
-    ...state,
-    list,
-  }
-}
-
 const ethereumTxUpdateSignedTx = (state, { signedTx, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
@@ -300,12 +281,20 @@ const selectEthereumWallet = (state, { address }) => ({
   selected: address,
 })
 
+const dropEthereumSelectedWallet = (state) => {
+  return {
+    ...state,
+    selected: null,
+  }
+}
+
 const mutations = {
 
   [REHYDRATE]: ethereumRehydrate,
   [ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET]: ethereumCreateDerivedWallet,
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
+  [ActionsTypes.ETHEREUM_DROP_SELECTED_WALLET]: dropEthereumSelectedWallet,
   [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
   [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
   [ActionsTypes.ETHEREUM_DELETE_TX_DRAFT]: ethereumDeleteTxDraft,
@@ -316,7 +305,6 @@ const mutations = {
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_TO]: ethereumTxUpdateTo,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_VALUE]: ethereumTxUpdateValue,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_DATA]: ethereumTxUpdateData,
-  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_UNSIGNED_TX]: ethereumTxUpdateUnsignedTx,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX]: ethereumTxUpdateSignedTx,
 }
 

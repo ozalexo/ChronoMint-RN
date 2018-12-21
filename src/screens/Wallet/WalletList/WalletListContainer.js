@@ -12,7 +12,7 @@ import { getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { getSections } from '@chronobank/session/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import { getBalance } from '@chronobank/ethereum/middleware/thunks'
-import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
+import { updateEthereumBalance, dropEthereumSelectedWallet } from '@chronobank/ethereum/redux/thunks'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinBalance, updateBitcoinTxHistory, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
@@ -27,6 +27,7 @@ const ActionCreators = {
   updateBitcoinBalance,
   updateBitcoinTxHistory,
   dropBitcoinSelectedWallet,
+  dropEthereumSelectedWallet,
   getBalance,
   updateEthereumBalance,
 }
@@ -52,6 +53,7 @@ class WalletListContainer extends PureComponent {
       PropTypes.string
     ),
     dropBitcoinSelectedWallet: PropTypes.func,
+    dropEthereumSelectedWallet: PropTypes.func,
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
     updateBitcoinTxHistory: PropTypes.func,
     requestBitcoinBalanceByAddress: PropTypes.func,
@@ -78,6 +80,7 @@ class WalletListContainer extends PureComponent {
 
   handleRemoveSelectedWallet = () => {
     this.props.dropBitcoinSelectedWallet()
+    this.props.dropEthereumSelectedWallet()
   }
 
   componentDidMount () {

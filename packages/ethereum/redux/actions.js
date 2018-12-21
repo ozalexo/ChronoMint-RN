@@ -31,6 +31,10 @@ export const selectEthereumWallet = ({ address }) => ({
   address,
 })
 
+export const dropEthereumSelectedWallet = () => ({
+  type: ActionTypes.ETHEREUM_DROP_SELECTED_WALLET,
+})
+
 export const createEthereumTxDraft = ({ address, masterWalletAddress }) => ({
   type: ActionTypes.ETHEREUM_CREATE_TX_DRAFT,
   address,
@@ -84,14 +88,8 @@ export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => ({
   masterWalletAddress,
 })
 
-export const updateEthereumTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddress }) => ({
-  type: ActionTypes.ETHEREUM_UPDATE_TX_UNSIGNED_TX,
-  unsignedTx,
-  masterWalletAddress,
-})
-
 export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress }) => ({
-  type: ActionTypes.ETHEREUM_UPDATE_TX_SIGNED_TX,
+  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX,
   signedTx,
   masterWalletAddress,
 })

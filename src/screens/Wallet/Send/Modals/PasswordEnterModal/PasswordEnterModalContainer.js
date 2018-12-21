@@ -83,34 +83,20 @@ class PasswordEnterModalContainer extends React.Component {
       .catch(() => { })
   }
 
-  checkPassword = (password) => {
-    const {
-      masterWallet,
-    } = this.props
-    return decryptWallet(masterWallet.encrypted, password)
-      .then(() => {
-        return true
-      })
-      .catch((error) => {
-        this.setState({ error: error.message })
-        return false
-      })
-  }
-
   handleConfirmClick = async ({ password }) => {
     const {
       masterWallet,
     } = this.props
     const pass = password ? password : this.state.password
-    const isPasswordValid = await this.checkPassword(pass)
-    if (isPasswordValid) {
-      decryptWallet(masterWallet.encrypted, pass)
-        .then((results) => {
-          this.handleSign({
-            privateKey: results.privateKey,
-          })
+    decryptWallet(masterWallet.encrypted, pass)
+      .then((results) => {
+        this.handleSign({
+          privateKey: results.privateKey,
         })
-    }
+      })
+      .catch((error) => {
+        this.setState({ error: error.message })
+      })
   }
 
   handleSign = ({ privateKey }) => {
