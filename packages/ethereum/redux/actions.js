@@ -88,12 +88,6 @@ export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => ({
   masterWalletAddress,
 })
 
-export const updateEthereumTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddress }) => ({
-  type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_UNSIGNED_TX,
-  unsignedTx,
-  masterWalletAddress,
-})
-
 export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress }) => ({
   type: ActionTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX,
   signedTx,

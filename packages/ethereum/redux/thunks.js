@@ -178,17 +178,6 @@ export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => (dis
   })
 }
 
-export const updateEthereumTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddress }) => (dispatch) => {
-  return new Promise((resolve, reject) => {
-    try {
-      dispatch(Actions.updateEthereumTxDraftUnsignedTx({ unsignedTx, masterWalletAddress }))
-      return resolve()
-    } catch (e) {
-      return reject(e)
-    }
-  })
-}
-
 export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {

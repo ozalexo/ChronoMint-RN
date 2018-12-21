@@ -257,25 +257,6 @@ const ethereumTxUpdateData = (state, { data, masterWalletAddress }) => {
   }
 }
 
-const ethereumTxUpdateUnsignedTx = (state, { unsignedTx, masterWalletAddress }) => {
-  let list = Object.assign({}, state.list)
-  list = {
-    ...list,
-    [masterWalletAddress]: {
-      ...list[masterWalletAddress],
-      txDraft: {
-        ...list[masterWalletAddress].txDraft,
-        unsignedTx,
-      },
-    },
-  }
-
-  return {
-    ...state,
-    list,
-  }
-}
-
 const ethereumTxUpdateSignedTx = (state, { signedTx, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
@@ -324,7 +305,6 @@ const mutations = {
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_TO]: ethereumTxUpdateTo,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_VALUE]: ethereumTxUpdateValue,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_DATA]: ethereumTxUpdateData,
-  [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_UNSIGNED_TX]: ethereumTxUpdateUnsignedTx,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX]: ethereumTxUpdateSignedTx,
 }
 
