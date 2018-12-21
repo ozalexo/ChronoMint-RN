@@ -13,8 +13,16 @@ const networkSelect = (state, action) => {
   }
 }
 
+const networkDisconnect = (state) => {
+  return {
+    ...state,
+    selected: null,
+  }
+}
+
 const mutations = {
   [ActionTypes.NETWORK_SELECT]: networkSelect,
+  [ActionTypes.NETWORK_DISCONNECT]: networkDisconnect,
 }
 
 export default (state = initialState, { type, ...payload }) => {

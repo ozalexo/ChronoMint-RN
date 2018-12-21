@@ -12,7 +12,7 @@ import { getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { getSections } from '@chronobank/session/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import { getBalance } from '@chronobank/ethereum/middleware/thunks'
-import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
+import { ethereumUpdateBalance } from '@chronobank/ethereum/redux/thunks'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinBalance, updateBitcoinTxHistory, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
@@ -28,7 +28,7 @@ const ActionCreators = {
   updateBitcoinTxHistory,
   dropBitcoinSelectedWallet,
   getBalance,
-  updateEthereumBalance,
+  ethereumUpdateBalance,
 }
 
 const mapDispatchToProps = (dispatch) =>
@@ -58,7 +58,7 @@ class WalletListContainer extends PureComponent {
     rmqSubscribe: PropTypes.func,
     getBalance: PropTypes.func,
     updateBitcoinBalance: PropTypes.func,
-    updateEthereumBalance: PropTypes.func,
+    ethereumUpdateBalance: PropTypes.func,
     masterWalletAddress: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
@@ -90,13 +90,13 @@ class WalletListContainer extends PureComponent {
       masterWalletAddress,
       BTCwalletsList,
       getBalance,
-      updateEthereumBalance,
+      ethereumUpdateBalance,
     } = this.props
 
     getBalance(masterWalletAddress)
       .then((amount) => {
         const balance = EthAmountUtils.amountToBalance(amount)
-        updateEthereumBalance({ tokenSymbol: 'ETH', address: masterWalletAddress, balance, amount })
+        ethereumUpdateBalance({ tokenSymbol: 'ETH', address: masterWalletAddress, balance, amount })
       })
       .catch((error) => {
         // eslint-disable-next-line no-console

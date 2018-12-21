@@ -44,7 +44,7 @@ export const createAccountByPrivateKey = (privateKey, password) => (dispatch) =>
   })
 }
 
-export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount }) => (dispatch) => {
+export const ethereumUpdateBalance = ({ tokenSymbol, address, balance, amount }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
       dispatch(Actions.ethereumUpdateBalance({ tokenSymbol, address, balance, amount }))
@@ -55,10 +55,10 @@ export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount })
   })
 }
 
-export const selectEthereumWallet = ({ address }) => (dispatch) => {
+export const ethereumSelectWallet = ({ address }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.selectEthereumWallet(address))
+      dispatch(Actions.ethereumSelectWallet(address))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -66,10 +66,10 @@ export const selectEthereumWallet = ({ address }) => (dispatch) => {
   })
 }
 
-export const createEthereumTxDraft = ({ address, masterWalletAddress }) => (dispatch) => {
+export const ethereumCreateTxDraft = ({ address, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.createEthereumTxDraft({ address, masterWalletAddress }))
+      dispatch(Actions.ethereumCreateTxDraft({ address, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -77,10 +77,10 @@ export const createEthereumTxDraft = ({ address, masterWalletAddress }) => (disp
   })
 }
 
-export const deleteEthereumTxDraft = ({ masterWalletAddress }) => (dispatch) => {
+export const ethereumDeleteTxDraft = ({ masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.deleteEthereumTxDraft({ masterWalletAddress }))
+      dispatch(Actions.ethereumDeleteTxDraft({ masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -88,10 +88,10 @@ export const deleteEthereumTxDraft = ({ masterWalletAddress }) => (dispatch) => 
   })
 }
 
-export const updateEthereumTxDraftNonce = ({ nonce, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftNonce = ({ nonce, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftNonce({ nonce, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftNonce({ nonce, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -99,10 +99,10 @@ export const updateEthereumTxDraftNonce = ({ nonce, masterWalletAddress }) => (d
   })
 }
 
-export const updateEthereumTxDraftGasLimit = ({ gasLimit, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftGasLimit = ({ gasLimit, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftGasLimit({ gasLimit, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftGasLimit({ gasLimit, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -110,10 +110,10 @@ export const updateEthereumTxDraftGasLimit = ({ gasLimit, masterWalletAddress })
   })
 }
 
-export const updateEthereumTxDraftGasPrice = ({ gasPrice, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftGasPrice = ({ gasPrice, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftGasPrice({ gasPrice, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftGasPrice({ gasPrice, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -121,10 +121,10 @@ export const updateEthereumTxDraftGasPrice = ({ gasPrice, masterWalletAddress })
   })
 }
 
-export const updateEthereumTxDraftChainId = ({ chainId, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftChainId = ({ chainId, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftChainId({ chainId, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftChainId({ chainId, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -132,10 +132,10 @@ export const updateEthereumTxDraftChainId = ({ chainId, masterWalletAddress }) =
   })
 }
 
-export const updateEthereumTxDraftTo = ({ to, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftTo = ({ to, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftTo({ to, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftTo({ to, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -143,10 +143,10 @@ export const updateEthereumTxDraftTo = ({ to, masterWalletAddress }) => (dispatc
   })
 }
 
-export const updateEthereumTxDraftValue = ({ value, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftValue = ({ value, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftValue({ value, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftValue({ value, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -154,10 +154,10 @@ export const updateEthereumTxDraftValue = ({ value, masterWalletAddress }) => (d
   })
 }
 
-export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftData = ({ data, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftData({ data, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftData({ data, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -165,10 +165,10 @@ export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => (dis
   })
 }
 
-export const updateEthereumTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftUnsignedTx({ unsignedTx, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftUnsignedTx({ unsignedTx, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)
@@ -176,10 +176,10 @@ export const updateEthereumTxDraftUnsignedTx = ({ unsignedTx, masterWalletAddres
   })
 }
 
-export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress }) => (dispatch) => {
+export const ethereumUpdateTxDraftSignedTx = ({ signedTx, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.updateEthereumTxDraftSignedTx({ signedTx, masterWalletAddress }))
+      dispatch(Actions.ethereumUpdateTxDraftSignedTx({ signedTx, masterWalletAddress }))
       return resolve()
     } catch (e) {
       return reject(e)

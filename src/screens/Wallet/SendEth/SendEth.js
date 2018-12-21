@@ -7,82 +7,85 @@ import React, { PureComponent } from 'react'
 import {
   ScrollView,
   View,
-  TouchableOpacity,
   Image,
   Text,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { NavigationEvents } from 'react-navigation'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
-// import i18n from '../../../locales/translation'
-import FeeSlider from '../../../components/FeeSlider'
+import FeeSliderFormik from '../../../components/FeeSliderFormik'
 import Input from '../../../components/Input'
 import Separator from '../../../components/Separator'
-import { NavigationEvents } from 'react-navigation'
+import TokenSelector from '../../../components/TokenSelector'
 import {
-  chevron_right,
   coin_bitcoin,
   coin_ethereum,
   coin_time_small,
 } from '../../../images'
+import ConfirmSendModal from './Modals/ConfirmSendModal'
+import PasswordEnterModal from './Modals/PasswordEnterModal'
 import styles from './SendEthStyles'
 
-
-const TokenSelector = ({ onPress = () => { }, selectedToken }) => (
-  <TouchableOpacity style={styles.container} onPress={onPress}>
-    <View style={styles.tokenSelector}>
-      {
-        selectedToken && selectedToken.symbol &&
-        <Text style={styles.tokenSelectorLabel}>
-          {
-            selectedToken.symbol
-          }
-        </Text>
-      }
-      <Image source={chevron_right} />
-    </View>
-  </TouchableOpacity>
-)
-
-TokenSelector.propTypes = {
-  onPress: PropTypes.func,
-  selectedToken: PropTypes.shape({}),
-}
-
 export default class SendEth extends PureComponent {
+  static propTypes = {
+    /* Parameters */
+    error: PropTypes.string,
+    fee: PropTypes.number,
+    feeInCurrency: PropTypes.number,
+    showConfirmModal: PropTypes.bool,
+    showPasswordModal: PropTypes.bool,
+    /* Methods */
+    handleChange: PropTypes.func,
+    onChangeAmount: PropTypes.func,
+    onChangeRecipient: PropTypes.func,
+    onCloseConfirmModal: PropTypes.func,
+    onFeeSliderChange: PropTypes.func,
+    onPasswordConfirm: PropTypes.func,
+    onSendConfirm: PropTypes.func,
+    onTogglePasswordModal: PropTypes.func,
+    setFieldValue: PropTypes.func,
+  }
 
   render () {
     const {
-      onTogglePasswordModal,
-      onCloseConfirmModal,
-      onPasswordConfirm,
-      onSendConfirm,
-      PasswordEnterModal,
-      ConfirmSendModal,
-      showPasswordModal,
-      showConfirmModal,
-      error,
-      //
+      /* Formik's props */
+      // dirty,
+      // errors,
+      // handleBlur,
+      // handleChange,
+      // handleReset,
+      // handleSubmit,
+      // isSubmitting,
+      // setFieldTouched,
+      // setFieldValue,
+      // touched,
+      // values,
+
+      /* SendEth props */
       amountInCurrency,
       blockchain,
-      price,
-      // currentTokenBalance,
+      error,
+      // fee,
+      // feeInCurrency,
       feeMultiplier,
-      // gasFeeAmount,
-      // gasFeeAmountInCurrency,
-      fee,
-      feeInCurrency,
-      onChangeAmount = () => { },
-      onChangeRecipient = () => { },
-      onFeeSliderChange = () => { },
+      onCloseConfirmModal,
+      onPasswordConfirm,
       onSelectToken,
+      onSendConfirm,
+      onTogglePasswordModal,
+      onTxDraftCreate,
+      onTxDraftRemove,
+      passProps,
+      price,
       selectedCurrency,
       selectedToken,
       selectedWallet,
-      passProps,
-      //txDraft
-      onTxDraftCreate,
-      onTxDraftRemove,
+      showConfirmModal,
+      showPasswordModal,
+      onChangeAmount = () => { },
+      onChangeRecipient = () => { },
+      onFeeSliderChange = () => { },
     } = this.props
 
     const currentTokenBalance = selectedWallet.tokens ?
@@ -139,18 +142,13 @@ export default class SendEth extends PureComponent {
               selectedWallet.address
             }
           </Text>
-          {
-            (blockchain === BLOCKCHAIN_ETHEREUM)
-              ? (
-                <View>
-                  <Separator style={styles.separatorDark} />
-                  <TokenSelector
-                    selectedToken={selectedToken}
-                    onPress={onSelectToken}
-                  />
-                </View>
-              ) : null
-          }
+          <View>
+            <Separator style={styles.separatorDark} />
+            <TokenSelector
+              selectedToken={selectedToken}
+              onPress={onSelectToken}
+            />
+          </View>
           <Separator style={styles.separatorDark} />
           <Text style={styles.walletValue}>
             {
@@ -171,46 +169,26 @@ export default class SendEth extends PureComponent {
           <Input
             placeholder='Recipient Address'
             onChange={onChangeRecipient}
-            name='recipient'
           />
           <Input
             placeholder={strings.amountInput}
             keyboardType='numeric'
             onChange={onChangeAmount}
-            name='amount'
           />
           <Text style={styles.sendBalance}>
             {
               strings.sendBalance
             }
           </Text>
-          <FeeSlider
-            tokenSymbol={selectedToken.symbol}
-            selectedCurrency={selectedCurrency}
-            calculatedFeeValue={fee}
-            calculatedFeeValueInSelectedCurrency={feeInCurrency}
+          <FeeSliderFormik
             maximumValue={1.9}
             minimumValue={0.1}
             value={feeMultiplier}
             step={0.1}
-            handleValueChange={onFeeSliderChange}
+            handleFeeMultiplierChange={onFeeSliderChange}
           />
         </View>
       </ScrollView>
     )
   }
-}
-
-SendEth.propTypes = {
-  fee: PropTypes.number,
-  feeInCurrency: PropTypes.number,
-  onTogglePasswordModal: PropTypes.func,
-  onCloseConfirmModal: PropTypes.func,
-  onPasswordConfirm: PropTypes.func,
-  onSendConfirm: PropTypes.func,
-  PasswordEnterModal: PropTypes.func,
-  ConfirmSendModal: PropTypes.func,
-  showPasswordModal: PropTypes.bool,
-  showConfirmModal: PropTypes.bool,
-  error: PropTypes.string,
 }

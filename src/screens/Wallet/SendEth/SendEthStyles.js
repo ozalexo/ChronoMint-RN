@@ -9,7 +9,7 @@ import colors from '../../../common/colors'
 
 export default StyleSheet.create({
   scrollView: {
-    marginTop: headerHeight + 20,
+    marginTop: headerHeight, // + 20,
     flexGrow: 1,
     marginBottom: 20,
   },
@@ -21,7 +21,6 @@ export default StyleSheet.create({
   openModalButton: {
     marginVertical: 15,
   },
-  //styles from develop
   advancedFee: {
     color: '#786AB7',
     fontSize: 16,
@@ -32,11 +31,11 @@ export default StyleSheet.create({
   formBody: {
     backgroundColor: colors.background,
     flexGrow: 1,
-    paddingTop: 30,
+    paddingTop: 20,
+    paddingHorizontal: 20,
   },
   formHeader: {
     flexGrow: 1,
-    paddingHorizontal: 20,
     paddingBottom: 30,
   },
   scanQR: {
@@ -75,16 +74,6 @@ export default StyleSheet.create({
     right: 20,
     top: -32,
     width: 64,
-  },
-  tokenSelector: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  tokenSelectorLabel: {
-    color: colors.background,
-    fontSize: 17,
-    fontWeight: '700',
   },
   walletAddress: {
     color: '#A3A3CC',

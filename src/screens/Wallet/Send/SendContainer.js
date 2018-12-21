@@ -93,15 +93,18 @@ class SendContainer extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
 
+    /* eslint-disable react/jsx-no-bind */
     return {
       ...params,
       headerRight: (
         <Button
           onPress={() => params.handleGoToPasswordModal()}
           title='Done'
+          color='#fff'
         />
       ),
     }
+    /* eslint-enable react/jsx-no-bind */
   }
 
   static propTypes = {
@@ -211,7 +214,7 @@ class SendContainer extends React.Component {
       const { address, masterWalletAddress } = this.props.navigation.state.params
       const { updateBitcoinTxDraftRecipient } = this.props
       // Check for Ethereum
-      let dummyValidationOfRecipientInput = value && value.length === 34
+      const dummyValidationOfRecipientInput = value && value.length === 34
 
       this.setState(
         {

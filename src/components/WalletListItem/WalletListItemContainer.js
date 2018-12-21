@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { selectBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
-import { selectEthereumWallet } from '@chronobank/ethereum/redux/thunks'
+import { ethereumSelectWallet } from '@chronobank/ethereum/redux/thunks'
 import { getCurrentWallet, getWalletByBlockchainAndAddress } from '@chronobank/session/redux/selectors'
 import WalletListItem from './WalletListItem'
 
@@ -25,7 +25,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   selectBitcoinWallet,
-  selectEthereumWallet,
+  ethereumSelectWallet,
 }, dispatch)
 
 class WalletListItemContainer extends PureComponent {
@@ -37,7 +37,7 @@ class WalletListItemContainer extends PureComponent {
       navigation,
       selectedCurrency,
       selectBitcoinWallet,
-      selectEthereumWallet,
+      ethereumSelectWallet,
       masterWalletAddress,
     } = this.props
 
@@ -49,7 +49,7 @@ class WalletListItemContainer extends PureComponent {
     }
 
     blockchain === BLOCKCHAIN_ETHEREUM
-      ? selectEthereumWallet({ address })
+      ? ethereumSelectWallet({ address })
       : selectBitcoinWallet({ address })
     navigation.navigate('Wallet', params)
   }
@@ -84,7 +84,7 @@ WalletListItemContainer.propTypes = {
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
   selectBitcoinWallet: PropTypes.func,
-  selectEthereumWallet: PropTypes.func,
+  ethereumSelectWallet: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletListItemContainer)

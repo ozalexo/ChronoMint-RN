@@ -25,7 +25,9 @@ export default class Input extends Component {
       onChange,
       name,
     } = this.props
-    onChange(name, value)
+    name
+      ? onChange(name, value)
+      : onChange(value)
   }
 
   handleTouch = () => {
@@ -33,7 +35,7 @@ export default class Input extends Component {
       onTouch = () => { },
       name,
     } = this.props
-    onTouch(name)
+    name && onTouch(name)
   }
 
   render () {

@@ -5,21 +5,16 @@
 
 import React, { PureComponent } from 'react'
 import {
-  ActivityIndicator,
   FlatList,
   Text,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import BigNumber from 'bignumber.js'
 import { BLOCKCHAIN_ETHEREUM, ETHEREUM_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN, BTC_PRIMARY_TOKEN } from '@chronobank/bitcoin/constants'
 import moment from 'moment'
-import isNumber from '../../common/utils/numeric'
 import PropTypes from 'prop-types'
-import i18n from '../../locales/translation'
 import Separator from '../Separator'
-import TransactionIcon from '../TransactionIcon'
+import TransactionItem from '../TransactionItem'
 import styles from './TransactionsListStyles'
 
 const tokenSymbols = {
@@ -28,15 +23,6 @@ const tokenSymbols = {
 }
 
 export default class TransactionsList extends PureComponent {
-
-  componentDidMount () {
-    const trLoadingStatus = this.props.mainWalletTransactionLoadingStatus
-    if (!trLoadingStatus.isFetching &&
-      !trLoadingStatus.isInited
-    ) {
-      this.props.refreshTransactionsList()
-    }
-  }
 
   keyExtractor = (item, index) =>
     '' + item.address + '_' + item.blockNumber + '_' + index
@@ -60,23 +46,12 @@ export default class TransactionsList extends PureComponent {
   render () {
     const {
       transactions,
-      mainWalletTransactionLoadingStatus,
       latestTransactionDate,
     } = this.props
     
     const lastTransactionDate = latestTransactionDate
       && moment.unix(latestTransactionDate).format('DD MMMM YYYY')
       || 'No date info available'
-
-    const TransactionsLoading = () => (
-      <View style={styles.transactionsListContainer}>
-        <Text style={styles.transactionsListTitle}>
-          Loading Transactions ...
-        </Text>
-        <Separator />
-        <ActivityIndicator />
-      </View>
-    )
 
     const NoTransactionsExists = () => (
       <View style={styles.transactionsListContainer}>
@@ -85,25 +60,6 @@ export default class TransactionsList extends PureComponent {
         </Text>
       </View>
     )
-
-    /** This code block temporary disabled */
-    // const RefreshTransactions = () => (
-    //   <View style={styles.transactionsListContainer}>
-    //     <TouchableOpacity
-    //       onPress={refreshTransactionsList}
-    //       style={styles.refreshTouch}
-    //     >
-    //       <Text style={styles.refreshText}>
-    //         No transactions available. Tap to refresh.
-    //       </Text>
-    //       <View style={styles.refreshImage}>
-    //         <Image
-    //           source={require('../images/temporary-reload-icon.png')}
-    //         />
-    //       </View>
-    //     </TouchableOpacity>
-    //   </View>
-    // )
 
     const LoadedTransactions = () => {
       return (
@@ -123,24 +79,21 @@ export default class TransactionsList extends PureComponent {
       )
     }
 
-    // FIXME: [AO] in some conditions it can return null
-    if (mainWalletTransactionLoadingStatus.isFetching) {
-      return (<TransactionsLoading />)
+    if (transactions && transactions.length) {
+      return (<LoadedTransactions />)
     } else {
-      if (mainWalletTransactionLoadingStatus.isInited) {
-        if (transactions && transactions.length) {
-          return (<LoadedTransactions />)
-        } else {
-          return (<NoTransactionsExists />)
-        }
-      } else {
-        return (<TransactionsLoading />)
-      }
+      return (<NoTransactionsExists />)
     }
   }
 }
 
 TransactionsList.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+  latestTransactionDate: PropTypes.number,
+  blockchain: PropTypes.string,
+  address: PropTypes.string,
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       address: PropTypes.string,
@@ -148,117 +101,4 @@ TransactionsList.propTypes = {
       confirmations: PropTypes.number,
     })
   ),
-  refreshTransactionsList: PropTypes.func,
-}
-
-class TransactionItem extends PureComponent {
-
-  static getFormattedBalance = (balance, symbol, type) => {
-    if (!balance) {
-      return '-.--'
-    }
-    let numBalance
-    if (isNumber(balance)) {
-      numBalance = balance
-    } else {
-      if (balance instanceof BigNumber) {
-        numBalance = balance.toNumber()
-      } else {
-        numBalance = parseInt(balance)
-      }
-    }
-    console.log('&&&&', balance, numBalance)
-    const isbalanceTooSmall = numBalance > 0 && numBalance < 0.01
-    let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
-    format = [
-      (type === 'sending' ? '-' : '+'),
-      format,
-    ].join(' ')
-
-    return i18n.toCurrency(numBalance, { precision: 2, unit: ` ${symbol} `, format })
-
-  }
-
-  handleTransactionClick = () => {
-    // const {
-    //   address,
-    //   balance,
-    //   blockNumber,
-    //   confirmations,
-    //   fee,
-    //   blockchain,
-    //   txDate,
-    //   type,
-    // } = props.item
-  }
-
-  render () {
-    const { type, symbol, item/*, navigation*/ } = this.props
-    const {
-      from,
-      to,
-      confirmations,
-      balance,
-    } = item
-
-    const address = type === 'sending' ? to : from
-
-
-    const transactionStyle = type === 'sending'
-      ? styles.sending
-      : styles.receiving
-
-    const tType = i18n.t(['TransactionsList', type])
-
-    return (
-      <TouchableWithoutFeedback
-        onPress={this.handleTransactionClick}
-      >
-        <View style={styles.item}>
-          <Separator />
-          <View style={styles.leftPart}>
-            <TransactionIcon
-              type={type}
-              confirmations={confirmations}
-            />
-            <Text
-              style={styles.itemText}
-              ellipsizeMode='middle'
-              numberOfLines={2}
-            >
-              {
-                tType
-              }
-              {'\n'}
-              {
-                address
-              }
-            </Text>
-          </View>
-          <Text style={transactionStyle}>
-            {
-              TransactionItem.getFormattedBalance(balance, symbol, type)
-            }
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
-    )
-  }
-}
-
-TransactionItem.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }),
-  latestTransactionDate: PropTypes.number,
-  blockchain: PropTypes.string,
-  address: PropTypes.string,
-  item: PropTypes.shape({
-    from: PropTypes.string,
-    to: PropTypes.string,
-    balance: PropTypes.string,
-    confirmations: PropTypes.number,
-  }),
-  symbol: PropTypes.string,
-  type: PropTypes.oneOf(['receiving', 'sending']),
 }

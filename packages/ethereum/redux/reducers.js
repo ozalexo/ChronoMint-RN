@@ -62,7 +62,7 @@ const ethereumCreateDerivedWallet = (state, { masterWalletAddress, address }) =>
   }
 }
 
-const updateEthereumBalance = (state, { tokenSymbol, address, balance, amount }) => {
+const ethereumUpdateBalance = (state, { tokenSymbol, address, balance, amount }) => {
   return {
     ...state,
     list: {
@@ -295,7 +295,7 @@ const ethereumTxUpdateSignedTx = (state, { signedTx, masterWalletAddress }) => {
   }
 }
 
-const selectEthereumWallet = (state, { address }) => ({
+const ethereumSelectWallet = (state, { address }) => ({
   ...state,
   selected: address,
 })
@@ -305,8 +305,8 @@ const mutations = {
   [REHYDRATE]: ethereumRehydrate,
   [ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET]: ethereumCreateDerivedWallet,
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
-  [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
-  [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
+  [ActionsTypes.ETHEREUM_SELECT_WALLET]: ethereumSelectWallet,
+  [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: ethereumUpdateBalance,
   [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
   [ActionsTypes.ETHEREUM_DELETE_TX_DRAFT]: ethereumDeleteTxDraft,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_NONCE]: ethereumTxUpdateNonce,

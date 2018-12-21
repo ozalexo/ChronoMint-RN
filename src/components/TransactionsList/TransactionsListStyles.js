@@ -9,29 +9,6 @@ import {
 import colors from '../../common/colors'
 
 export default StyleSheet.create({
-  item: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  leftPart: {
-    flexShrink: 1,
-    flexDirection: 'row',
-  },
-  itemText: {
-    flexShrink: 1,
-    marginHorizontal: 8,
-    fontSize: 13,
-  },
-  receiving: {
-    color: colors.green,
-  },
-  sending: {
-    color: colors.foreground,
-  },
   transactionsListContainer: {
     backgroundColor: colors.background,
     borderRadius: 3,

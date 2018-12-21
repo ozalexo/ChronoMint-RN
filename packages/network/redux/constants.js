@@ -6,3 +6,4 @@
 export const DUCK_NETWORK = 'network'
 
 export const NETWORK_SELECT = 'NETWORK/SELECT'
+export const NETWORK_DISCONNECT = 'NETWORK/DISCONNECT'

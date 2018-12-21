@@ -54,13 +54,31 @@ export default class Web3Controller {
     return this.initController()
   }
 
+  disconnect () {
+    return new Promise( async (resolve) => {
+      if (this.provider) {
+        await this.provider.disconnect()
+      }
+      this.web3 = null
+      this.syncing = null
+      this.requiredTokens = []
+      this.contracts = new Map()
+      this.tokens = new Map()
+      this.isReconnectRequired = true
+      this.tokenSubscriptions = []
+      this.contractSubscriptions = []
+      this.syncStatusSubscription = null
+      return resolve()
+    })
+  }
+
   onErrorHandler = (/*error*/) => {
     // console.log('onErrorHandler error', error)
     // this.dispatch(NodesActions.primaryNodeError(this.host, error))
   }
 
   onEndHandler = (error) => {
-    console.log('onEndHandler error', error)
+    // console.log('onEndHandler error', error)
     this.dispatch(Web3Actions.connectFailure(this.networkIndex, this.networkIndex, error))
     this.provider && this.provider.disconnect()
 
