@@ -339,11 +339,19 @@ export default class Web3Controller {
   sendSignedTransaction ({ signedTx }) {
     return new Promise((resolve, reject) => {
       this.web3.eth.sendSignedTransaction(signedTx)
-        .then((result) => {
-          return resolve(result)
+        .on('transactionHash', (hash) => {
+          // eslint-disable-next-line no-console
+          console.log('ETH transaction send success. TX hash:', hash)
+          return resolve(hash)
         })
-        .catch((error) => {
-          return reject(error)
+        .on('receipt', (receipt) => {
+          // eslint-disable-next-line no-console
+          console.log('ETH transaction mained success. TX receipt:', receipt)
+        })
+        .on('error', (error) => {
+          // eslint-disable-next-line no-console
+          console.log('ETH transaction send failure:', error)
+          reject(error)
         })
     })
   }
