@@ -36,6 +36,10 @@ const ethereumCreateWallet = (state, { address, encrypted, path }) => {
         },
       },
       encrypted,
+      transactions: {
+        latestTxDate: null,
+        txList: [],
+      },
     },
   }
   return {
@@ -281,6 +285,29 @@ const selectEthereumWallet = (state, { address }) => ({
   selected: address,
 })
 
+const ethereumTxUpdateHistory = (state, { latestTxDate, txList, address, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      transactions: {
+        ...list[masterWalletAddress].transactions,
+        latestTxDate,
+        txList: [
+          ...list[masterWalletAddress].transactions.txList,
+          ...txList,
+        ],
+      },
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
 const dropEthereumSelectedWallet = (state) => {
   return {
     ...state,
@@ -306,6 +333,7 @@ const mutations = {
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_VALUE]: ethereumTxUpdateValue,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_DATA]: ethereumTxUpdateData,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX]: ethereumTxUpdateSignedTx,
+  [ActionsTypes.ETHEREUM_TX_UPDATE_HISTORY]: ethereumTxUpdateHistory,
 }
 
 export default (state = initialState, { type, ...other }) => {

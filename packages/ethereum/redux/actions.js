@@ -93,3 +93,11 @@ export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress })
   signedTx,
   masterWalletAddress,
 })
+
+export const ethereumTxUpdateHistory = ({ address, masterWalletAddress, latestTxDate, txList }) => ({
+  type: ActionTypes.ETHEREUM_TX_UPDATE_HISTORY,
+  latestTxDate,
+  txList,
+  address,
+  masterWalletAddress,
+})

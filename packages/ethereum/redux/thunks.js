@@ -188,3 +188,14 @@ export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress })
     }
   })
 }
+
+export const updateEthereumTxHistory = ({ latestTxDate, txList, masterWalletAddress, address }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.ethereumTxUpdateHistory({ latestTxDate, txList, masterWalletAddress, address }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}

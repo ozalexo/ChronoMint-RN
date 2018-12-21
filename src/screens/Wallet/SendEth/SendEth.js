@@ -6,7 +6,9 @@
 import React, { PureComponent } from 'react'
 import {
   Image,
+  Keyboard,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -51,6 +53,32 @@ TokenSelector.propTypes = {
 }
 
 export default class SendEth extends PureComponent {
+  constructor (props) {
+    super(props)
+    this.state = {
+      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey',
+    }
+  }
+
+  componentDidMount () {
+    // using keyboardWillHide is better but it does not work for android
+    this.keyboardHideListener = Keyboard.addListener(
+      Platform.OS === 'android'
+        ? 'keyboardDidHide'
+        : 'keyboardWillHide',
+      this.keyboardHideListener.bind(this)
+    )
+  }
+
+  componentWillUnmount () {
+    this.keyboardHideListener.remove()
+  }
+
+  keyboardHideListener () {
+    this.setState({
+      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey' + new Date().getTime()
+    })
+  }
 
   render () {
     const {
@@ -104,8 +132,11 @@ export default class SendEth extends PureComponent {
       [BLOCKCHAIN_BITCOIN]: coin_bitcoin,
     }
 
+    let { keyboardAvoidingViewKey } = this.state
+
     return (
       <KeyboardAvoidingView
+        key={keyboardAvoidingViewKey}
         behavior='height'
       >
         <ScrollView style={styles.scrollView}>
