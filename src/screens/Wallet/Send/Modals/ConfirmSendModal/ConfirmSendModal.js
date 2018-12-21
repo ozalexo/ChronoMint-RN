@@ -28,7 +28,7 @@ const ConfirmSendModal = ({
 }) =>
   (
     <Modal
-      animationType="slide"
+      animationType='slide'
       visible={visible}
       onRequestClose={modalToggle}
     >

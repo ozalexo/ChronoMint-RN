@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native'
 import BigNumber from 'bignumber.js'
-import { BLOCKCHAIN_ETHEREUM, ETHEREUM_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
+import { BLOCKCHAIN_ETHEREUM, ETH_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN, BTC_PRIMARY_TOKEN } from '@chronobank/bitcoin/constants'
 import moment from 'moment'
 import isNumber from '../../common/utils/numeric'
@@ -24,7 +24,7 @@ import styles from './TransactionsListStyles'
 
 const tokenSymbols = {
   [BLOCKCHAIN_BITCOIN]: BTC_PRIMARY_TOKEN,
-  [BLOCKCHAIN_ETHEREUM]: ETHEREUM_PRIMARY_TOKEN,
+  [BLOCKCHAIN_ETHEREUM]: ETH_PRIMARY_TOKEN,
 }
 
 export default class TransactionsList extends PureComponent {
@@ -43,7 +43,9 @@ export default class TransactionsList extends PureComponent {
 
   renderItem = ({item}) => {
     const { address, blockchain, navigation } = this.props
-    const type = address === item.from ? 'sending' : 'receiving'
+    const type = address.toLowerCase() === item.from.toLowerCase()
+      ? 'sending'
+      : 'receiving'
     const symbol = tokenSymbols[blockchain]
 
     return (
@@ -64,9 +66,20 @@ export default class TransactionsList extends PureComponent {
       latestTransactionDate,
     } = this.props
     
-    const lastTransactionDate = latestTransactionDate
-      && moment.unix(latestTransactionDate).format('DD MMMM YYYY')
-      || 'No date info available'
+    let lastTransactionDate
+    if (!latestTransactionDate) {
+      lastTransactionDate = 'No date info available'
+    } else {
+      if (latestTransactionDate.toString().length > 10) {
+        lastTransactionDate = latestTransactionDate
+          && moment(latestTransactionDate).format('DD MMMM YYYY')
+          || 'No date info available'
+      } else {
+        lastTransactionDate = latestTransactionDate
+          && moment.unix(latestTransactionDate).format('DD MMMM YYYY')
+          || 'No date info available'
+      }
+    }
 
     const TransactionsLoading = () => (
       <View style={styles.transactionsListContainer}>

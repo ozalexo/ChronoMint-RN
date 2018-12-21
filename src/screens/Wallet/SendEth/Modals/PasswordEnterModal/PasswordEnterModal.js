@@ -27,7 +27,7 @@ const PasswordEnterModal = ({
   onScan,
 }) => (
   <Modal
-    animationType="slide"
+    animationType='slide'
     visible={visible}
     onRequestClose={modalToggle}
   >

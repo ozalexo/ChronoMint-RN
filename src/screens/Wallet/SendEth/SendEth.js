@@ -85,7 +85,7 @@ export default class SendEth extends PureComponent {
     } = this.props
 
     const currentTokenBalance = selectedWallet.tokens ?
-      selectedWallet.tokens[Object.keys(selectedWallet.tokens)[0]].amount :
+      selectedWallet.tokens['ETH'].balance :
       null
 
 
@@ -141,18 +141,13 @@ export default class SendEth extends PureComponent {
                 selectedWallet.address
               }
             </Text>
-            {
-              (blockchain === BLOCKCHAIN_ETHEREUM)
-                ? (
-                  <View>
-                    <Separator style={styles.separatorDark} />
-                    <TokenSelector
-                      selectedToken={selectedToken}
-                      onPress={onSelectToken}
-                    />
-                  </View>
-                ) : null
-            }
+            <View>
+              <Separator style={styles.separatorDark} />
+              <TokenSelector
+                selectedToken={selectedToken}
+                onPress={onSelectToken}
+              />
+            </View>
             <Separator style={styles.separatorDark} />
             <Text style={styles.walletValue}>
               {
@@ -187,7 +182,7 @@ export default class SendEth extends PureComponent {
               }
             </Text>
             <FeeSlider
-              tokenSymbol={selectedToken.symbol}
+              tokenSymbol={selectedToken && selectedToken.symbol}
               selectedCurrency={selectedCurrency}
               calculatedFeeValue={gasLimit}
               calculatedFeeValueInSelectedCurrency={gasLimitInCurrency}

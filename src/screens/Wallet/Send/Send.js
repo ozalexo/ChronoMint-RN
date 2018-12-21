@@ -15,7 +15,6 @@ import {
 import PropTypes from 'prop-types'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
-// import i18n from '../../../locales/translation'
 import FeeSlider from '../../../components/FeeSlider'
 import Input from '../../../components/Input'
 import Separator from '../../../components/Separator'
@@ -63,25 +62,19 @@ export default class Send extends PureComponent {
       showPasswordModal,
       showConfirmModal,
       error,
-      //
       amountInCurrency,
       blockchain,
       price,
-      // currentTokenBalance,
       feeMultiplier,
-      // gasFeeAmount,
-      // gasFeeAmountInCurrency,
       fee,
       feeInCurrency,
       onChangeAmount = () => { },
       onChangeRecipient = () => { },
       onFeeSliderChange = () => { },
-      onSelectToken,
       selectedCurrency,
       selectedToken,
       selectedWallet,
       passProps,
-      //txDraft
       onTxDraftCreate,
       onTxDraftRemove,
     } = this.props
@@ -143,18 +136,6 @@ export default class Send extends PureComponent {
                 selectedWallet.address
               }
             </Text>
-            {
-              (blockchain === BLOCKCHAIN_ETHEREUM)
-                ? (
-                  <View>
-                    <Separator style={styles.separatorDark} />
-                    <TokenSelector
-                      selectedToken={selectedToken}
-                      onPress={onSelectToken}
-                    />
-                  </View>
-                ) : null
-            }
             <Separator style={styles.separatorDark} />
             <Text style={styles.walletValue}>
               {
@@ -189,7 +170,7 @@ export default class Send extends PureComponent {
               }
             </Text>
             <FeeSlider
-              tokenSymbol={selectedToken.symbol}
+              tokenSymbol={selectedToken && selectedToken.symbol}
               selectedCurrency={selectedCurrency}
               calculatedFeeValue={fee}
               calculatedFeeValueInSelectedCurrency={feeInCurrency}

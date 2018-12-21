@@ -33,10 +33,10 @@ export default StyleSheet.create({
     backgroundColor: colors.background,
     flexGrow: 1,
     paddingTop: 30,
+    paddingHorizontal: 20,
   },
   formHeader: {
     flexGrow: 1,
-    paddingHorizontal: 20,
     paddingBottom: 30,
   },
   scanQR: {

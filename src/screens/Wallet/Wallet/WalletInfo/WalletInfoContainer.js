@@ -7,7 +7,9 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { getBitcoinWallets } from '@chronobank/bitcoin/redux/selectors'
+import { getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import WalletInfo from './WalletInfo'
 
 const mapStateToProps = (state) => {
@@ -15,6 +17,7 @@ const mapStateToProps = (state) => {
 
   return {
     bitcoinWallets: getBitcoinWallets(masterWalletAddress)(state),
+    ethereumWallets: getEthereumWalletList(state),
   }
 }
 
@@ -26,29 +29,30 @@ class WalletInfoContainer extends PureComponent {
       blockchain,
       selectedCurrency,
       bitcoinWallets,
+      ethereumWallets,
     } = this.props
+
+    const wallet = blockchain === BLOCKCHAIN_ETHEREUM
+      ? ethereumWallets[address]
+      : bitcoinWallets[address]
 
     return (
       <WalletInfo
         address={address}
         blockchain={blockchain}
         selectedCurrency={selectedCurrency}
-        bitcoinWallet={bitcoinWallets[address]}
+        wallet={wallet}
       />
     )
   }
 }
 
 WalletInfoContainer.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }),
   bitcoinWallets: PropTypes.shape({}),
-  masterWalletAddress: PropTypes.string,
+  ethereumWallets: PropTypes.shape({}),
   address: PropTypes.string,
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
-  selectBitcoinWallet: PropTypes.func,
 }
 
 export default connect(mapStateToProps, null)(WalletInfoContainer)
