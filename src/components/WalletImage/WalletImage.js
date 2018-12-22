@@ -9,65 +9,51 @@ import {
   Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
-// import { BLOCKCHAIN_ETHEREUM } from '@chronobank/core/dao/EthereumDAO'
-// import {
-//   BLOCKCHAIN_BITCOIN_CASH,
-//   BLOCKCHAIN_BITCOIN_GOLD,
-//   BLOCKCHAIN_BITCOIN,
-//   BLOCKCHAIN_LITECOIN
-// } from '@chronobank/login/network/BitcoinProvider'
-// import { BLOCKCHAIN_NEM } from '@chronobank/core/dao/NemDAO'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
+import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
 import { indicators } from '../../common/constants/transactions'
 import {
   coin_ethereum_small,
-  coin_bitcoin_cash_small,
+  // coin_bitcoin_cash_small,
   wallet_circle_small,
   coin_bitcoin_small,
-  coin_litecoin_small,
-  coin_nem_small,
+  // coin_litecoin_small,
+  // coin_nem_small,
   coin_ethereum_big,
-  coin_bitcoin_cash_big,
+  // coin_bitcoin_cash_big,
   wallet_circle_big,
   coin_bitcoin_big,
-  coin_litecoin_big,
-  coin_nem_big,
+  // coin_litecoin_big,
+  // coin_nem_big,
 } from '../../images'
 import styles from './WalletImageStyles'
 
-
-const BLOCKCHAIN_BITCOIN_CASH = 'BLOCKCHAIN_BITCOIN_CASH'
-const BLOCKCHAIN_BITCOIN_GOLD = 'BLOCKCHAIN_BITCOIN_GOLD'
-const BLOCKCHAIN_BITCOIN = 'BLOCKCHAIN_BITCOIN'
-const BLOCKCHAIN_ETHEREUM = 'BLOCKCHAIN_ETHEREUM'
-const BLOCKCHAIN_LITECOIN = 'BLOCKCHAIN_LITECOIN'
-const BLOCKCHAIN_NEM = 'BLOCKCHAIN_NEM'
-
 const walletImages = {
   [BLOCKCHAIN_ETHEREUM]: coin_ethereum_small,
-  [BLOCKCHAIN_BITCOIN_CASH]: coin_bitcoin_cash_small,
-  [BLOCKCHAIN_BITCOIN_GOLD]: wallet_circle_small,
+  // [BLOCKCHAIN_BITCOIN_CASH]: coin_bitcoin_cash_small,
+  // [BLOCKCHAIN_BITCOIN_GOLD]: wallet_circle_small,
   [BLOCKCHAIN_BITCOIN]: coin_bitcoin_small,
-  [BLOCKCHAIN_LITECOIN]: coin_litecoin_small,
-  [BLOCKCHAIN_NEM]: coin_nem_small,
+  // [BLOCKCHAIN_LITECOIN]: coin_litecoin_small,
+  // [BLOCKCHAIN_NEM]: coin_nem_small,
 }
 
 const walletBigImages = {
   [BLOCKCHAIN_ETHEREUM]: coin_ethereum_big,
-  [BLOCKCHAIN_BITCOIN_CASH]: coin_bitcoin_cash_big,
-  [BLOCKCHAIN_BITCOIN_GOLD]: wallet_circle_big,
+  // [BLOCKCHAIN_BITCOIN_CASH]: coin_bitcoin_cash_big,
+  // [BLOCKCHAIN_BITCOIN_GOLD]: wallet_circle_big,
   [BLOCKCHAIN_BITCOIN]: coin_bitcoin_big,
-  [BLOCKCHAIN_LITECOIN]: coin_litecoin_big,
-  [BLOCKCHAIN_NEM]: coin_nem_big,
+  // [BLOCKCHAIN_LITECOIN]: coin_litecoin_big,
+  // [BLOCKCHAIN_NEM]: coin_nem_big,
 }
 
 const getFallbackWalletImage = (blockchain, size = 'small') => {
   const bcsList = [
-    BLOCKCHAIN_BITCOIN_CASH,
-    BLOCKCHAIN_BITCOIN_GOLD,
+    // BLOCKCHAIN_BITCOIN_CASH,
+    // BLOCKCHAIN_BITCOIN_GOLD,
     BLOCKCHAIN_BITCOIN,
     BLOCKCHAIN_ETHEREUM,
-    BLOCKCHAIN_LITECOIN,
-    BLOCKCHAIN_NEM,
+    // BLOCKCHAIN_LITECOIN,
+    // BLOCKCHAIN_NEM,
   ]
 
   if (blockchain && bcsList.includes(blockchain)) {
@@ -86,7 +72,7 @@ const WalletImage = ({
   size,
 }) => {
   // Size guard. Default is small wallet icon
-  let imageSize = size ? size : 'small'
+  const imageSize = size ? size : 'small'
   const wImage = getFallbackWalletImage(blockchain, imageSize)
 
   return (

@@ -5,10 +5,10 @@
 
 import * as ActionTypes from './constants'
 
-export const login = (currentWallet) => {
+export const login = (masterWalletAddress) => {
   return {
     type: ActionTypes.SESSION_LOGIN,
-    currentWallet,
+    masterWalletAddress,
   }
 }
 

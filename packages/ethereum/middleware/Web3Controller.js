@@ -60,7 +60,7 @@ export default class Web3Controller {
   }
 
   onEndHandler = (error) => {
-    // console.log('onEndHandler error', error)
+    console.log('onEndHandler error', error)
     this.dispatch(Web3Actions.connectFailure(this.networkIndex, this.networkIndex, error))
     this.provider && this.provider.disconnect()
 
@@ -177,19 +177,19 @@ export default class Web3Controller {
             }
             const eventType = data.event.toLowerCase()
             switch (eventType) {
-            case 'transfer': {
-              // eslint-disable-next-line no-console
-              console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
-              // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
-              //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
-              // }
-              break
-            }
-            case 'approval': {
-              // eslint-disable-next-line no-console
-              console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
-              break
-            }
+              case 'transfer': {
+                // eslint-disable-next-line no-console
+                console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
+                // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
+                //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
+                // }
+                break
+              }
+              case 'approval': {
+                // eslint-disable-next-line no-console
+                console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
+                break
+              }
             }
           })
           .on('error', (error) => {
@@ -329,6 +329,86 @@ export default class Web3Controller {
       this.web3.eth.getBalance(address)
         .then((balance) => {
           return resolve(balance)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  sendSignedTransaction ({ signedTx }) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.sendSignedTransaction(signedTx)
+        .on('transactionHash', (hash) => {
+          // eslint-disable-next-line no-console
+          console.log('ETH transaction send success. TX hash:', hash)
+          return resolve(hash)
+        })
+        .on('receipt', (receipt) => {
+          // eslint-disable-next-line no-console
+          console.log('ETH transaction mained success. TX receipt:', receipt)
+        })
+        .on('error', (error) => {
+          // eslint-disable-next-line no-console
+          console.log('ETH transaction send failure:', error)
+          reject(error)
+        })
+    })
+  }
+
+  getNonceHex (address) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getTransactionCount(address)
+        .then((nonce) => {
+          return resolve(this.web3.utils.toHex(nonce))
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  getNonce (address) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getTransactionCount(address)
+        .then((nonce) => {
+          return resolve(nonce)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  getChainId () {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.net.getId()
+        .then((chainId) => {
+          return resolve(chainId)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  estimateGas ({ from, to, value, data, gasPrice, nonce }) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.estimateGas({ from, to, value, data, gasPrice, nonce })
+        .then((gasLimit) => {
+          return resolve(gasLimit)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  }
+
+  getGasPrice () {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getGasPrice()
+        .then((gasPrice) => {
+          return resolve(gasPrice)
         })
         .catch((error) => {
           return reject(error)

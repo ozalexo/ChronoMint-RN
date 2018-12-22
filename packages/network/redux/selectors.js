@@ -39,7 +39,7 @@ export const getAvailableNetworks = createSelector(
  * get network.selected
  * @param {object} state
  */
-export const getNetworkByIndex = (networkIndex) =>createSelector(
+export const getNetworkByIndex = (networkIndex) => createSelector(
   getAvailableNetworks,
   (availableNetworks) => availableNetworks[networkIndex]
 )

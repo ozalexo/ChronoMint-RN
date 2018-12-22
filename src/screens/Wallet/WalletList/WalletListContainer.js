@@ -8,10 +8,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
-import { getSections, getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
+import { getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
+import { getSections } from '@chronobank/session/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import { getBalance } from '@chronobank/ethereum/middleware/thunks'
-import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
+import { updateEthereumBalance, dropEthereumSelectedWallet } from '@chronobank/ethereum/redux/thunks'
 import * as apiBTC from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinBalance, updateBitcoinTxHistory, dropBitcoinSelectedWallet } from '@chronobank/bitcoin/redux/thunks'
@@ -26,6 +27,7 @@ const ActionCreators = {
   updateBitcoinBalance,
   updateBitcoinTxHistory,
   dropBitcoinSelectedWallet,
+  dropEthereumSelectedWallet,
   getBalance,
   updateEthereumBalance,
 }
@@ -34,10 +36,12 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(ActionCreators, dispatch)
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    sections: getSections(state),
-    currentWallet: getCurrentWallet(state),
-    BTCwalletsList: getBitcoinWalletsList(state),
+    sections: getSections(masterWalletAddress)(state),
+    masterWalletAddress,
+    BTCwalletsList: getBitcoinWalletsList(masterWalletAddress)(state),
     ETHwalletsList: getEthereumWalletList(state),
   }
 }
@@ -49,13 +53,15 @@ class WalletListContainer extends PureComponent {
       PropTypes.string
     ),
     dropBitcoinSelectedWallet: PropTypes.func,
+    dropEthereumSelectedWallet: PropTypes.func,
     requestBitcoinSubscribeWalletByAddress: PropTypes.func,
     updateBitcoinTxHistory: PropTypes.func,
     requestBitcoinBalanceByAddress: PropTypes.func,
     rmqSubscribe: PropTypes.func,
     getBalance: PropTypes.func,
     updateBitcoinBalance: PropTypes.func,
-    currentWallet: PropTypes.string,
+    updateEthereumBalance: PropTypes.func,
+    masterWalletAddress: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
     }),
@@ -74,6 +80,7 @@ class WalletListContainer extends PureComponent {
 
   handleRemoveSelectedWallet = () => {
     this.props.dropBitcoinSelectedWallet()
+    this.props.dropEthereumSelectedWallet()
   }
 
   componentDidMount () {
@@ -83,16 +90,16 @@ class WalletListContainer extends PureComponent {
       updateBitcoinBalance,
       updateBitcoinTxHistory,
       rmqSubscribe,
-      currentWallet,
+      masterWalletAddress,
       BTCwalletsList,
       getBalance,
       updateEthereumBalance,
     } = this.props
 
-    getBalance(currentWallet)
+    getBalance(masterWalletAddress)
       .then((amount) => {
         const balance = EthAmountUtils.amountToBalance(amount)
-        updateEthereumBalance({ tokenSymbol: 'ETH', address: currentWallet, balance, amount })
+        updateEthereumBalance({ tokenSymbol: 'ETH', address: masterWalletAddress, balance, amount })
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
@@ -108,6 +115,7 @@ class WalletListContainer extends PureComponent {
             // TODO: need to handle possible errors in reply
             return
           }
+
           try {
             const data = JSON.parse(body)
             const confirmations0 = data.balances.confirmations0
@@ -117,7 +125,7 @@ class WalletListContainer extends PureComponent {
 
             updateBitcoinBalance({
               address: data.address,
-              parentAddress: currentWallet,
+              masterWalletAddress,
               balance: balance0 || balance6,
               amount: confirmations0 || confirmations6,
             })
@@ -129,6 +137,7 @@ class WalletListContainer extends PureComponent {
           }
         },
       })
+
       //subscribe on transactions
       rmqSubscribe({
         // TODO: need to get channel name from store
@@ -145,7 +154,7 @@ class WalletListContainer extends PureComponent {
                 from: data.inputs[0].address,
                 to: data.outputs[0].address,
                 amount: data.outputs[0].value,
-                balance: convertSatoshiToBTC(data.outputs[0].value).toNumber(),
+                balance: convertSatoshiToBTC(data.outputs[0].value),
                 timestamp: data.timestamp,
                 hash: body.hash,
                 confirmations: data.confirmations,
@@ -153,7 +162,7 @@ class WalletListContainer extends PureComponent {
             ]
             updateBitcoinTxHistory({
               address,
-              parentAddress: currentWallet,
+              masterWalletAddress,
               txList,
               latestTxDate: data.timestamp,
             })
@@ -172,8 +181,8 @@ class WalletListContainer extends PureComponent {
             .then((balance) => {
               updateBitcoinBalance({
                 address,
-                parentAddress: currentWallet,
-                balance: parseBitcoinBalanceData(balance).toNumber(),
+                masterWalletAddress,
+                balance: parseBitcoinBalanceData(balance),
                 amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
               })
             })
@@ -186,13 +195,13 @@ class WalletListContainer extends PureComponent {
   }
 
   render () {
-    const { navigation, sections, currentWallet } = this.props
+    const { navigation, sections, masterWalletAddress } = this.props
 
     return (
       <WalletList
         navigation={navigation}
         sections={sections}
-        parentWallet={currentWallet}
+        masterWalletAddress={masterWalletAddress}
         onRemoveSelectedWallet={this.handleRemoveSelectedWallet}
       />
     )

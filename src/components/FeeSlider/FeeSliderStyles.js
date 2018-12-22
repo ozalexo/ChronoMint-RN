@@ -10,7 +10,6 @@ import colors from '../../common/colors'
 
 export default StyleSheet.create({
   feeSliderContainer: {
-    marginHorizontal: 20,
     marginVertical: 30,
   },
   feeSliderLabel: {

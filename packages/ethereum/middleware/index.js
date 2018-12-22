@@ -5,7 +5,7 @@
 
 import Web3Controller from './Web3Controller'
 import { NETWORK_SELECT } from '@chronobank/network/redux/constants'
-import { WEB3_MIDDLEWARE_METHOD_GET_BALANCE } from './constants'
+import * as ActionTypes from './constants'
 import { getNetworkByIndex } from '@chronobank/network/redux/selectors'
 
 let w3c = null
@@ -28,6 +28,24 @@ const connect = async (store, action, next) => {
 
 const getBalance = (store, { address }) =>
   w3c.getBalance(address)
+
+const sendSignedTransaction = (store, { signedTx }) =>
+  w3c.sendSignedTransaction({ signedTx })
+
+const getNonceHex = (store, { address }) =>
+  w3c.getNonceHex(address)
+
+const getNonce = (store, { address }) =>
+  w3c.getNonce(address)
+
+const getChainId = () =>
+  w3c.getChainId()
+
+const estimateGas = (store, { from, to, value, data, gasPrice, nonce }) =>
+  w3c.estimateGas({ from, to, value, data, gasPrice, nonce })
+
+const getGasPrice = () =>
+  w3c.getGasPrice()
 
 // const getWeb3Instance = (store, action, next) => {
 //   next(action)
@@ -90,7 +108,13 @@ const getBalance = (store, { address }) =>
 const mutations = {
 
   [NETWORK_SELECT]: connect,
-  [WEB3_MIDDLEWARE_METHOD_GET_BALANCE]: getBalance,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_ESTIMATE_GAS]: estimateGas,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BALANCE]: getBalance,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_CHAIN_ID]: getChainId,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE]: getGasPrice,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX]: getNonceHex,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE]: getNonce,
+  [ActionTypes.WEB3_MIDDLEWARE_METHOD_SEND_SIGNED_TX]: sendSignedTransaction,
 
 }
 

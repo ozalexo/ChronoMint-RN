@@ -6,29 +6,41 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 import {
   Alert,
 } from 'react-native'
 import {
   requestBitcoinTransactionsHistoryByAddress,
 } from '@chronobank/bitcoin/service/api'
+import {
+  requestEthereumTransactionsHistoryByAddress,
+} from '@chronobank/ethereum/service/api'
+import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { updateBitcoinTxHistory } from '@chronobank/bitcoin/redux/thunks'
+import { updateEthereumTxHistory } from '@chronobank/ethereum/redux/thunks'
 import { convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
+import { amountToBalance } from '@chronobank/ethereum/utils/amount'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
-import PropTypes from 'prop-types'
+import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import Wallet from './Wallet'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    currentWallet: getCurrentWallet(state),
-    currentBTCWallet: getBitcoinCurrentWallet(state),
+    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
+    currentETHWallet: getCurrentEthWallet(masterWalletAddress)(state),
+    masterWalletAddress: getCurrentWallet(state),
   }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   requestBitcoinTransactionsHistoryByAddress,
+  requestEthereumTransactionsHistoryByAddress,
   updateBitcoinTxHistory,
+  updateEthereumTxHistory,
 }, dispatch)
 
 class WalletContainer extends Component {
@@ -38,7 +50,11 @@ class WalletContainer extends Component {
 
   static propTypes = {
     requestBitcoinTransactionsHistoryByAddress: PropTypes.func,
-    createBitcoinTxHistory: PropTypes.func,
+    requestEthereumTransactionsHistoryByAddress: PropTypes.func,
+    updateBitcoinTxHistory: PropTypes.func,
+    updateEthereumTxHistory: PropTypes.func,
+    currentBTCWallet: PropTypes.shape({}),
+    currentETHWallet: PropTypes.shape({}),
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
       state: PropTypes.shape({
@@ -46,37 +62,78 @@ class WalletContainer extends Component {
           address: PropTypes.string,
           blockchain: PropTypes.string,
           selectedCurrency: PropTypes.string,
-          parentAddress: PropTypes.string,
+          masterWalletAddress: PropTypes.string,
         }),
       }),
     }),
   }
 
   componentDidMount () {
-    const { address, parentAddress } = this.props.navigation.state.params
-    const { updateBitcoinTxHistory, requestBitcoinTransactionsHistoryByAddress } = this.props
-    requestBitcoinTransactionsHistoryByAddress(address)
-      .then((response) => {
-        const timestamps = []
-        const txList = response.payload.data.map((tx) => {
-          timestamps.push(tx.timestamp)
-          return {
-            from: tx.inputs[0].address,
-            to: tx.outputs[0].address,
-            amount: tx.outputs[0].value,
-            balance: convertSatoshiToBTC(tx.outputs[0].value).toNumber(),
-            timestamp: tx.timestamp,
-            hash: tx.hash,
-            confirmations: tx.confirmations,
-          }
+    const { address, blockchain, masterWalletAddress } = this.props.navigation.state.params
+    const {
+      requestBitcoinTransactionsHistoryByAddress,
+      requestEthereumTransactionsHistoryByAddress,
+      updateBitcoinTxHistory,
+      updateEthereumTxHistory,
+    } = this.props
+    blockchain !== BLOCKCHAIN_ETHEREUM
+      ? requestBitcoinTransactionsHistoryByAddress(address)
+        .then((response) => {
+          const timestamps = []
+          const txList = response.payload.data.map((tx) => {
+            timestamps.push(tx.timestamp)
+            return {
+              from: tx.inputs[0].address,
+              to: tx.outputs[0].address,
+              amount: tx.outputs[0].value,
+              balance: convertSatoshiToBTC(tx.outputs[0].value),
+              timestamp: tx.timestamp,
+              hash: tx.hash,
+              confirmations: tx.confirmations,
+            }
+          })
+          updateBitcoinTxHistory({
+            address,
+            masterWalletAddress,
+            txList,
+            latestTxDate: Math.max(...timestamps),
+          })
         })
-        updateBitcoinTxHistory({
-          address,
-          parentAddress,
-          txList,
-          latestTxDate: Math.max(...timestamps),
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
         })
-      })
+      : requestEthereumTransactionsHistoryByAddress(address)
+        .then((response) => {
+          const timestamps = []
+          const txList = response.payload.data.map((tx) => {
+            timestamps.push(tx.timestamp)
+            return {
+              balance: amountToBalance(tx.value).toString(),
+              blockNumber: tx.blockNumber,
+              confirmations: tx.confirmations,
+              from: tx.from,
+              gas: tx.gas,
+              gasPrice:tx. gasPrice,
+              hash: tx.hash,
+              index: tx.index,
+              nonce: tx.nonce,
+              timestamp: tx.timestamp,
+              to: tx.to,
+              value: tx.value,
+            }
+          })
+          updateEthereumTxHistory({
+            address,
+            masterWalletAddress,
+            txList,
+            latestTxDate: Math.max(...timestamps),
+          })
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+        })
   }
 
   handleSend = () => {
@@ -89,17 +146,19 @@ class WalletContainer extends Component {
       address,
       blockchain,
       selectedCurrency,
-      parentAddress,
+      masterWalletAddress,
     } = state.params
 
     const params = {
       address,
       blockchain,
       selectedCurrency,
-      parentAddress,
+      masterWalletAddress,
     }
 
-    navigate('Send', params)
+
+    const path = blockchain === BLOCKCHAIN_ETHEREUM ? 'SendEth' : 'Send'
+    navigate(path, params)
   }
 
   handleReceive = () => {
@@ -123,23 +182,26 @@ class WalletContainer extends Component {
       address,
       selectedCurrency,
     } = this.props.navigation.state.params
-    const { currentBTCWallet, navigation } = this.props
+    const { currentBTCWallet, currentETHWallet, navigation } = this.props
+    const currentWallet = blockchain === BLOCKCHAIN_ETHEREUM
+      ? currentETHWallet
+      : currentBTCWallet
+    const latestTransactionDate =
+      currentWallet &&
+      currentWallet.transactions &&
+      currentWallet.transactions.latestTxDate
+      || null
+    const transactions =
+      currentWallet &&
+      currentWallet.transactions &&
+      currentWallet.transactions.txList
+      || []
     return (
       <Wallet
         blockchain={blockchain}
         navigation={navigation}
-        latestTransactionDate={
-          currentBTCWallet &&
-          currentBTCWallet.transactions &&
-          currentBTCWallet.transactions.latestTxDate
-          || null
-        }
-        transactions={
-          currentBTCWallet &&
-          currentBTCWallet.transactions &&
-          currentBTCWallet.transactions.txList
-          || []
-        }
+        latestTransactionDate={latestTransactionDate}
+        transactions={transactions}
         address={address}
         selectedCurrency={selectedCurrency}
         onSend={this.handleSend}

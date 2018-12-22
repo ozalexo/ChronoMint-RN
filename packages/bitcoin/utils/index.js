@@ -8,6 +8,7 @@ import { checkPrivateKey } from '@chronobank/ethereum/utils'
 import coinselect from 'coinselect'
 import BigNumber from 'bignumber.js'
 
+// TODO: this info may be obtained from Redux store (see network)
 export const convertToBlockchainNet = (networkType) => {
   if (networkType === 'mainet') {
     return 'bitcoin'
@@ -26,14 +27,14 @@ export const getAddress = (privateKey, network) => {
 }
 
 const getKeyPair = (privateKey, network) => {
-  return new bitcoin.ECPair.fromPrivateKey(Buffer.from(privateKey, "hex"), { network })
+  return new bitcoin.ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'), { network })
 }
 
 export const selectCoins = (to, amount, feeRate, utxos) => {
   const targets = [
     {
       address: to,
-      value: amount.toNumber(),
+      value: parseFloat(amount),
     },
   ]
   const utxosArray = utxos.map((output) => ({

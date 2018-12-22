@@ -7,19 +7,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import { requestBitcoinSendRawTransaction } from '@chronobank/bitcoin/service/api'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import ConfirmSendModal from './ConfirmSendModal'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    prices: {
-      BTC: {
-        USD: 1499,
-      },
-    },
-    currentBTCWallet: getBitcoinCurrentWallet(state),
+    prices: selectMarketPrices(state),
+    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
     selectedCurrency: selectCurrentCurrency(state),
   }
 }

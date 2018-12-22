@@ -48,3 +48,21 @@ export const reconnect = (/*isConnecting*/) => (/*dispatch, getState*/) => {
 
 export const getBalance = (address) => (dispatch) =>
   dispatch(Actions.getBalance(address))
+
+export const getNonceHex = (address) => (dispatch) =>
+  dispatch(Actions.getNonceHex(address))
+
+export const sendSignedTransaction = ({ signedTx }) => (dispatch) =>
+  dispatch(Actions.sendSignedTransaction({ signedTx }))
+
+export const getNonce = (address) => (dispatch) =>
+  dispatch(Actions.getNonce(address))
+
+export const estimateGas = ({ from, to, value, data, gasPrice, nonce }) => (dispatch) =>
+  dispatch(Actions.estimateGas({ from, to, value, data, gasPrice, nonce }))
+
+export const getGasPrice = () => (dispatch) =>
+  dispatch(Actions.getGasPrice())
+
+export const getChainId = () => (dispatch) =>
+  dispatch(Actions.getChainId())

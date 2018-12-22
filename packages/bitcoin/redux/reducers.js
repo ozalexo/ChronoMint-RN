@@ -20,15 +20,15 @@ const bitcoinRehydrate = (state, payload) => {
   }
 }
 
-const bitcoinDeleteTxDraft = (state, { address, parentAddress }) => {
+const bitcoinDeleteTxDraft = (state, { address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
-  delete list[parentAddress][address].txDraft
+  delete list[masterWalletAddress][address].txDraft
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
       },
     },
   }
@@ -38,14 +38,14 @@ const bitcoinDeleteTxDraft = (state, { address, parentAddress }) => {
   }
 }
 
-const bitcoinCreateTxDraft = (state, { address, parentAddress }) => {
+const bitcoinCreateTxDraft = (state, { address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
           recipient: '',
           amount: null,
@@ -78,18 +78,18 @@ const bitcoinDropSelectedWallet = (state) => {
   }
 }
 
-const bitcoinUpdateWalletBalance = (state, { address, parentAddress, balance, amount }) => {
+const bitcoinUpdateWalletBalance = (state, { address, masterWalletAddress, balance, amount }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         address,
         tokens: {
           [BTC_PRIMARY_TOKEN]: {
-            ...list[parentAddress][address].tokens[BTC_PRIMARY_TOKEN],
+            ...list[masterWalletAddress][address].tokens[BTC_PRIMARY_TOKEN],
             balance,
             amount,
           },
@@ -97,18 +97,19 @@ const bitcoinUpdateWalletBalance = (state, { address, parentAddress, balance, am
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinCreateWallet = (state, { parentAddress, address }) => {
+const bitcoinCreateWallet = (state, { masterWalletAddress, address }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
         address,
         transactions: {
@@ -126,183 +127,256 @@ const bitcoinCreateWallet = (state, { parentAddress, address }) => {
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateRecipient = (state, { recipient, address, parentAddress }) => {
+const bitcoinTxUpdateRecipient = (state, { recipient, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           recipient,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateHistory = (state, { latestTxDate, txList, address, parentAddress }) => {
+const bitcoinTxUpdateHistory = (state, { latestTxDate, txList, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         transactions: {
-          ...list[parentAddress][address].transactions,
+          ...list[masterWalletAddress][address].transactions,
           latestTxDate,
           txList: [
-            ...list[parentAddress][address].transactions.txList,
+            ...list[masterWalletAddress][address].transactions.txList,
             ...txList,
           ],
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateSignedTx = (state, { signedTx, address, parentAddress }) => {
+const bitcoinTxUpdateSignedTx = (state, { signedTx, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           signedTx,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateUnsignedTx = (state, { unsignedTx, address, parentAddress }) => {
+const bitcoinTxUpdateUnsignedTx = (state, { unsignedTx, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           unsignedTx,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateFee = (state, { fee, address, parentAddress }) => {
+const bitcoinTxUpdateFee = (state, { fee, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           fee,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateFeeMultiplier = (state, { feeMultiplier, address, parentAddress }) => {
+const bitcoinTxUpdateFeeMultiplier = (state, { feeMultiplier, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           feeMultiplier,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateToken = (state, { token, address, parentAddress }) => {
+const bitcoinTxUpdateToken = (state, { token, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           token,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
 
-const bitcoinTxUpdateAmount = (state, { amount, address, parentAddress }) => {
+const bitcoinTxUpdateAmount = (state, { amount, address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
-    [parentAddress]: {
-      ...list[parentAddress],
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
       [address]: {
-        ...list[parentAddress][address],
+        ...list[masterWalletAddress][address],
         txDraft: {
-          ...list[parentAddress][address].txDraft,
+          ...list[masterWalletAddress][address].txDraft,
           amount,
         },
       },
     },
   }
+
   return {
     ...state,
     list,
   }
 }
+
+const bitcoinTxReject = (state, { entry }) => {
+  const address = entry.tx.from
+  const blockchainScope = state[entry.blockchain]
+  const pending = blockchainScope.pending
+  const scope = pending[address]
+
+  return {
+    ...state,
+    [entry.blockchain]: {
+      ...blockchainScope,
+      pending: {
+        ...pending,
+        [address]: {
+          ...scope,
+          [entry.key]: entry,
+        },
+      },
+    },
+  }
+}
+
+const bitcoinTxAccept = (state, { entry }) => {
+  const address = entry.tx.from
+  const blockchainScope = state[entry.blockchain]
+  const pending = blockchainScope.pending
+  const scope = pending[address]
+
+  return {
+    ...state,
+    [entry.blockchain]: {
+      ...blockchainScope,
+      pending: {
+        ...pending,
+        [address]: {
+          ...scope,
+          [entry.key]: entry,
+        },
+      },
+    },
+  }
+}
+
+const bitcoinTxUpdate = (state, { entry }) => {
+  const address = entry.tx.from
+  const blockchainScope = state[entry.blockchain]
+  const pending = blockchainScope.pending
+  const scope = pending[address]
+
+  return {
+    ...state,
+    [entry.blockchain]: {
+      ...blockchainScope,
+      pending: {
+        ...pending,
+        [address]: {
+          ...scope,
+          [entry.key]: entry,
+        },
+      },
+    },
+  }
+}
+  
 
 const mutations = {
 
@@ -408,67 +482,13 @@ const mutations = {
   }),
 
   // Update/Create Tx in state
-  [ActionsTypes.BITCOIN_TX_UPDATE]: (state, { entry }) => {
-    const address = entry.tx.from
-    const blockchainScope = state[entry.blockchain]
-    const pending = blockchainScope.pending
-    const scope = pending[address]
-    return {
-      ...state,
-      [entry.blockchain]: {
-        ...blockchainScope,
-        pending: {
-          ...pending,
-          [address]: {
-            ...scope,
-            [entry.key]: entry,
-          },
-        },
-      },
-    }
-  },
+  [ActionsTypes.BITCOIN_TX_UPDATE]: bitcoinTxUpdate,
 
   // Accept Tx in state
-  [ActionsTypes.BITCOIN_TX_ACCEPT]: (state, { entry }) => {
-    const address = entry.tx.from
-    const blockchainScope = state[entry.blockchain]
-    const pending = blockchainScope.pending
-    const scope = pending[address]
-    return {
-      ...state,
-      [entry.blockchain]: {
-        ...blockchainScope,
-        pending: {
-          ...pending,
-          [address]: {
-            ...scope,
-            [entry.key]: entry,
-          },
-        },
-      },
-    }
-  },
+  [ActionsTypes.BITCOIN_TX_ACCEPT]: bitcoinTxAccept,
 
   // Reject Tx in state
-  [ActionsTypes.BITCOIN_TX_REJECT]: (state, { entry }) => {
-    const address = entry.tx.from
-    const blockchainScope = state[entry.blockchain]
-    const pending = blockchainScope.pending
-    const scope = pending[address]
-    return {
-      ...state,
-      [entry.blockchain]: {
-        ...blockchainScope,
-        pending: {
-          ...pending,
-          [address]: {
-            ...scope,
-            [entry.key]: entry,
-          },
-        },
-      },
-    }
-  },
+  [ActionsTypes.BITCOIN_TX_REJECT]: bitcoinTxReject,
 }
 
 export default (state = initialState, { type, ...other }) => {

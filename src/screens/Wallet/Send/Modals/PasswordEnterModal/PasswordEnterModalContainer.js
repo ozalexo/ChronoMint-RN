@@ -6,6 +6,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
+import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import { updateBitcoinTxDraftSignedTx } from '@chronobank/bitcoin/redux/thunks'
@@ -19,12 +20,14 @@ import { name as appName } from '../../../../../../app.json'
 import PasswordEnterModal from './PasswordEnterModal'
 
 const mapStateToProps = (state) => {
+  const masterWalletAddress = getCurrentWallet(state)
+
   return {
-    currentWallet: getCurrentEthWallet(state),
-    currentBTCWallet: getBitcoinCurrentWallet(state),
+    masterWalletAddress,
+    masterWallet: getCurrentEthWallet(masterWalletAddress)(state),
+    currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateBitcoinTxDraftSignedTx,
@@ -72,42 +75,28 @@ class PasswordEnterModalContainer extends React.Component {
     return TouchID.authenticate(`${appName} Application`)
       .then(() => {
         const {
-          parentAddress,
+          masterWalletAddress,
         } = this.props.passProps
-        return Keychain.getInternetCredentials(parentAddress)
+        return Keychain.getInternetCredentials(masterWalletAddress)
       })
       .then((keychain) => this.handleConfirmClick({ password: keychain.password }))
       .catch(() => { })
   }
 
-  checkPassword = (password) => {
+  handleConfirmClick = async ({ password }) => {
     const {
-      currentWallet,
+      masterWallet,
     } = this.props
-    return decryptWallet(currentWallet.encrypted, password)
-      .then(() => {
-        return true
+    const pass = password ? password : this.state.password
+    decryptWallet(masterWallet.encrypted, pass)
+      .then((results) => {
+        this.handleSign({
+          privateKey: results.privateKey,
+        })
       })
       .catch((error) => {
         this.setState({ error: error.message })
-        return false
       })
-  }
-
-  handleConfirmClick = async ({ password }) => {
-    const {
-      currentWallet,
-    } = this.props
-    const pass = password ? password : this.state.password
-    const isPasswordValid = await this.checkPassword(pass)
-    if (isPasswordValid) {
-      decryptWallet(currentWallet.encrypted, pass)
-        .then((results) => {
-          this.handleSign({
-            privateKey: results.privateKey,
-          })
-        })
-    }
   }
 
   handleSign = ({ privateKey }) => {
@@ -124,7 +113,7 @@ class PasswordEnterModalContainer extends React.Component {
     if (signedTx) {
       updateBitcoinTxDraftSignedTx({
         address: currentBTCWallet.address,
-        parentAddress: passProps.parentAddress,
+        masterWalletAddress: passProps.masterWalletAddress,
         signedTx,
       })
       this.props.confirmPassword()

@@ -16,6 +16,7 @@ import {
   rmqConnect,
   rmqDisconnect,
 } from '@chronobank/network/redux/thunks'
+import { marketAddToken } from '@chronobank/market/redux/thunks'
 
 export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
   return new Promise((resolve, reject) => {
@@ -25,6 +26,8 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch) => {
 
     try {
       dispatch(startMarket())
+      dispatch(marketAddToken('BTC'))
+      dispatch(marketAddToken('ETH'))
       dispatch(rmqConnect())
         .then(() => {
           dispatch(createBitcoinWallet(privateKey, ethAddress))

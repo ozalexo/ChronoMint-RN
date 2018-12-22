@@ -75,3 +75,36 @@ export const getBalance = (address) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BALANCE,
   address,
 })
+
+export const sendSignedTransaction = ({ signedTx }) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_SEND_SIGNED_TX,
+  signedTx,
+})
+
+export const getNonceHex = (address) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX,
+  address,
+})
+
+export const getNonce = (address) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE,
+  address,
+})
+
+export const getChainId = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_CHAIN_ID,
+})
+
+export const estimateGas = ({ from, to, value, data, gasPrice, nonce }) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_ESTIMATE_GAS,
+  from,
+  to,
+  value,
+  data,
+  gasPrice,
+  nonce,
+})
+
+export const getGasPrice = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE,
+})

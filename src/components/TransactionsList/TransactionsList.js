@@ -11,18 +11,20 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import i18n from '../../locales/translation'
-import { BLOCKCHAIN_ETHEREUM, ETHEREUM_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
+import BigNumber from 'bignumber.js'
+import { BLOCKCHAIN_ETHEREUM, ETH_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN, BTC_PRIMARY_TOKEN } from '@chronobank/bitcoin/constants'
 import moment from 'moment'
+import isNumber from '../../common/utils/numeric'
 import PropTypes from 'prop-types'
+import i18n from '../../locales/translation'
 import Separator from '../Separator'
 import TransactionIcon from '../TransactionIcon'
 import styles from './TransactionsListStyles'
 
 const tokenSymbols = {
   [BLOCKCHAIN_BITCOIN]: BTC_PRIMARY_TOKEN,
-  [BLOCKCHAIN_ETHEREUM]: ETHEREUM_PRIMARY_TOKEN,
+  [BLOCKCHAIN_ETHEREUM]: ETH_PRIMARY_TOKEN,
 }
 
 export default class TransactionsList extends PureComponent {
@@ -41,10 +43,18 @@ export default class TransactionsList extends PureComponent {
 
   renderItem = ({item}) => {
     const { address, blockchain, navigation } = this.props
-    const type = address === item.from ? 'sending' : 'receiving'
+    const type = address.toLowerCase() === item.from.toLowerCase()
+      ? 'sending'
+      : 'receiving'
     const symbol = tokenSymbols[blockchain]
+
     return (
-      <TransactionItem item={item} type={type} symbol={symbol} navigation={navigation} />
+      <TransactionItem
+        item={item}
+        type={type}
+        symbol={symbol}
+        navigation={navigation}
+      />
     )
   }
 
@@ -56,9 +66,20 @@ export default class TransactionsList extends PureComponent {
       latestTransactionDate,
     } = this.props
     
-    const lastTransactionDate = latestTransactionDate
-      && moment.unix(latestTransactionDate).format('DD MMMM YYYY')
-      || 'No date info available'
+    let lastTransactionDate
+    if (!latestTransactionDate) {
+      lastTransactionDate = 'No date info available'
+    } else {
+      if (latestTransactionDate.toString().length > 10) {
+        lastTransactionDate = latestTransactionDate
+          && moment(latestTransactionDate).format('DD MMMM YYYY')
+          || 'No date info available'
+      } else {
+        lastTransactionDate = latestTransactionDate
+          && moment.unix(latestTransactionDate).format('DD MMMM YYYY')
+          || 'No date info available'
+      }
+    }
 
     const TransactionsLoading = () => (
       <View style={styles.transactionsListContainer}>
@@ -136,7 +157,7 @@ TransactionsList.propTypes = {
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       address: PropTypes.string,
-      balance: PropTypes.number,
+      balance: PropTypes.string,
       confirmations: PropTypes.number,
     })
   ),
@@ -146,14 +167,27 @@ TransactionsList.propTypes = {
 class TransactionItem extends PureComponent {
 
   static getFormattedBalance = (balance, symbol, type) => {
-    const isbalanceTooSmall = balance > 0 && balance < 0.01
+    if (!balance) {
+      return '-.--'
+    }
+    let numBalance
+    if (isNumber(balance)) {
+      numBalance = balance
+    } else {
+      if (balance instanceof BigNumber) {
+        numBalance = balance.toNumber()
+      } else {
+        numBalance = parseInt(balance)
+      }
+    }
+    const isbalanceTooSmall = numBalance > 0 && numBalance < 0.01
     let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
     format = [
       (type === 'sending' ? '-' : '+'),
       format,
     ].join(' ')
 
-    return i18n.toCurrency(balance, { precision: 2, unit: ` ${symbol} `, format })
+    return i18n.toCurrency(numBalance, { precision: 2, unit: ` ${symbol} `, format })
 
   }
 
@@ -171,7 +205,7 @@ class TransactionItem extends PureComponent {
   }
 
   render () {
-    const { type, symbol, navigation, item } = this.props
+    const { type, symbol, item/*, navigation*/ } = this.props
     const {
       from,
       to,
@@ -225,10 +259,16 @@ class TransactionItem extends PureComponent {
 }
 
 TransactionItem.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+  latestTransactionDate: PropTypes.number,
+  blockchain: PropTypes.string,
+  address: PropTypes.string,
   item: PropTypes.shape({
     from: PropTypes.string,
     to: PropTypes.string,
-    balance: PropTypes.number,
+    balance: PropTypes.string,
     confirmations: PropTypes.number,
   }),
   symbol: PropTypes.string,

@@ -8,19 +8,11 @@ import {
   View,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { BLOCKCHAIN_ETHEREUM  } from '@chronobank/ethereum/constants'
 import TokensCounter from '../../../../components/TokensCounter'
 import PrimaryToken from '../../../../components/PrimaryToken'
 import PrimaryBalance from '../../../../components/PrimaryBalance'
 import WalletImage from '../../../../components/WalletImage'
 import styles from './WalletInfoStyles'
-
-const TokensListContainer = TokensCounter
-const PrimaryTokenContainer = PrimaryToken
-const PrimaryBalanceContainer = PrimaryBalance
-// const TokensListContainer: ComponentType<TTokensListFactoryProps> = TokensListContainerFactory(TokensCounter)
-// const PrimaryTokenContainer: ComponentType<TPrimaryTokenFactoryProps> = PrimaryTokenContainerFactory(PrimaryToken)
-// const PrimaryBalanceContainer: ComponentType<TPrimaryBalanceFactoryProps> = PrimaryBalanceContainerFactory(PrimaryBalance)
 
 export default class WalletInfo extends PureComponent {
 
@@ -28,13 +20,14 @@ export default class WalletInfo extends PureComponent {
     address: PropTypes.string,
     blockchain: PropTypes.string,
     selectedCurrency: PropTypes.string,
+    wallet: PropTypes.shape({}),
   }
 
   render () {
     const {
       address,
       blockchain,
-      bitcoinWallet,
+      wallet,
       selectedCurrency,
     } = this.props
     return (
@@ -50,16 +43,16 @@ export default class WalletInfo extends PureComponent {
             address
           }
         </Text>
-        <PrimaryTokenContainer
+        <PrimaryToken
           blockchain={blockchain}
         />
         <View style={styles.balanceAndTokensRow}>
-          <PrimaryBalanceContainer
+          <PrimaryBalance
             blockchain={blockchain}
             selectedCurrency={selectedCurrency}
-            wallet={blockchain === BLOCKCHAIN_ETHEREUM ? null : bitcoinWallet}
+            wallet={wallet}
           />
-          <TokensListContainer
+          <TokensCounter
             blockchain={blockchain}
           />
         </View>

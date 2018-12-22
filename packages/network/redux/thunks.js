@@ -31,9 +31,10 @@ export const autoSelectNetwork = () => (dispatch, getState) => {
   let networkIndex = null
   if (networks.selected === null) {
     if (process.env['NODE_ENV'] === 'development') {
-      networkIndex = 3
+      networkIndex = 2
     } else {
-      networkIndex = 1
+      // networkIndex = 1
+      networkIndex = 2 // Always connect to testnet for the very first demo purposes
     }
     dispatch(Actions.networkSelect(networkIndex))
   }

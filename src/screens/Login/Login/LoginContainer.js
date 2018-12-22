@@ -15,25 +15,12 @@ import { loginThunk } from '@chronobank/session/redux/thunks'
 import { name as appName } from '../../../../app.json'
 import Login from './Login'
 
-
-const mapStateToProps = (state) => {
-  return {
-  }
-}
-
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   loginThunk,
 }, dispatch)
 
 class LoginContainer extends PureComponent {
   static propTypes = {
-    network: PropTypes.shape({
-      blockchain: PropTypes.shape({
-        Bitcoin: PropTypes.shape({
-          bcNetworkId: PropTypes.string,
-        }),
-      }),
-    }),
     loginThunk: PropTypes.func,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
@@ -93,9 +80,15 @@ class LoginContainer extends PureComponent {
           .then((keychain) => {
             this.handleLoginClick({ password: keychain.password })
           })
-          .catch((error) => console.warn(error))
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+          })
       })
-      .catch((error) => console.warn(error))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.warn(error)
+      })
   }
 
   handleLoginClick = async ({ password }) => {
@@ -147,5 +140,5 @@ class LoginContainer extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
+export default connect(null, mapDispatchToProps)(LoginContainer)
 

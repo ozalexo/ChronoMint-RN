@@ -13,6 +13,7 @@ import com.oblador.keychain.KeychainPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.horcrux.svg.SvgPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RandomBytesPackage(),
             new RNDeviceInfo(),
             new RNLanguagesPackage(),
-            new SplashScreenReactPackage()
+            new SplashScreenReactPackage(),
+            new SvgPackage()
       );
     }
 

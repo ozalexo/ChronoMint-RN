@@ -107,6 +107,16 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+        release {
+            if (project.hasProperty('LABORX_RELEASE_STORE_FILE')) {
+                storeFile file(LABORX_RELEASE_STORE_FILE)
+                storePassword LABORX_RELEASE_STORE_PASSWORD
+                keyAlias LABORX_RELEASE_KEY_ALIAS
+                keyPassword LABORX_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
     splits {
         abi {
             reset()
@@ -119,6 +129,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -143,6 +154,7 @@ dependencies {
     implementation project(':react-native-secure-randombytes')
     implementation project(':react-native-languages')
     implementation project(':react-native-splash-screen')
+    implementation project(':react-native-svg')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
