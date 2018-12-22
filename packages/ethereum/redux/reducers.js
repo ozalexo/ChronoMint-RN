@@ -285,7 +285,7 @@ const selectEthereumWallet = (state, { address }) => ({
   selected: address,
 })
 
-const ethereumTxUpdateHistory = (state, { latestTxDate, txList, address, masterWalletAddress }) => {
+const ethereumTxUpdateHistory = (state, { latestTxDate, txList, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,

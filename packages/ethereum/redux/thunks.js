@@ -99,28 +99,6 @@ export const deleteEthereumTxDraft = ({ masterWalletAddress }) => (dispatch) => 
   })
 }
 
-// export const updateEthereumTxDraftGasPrice = ({ gasPrice, masterWalletAddress }) => (dispatch) => {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       dispatch(Actions.updateEthereumTxDraftGasPrice({ gasPrice, masterWalletAddress }))
-//       return resolve()
-//     } catch (e) {
-//       return reject(e)
-//     }
-//   })
-// }
-
-// export const updateEthereumTxDraftChainId = ({ chainId, masterWalletAddress }) => (dispatch) => {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       dispatch(Actions.updateEthereumTxDraftChainId({ chainId, masterWalletAddress }))
-//       return resolve()
-//     } catch (e) {
-//       return reject(e)
-//     }
-//   })
-// }
-
 export const updateEthereumTxDraftGasPriceChainIdNonce = ({ gasPrice, chainId, nonce, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
