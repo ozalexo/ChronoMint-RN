@@ -6,7 +6,7 @@
 import { createSelector } from 'reselect'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { getBitcoinWalletsForSections, getBitcoinListByMasterAddress } from '@chronobank/bitcoin/redux/selectors'
-import { getEthereumWallets, getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
+import { getEthereumWalletsForSections, getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { DUCK_SESSION } from './constants'
 
 export const getDuckSession = (state) =>
@@ -19,9 +19,9 @@ export const getCurrentWallet = createSelector(
 
 export const getSections = (masterWalletAddress) => createSelector(
   getBitcoinWalletsForSections(masterWalletAddress),
-  getEthereumWallets,
-  (bitWallets, ethWallets) => {
-    return [...ethWallets, ...bitWallets]
+  getEthereumWalletsForSections(masterWalletAddress),
+  (bitWallets, ethWallet) => {
+    return [ethWallet, ...bitWallets]
   }
 )
 

@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { rmqSubscribe } from '@chronobank/network/redux/thunks'
-import { getEthereumWalletList } from '@chronobank/ethereum/redux/selectors'
 import { getSections } from '@chronobank/session/redux/selectors'
 import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
 import { getBalance } from '@chronobank/ethereum/middleware/thunks'
@@ -42,7 +41,6 @@ const mapStateToProps = (state) => {
     sections: getSections(masterWalletAddress)(state),
     masterWalletAddress,
     BTCwalletsList: getBitcoinWalletsList(masterWalletAddress)(state),
-    ETHwalletsList: getEthereumWalletList(state),
   }
 }
 

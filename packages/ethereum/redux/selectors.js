@@ -21,6 +21,22 @@ export const getCurrentEthWallet = (ethAddress) => createSelector(
     return ethereumList[ethAddress]
   }
 )
+
+export const getEthereumWalletsForSections = (ethAddress) => createSelector(
+  getCurrentEthWallet(ethAddress),
+  (ethereumWallet) => {
+    return {
+      data: [
+        {
+          address: ethereumWallet.address,
+          blockchain: BLOCKCHAIN_ETHEREUM,
+        },
+      ],
+      title: BLOCKCHAIN_ETHEREUM,
+    }
+  },
+)
+
 export const getEthAccountList = createSelector(
   getEthereumWalletList,
   (ethereumList) => {

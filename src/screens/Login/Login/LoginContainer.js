@@ -103,8 +103,8 @@ class LoginContainer extends PureComponent {
           privateKey: results.privateKey,
         })
       })
-      .catch((error) => {
-        Alert.alert('Login failure', error.message)
+      .catch(() => {
+        Alert.alert('Login failure. Verify your credentials and try again')
       })
   }
 
@@ -115,8 +115,8 @@ class LoginContainer extends PureComponent {
       .then(() => {
         navigate('WalletList')
       })
-      .catch((error) => {
-        Alert.alert('Login failure', error.message)
+      .catch(() => {
+        Alert.alert('Login failure. Verify your credentials and try again')
       })
   }
 
