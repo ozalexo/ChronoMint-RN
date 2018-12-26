@@ -16,6 +16,8 @@ import {
 import {
   ChronoWalletIcon,
   ChronoWalletText,
+  touchID,
+  faceID,
 } from '../../../images'
 import Input from '../../../components/Input'
 import PrimaryButton from '../../../components/PrimaryButton'
@@ -28,6 +30,11 @@ import { headerHeight } from '../../../common/constants/screens'
 import styles from './LoginStyles'
 
 const CustomizedSeparator = () => <Separator style={styles.separator} />
+
+const biometryTypes = {
+  TouchID: touchID,
+  FaceID: faceID,
+}
 
 export default class Login extends PureComponent {
   static propTypes = {
@@ -86,13 +93,6 @@ export default class Login extends PureComponent {
                 source={ChronoWalletText}
                 style={styles.logoText}
               />
-              {
-                biometryType &&
-                <TextButton
-                  label={`${biometryType} Auth`}
-                  onPress={onScan}
-                />
-              }
 
               {
                 this.renderAccount()
@@ -105,12 +105,25 @@ export default class Login extends PureComponent {
                 style={styles.input}
                 secureTextEntry
               />
-              <PrimaryButton
-                label='Log in'
-                upperCase
-                style={styles.primaryButton}
-                onPress={onLoginClick}
-              />
+              <View style={styles.loginButtonLine}>
+                <PrimaryButton
+                  label='Log in'
+                  upperCase
+                  style={styles.primaryButton}
+                  onPress={onLoginClick}
+                />
+                {
+                  biometryType &&
+                  <TouchableWithoutFeedback
+                    onPress={onScan}
+                    style={styles.biometryTypeWrapper}>
+                    <Image
+                      source={biometryTypes[biometryType]}
+                      style={styles.biometryType}
+                    />
+                  </TouchableWithoutFeedback>
+                }
+              </View>
               <TextButton
                 label={i18n.t('LoginPage.forgotPassword')}
                 style={styles.forgotButton}

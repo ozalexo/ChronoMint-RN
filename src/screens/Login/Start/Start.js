@@ -57,20 +57,21 @@ export default class Start extends PureComponent {
       onClickUseExistingButton,
       onToggleScreenContent,
     } = this.props
-    if (!accounts || accounts.length === 0) {
-      return <Text style={styles.noAccountsText}>No Accounts To Show</Text>
-    }
     return (
       <React.Fragment>
-        <FlatList
-          data={this.props.accounts}
-          ItemSeparatorComponent={CustomizedSeparator}
-          keyExtractor={this.keyExtractor}
-          ListFooterComponent={CustomizedSeparator}
-          ListHeaderComponent={CustomizedSeparator}
-          renderItem={this.renderItem}
-          style={styles.accountsList}
-        />
+        {
+          !accounts || accounts.length === 0
+            ? <Text style={styles.noAccountsText}>No Accounts To Show</Text>
+            : <FlatList
+              data={this.props.accounts}
+              ItemSeparatorComponent={CustomizedSeparator}
+              keyExtractor={this.keyExtractor}
+              ListFooterComponent={CustomizedSeparator}
+              ListHeaderComponent={CustomizedSeparator}
+              renderItem={this.renderItem}
+              style={styles.accountsList}
+            />
+        }
 
         <PrimaryButton
           label={i18n.t('StartPage.addAnExistingAccount')}
@@ -185,7 +186,6 @@ export default class Start extends PureComponent {
     const keyboardVerticalOffset = -headerHeight
     const {
       showAccountsList,
-      onToggleScreenContent,
     } = this.props
 
     return (
