@@ -6,14 +6,12 @@
 import React, { PureComponent } from 'react'
 import {
   Image,
-  KeyboardAvoidingView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  Keyboard,
-  Platform,
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import { NavigationEvents } from 'react-navigation'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
@@ -56,27 +54,6 @@ TokenSelector.propTypes = {
 }
 
 export default class Send extends PureComponent {
-  constructor (props) {
-    super(props)
-    this.state = {
-      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey',
-    }
-  }
-
-  componentDidMount () {
-    // using keyboardWillHide is better but it does not work for android
-    this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide', this.keyboardHideListener);
-  }
-
-  componentWillUnmount () {
-    this.keyboardHideListener.remove()
-  }
-
-  keyboardHideListener = () => {
-    this.setState({
-      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey' + new Date().getTime(),
-    })
-  }
 
   render () {
     const {
@@ -108,7 +85,6 @@ export default class Send extends PureComponent {
       onQRpageOpen,
       onQRscan,
     } = this.props
-    let { keyboardAvoidingViewKey } = this.state
 
     const currentTokenBalance = selectedWallet.tokens ?
       selectedWallet.tokens[Object.keys(selectedWallet.tokens)[0]].amount :
@@ -131,10 +107,7 @@ export default class Send extends PureComponent {
     }
     
     return (
-      <KeyboardAvoidingView
-        behavior='height'
-        key={keyboardAvoidingViewKey}
-      >
+      <KeyboardAwareScrollView>
         <ScrollView style={styles.scrollView}>
           <NavigationEvents
             onDidFocus={onTxDraftCreate}
@@ -234,7 +207,7 @@ export default class Send extends PureComponent {
             />
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     )
   }
 }

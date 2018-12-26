@@ -6,15 +6,13 @@
 import React, { PureComponent } from 'react'
 import {
   Image,
-  KeyboardAvoidingView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  Keyboard,
-  Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
 // import i18n from '../../../locales/translation'
@@ -57,28 +55,6 @@ TokenSelector.propTypes = {
 
 export default class SendEth extends PureComponent {
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey',
-    }
-  }
-
-  componentDidMount () {
-    // using keyboardWillHide is better but it does not work for android
-    this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide', this.keyboardHideListener);
-  }
-
-  componentWillUnmount () {
-    this.keyboardHideListener.remove()
-  }
-
-  keyboardHideListener = () => {
-    this.setState({
-      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey' + new Date().getTime(),
-    })
-  }
-
   render () {
     const {
       onTogglePasswordModal,
@@ -113,7 +89,6 @@ export default class SendEth extends PureComponent {
       showQRscanner,
       onQRscan,
     } = this.props
-    let { keyboardAvoidingViewKey } = this.state
 
     const currentTokenBalance = selectedWallet.tokens ?
       selectedWallet.tokens['ETH'].balance :
@@ -136,10 +111,7 @@ export default class SendEth extends PureComponent {
     }
 
     return (
-      <KeyboardAvoidingView
-        behavior='height'
-        key={keyboardAvoidingViewKey}
-      >
+      <KeyboardAwareScrollView>
         <ScrollView style={styles.scrollView}>
           <NavigationEvents
             onDidFocus={onTxDraftCreate}
@@ -246,7 +218,7 @@ export default class SendEth extends PureComponent {
             />
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     )
   }
 }

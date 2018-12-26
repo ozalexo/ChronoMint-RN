@@ -23,7 +23,21 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: '500',
   },
-  authButton: {
-    color: colors.primary,
+  primaryButton: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  enterPasswordWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  biometryTypeWrapper: {
+    alignItems: 'center',
+  },
+  biometryType: {
+    marginLeft: 10,
+    width: 32,
+    height: 32,
   },
 })

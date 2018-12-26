@@ -8,13 +8,24 @@ import {
   SafeAreaView,
   View,
   Modal,
+  TouchableWithoutFeedback,
+  Image,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import {
+  touchID,
+  faceID,
+} from '../../../../../images'
 import PrimaryButton from '../../../../../components/PrimaryButton'
 import TextButton from '../../../../../components/TextButton'
 import Input from '../../../../../components/Input'
 
 import styles from './PasswordEnterModalStyles'
+
+const biometryTypes = {
+  TouchID: touchID,
+  FaceID: faceID,
+}
 
 const PasswordEnterModal = ({
   visible,
@@ -48,18 +59,24 @@ const PasswordEnterModal = ({
             error={error}
             secureTextEntry
           />
-          <PrimaryButton
-            label='Enter password'
-            onPress={onConfirmPassword}
-          />
-          {
-            biometryType &&
-            <TextButton
-              texStyle={styles.authButton}
-              label={`${biometryType} Auth`}
-              onPress={onScan}
+          <View style={styles.enterPasswordWrapper}>
+            <PrimaryButton
+              label='Enter password'
+              style={styles.primaryButton}
+              onPress={onConfirmPassword}
             />
-          }
+            {
+              biometryType &&
+              <TouchableWithoutFeedback
+                onPress={onScan}
+                style={styles.biometryTypeWrapper}>
+                <Image
+                  source={biometryTypes[biometryType]}
+                  style={styles.biometryType}
+                />
+              </TouchableWithoutFeedback>
+            }
+          </View>
         </View>
       </SafeAreaView>
     </Modal>
