@@ -1,0 +1,11 @@
+patch-package
+--- a/node_modules/react-native-camera/android/build.gradle
++++ b/node_modules/react-native-camera/android/build.gradle
+@@ -20,7 +20,6 @@ apply plugin: 'com.android.library'
+ 
+ android {
+   compileSdkVersion safeExtGet('compileSdkVersion', 26)
+-  buildToolsVersion safeExtGet('buildToolsVersion', '26.0.2')
+ 
+   defaultConfig {
+     minSdkVersion safeExtGet('minSdkVersion', 16)
