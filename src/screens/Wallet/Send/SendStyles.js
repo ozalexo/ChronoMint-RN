@@ -21,6 +21,9 @@ export default StyleSheet.create({
   openModalButton: {
     marginVertical: 15,
   },
+  headerButton: {
+    padding: 16,
+  },
   //styles from develop
   advancedFee: {
     color: '#786AB7',

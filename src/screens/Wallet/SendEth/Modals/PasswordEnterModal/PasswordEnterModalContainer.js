@@ -6,6 +6,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
+import BigNumber from 'bignumber.js'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { updateEthereumTxDraftSignedTx } from '@chronobank/ethereum/redux/thunks'
@@ -120,7 +121,7 @@ class PasswordEnterModalContainer extends React.Component {
       data,
       value: balanceToAmount(value).toNumber(),
       nonce,
-      gas: gasLimit,
+      gas: new BigNumber(gasLimit),
       gasPrice,
       chainId,
     }

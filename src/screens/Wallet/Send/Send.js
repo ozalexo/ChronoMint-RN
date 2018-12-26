@@ -11,6 +11,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Keyboard,
+  Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { NavigationEvents } from 'react-navigation'
@@ -54,6 +56,27 @@ TokenSelector.propTypes = {
 }
 
 export default class Send extends PureComponent {
+  constructor (props) {
+    super(props)
+    this.state = {
+      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey',
+    }
+  }
+
+  componentDidMount () {
+    // using keyboardWillHide is better but it does not work for android
+    this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide', this.keyboardHideListener);
+  }
+
+  componentWillUnmount () {
+    this.keyboardHideListener.remove()
+  }
+
+  keyboardHideListener = () => {
+    this.setState({
+      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey' + new Date().getTime(),
+    })
+  }
 
   render () {
     const {
@@ -85,6 +108,7 @@ export default class Send extends PureComponent {
       onQRpageOpen,
       onQRscan,
     } = this.props
+    let { keyboardAvoidingViewKey } = this.state
 
     const currentTokenBalance = selectedWallet.tokens ?
       selectedWallet.tokens[Object.keys(selectedWallet.tokens)[0]].amount :
@@ -105,10 +129,11 @@ export default class Send extends PureComponent {
       [BLOCKCHAIN_ETHEREUM]: coin_ethereum,
       [BLOCKCHAIN_BITCOIN]: coin_bitcoin,
     }
-
+    
     return (
       <KeyboardAvoidingView
         behavior='height'
+        key={keyboardAvoidingViewKey}
       >
         <ScrollView style={styles.scrollView}>
           <NavigationEvents

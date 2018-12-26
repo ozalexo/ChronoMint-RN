@@ -20,3 +20,4 @@ export const amountToBalance = (amount) => {
 }
 
 export const convertToWei = (amount) => web3utils.toWei(amount)
+export const convertFromWei = (amount) => web3utils.fromWei(amount)

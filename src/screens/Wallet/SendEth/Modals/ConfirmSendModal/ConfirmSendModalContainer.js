@@ -10,9 +10,9 @@ import { bindActionCreators } from 'redux'
 import {
   sendSignedTransaction,
 } from '@chronobank/ethereum/middleware/thunks'
-import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
-import { selectMarketPrices } from '@chronobank/market/redux/selectors'
+import { selectCurrentCurrency,selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
+import { convertFromWei } from '@chronobank/ethereum/utils/amount'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import ConfirmSendModal from './ConfirmSendModal'
 
@@ -54,7 +54,7 @@ class ConfirmSendModalContainer extends React.Component {
       token: txDraft.value,
       currency: currency * txDraft.value,
     }
-    const totalFee = txDraft.gasLimit
+    const totalFee = parseFloat(convertFromWei(txDraft.gasLimit))
     const fee = {
       token: totalFee,
       currency: currency * totalFee,

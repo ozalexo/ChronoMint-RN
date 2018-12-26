@@ -32,6 +32,7 @@ import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { convertBTCToSatoshi, convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import TextButton from '../../../components/TextButton'
+import styles from './SendStyles'
 import Send from './Send'
 
 const mapStateToProps = (state) => {
@@ -97,6 +98,7 @@ class SendContainer extends React.Component {
       ...params,
       headerRight: (
         <TextButton
+          style={styles.headerButton}
           onPress={params.handleGoToPasswordModal}
           label='Done'
         />
@@ -236,8 +238,9 @@ class SendContainer extends React.Component {
     if (typeof value === 'string') {
       const { prices, updateBitcoinTxDraftAmount } = this.props
       const { selectedCurrency, address, masterWalletAddress } = this.props.navigation.state.params
-      if (!(value.endsWith(',') || value.endsWith('.'))) {
-        const localeValue = new BigNumber(parseFloat(value.replace(',', '.').replace(' ', ''))).toNumber()
+      if (!(value.endsWith(',') || value.endsWith('.') || value.endsWith('0'))) {
+        const inputValue = value.replace(',', '.').replace(' ', '')
+        const localeValue = new BigNumber(inputValue).toNumber()
         const tokenPrice =
           (prices &&
             this.state.selectedToken &&
@@ -248,7 +251,7 @@ class SendContainer extends React.Component {
           localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0
         this.setState(
           {
-            amount: localeValue,
+            amount: inputValue,
             amountInCurrency: tokenPrice * localeValue,
             isAmountInputValid: dummyValidationOfAmountInput,
           },
@@ -265,14 +268,14 @@ class SendContainer extends React.Component {
         )
       } else {
         this.setState({
-          amount: value ? new BigNumber(parseFloat(value.replace(',', '.').replace(' ', ''))).toNumber() : null,
+          amount: value ? value.replace(',', '.').replace(' ', '') : null,
           amountInCurrency: 0,
           isAmountInputValid: false,
         }, () => {
           updateBitcoinTxDraftAmount({
             address,
             masterWalletAddress,
-            amount: this.state.amount,
+            amount: new BigNumber(this.state.amount).toNumber(),
           })
         })
       }

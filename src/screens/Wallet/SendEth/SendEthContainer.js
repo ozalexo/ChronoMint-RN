@@ -24,6 +24,7 @@ import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import TextButton from '../../../components/TextButton'
+import styles from './SendEthStyles'
 import SendEth from './SendEth'
 
 const mapStateToProps = (state) => {
@@ -74,6 +75,7 @@ class SendEthContainer extends React.Component {
       ...params,
       headerRight: (
         <TextButton
+          style={styles.headerButton}
           onPress={params.handleGoToPasswordModal}
           label='Done'
         />
@@ -183,8 +185,9 @@ class SendEthContainer extends React.Component {
         masterWalletAddress,
       } = this.props
       const { selectedCurrency } = this.props.navigation.state.params
-      if (!(value.endsWith(',') || value.endsWith('.'))) {
-        const localeValue = new BigNumber(parseFloat(value.replace(',', '.').replace(' ', ''))).toNumber()
+      if (!(value.endsWith(',') || value.endsWith('.') || value.endsWith('0'))) {
+        const inputValue = value.replace(',', '.').replace(' ', '')
+        const localeValue = new BigNumber(inputValue).toNumber()
         const tokenPrice =
           (prices &&
             this.state.selectedToken &&
@@ -195,7 +198,7 @@ class SendEthContainer extends React.Component {
           localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0
         this.setState(
           {
-            amount: localeValue,
+            amount: inputValue,
             amountInCurrency: tokenPrice * localeValue,
             isAmountInputValid: dummyValidationOfAmountInput,
           },
@@ -211,13 +214,13 @@ class SendEthContainer extends React.Component {
         )
       } else {
         this.setState({
-          amount: value ? new BigNumber(parseFloat(value.replace(',', '.').replace(' ', ''))).toNumber() : null,
+          amount: value ? value.replace(',', '.').replace(' ', '') : null,
           amountInCurrency: 0,
           isAmountInputValid: false,
         }, () => {
           updateEthereumTxDraftValue({
             masterWalletAddress,
-            value: this.state.amount,
+            value: new BigNumber(this.state.amount).toNumber(),
           })
         })
       }
@@ -241,7 +244,7 @@ class SendEthContainer extends React.Component {
           prices[this.state.selectedToken.symbol][selectedCurrency]) ||
         0 // TODO: handle wrong values correctly
 
-      const newGasLimit = this.state.gasLimit ? this.state.gasLimit * this.state.feeMultiplier : null
+      const newGasLimit = this.state.gasLimit ? this.state.gasLimit * value : null
       const newGasPrice = newGasLimit ? newGasLimit * tokenPrice : null
 
       this.setState({

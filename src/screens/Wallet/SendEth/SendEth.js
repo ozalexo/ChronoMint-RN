@@ -11,6 +11,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Keyboard,
+  Platform,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
@@ -31,7 +33,6 @@ import ConfirmSendModal from './Modals/ConfirmSendModal'
 import PasswordEnterModal from './Modals/PasswordEnterModal'
 import QRscanner from '../QRscannerModal'
 import styles from './SendEthStyles'
-
 
 const TokenSelector = ({ onPress = () => { }, selectedToken }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -55,6 +56,28 @@ TokenSelector.propTypes = {
 }
 
 export default class SendEth extends PureComponent {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey',
+    }
+  }
+
+  componentDidMount () {
+    // using keyboardWillHide is better but it does not work for android
+    this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide', this.keyboardHideListener);
+  }
+
+  componentWillUnmount () {
+    this.keyboardHideListener.remove()
+  }
+
+  keyboardHideListener = () => {
+    this.setState({
+      keyboardAvoidingViewKey: 'keyboardAvoidingViewKey' + new Date().getTime(),
+    })
+  }
 
   render () {
     const {
@@ -90,6 +113,7 @@ export default class SendEth extends PureComponent {
       showQRscanner,
       onQRscan,
     } = this.props
+    let { keyboardAvoidingViewKey } = this.state
 
     const currentTokenBalance = selectedWallet.tokens ?
       selectedWallet.tokens['ETH'].balance :
@@ -114,6 +138,7 @@ export default class SendEth extends PureComponent {
     return (
       <KeyboardAvoidingView
         behavior='height'
+        key={keyboardAvoidingViewKey}
       >
         <ScrollView style={styles.scrollView}>
           <NavigationEvents
@@ -201,6 +226,7 @@ export default class SendEth extends PureComponent {
               keyboardType='numeric'
               onChange={onChangeAmount}
               name='amount'
+              value={amount}
             />
             <Text style={styles.sendBalance}>
               {
