@@ -190,12 +190,14 @@ class SendContainer extends React.Component {
                 this.setState({ modalProps }, () => this.handleTogglePasswordModal())
               })
               .catch((error) => {
+                Alert.alert("Error, while preparing bitcoin transaction.")
                 // eslint-disable-next-line no-console
                 console.warn(error)
               })
           }
         })
         .catch((error) => {
+          Alert.alert("Error, while making an UTXO request to middleware.")
           // eslint-disable-next-line no-console
           console.warn(error)
         })
@@ -380,6 +382,7 @@ class SendContainer extends React.Component {
           })
         })
         .catch((error) => {
+          Alert.alert("Error, while making a fee estimate request to middleware.")
           // eslint-disable-next-line no-console
           console.warn(error)
         })

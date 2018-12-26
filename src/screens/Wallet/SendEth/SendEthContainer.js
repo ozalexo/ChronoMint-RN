@@ -131,7 +131,10 @@ class SendEthContainer extends React.Component {
           nonce: results[2],
         })
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        Alert.alert('Error, while making a gasprice, chainid, nonce requests to middleware.')
+        console.log(error)
+      })
   }
 
   handleGoToPasswordModal = () => {
@@ -293,7 +296,10 @@ class SendEthContainer extends React.Component {
           })
         })
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        Alert.alert('Error, while making a gas estimate request to middleware.')
+        console.warn(error)
+      })
   }
 
   handleTogglePasswordModal = () => {
