@@ -44,6 +44,7 @@ const PasswordEnterModal = ({
           name='password'
           onChange={onPasswordChange}
           error={error}
+          secureTextEntry
         />
         <PrimaryButton
           label='Enter password'

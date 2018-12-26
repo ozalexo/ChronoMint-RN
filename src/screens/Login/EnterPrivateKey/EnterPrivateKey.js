@@ -25,6 +25,7 @@ export default class EnterPrivateKey extends PureComponent {
         <Input
           label='Private key'
           name='privateKey'
+          secureTextEntry
           onChange={onChangePrivateKey}
           error={error}
         />

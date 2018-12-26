@@ -103,6 +103,7 @@ export default class Login extends PureComponent {
                 onChange={onChangePassword}
                 error={error}
                 style={styles.input}
+                secureTextEntry
               />
               <PrimaryButton
                 label='Log in'
