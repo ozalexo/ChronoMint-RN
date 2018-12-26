@@ -39,13 +39,13 @@ export default class Login extends PureComponent {
   }
 
   renderAccount = () => {
-    const { address } = this.props
+    const { address, onAccountClick } = this.props
     return (
       <React.Fragment>
         <CustomizedSeparator />
         <AccountItem
           address={address}
-          onPress={() => { }}
+          onPress={onAccountClick}
         />
         <CustomizedSeparator />
       </React.Fragment>

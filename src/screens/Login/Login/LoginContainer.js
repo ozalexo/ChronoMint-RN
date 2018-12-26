@@ -120,6 +120,10 @@ class LoginContainer extends PureComponent {
       })
   }
 
+  handleAccountClick = () => {
+    this.props.navigation.navigate('Start')
+  }
+
   render () {
     const {
       address,
@@ -131,6 +135,7 @@ class LoginContainer extends PureComponent {
         biometryType={biometryType}
         error={error}
         address={address}
+        onAccountClick={this.handleAccountClick}
         onChangePassword={this.handlePasswordChange}
         onClickForgotButton={this.handleForgotClick}
         onLoginClick={this.handleLoginClick}
