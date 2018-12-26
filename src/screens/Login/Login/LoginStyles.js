@@ -33,6 +33,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   biometryType: {
+    marginLeft: 10,
     width: 32,
     height: 32,
   },
@@ -53,7 +54,6 @@ export default StyleSheet.create({
   },
   primaryButton: {
     flex: 1,
-    marginRight: 10,
     flexDirection: 'row',
   },
   forgotButton: {

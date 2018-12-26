@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginVertical: 15,
   },
   headerButton: {
-    padding: 16,
+    paddingHorizontal: 16,
   },
   //styles from develop
   advancedFee: {

@@ -15,6 +15,14 @@ export default StyleSheet.create({
     backgroundColor: colors.primary,
     flexDirection: 'row',
   },
+  goback: {
+    alignSelf: 'flex-start',
+    padding: 16,
+  },
+  gobackText: {
+    fontSize: 17,
+    fontWeight: '500',
+  },
   authButton: {
     color: colors.primary,
   },

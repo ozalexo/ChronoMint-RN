@@ -22,15 +22,22 @@ export default StyleSheet.create({
     color: colors.greySub,
   },
   screenLabel: {
-    paddingVertical: 10,
     color: colors.light,
+    fontSize: 17,
   },
   confirmButtons: {
     marginVertical: 50,
   },
-  actions: {
+  header: {
     backgroundColor: colors.primary,
+    paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  headerButton: {
+    paddingHorizontal: 16,
+  },
+  headerText: {
+    fontSize: 17,
   },
 })

@@ -10,7 +10,6 @@ import {
   Modal,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import ActionButton from '../../../../../components/ActionButton'
 import PrimaryButton from '../../../../../components/PrimaryButton'
 import TextButton from '../../../../../components/TextButton'
 import Input from '../../../../../components/Input'
@@ -25,43 +24,46 @@ const PasswordEnterModal = ({
   error,
   biometryType,
   onScan,
-}) => (
-  <Modal
-    animationType='slide'
-    visible={visible}
-    onRequestClose={modalToggle}
-  >
-    <SafeAreaView style={styles.modal}>
-      <View style={styles.actions}>
-        <ActionButton
-          title='Go back'
-          onPress={modalToggle}
-        />
-      </View>
-      <View>
-        <Input
-          label='Enter password'
-          name='password'
-          onChange={onPasswordChange}
-          error={error}
-          secureTextEntry
-        />
-        <PrimaryButton
-          label='Enter password'
-          onPress={onConfirmPassword}
-        />
-        {
-          biometryType &&
+}) =>
+  (
+    <Modal
+      animationType='slide'
+      visible={visible}
+      onRequestClose={modalToggle}
+    >
+      <SafeAreaView style={styles.modal}>
+        <View style={styles.actions}>
           <TextButton
-            texStyle={styles.authButton}
-            label={`${biometryType} Auth`}
-            onPress={onScan}
+            texStyle={styles.gobackText}
+            style={styles.goback}
+            label='Go back'
+            onPress={modalToggle}
           />
-        }
-      </View>
-    </SafeAreaView>
-  </Modal>
-)
+        </View>
+        <View>
+          <Input
+            label='Enter password'
+            name='password'
+            onChange={onPasswordChange}
+            error={error}
+            secureTextEntry
+          />
+          <PrimaryButton
+            label='Enter password'
+            onPress={onConfirmPassword}
+          />
+          {
+            biometryType &&
+            <TextButton
+              texStyle={styles.authButton}
+              label={`${biometryType} Auth`}
+              onPress={onScan}
+            />
+          }
+        </View>
+      </SafeAreaView>
+    </Modal>
+  )
 
 PasswordEnterModal.propTypes = {
   visible: PropTypes.bool,

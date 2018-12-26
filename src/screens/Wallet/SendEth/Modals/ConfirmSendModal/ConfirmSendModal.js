@@ -11,7 +11,7 @@ import {
   Modal,
 } from 'react-native'
 import PropTypes from 'prop-types'
-import ActionButton from '../../../../../components/ActionButton'
+import TextButton from '../../../../../components/TextButton'
 import LabeledItem from '../../../../../components/LabeledItem'
 import styles from './ConfirmSendModalStyles'
 
@@ -33,16 +33,20 @@ const ConfirmSendModal = ({
       onRequestClose={modalToggle}
     >
       <SafeAreaView style={styles.modal}>
-        <View style={styles.actions}>
-          <ActionButton
-            title='Cancel'
+        <View style={styles.header}>
+          <TextButton
+            label='Cancel'
+            textStyle={styles.headerText}
+            style={styles.headerButton}
             onPress={modalToggle}
           />
           <Text style={styles.screenLabel}>
             Confirm Send
           </Text>
-          <ActionButton
-            title='Confirm'
+          <TextButton
+            label='Confirm'
+            textStyle={styles.headerText}
+            style={styles.headerButton}
             onPress={onConfirmSend}
           />
         </View>
