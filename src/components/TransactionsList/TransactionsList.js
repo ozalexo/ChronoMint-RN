@@ -168,7 +168,7 @@ class TransactionItem extends PureComponent {
 
   static getFormattedBalance = (balance, symbol, type) => {
     if (!balance) {
-      return '-.--'
+      return ''
     }
     let numBalance
     if (isNumber(balance)) {

@@ -17,13 +17,13 @@ export default class PrimaryBalance extends PureComponent {
   static getFormattedBalance = (balance) => {
     let numberBalance
     if (!balance) {
-      return '-.--'
+      return ''
     } else {
       if (!isNumber(balance)) {
         if (balance instanceof BigNumber) {
           numberBalance = balance.toNumber()
         } else {
-          return '-.--'
+          return ''
         }
       } else {
         numberBalance = parseFloat(balance)

@@ -42,7 +42,7 @@ const FeeSlider = ({
 }) => {
   const tokenInfo = tokenSymbol &&
     calculatedFeeValue &&
-    [tokenSymbol, calculatedFeeValue.toFixed(8)].join(' ') || '-.--'
+    [tokenSymbol, calculatedFeeValue.toFixed(8)].join(' ') || ''
 
   const currencyInfo = tokenSymbol &&
     selectedCurrency &&

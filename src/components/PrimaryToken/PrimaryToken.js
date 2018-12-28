@@ -17,7 +17,7 @@ export default class PrimaryToken extends PureComponent {
 
   static getFormattedBalance = (balance) => {
     if (!isNumber(balance)) {
-      return '-.--'
+      return ''
     }
 
     if (balance > 0 && balance < 0.0001) {
