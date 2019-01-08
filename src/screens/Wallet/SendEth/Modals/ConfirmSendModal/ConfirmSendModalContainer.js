@@ -60,8 +60,8 @@ class ConfirmSendModalContainer extends React.Component {
       currency: currency * totalFee,
     }
     const balance = {
-      token: token.balance.toNumber(),
-      currency: currency * token.balance,
+      token: +token.balance,
+      currency: currency * +token.balance,
     }
 
     this.setState({

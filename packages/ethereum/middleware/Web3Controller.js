@@ -162,28 +162,21 @@ export default class Web3Controller {
     }
   }
 
-  sendToken = ({ from, to, tokenSymbol, value }) => {
+  sendToken = async ({ from, to, tokenSymbol, value }) => {
     const currentToken = this.tokens.get(tokenSymbol)
-    // eslint-disable-next-line no-console
-    console.log('currentToken: ', currentToken)
-    // eslint-disable-next-line no-console
-    console.log('currentToken._address: ', currentToken._address)
     try {
       // call() will return 1 in case if everything correct
-      const checkValue = new BigNumber(0.5)
-      // eslint-disable-next-line no-console
-      console.log('checkValue: ', checkValue)
-      const isCorrect = currentToken.methods.transfer(to, checkValue).call()
+      const formatetdValue = Web3.utils.soliditySha3({ t: 'uint256', v: new Web3.utils.BN(value) })
+      const isCorrect = await currentToken.methods.transfer(to, formatetdValue).call()
       if (isCorrect == 1) {
-        const data = currentToken.methods.transfer(to, checkValue).encodeABI()
+        const data = currentToken.methods.transfer(to, formatetdValue).encodeABI()
         return {
           from,
           to: currentToken._address,
           value: new BigNumber(0),
           data,
         }
-      }
-      else {
+      } else {
         // eslint-disable-next-line no-console
         console.log('Token transfer error:', isCorrect)
       }
