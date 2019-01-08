@@ -162,21 +162,31 @@ export default class Web3Controller {
     }
   }
 
-  sendToken = ({ from, to, gasPrice, gas, tokenSymbol, value }) => {
+  sendToken = ({ from, to, tokenSymbol, value }) => {
     const currentToken = this.tokens.get(tokenSymbol)
     // eslint-disable-next-line no-console
     console.log('currentToken: ', currentToken)
+    // eslint-disable-next-line no-console
+    console.log('currentToken._address: ', currentToken._address)
     try {
-      currentToken.methods.transfer(to, value).send({
-        from,
-        gasPrice,
-        gas,
-        value,
-      })
+      // call() will return 1 in case if everything correct
+      const checkValue = new BigNumber(0.5)
+      // eslint-disable-next-line no-console
+      console.log('checkValue: ', checkValue)
+      const isCorrect = currentToken.methods.transfer(to, checkValue).call()
+      if (isCorrect == 1) {
+        const data = currentToken.methods.transfer(to, checkValue).encodeABI()
+        return {
+          from,
+          to: currentToken._address,
+          value: new BigNumber(0),
+          data,
+        }
+      }
+      else {
         // eslint-disable-next-line no-console
-        .then((results) => console.log('SEND RESULTS: ', results))
-        // eslint-disable-next-line no-console
-        .catch((error) => console.log('SEND error: ', error))
+        console.log('Token transfer error:', isCorrect)
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('Error during send Token: ', error)
@@ -292,11 +302,11 @@ export default class Web3Controller {
   }
 
   getContractByName (contractName) {
-    return this.contracts[contractName]
+    return this.contracts.get(contractName)
   }
 
   getTokenContractByName (tokenContractName) {
-    return this.tokens[tokenContractName]
+    return this.tokens.get(tokenContractName)
   }
 
   async loadTokens (ethAddress) {

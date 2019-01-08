@@ -54,17 +54,23 @@ class SetAccountPasswordContainer extends PureComponent {
 
   handleDone = (values) => {
     const {
+      navigation,
+      createAccountByMnemonic,
+      createAccountByPrivateKey,
+      loginThunk,
+    } = this.props
+    const {
       privateKey,
       mnemonic,
       ethereumMainAddress,
-    } = this.props.navigation.state.params
+    } = navigation.state.params
+    const { navigate } = navigation
     const { password } = values
-    const { navigate } = this.props.navigation
 
     if (mnemonic) {
-      this.props.createAccountByMnemonic(mnemonic, password)
+      createAccountByMnemonic(mnemonic, password)
         .then((derivedPrivateKey) => {
-          this.props.loginThunk(ethereumMainAddress, derivedPrivateKey)
+          loginThunk(ethereumMainAddress, derivedPrivateKey)
             .then(() => {
               navigate('WalletList')
             })
@@ -79,9 +85,9 @@ class SetAccountPasswordContainer extends PureComponent {
           console.warn(error)
         })
     } else {
-      this.props.createAccountByPrivateKey(privateKey, password)
+      createAccountByPrivateKey(privateKey, password)
         .then((derivedPrivateKey) => {
-          this.props.loginThunk(ethereumMainAddress, derivedPrivateKey)
+          loginThunk(ethereumMainAddress, derivedPrivateKey)
             .then(() => {
               navigate('WalletList')
             })

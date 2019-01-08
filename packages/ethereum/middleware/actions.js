@@ -100,12 +100,10 @@ export const initContracts = (ethAddress) => ({
   ethAddress,
 })
 
-export const sendToken = ({ from, to, gasPrice, gas, tokenSymbol, value }) => ({
+export const sendToken = ({ from, to, tokenSymbol, value }) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_SEND_TOKEN,
   from,
   to,
-  gasPrice,
-  gas,
   tokenSymbol,
   value,
 })

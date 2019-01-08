@@ -19,6 +19,44 @@ const blockchains = {
   [ETH_PRIMARY_TOKEN]: BLOCKCHAIN_ETHEREUM,
 }
 
+const TokenItem = ({
+  item,
+  blockchain,
+  symbol,
+  formattedBalance,
+  selectedCurrency,
+  formattedAmountInCurrency,
+  onPress,
+}) => {
+  return (
+    <TouchableOpacity
+      onPress={() => onPress(item)}
+    >
+      <View style={styles.tokenContainer}>
+        <WalletImage
+          blockchain={blockchain}
+        />
+        <View style={styles.containerItem}>
+          <Text style={styles.itemText}>
+            {symbol}
+          </Text>
+          <Text style={styles.itemText}>
+            {formattedBalance}
+          </Text>
+        </View>
+        <View style={styles.containerItem}>
+          <Text style={styles.itemText}>
+            {selectedCurrency}
+          </Text>
+          <Text style={styles.itemText}>
+            {formattedAmountInCurrency}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
 export default class TokenSelector extends React.Component {
 
   static propTypes = {
@@ -46,30 +84,15 @@ export default class TokenSelector extends React.Component {
     const formattedAmountInCurrency = amountInCurrency > 0 ? amountInCurrency.toFixed(2) : amountInCurrency
     const blockchain = blockchains[symbol] ? blockchains[symbol] : 'default'
     return (
-      <TouchableOpacity
-        onPress={() => onSelectToken(item)}>
-        <View style={styles.tokenContainer}>
-          <WalletImage
-            blockchain={blockchain}
-          />
-          <View style={styles.containerItem}>
-            <Text style={styles.itemText}>
-              {symbol}
-            </Text>
-            <Text style={styles.itemText}>
-              {formattedBalance}
-            </Text>
-          </View>
-          <View style={styles.containerItem}>
-            <Text style={styles.itemText}>
-              {selectedCurrency}
-            </Text>
-            <Text style={styles.itemText}>
-              {formattedAmountInCurrency}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <TokenItem
+        item={item}
+        blockchain={blockchain}
+        symbol={symbol}
+        formattedBalance={formattedBalance}
+        selectedCurrency={selectedCurrency}
+        formattedAmountInCurrency={formattedAmountInCurrency}
+        onPress={onSelectToken}
+      />
     )
   }
 

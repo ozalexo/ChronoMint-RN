@@ -8,13 +8,12 @@ import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { getAddress } from '@chronobank/ethereum/utils'
 import { mnemonicToPrivateKeyAndAddress } from '@chronobank/ethereum/utils'
-import { createAccountByMnemonic } from '@chronobank/ethereum/redux/thunks'
 import i18n from '../../../locales/translation'
 import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import EnterMnemonic from './EnterMnemonic'
 
 class EnterMnemonicContainer extends PureComponent {
-  
+
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
@@ -43,10 +42,9 @@ class EnterMnemonicContainer extends PureComponent {
       }
 
       const params = {
-        privateKey,
+        mnemonic,
         ethereumMainAddress,
       }
-      createAccountByMnemonic(mnemonic)
       navigate('SetAccountPassword', params)
     } catch (error) {
       return Alert.alert(i18n.t('EnterMnemonic.wrongMnemonic'))

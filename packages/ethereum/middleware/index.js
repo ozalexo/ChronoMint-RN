@@ -53,8 +53,8 @@ const loadTokens = () =>
 const initContracts = (store, { ethAddress }) =>
   w3c.initContracts(ethAddress)
 
-const sendToken = (store, { from, to, gasPrice, gas, tokenSymbol, value }) =>
-  w3c.sendToken({ from, to, gasPrice, gas, tokenSymbol, value })
+const sendToken = (store, { from, to, tokenSymbol, value }) =>
+  w3c.sendToken({ from, to, tokenSymbol, value })
 
 
 // const getWeb3Instance = (store, action, next) => {

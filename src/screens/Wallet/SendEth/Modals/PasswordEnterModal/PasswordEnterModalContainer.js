@@ -9,7 +9,10 @@ import { Alert } from 'react-native'
 import BigNumber from 'bignumber.js'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
-import { updateEthereumTxDraftSignedTx } from '@chronobank/ethereum/redux/thunks'
+import { updateEthereumTxDraftSignedTx, updateEthereumTxDraftData } from '@chronobank/ethereum/redux/thunks'
+import {
+  sendToken,
+} from '@chronobank/ethereum/middleware/thunks'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TouchID from 'react-native-touch-id'
@@ -43,6 +46,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateEthereumTxDraftSignedTx,
+  updateEthereumTxDraftData,
+  sendToken,
 }, dispatch)
 
 class PasswordEnterModalContainer extends React.Component {
@@ -127,8 +132,10 @@ class PasswordEnterModalContainer extends React.Component {
   handleSign = ({ privateKey }) => {
     const {
       updateEthereumTxDraftSignedTx,
+      updateEthereumTxDraftData,
       currentEthWallet,
       masterWalletAddress,
+      sendToken,
       token,
     } = this.props
     const {
@@ -141,34 +148,55 @@ class PasswordEnterModalContainer extends React.Component {
       value,
       data,
     } = currentEthWallet.txDraft
-    const tx = {
-      to,
-      from,
-      data,
-      value: balanceToAmount(value).toNumber(),
-      nonce,
-      gas: new BigNumber(gasLimit),
-      gasPrice,
-      chainId,
-    }
-
-    token.symbol === ETH_PRIMARY_TOKEN
-      ? signEthTransaction({
-        tx,
-        privateKey,
+    let tx = {}
+    if (token.symbol === ETH_PRIMARY_TOKEN) {
+      tx = {
+        to,
+        from,
+        data,
+        value: balanceToAmount(value).toNumber(),
+        nonce,
+        gas: new BigNumber(gasLimit),
+        gasPrice,
+        chainId,
+      }
+    } else {
+      const tokenSend = sendToken({
+        from,
+        to,
+        tokenSymbol: token.symbol,
+        value: balanceToAmount(value, token.decimals),
       })
-        .then((signedTXresults) => {
-          updateEthereumTxDraftSignedTx({
-            masterWalletAddress,
-            signedTx: signedTXresults.rawTransaction,
-          })
-            .then(() => this.props.confirmPassword())
-            // eslint-disable-next-line no-console
-            .catch((error) => console.log(error))
+      updateEthereumTxDraftData({
+        masterWalletAddress,
+        data: tokenSend.data,
+      })
+      tx = {
+        to: tokenSend.to,
+        from: tokenSend.from,
+        data: tokenSend.data,
+        value: tokenSend.value,
+        nonce,
+        gas: new BigNumber(gasLimit),
+        gasPrice,
+        chainId,
+      }
+    }
+    signEthTransaction({
+      tx,
+      privateKey,
+    })
+      .then((signedTXresults) => {
+        updateEthereumTxDraftSignedTx({
+          masterWalletAddress,
+          signedTx: signedTXresults.rawTransaction,
         })
-        // eslint-disable-next-line no-console
-        .catch((error) => console.log(error))
-      : this.props.confirmPassword()
+          .then(() => this.props.confirmPassword())
+          // eslint-disable-next-line no-console
+          .catch((error) => console.log(error))
+      })
+      // eslint-disable-next-line no-console
+      .catch((error) => console.log(error))
   }
 
 

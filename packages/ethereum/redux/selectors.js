@@ -31,7 +31,11 @@ export const getCurrentTokensArray = (ethAddress) => createSelector(
       balance: wallet.tokens[token].balance.toNumber(),
       symbol: token,
     })
-    )
+    ).sort((a,b) => {
+      const item1 = b.balance
+      const item2 = a.balance
+      return item1 >= item2 ? 1 : -1
+    })
   }
 )
 
