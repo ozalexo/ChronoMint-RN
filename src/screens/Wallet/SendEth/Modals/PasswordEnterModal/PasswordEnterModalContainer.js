@@ -6,6 +6,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
+import { strToBytes32 } from '@chronobank/ethereum/utils'
 import BigNumber from 'bignumber.js'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
@@ -19,6 +20,10 @@ import { decryptWallet, signEthTransaction } from '@chronobank/ethereum/utils'
 import { balanceToAmount } from '@chronobank/ethereum/utils/amount'
 import { name as appName } from '../../../../../../app.json'
 import PasswordEnterModal from './PasswordEnterModal'
+import {
+  sendSignedTransaction,
+  getContractByName,
+} from '@chronobank/ethereum/middleware/thunks'
 
 const authenticateErrors = {
   'NOT_SUPPORTED': 'Not supported.',
@@ -42,6 +47,8 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getContractByName,
+  sendSignedTransaction,
   updateEthereumTxDraftSignedTx,
 }, dispatch)
 
@@ -112,9 +119,12 @@ class PasswordEnterModalContainer extends React.Component {
     const {
       currentEthWallet,
     } = this.props
+    console.log('THIS STATE', this.state)
     const pass = password ? password : this.state.password
+
     decryptWallet(currentEthWallet.encrypted, pass)
       .then((results) => {
+        console.log('Got PK', results)
         this.handleSign({
           privateKey: results.privateKey,
         })
@@ -124,13 +134,15 @@ class PasswordEnterModalContainer extends React.Component {
       })
   }
 
-  handleSign = ({ privateKey }) => {
+  handleSign = async ({ privateKey }) => {
+    console.log('Signing...', privateKey)
     const {
       updateEthereumTxDraftSignedTx,
       currentEthWallet,
       masterWalletAddress,
       token,
     } = this.props
+    console.log('1')
     const {
       nonce,
       gasLimit,
@@ -141,6 +153,7 @@ class PasswordEnterModalContainer extends React.Component {
       value,
       data,
     } = currentEthWallet.txDraft
+    console.log('2')
     const tx = {
       to,
       from,
@@ -151,24 +164,94 @@ class PasswordEnterModalContainer extends React.Component {
       gasPrice,
       chainId,
     }
+    console.log('3')
+    // export const strToBytes32 = (str) => web3.utils.padRight(web3.utils.utf8ToHex(str), 32)
+    const tokenAddress = '0x5240682f204ec9dc7ce771f4483db7611d380b2c'
+    console.log('4.1')
+    const tokenName = strToBytes32('AOZ Token')
+    console.log('4.2')
+    const tokenSym = strToBytes32('AOZ')
+    const tokenUrl = strToBytes32('')
+    const tokenIpfs = strToBytes32('')
+    const tokenSwarm = strToBytes32('')
+    console.log('5')
 
-    token.symbol === ETH_PRIMARY_TOKEN
-      ? signEthTransaction({
-        tx,
+    const er20man = this.props.getContractByName({ contractName: 'ERC20Manager' })
+    console.log('6 er20man', er20man)
+    try {
+      const call = await er20man.methods.addToken(
+        tokenAddress,
+        tokenSym,
+        tokenName,
+        tokenUrl,
+        18,
+        tokenIpfs,
+        tokenSwarm
+      ).call()
+      console.log('CALL:', call)
+      const recipie = await er20man.methods.addToken(
+        tokenAddress,
+        tokenSym,
+        tokenName,
+        tokenUrl,
+        18,
+        tokenIpfs,
+        tokenSwarm
+      ).encodeABI()
+      console.log('7 recipie', recipie)
+      const addTokenTx = {
+        to: '0x5a3134530f85dc8f6e27bd1977348c0b54f39f62',
+        from,
+        data: recipie,
+        value: 0,
+        nonce,
+        gas: new BigNumber(gasLimit*40),
+        gasPrice,
+        chainId,
+      }
+      signEthTransaction({
+        tx: addTokenTx,
         privateKey,
       })
-        .then((signedTXresults) => {
-          updateEthereumTxDraftSignedTx({
-            masterWalletAddress,
-            signedTx: signedTXresults.rawTransaction,
-          })
-            .then(() => this.props.confirmPassword())
-            // eslint-disable-next-line no-console
-            .catch((error) => console.log(error))
+        .then((signedTx) => {
+          console.log('>>>>>>>>>>>> Sending add token signed TX', signedTx)
+          // signedTXresults.rawTransaction
+          this.props.sendSignedTransaction({ signedTx: signedTx.rawTransaction })
+            .then((sendTxResponse) => {
+              console.log('TOKEN ADDED:', sendTxResponse)
+            })
+            .catch((error) => {
+              // eslint-disable-next-line no-console
+              console.log('TOKEN not ADDED :((', error)
+            })
         })
-        // eslint-disable-next-line no-console
-        .catch((error) => console.log(error))
-      : this.props.confirmPassword()
+        .catch((error) => {
+          console.log('Error Add Token:', error)
+        })
+      console.log('addTokenTx', addTokenTx)
+    } catch (e) {
+      console.log('e0004', e)
+    }
+
+    // console.log('Sending regular TX...')
+    // token.symbol === ETH_PRIMARY_TOKEN
+    //   ? signEthTransaction({
+    //     tx,
+    //     privateKey,
+    //   })
+    //     .then((signedTXresults) => {
+    //       console.log('Signed regular  TX...')
+    //       updateEthereumTxDraftSignedTx({
+    //         masterWalletAddress,
+    //         signedTx: signedTXresults.rawTransaction,
+    //       })
+    //         .then(() => this.props.confirmPassword())
+    //         // eslint-disable-next-line no-console
+    //         .catch((error) => console.log(error))
+    //     })
+    //     // eslint-disable-next-line no-console
+    //     .catch((error) => console.log(error))
+    //   : this.props.confirmPassword()
   }
 
 

@@ -224,19 +224,19 @@ export default class Web3Controller {
             }
             const eventType = data.event.toLowerCase()
             switch (eventType) {
-              case 'transfer': {
-                // eslint-disable-next-line no-console
-                console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
-                // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
-                //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
-                // }
-                break
-              }
-              case 'approval': {
-                // eslint-disable-next-line no-console
-                console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
-                break
-              }
+            case 'transfer': {
+              // eslint-disable-next-line no-console
+              console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
+              // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
+              //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
+              // }
+              break
+            }
+            case 'approval': {
+              // eslint-disable-next-line no-console
+              console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
+              break
+            }
             }
           })
           .on('error', (error) => {
@@ -292,11 +292,12 @@ export default class Web3Controller {
   }
 
   getContractByName (contractName) {
-    return this.contracts[contractName]
+    console.log('w3c GCBN', contractName)
+    return this.contracts.get(contractName)
   }
 
   getTokenContractByName (tokenContractName) {
-    return this.tokens[tokenContractName]
+    return this.tokens.get(tokenContractName)
   }
 
   async loadTokens (ethAddress) {

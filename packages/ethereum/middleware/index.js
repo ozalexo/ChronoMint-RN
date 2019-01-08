@@ -50,6 +50,11 @@ const getGasPrice = () =>
 const loadTokens = () =>
   w3c.loadTokens()
 
+const getContractByName = (store, { contractName }) => {
+  console.log('mw GCBN', contractName)
+  return w3c.getContractByName(contractName)
+}
+
 const initContracts = (store, { ethAddress }) =>
   w3c.initContracts(ethAddress)
 
@@ -128,6 +133,7 @@ const mutations = {
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE_HEX]: getNonceHex,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_NONCE]: getNonce,
   [ActionTypes.WEB3_MIDDLEWARE_METHOD_SEND_SIGNED_TX]: sendSignedTransaction,
+  [ActionTypes.WEB3_MIDDLEWARE_GET_CONTRACT_BY_NAME]: getContractByName,
 
 }
 

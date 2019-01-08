@@ -114,7 +114,6 @@ class SendEthContainer extends React.Component {
     masterWalletAddress: PropTypes.string,
     selectedCurrency: PropTypes.string,
     currentEthWallet: PropTypes.shape({}),
-    network: PropTypes.shape({}),
     prices: PropTypes.shape({}),
     navigation: PropTypes.shape({
       getParam: PropTypes.func,
@@ -170,9 +169,7 @@ class SendEthContainer extends React.Component {
   handleGoToPasswordModal = () => {
 
     if (this.state.isRecipientInputValid && this.state.isAmountInputValid) {
-
       this.handleTogglePasswordModal()
-
     } else {
       Alert.alert('Input error', 'Please fill address and amount', [
         { text: 'Ok', onPress: () => { }, style: 'cancel' },
@@ -181,28 +178,27 @@ class SendEthContainer extends React.Component {
   }
 
   handleChangeRecipient = (name, value) => {
-    if (typeof value === 'string') {
+    if (value && typeof value === 'string') {
       const {
         updateEthereumTxDraftTo,
         masterWalletAddress,
       } = this.props
       // Check for Ethereum
-      const dummyValidationOfRecipientInput =
-        value &&
+      const isRecipientInputValid =
         (value.length >= 40 || value.length <= 44) &&
         value.startsWith('0x')
 
       this.setState(
         {
           recipient: value,
-          isRecipientInputValid: dummyValidationOfRecipientInput,
+          isRecipientInputValid,
         },
         () => {
           updateEthereumTxDraftTo({
             masterWalletAddress,
-            to: this.state.recipient,
+            to: value,
           })
-          if (this.state.isAmountInputValid) {
+          if (isRecipientInputValid && this.state.isAmountInputValid) {
             this.requestGasEstimations()
           }
         }
@@ -227,21 +223,21 @@ class SendEthContainer extends React.Component {
             prices[this.state.selectedToken.symbol] &&
             prices[this.state.selectedToken.symbol][selectedCurrency]) ||
           0 // TODO: handle wrong values correctly
-        const dummyValidationOfAmountInput =
+        const isAmountInputValid =
           localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0 
           // && localeValue <= +this.state.selectedToken.balance
         this.setState(
           {
             amount: inputValue,
             amountInCurrency: tokenPrice * localeValue,
-            isAmountInputValid: dummyValidationOfAmountInput,
+            isAmountInputValid,
           },
           () => {
             updateEthereumTxDraftValue({
               masterWalletAddress,
               value: localeValue,
             })
-            if (this.state.isRecipientInputValid) {
+            if (isAmountInputValid && this.state.isRecipientInputValid) {
               this.requestGasEstimations()
             }
           }
@@ -315,6 +311,7 @@ class SendEthContainer extends React.Component {
       gasPrice,
       nonce,
     }
+    console.log('Estimating for:', estimationGasArguments)
     estimateGas(estimationGasArguments)
       .then((results) => {
         this.setState({

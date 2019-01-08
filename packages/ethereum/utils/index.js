@@ -6,6 +6,7 @@
 import Mnemonic from 'bitcore-mnemonic-react-native'
 import hdKey from 'ethereumjs-wallet/hdkey'
 import Accounts from 'web3-eth-accounts'
+import web3 from 'web3'
 import { WALLET_HD_PATH } from '../constants'
 
 const getDerivedWalletByPrivateKey = (privateKey, path = WALLET_HD_PATH) => {
@@ -86,3 +87,6 @@ export const signEthTransaction = ({ tx, privateKey }) => {
   const signedTx = accounts.signTransaction(tx, privateKey)
   return signedTx
 }
+
+// export const strToBytes32 = (str) => web3.utils.padRight(web3.utils.utf8ToHex(str), 32)
+export const strToBytes32 = (str) => web3.utils.utf8ToHex(str)

@@ -72,3 +72,8 @@ export const sendToken = ({ from, to, gasPrice, gas, tokenSymbol, value }) => (d
 
 export const getChainId = () => (dispatch) =>
   dispatch(Actions.getChainId())
+
+export const getContractByName = ({ contractName }) => (dispatch) => {
+  console.log('GCBN', contractName)
+  return dispatch(Actions.getContractByName(contractName))
+}

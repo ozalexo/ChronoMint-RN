@@ -123,3 +123,8 @@ export const estimateGas = ({ from, to, value, data, gasPrice, nonce }) => ({
 export const getGasPrice = () => ({
   type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_GAS_PRICE,
 })
+
+export const getContractByName = (contractName) => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_GET_CONTRACT_BY_NAME,
+  contractName,
+})
