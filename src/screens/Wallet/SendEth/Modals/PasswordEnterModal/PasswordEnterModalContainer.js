@@ -9,7 +9,7 @@ import { Alert } from 'react-native'
 import BigNumber from 'bignumber.js'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
-import { updateEthereumTxDraftSignedTx, updateEthereumTxDraftData } from '@chronobank/ethereum/redux/thunks'
+import { updateEthereumTxDraftSignedTx, updateEthereumTxDraftData, updateEthereumTxDraftGasLimit } from '@chronobank/ethereum/redux/thunks'
 import {
   sendToken,
 } from '@chronobank/ethereum/middleware/thunks'
@@ -47,6 +47,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateEthereumTxDraftSignedTx,
   updateEthereumTxDraftData,
+  updateEthereumTxDraftGasLimit,
   sendToken,
 }, dispatch)
 
@@ -131,8 +132,8 @@ class PasswordEnterModalContainer extends React.Component {
 
   handleSign = ({ privateKey }) => {
     const {
-      updateEthereumTxDraftSignedTx,
       updateEthereumTxDraftData,
+      updateEthereumTxDraftGasLimit,
       currentEthWallet,
       masterWalletAddress,
       sendToken,
@@ -160,28 +161,53 @@ class PasswordEnterModalContainer extends React.Component {
         gasPrice,
         chainId,
       }
+      this.signEthereumTransaction({
+        tx,
+        privateKey,
+      })
     } else {
-      const tokenSend = sendToken({
+      sendToken({
         from,
         to,
         tokenSymbol: token.symbol,
         value: balanceToAmount(value, token.decimals),
       })
-      updateEthereumTxDraftData({
-        masterWalletAddress,
-        data: tokenSend.data,
-      })
-      tx = {
-        to: tokenSend.to,
-        from: tokenSend.from,
-        data: tokenSend.data,
-        value: tokenSend.value,
-        nonce,
-        gas: new BigNumber(gasLimit),
-        gasPrice,
-        chainId,
-      }
+        .then((tokenSend) => {
+          const newGasLimit = tokenSend.gasLimit+gasLimit
+          updateEthereumTxDraftGasLimit({
+            masterWalletAddress,
+            gasLimit: newGasLimit,
+          })
+          updateEthereumTxDraftData({
+            masterWalletAddress,
+            data: tokenSend.data,
+          })
+          tx = {
+            to: tokenSend.to,
+            from: tokenSend.from,
+            data: tokenSend.data,
+            value: tokenSend.value,
+            nonce,
+            gas: new BigNumber(newGasLimit),
+            gasPrice,
+            chainId,
+          }
+          this.signEthereumTransaction({
+            tx,
+            privateKey,
+          })
+        })
+        // eslint-disable-next-line no-console
+        .catch((error) => console.log(error))
     }
+  }
+
+  signEthereumTransaction = ({ tx, privateKey }) => {
+    const {
+      updateEthereumTxDraftSignedTx,
+      masterWalletAddress,
+      confirmPassword,
+    } = this.props
     signEthTransaction({
       tx,
       privateKey,
@@ -191,14 +217,13 @@ class PasswordEnterModalContainer extends React.Component {
           masterWalletAddress,
           signedTx: signedTXresults.rawTransaction,
         })
-          .then(() => this.props.confirmPassword())
+          .then(() => confirmPassword())
           // eslint-disable-next-line no-console
           .catch((error) => console.log(error))
       })
       // eslint-disable-next-line no-console
       .catch((error) => console.log(error))
   }
-
 
   render () {
     const {

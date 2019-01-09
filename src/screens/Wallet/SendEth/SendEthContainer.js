@@ -218,7 +218,7 @@ class SendEthContainer extends React.Component {
         masterWalletAddress,
         selectedCurrency,
       } = this.props
-      if (!(value.endsWith(',') || value.endsWith('.') || value.endsWith('0'))) {
+      if (!(value.endsWith(',') || value.endsWith('.'))) {
         const inputValue = value.replace(',', '.').replace(' ', '')
         const localeValue = new BigNumber(inputValue).toNumber()
         const tokenPrice =
@@ -250,7 +250,7 @@ class SendEthContainer extends React.Component {
         this.setState({
           amount: value ? value.replace(',', '.').replace(' ', '') : null,
           amountInCurrency: 0,
-          isAmountInputValid: false,
+          isAmountInputValid: value.toNumber() ? true : false,
         }, () => {
           updateEthereumTxDraftValue({
             masterWalletAddress,

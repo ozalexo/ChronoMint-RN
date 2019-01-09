@@ -19,6 +19,8 @@ import * as Web3Actions from './actions'
 import * as Web3Thunks from './thunks'
 import Web3Provider from './Web3Provider'
 
+export const DEFAULT_GAS = 4700000
+
 export default class Web3Controller {
   constructor (
     dispatch,
@@ -166,19 +168,20 @@ export default class Web3Controller {
     const currentToken = this.tokens.get(tokenSymbol)
     try {
       // call() will return 1 in case if everything correct
-      const formatetdValue = Web3.utils.soliditySha3({ t: 'uint256', v: new Web3.utils.BN(value) })
-      const isCorrect = await currentToken.methods.transfer(to, formatetdValue).call()
-      if (isCorrect == 1) {
-        const data = currentToken.methods.transfer(to, formatetdValue).encodeABI()
-        return {
-          from,
-          to: currentToken._address,
-          value: new BigNumber(0),
-          data,
-        }
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Token transfer error:', isCorrect)
+      // eslint-disable-next-line no-console
+      const newValue = BigNumber.isBigNumber(value)
+        ? value.toString(10)
+        : value
+
+      const gasLimit = await currentToken.methods.transfer(to, newValue).estimateGas({ from, newValue })
+      const data = currentToken.methods.transfer(to, newValue).encodeABI()
+
+      return {
+        from,
+        to: currentToken._address,
+        value: new BigNumber(0),
+        data,
+        gasLimit,
       }
     } catch (error) {
       // eslint-disable-next-line no-console
