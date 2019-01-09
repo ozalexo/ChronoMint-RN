@@ -26,16 +26,22 @@ export const getCurrentTokensArray = (ethAddress) => createSelector(
   getCurrentEthWallet(ethAddress),
   (wallet) => {
     const tokens = Object.keys(wallet.tokens)
-    return tokens.map((token) => ({
-      ...wallet.tokens[token],
-      balance: wallet.tokens[token].balance.toNumber(),
-      symbol: token,
+    const filteredTokens = []
+    tokens.forEach((token) => {
+      if (wallet.tokens[token] && wallet.tokens[token].balance && wallet.tokens[token].balance.toNumber() != 0) {
+        filteredTokens.push({
+          ...wallet.tokens[token],
+          balance: wallet.tokens[token].balance.toNumber(),
+          symbol: token,
+        })
+      }
     })
-    ).sort((a,b) => {
+    filteredTokens.sort((a, b) => {
       const item1 = b.balance
       const item2 = a.balance
       return item1 >= item2 ? 1 : -1
     })
+    return filteredTokens
   }
 )
 
