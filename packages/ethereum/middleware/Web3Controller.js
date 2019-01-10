@@ -179,7 +179,7 @@ export default class Web3Controller {
         to: currentToken._address,
         value: new BigNumber(0),
         data,
-        gasLimit: gasLimit + 1,
+        gasLimit: gasLimit + 1, // +1 explanation: copied from TimeX. May be we will need some constant here
       }
     } catch (error) {
       // eslint-disable-next-line no-console
