@@ -40,8 +40,8 @@ class ConfirmMnemonicContainer extends PureComponent {
       this.setState({
         words: this.state.prevWords,
         mnemonic: this.state.prevMnemonic,
+        disabled: true,
       })
-      this.setState({ disabled: true })
     }
   }
 
