@@ -73,12 +73,9 @@ class LoginContainer extends PureComponent {
           this.setState({ biometryType: 'TouchID' }) //For Android
         }
       })
-      .then(() => {
-        this.authenticate()
-      })
-      .catch(() => {
-        Alert.alert('You do not support the ability to scan.')
-      })
+      .then(this.authenticate)
+      // eslint-disable-next-line no-console
+      .catch((e) => console.log(e))
   }
 
   authenticate = () => {

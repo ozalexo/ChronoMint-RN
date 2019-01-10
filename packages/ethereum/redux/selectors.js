@@ -37,9 +37,9 @@ export const getCurrentTokensArray = (ethAddress) => createSelector(
       }
     })
     filteredTokens.sort((a, b) => {
-      const item1 = b.balance
-      const item2 = a.balance
-      return item1 >= item2 ? 1 : -1
+      const item1 = b.symbol
+      const item2 = a.symbol
+      return item2 >= item1 ? 1 : -1
     })
     return filteredTokens
   }

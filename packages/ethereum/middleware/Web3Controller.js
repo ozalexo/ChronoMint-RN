@@ -19,8 +19,6 @@ import * as Web3Actions from './actions'
 import * as Web3Thunks from './thunks'
 import Web3Provider from './Web3Provider'
 
-export const DEFAULT_GAS = 4700000
-
 export default class Web3Controller {
   constructor (
     dispatch,
@@ -181,7 +179,7 @@ export default class Web3Controller {
         to: currentToken._address,
         value: new BigNumber(0),
         data,
-        gasLimit,
+        gasLimit: gasLimit + 1,
       }
     } catch (error) {
       // eslint-disable-next-line no-console

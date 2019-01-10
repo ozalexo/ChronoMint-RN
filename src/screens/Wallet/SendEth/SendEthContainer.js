@@ -19,7 +19,7 @@ import {
   getChainId,
 } from '@chronobank/ethereum/middleware/thunks'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
-import { balanceToAmount } from '@chronobank/ethereum/utils/amount'
+import { balanceToAmount, amountToBalance } from '@chronobank/ethereum/utils/amount'
 import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
 import { selectMarketPrices, selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
@@ -60,8 +60,9 @@ class SendEthContainer extends React.Component {
       showQRscanner: false,
       error: null,
       gasLimit: null,
-      gasDefault: null,
-      gasLimitInCurrency: null,
+      defaultGasPrice: null,
+      gasPrice: null,
+      gasPriceInCurrency: null,
       feeMultiplier: 1,
       isAmountInputValid: false,
       isRecipientInputValid: false,
@@ -71,7 +72,7 @@ class SendEthContainer extends React.Component {
     }
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps) {
     if (prevProps.navigation.state.params) {
       if (prevProps.navigation.state.params.token.symbol !== this.props.navigation.state.params.token.symbol) {
         const selectedToken = {
@@ -110,7 +111,8 @@ class SendEthContainer extends React.Component {
     getNonce: PropTypes.func,
     getGasPrice: PropTypes.func,
     getChainId: PropTypes.func,
-    updateEthereumTxDraftGasPriceChainIdNonce: PropTypes.func,
+    updateEthereumTxDraftGasPrice: PropTypes.func,
+    updateEthereumTxDraftChainIdNonce: PropTypes.func,
     masterWalletAddress: PropTypes.string,
     selectedCurrency: PropTypes.string,
     currentEthWallet: PropTypes.shape({}),
@@ -143,7 +145,8 @@ class SendEthContainer extends React.Component {
       getNonce,
       getGasPrice,
       getChainId,
-      updateEthereumTxDraftGasPriceChainIdNonce,
+      updateEthereumTxDraftChainIdNonce,
+      updateEthereumTxDraftGasPrice,
       masterWalletAddress,
     } = this.props
 
@@ -153,9 +156,16 @@ class SendEthContainer extends React.Component {
       getNonce(masterWalletAddress),
     ])
       .then((results) => {
-        updateEthereumTxDraftGasPriceChainIdNonce({
+        this.setState({
+          gasPrice: +results[0],
+          defaultGasPrice: +results[0],
+        })
+        updateEthereumTxDraftGasPrice({
           masterWalletAddress,
-          gasPrice: results[0],
+          gasPrice: +results[0],
+        })
+        updateEthereumTxDraftChainIdNonce({
+          masterWalletAddress,
           chainId: results[1],
           nonce: results[2],
         })
@@ -228,8 +238,8 @@ class SendEthContainer extends React.Component {
             prices[this.state.selectedToken.symbol][selectedCurrency]) ||
           0 // TODO: handle wrong values correctly
         const dummyValidationOfAmountInput =
-          localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0 
-          // && localeValue <= +this.state.selectedToken.balance
+          localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0
+        // && localeValue <= +this.state.selectedToken.balance
         this.setState(
           {
             amount: inputValue,
@@ -264,30 +274,32 @@ class SendEthContainer extends React.Component {
   handleFeeSliderChange = (value) => {
     const {
       prices,
-      updateEthereumTxDraftGasLimit,
+      updateEthereumTxDraftGasPrice,
       masterWalletAddress,
       selectedCurrency,
     } = this.props
-    if (this.state.gasLimit !== null) {
+    if (this.state.gasPrice !== null) {
 
       const tokenPrice =
         (prices &&
           this.state.selectedToken &&
+          prices[this.state.selectedToken.symbol] &&
           prices[this.state.selectedToken.symbol][selectedCurrency]) ||
         0 // TODO: handle wrong values correctly
 
-      let newGasLimit = this.state.gasLimit ? this.state.gasDefault * value : null
-      let newGasPrice = newGasLimit ? newGasLimit * tokenPrice : null
-      newGasLimit = parseInt(newGasLimit)
+      let newGasPrice = this.state.gasPrice ? this.state.defaultGasPrice * +value : null
       newGasPrice = parseInt(newGasPrice)
+      let newGasPriceInCurrency = newGasPrice ? newGasPrice * tokenPrice : null
+      newGasPriceInCurrency = parseInt(newGasPriceInCurrency)
+
       this.setState({
         feeMultiplier: value,
-        gasLimit: newGasLimit,
-        gasLimitInCurrency: newGasPrice,
+        gasPrice: newGasPrice,
+        gasPriceInCurrency: newGasPriceInCurrency,
       }, () => {
-        updateEthereumTxDraftGasLimit({
+        updateEthereumTxDraftGasPrice({
           masterWalletAddress,
-          gasLimit: newGasLimit,
+          gasPrice: newGasPrice,
         })
       })
     } else {
@@ -308,10 +320,11 @@ class SendEthContainer extends React.Component {
       gasPrice,
       nonce,
     } = currentEthWallet.txDraft
+    const { decimals } = this.state.selectedToken
     const estimationGasArguments = {
       from,
       to,
-      value: balanceToAmount(this.state.amount),
+      value: balanceToAmount(this.state.amount, decimals),
       gasPrice,
       nonce,
     }
@@ -319,7 +332,6 @@ class SendEthContainer extends React.Component {
       .then((results) => {
         this.setState({
           gasLimit: results,
-          gasDefault: results,
         }, () => {
           updateEthereumTxDraftGasLimit({
             masterWalletAddress,
@@ -390,8 +402,8 @@ class SendEthContainer extends React.Component {
       amount,
       amountInCurrency,
       feeMultiplier,
-      gasLimitInCurrency,
-      gasLimit,
+      gasPriceInCurrency,
+      gasPrice,
       recipient,
       selectedToken,
       modalProps,
@@ -404,14 +416,16 @@ class SendEthContainer extends React.Component {
     const blockchainPrice = prices &&
       prices[selectedToken.symbol] &&
       prices[selectedToken.symbol][selectedCurrency] || 0
+    const formattedGasPrice = amountToBalance(gasPrice, selectedToken.decimals).toNumber()
+    const formattedgasPriceInCurrency = amountToBalance(gasPriceInCurrency, selectedToken.decimals).toNumber()
     return (
       <SendEth
         amount={amount}
         amountInCurrency={amountInCurrency}
         blockchain={blockchain}
         feeMultiplier={feeMultiplier}
-        gasLimit={gasLimit}
-        gasLimitInCurrency={gasLimitInCurrency}
+        gasPrice={formattedGasPrice}
+        gasPriceInCurrency={formattedgasPriceInCurrency}
         onChangeAmount={this.handleChangeAmount}
         onChangeRecipient={this.handleChangeRecipient}
         onFeeSliderChange={this.handleFeeSliderChange}

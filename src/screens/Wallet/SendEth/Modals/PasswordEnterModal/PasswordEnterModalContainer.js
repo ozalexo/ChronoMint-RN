@@ -82,12 +82,9 @@ class PasswordEnterModalContainer extends React.Component {
           this.setState({ biometryType: 'TouchID' }) //For Android
         }
       })
-      .then(() => {
-        this.authenticate()
-      })
-      .catch(() => {
-        Alert.alert('You do not support the ability to scan.')
-      })
+      .then(this.authenticate)
+      // eslint-disable-next-line no-console
+      .catch((e) => console.log(e))
   }
 
 
@@ -174,10 +171,9 @@ class PasswordEnterModalContainer extends React.Component {
         value: balanceToAmount(value, token.decimals),
       })
         .then((tokenSend) => {
-          const newGasLimit = tokenSend.gasLimit+gasLimit
           updateEthereumTxDraftGasLimit({
             masterWalletAddress,
-            gasLimit: newGasLimit,
+            gasLimit: tokenSend.gasLimit,
           })
           updateEthereumTxDraftData({
             masterWalletAddress,
@@ -189,7 +185,7 @@ class PasswordEnterModalContainer extends React.Component {
             data: tokenSend.data,
             value: tokenSend.value,
             nonce,
-            gas: new BigNumber(newGasLimit),
+            gas: new BigNumber(tokenSend.gasLimit),
             gasPrice,
             chainId,
           }

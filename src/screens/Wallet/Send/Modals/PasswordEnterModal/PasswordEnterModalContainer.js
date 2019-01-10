@@ -78,9 +78,8 @@ class PasswordEnterModalContainer extends React.Component {
         }
       })
       .then(this.authenticate)
-      .catch(() => {
-        Alert.alert('You do not support the ability to scan.')
-      })
+      // eslint-disable-next-line no-console
+      .catch((e) => console.log(e))
   }
 
 

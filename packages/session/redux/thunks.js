@@ -42,11 +42,14 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch, getState) => {
         .then(() => {
           const bitcoinChannels = getCurrentNetworkBlockchainChannels(BLOCKCHAIN_BITCOIN)(getState())
           dispatch(apiETH.requestEthereumSubscribeWalletByAddress(ethAddress))
-            .then((result) => {
+            .then(() => {
               dispatch(apiETH.requestEthereumBalanceByAddress(ethAddress))
+                // eslint-disable-next-line no-console
                 .then((result) => console.log('result: ', result))
+                // eslint-disable-next-line no-console
                 .catch((er) => console.log('er: ', er))
             })
+            // eslint-disable-next-line no-console
             .catch((er) => console.log('er: ', er))
           dispatch(getBalance(ethAddress))
             .then((amount) => {

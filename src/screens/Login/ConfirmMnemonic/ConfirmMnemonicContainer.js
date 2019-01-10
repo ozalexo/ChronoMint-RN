@@ -56,10 +56,10 @@ class ConfirmMnemonicContainer extends PureComponent {
       createAccountByMnemonic,
     } = this.props
 
-    // if (mnemonic !== this.state.mnemonic.join(' ')) {
-    //   this.addError(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
-    //   return this.resetState()
-    // }
+    if (mnemonic !== this.state.mnemonic.join(' ')) {
+      Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+      return this.resetState()
+    }
     createAccountByMnemonic(mnemonic, password)
       .then(() => {
         this.navigateToStartPage()
@@ -91,9 +91,9 @@ class ConfirmMnemonicContainer extends PureComponent {
         mnemonic: [...mnemonic, word],
         words: [...newWords],
       }, () => {
-        // if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
+        if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
           this.handleDone()
-        // }
+        }
       })
     }
   }
@@ -104,10 +104,6 @@ class ConfirmMnemonicContainer extends PureComponent {
       mnemonic: [],
       words: mnemonic.split(' ').sort(() => Math.random() - 0.5),
     }
-  }
-
-  addError = (error) => {
-    Alert.alert(error)
   }
 
   resetState = () => {
