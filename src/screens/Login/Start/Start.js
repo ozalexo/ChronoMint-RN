@@ -96,10 +96,12 @@ export default class Start extends PureComponent {
   enterPasswordValidationSchema = Yup.object().shape({
     password: Yup.string()
       .min(8, i18n.t('StartPage.passwordTooShort', { min_password_length: MIN_PASSWORD_LENGTH }))
-      .required(i18n.t('StartPage.passwordRequired'))
+      .required(i18n.t('StartPage.passwordRequired')),
+    /* Lines below are kept if we will increase security requirements in the future
       .matches(/[a-z]/, i18n.t('StartPage.passwordLowerCaseChar'))
       .matches(/[A-Z]/, i18n.t('StartPage.passwordUpperCaseChar'))
       .matches(/[a-zA-Z]+[^a-zA-Z\s]+/, i18n.t('StartPage.passwordSpecialChar')),
+    */
     confirmPassword: Yup.string()
       .oneOf(
         [Yup.ref('password', null)],
