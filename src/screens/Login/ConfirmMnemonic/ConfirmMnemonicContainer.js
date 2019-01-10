@@ -41,8 +41,7 @@ class ConfirmMnemonicContainer extends PureComponent {
         words: this.state.prevWords,
         mnemonic: this.state.prevMnemonic,
       })
-    } else {
-      Alert.alert('You can\'t make an undo.')
+      this.setState({ disabled: true })
     }
   }
 
@@ -82,7 +81,10 @@ class ConfirmMnemonicContainer extends PureComponent {
 
   handleWord = (word) => {
     if (word) {
-      const { mnemonic, words } = this.state
+      const { mnemonic, words, disabled } = this.state
+      if (disabled) {
+        this.setState({ disabled: false })
+      }
       const newWords = [...words]
       newWords[newWords.indexOf(word)] = ''
       this.setState({
@@ -101,6 +103,7 @@ class ConfirmMnemonicContainer extends PureComponent {
   createInitialState = () => {
     const { mnemonic } = this.props.navigation.state.params
     return {
+      disabled: true,
       mnemonic: [],
       words: mnemonic.split(' ').sort(() => Math.random() - 0.5),
     }
@@ -111,7 +114,7 @@ class ConfirmMnemonicContainer extends PureComponent {
   }
 
   render () {
-    const { words, mnemonic } = this.state
+    const { words, mnemonic, disabled } = this.state
     return (
       <ConfirmMnemonic
         onDone={this.handleDone}
@@ -120,6 +123,7 @@ class ConfirmMnemonicContainer extends PureComponent {
         onWord={this.handleWord}
         mnemonic={mnemonic}
         words={words}
+        disabled={disabled}
       />
     )
   }

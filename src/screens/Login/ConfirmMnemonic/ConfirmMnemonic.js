@@ -53,6 +53,7 @@ export default class ConfirmMnemonic extends PureComponent {
       onDone,
       onClear,
       onUndo,
+      disabled,
     } = this.props
 
     return (
@@ -89,9 +90,10 @@ export default class ConfirmMnemonic extends PureComponent {
           />
           <PrimaryButton
             label={i18n.t('ConfirmMnemonic.undo')}
-            onPress={onUndo}
+            onPress={!disabled ? onUndo : () => { }}
             style={styles.undoAndClear}
             upperCase
+            disabled={disabled}
           />
         </View>
         <View style={styles.doneWrapper}>
