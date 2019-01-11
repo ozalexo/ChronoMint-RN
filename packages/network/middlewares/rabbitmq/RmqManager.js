@@ -3,7 +3,6 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import SockJS from 'sockjs-client'
 import webstomp from 'webstomp-client'
 
 class RmqManager {
@@ -18,7 +17,7 @@ class RmqManager {
     this.client && this.ws && this.disconnect()
     return new Promise((resolve, reject) => {
       try {
-        this.ws = new SockJS(baseUrl)
+        this.ws = new WebSocket(baseUrl)
       } catch (error) {
         return reject(error.message)
       }

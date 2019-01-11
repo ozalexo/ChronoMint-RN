@@ -4,9 +4,9 @@
  */
 
 import RmqManager from './RmqManager'
-// import { getRmqSubscriptions } from './selectors'
+import { getCurrentNetworkRmqbaseUrl } from '../../redux/selectors'
+
 import {
-  BASE_URL,
   MW_RMQ_CONNECT,
   MW_RMQ_DISCONNECT,
   MW_RMQ_SUBSCRIBE,
@@ -59,7 +59,14 @@ const createRmqMiddleware = () => {
       onStompError,
       onWebSocketClose,
     }
-    return RmqManager.connect(BASE_URL, USER, PASSWORD, handlers)
+
+    const state = store.getState()
+    const rabbitMqBaseUrl = getCurrentNetworkRmqbaseUrl(state)
+    if (!rabbitMqBaseUrl) {
+      return Promise.reject('You must select a network by NETWORK_SELECT action before connecting to RabbitMQ')
+    }
+
+    return RmqManager.connect(rabbitMqBaseUrl, USER, PASSWORD, handlers)
       .then(() => {
         next(Actions.rmqConnectSuccess())
         return Promise.resolve()
