@@ -36,133 +36,154 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch, getState) => {
 
     try {
       dispatch(startMarket())
-      dispatch(marketAddToken('BTC'))
-      dispatch(marketAddToken('ETH'))
-      dispatch(rmqConnect())
+      dispatch(marketAddToken('BTC')) // TODO: to remove hardcode
+      dispatch(marketAddToken('ETH')) // TODO: to remove hardcode
+    } catch (error) {
+      // Ignoring market errors
+      // eslint-disable-next-line no-console
+      console.log('Market error:', error)
+    }
+
+    try {
+      dispatch(apiETH.requestEthereumSubscribeWalletByAddress(ethAddress))
         .then(() => {
-          const bitcoinChannels = getCurrentNetworkBlockchainChannels(BLOCKCHAIN_BITCOIN)(getState())
-          dispatch(apiETH.requestEthereumSubscribeWalletByAddress(ethAddress))
-            .then(() => {
-              dispatch(apiETH.requestEthereumBalanceByAddress(ethAddress))
-                // eslint-disable-next-line no-console
-                .then((result) => console.log('result: ', result))
-                // eslint-disable-next-line no-console
-                .catch((er) => console.log('er: ', er))
-            })
+          dispatch(apiETH.requestEthereumBalanceByAddress(ethAddress))
+            // eslint-disable-next-line no-console
+            .then((result) => console.log('result: ', result))
             // eslint-disable-next-line no-console
             .catch((er) => console.log('er: ', er))
-          dispatch(getBalance(ethAddress))
-            .then((amount) => {
-              const balance = EthAmountUtils.amountToBalance(amount)
-              dispatch(updateEthereumBalance({ tokenSymbol: 'ETH', address: ethAddress, balance, amount }))
-            })
-            .catch((error) => {
-              return reject('Requiesting ETH balance error', error)
-            })
-          dispatch(initContracts(ethAddress))
-          dispatch(createBitcoinWallet(privateKey, ethAddress))
-            .then(() => {
-              const BTCwalletsList = getBitcoinWalletsList(ethAddress)(getState())
-              BTCwalletsList.forEach((address) => {
-                dispatch(apiBTC.requestBitcoinSubscribeWalletByAddress(address))
-                  .then(() => {
-                    dispatch(apiBTC.requestBitcoinBalanceByAddress(address))
-                      .then((balance) => {
-                        dispatch(updateBitcoinBalance({
-                          address,
-                          masterWalletAddress: ethAddress,
-                          balance: parseBitcoinBalanceData(balance),
-                          amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
-                        }))
-                      })
-                      .catch((error) => {
-                        return reject('Update BTC balance HTTP ERROR:', error)
-                      })
-                  })
-                  .catch((error) => {
-                    return reject('HTTP response ERROR:', error)
-                  })
-                dispatch(rmqSubscribe({
-                  // TODO: need to get channel name from store
-                  channel: `${bitcoinChannels.balance}.${address}`,
-                  handler: ({ body }) => {
-                    if (!body) {
-                      // TODO: need to handle possible errors in reply
-                      return
-                    }
-
-                    try {
-                      const data = JSON.parse(body)
-                      const confirmations0 = data.balances.confirmations0
-                      const confirmations6 = data.balances.confirmations6
-                      const balance0 = convertSatoshiToBTC(confirmations0)
-                      const balance6 = convertSatoshiToBTC(confirmations6)
-
-                      dispatch(updateBitcoinBalance({
-                        address: data.address,
-                        masterWalletAddress: ethAddress,
-                        balance: balance0 || balance6,
-                        amount: confirmations0 || confirmations6,
-                      }))
-                    } catch (error) {
-                      // TODO: to handle any errors here
-                      // Silently ignore any errors for now.
-                      // eslint-disable-next-line no-console
-                      console.log(error)
-                    }
-                  },
-                }))
-
-                //subscribe on transactions
-                dispatch(rmqSubscribe({
-                  // TODO: need to get channel name from store
-                  channel: `${bitcoinChannels.transaction}.${address}`,
-                  handler: ({ body }) => {
-                    if (!body) {
-                      // TODO: need to handle possible errors in reply
-                      return
-                    }
-                    try {
-                      const data = JSON.parse(body)
-                      const txList = [
-                        {
-                          from: data.inputs[0].address,
-                          to: data.outputs[0].address,
-                          amount: data.outputs[0].value,
-                          balance: convertSatoshiToBTC(data.outputs[0].value),
-                          timestamp: data.timestamp,
-                          hash: body.hash,
-                          confirmations: data.confirmations,
-                        },
-                      ]
-                      dispatch(updateBitcoinTxHistory({
-                        address,
-                        masterWalletAddress: ethAddress,
-                        txList,
-                        latestTxDate: data.timestamp,
-                      }))
-                    } catch (error) {
-                      // TODO: to handle any errors here
-                      // Silently ignore any errors for now.
-                      // eslint-disable-next-line no-console
-                      console.log(error)
-                    }
-                  },
-                }))
-              })
-              dispatch(login(ethAddress))
-              return resolve()
-            })
-            .catch((error) => {
-              return reject(error)
-            })
+        })
+        // eslint-disable-next-line no-console
+        .catch((er) => console.log('er: ', er))
+      dispatch(getBalance(ethAddress))
+        .then((amount) => {
+          const balance = EthAmountUtils.amountToBalance(amount)
+          dispatch(updateEthereumBalance({ tokenSymbol: 'ETH', address: ethAddress, balance, amount }))
         })
         .catch((error) => {
-          return reject(error)
+          return reject('Requiesting ETH balance error', error)
         })
+      dispatch(initContracts(ethAddress))
     } catch (error) {
-      return reject(error)
+      // Something wrong during obtain info for ETH
+      // eslint-disable-next-line no-console
+      console.log(error)
     }
+
+    dispatch(createBitcoinWallet(privateKey, ethAddress))
+      .then(() => {
+        const BTCwalletsList = getBitcoinWalletsList(ethAddress)(getState())
+        BTCwalletsList.forEach((address) => {
+          // Get BTC balance
+          dispatch(apiBTC.requestBitcoinBalanceByAddress(address))
+            .then((balance) => {
+              dispatch(updateBitcoinBalance({
+                address,
+                masterWalletAddress: ethAddress,
+                balance: parseBitcoinBalanceData(balance),
+                amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
+              }))
+            })
+            .catch((error) => {
+              // eslint-disable-next-line no-console
+              console.log('Update BTC balance HTTP ERROR:', error)
+            })
+          
+          // Connect to RabbitMQ and subscribe for updates
+          dispatch(rmqConnect())
+            .then(() => {
+              const bitcoinChannels = getCurrentNetworkBlockchainChannels(BLOCKCHAIN_BITCOIN)(getState())
+
+              dispatch(apiBTC.requestBitcoinSubscribeWalletByAddress(address))
+                .then(() => {
+                  // Do nothing, subscribed.
+                })
+                .catch((error) => {
+                  console.log('HTTP response ERROR:', error)
+                })
+
+              // Subscribe on balance updates
+              dispatch(rmqSubscribe({
+                // TODO: need to get channel name from store
+                channel: `${bitcoinChannels.balance}.${address}`,
+                handler: ({ body }) => {
+                  if (!body) {
+                    // TODO: need to handle possible errors in reply
+                    return
+                  }
+
+                  try {
+                    const data = JSON.parse(body)
+                    const confirmations0 = data.balances.confirmations0
+                    const confirmations6 = data.balances.confirmations6
+                    const balance0 = convertSatoshiToBTC(confirmations0)
+                    const balance6 = convertSatoshiToBTC(confirmations6)
+
+                    dispatch(updateBitcoinBalance({
+                      address: data.address,
+                      masterWalletAddress: ethAddress,
+                      balance: balance0 || balance6,
+                      amount: confirmations0 || confirmations6,
+                    }))
+                  } catch (error) {
+                    // TODO: to handle any errors here
+                    // Silently ignore any errors for now.
+                    // eslint-disable-next-line no-console
+                    console.log(error)
+                  }
+                },
+              }))
+
+              // Subscribe on transactions
+              dispatch(rmqSubscribe({
+                // TODO: need to get channel name from store
+                channel: `${bitcoinChannels.transaction}.${address}`,
+                handler: ({ body }) => {
+                  if (!body) {
+                    // TODO: need to handle possible errors in reply
+                    return
+                  }
+                  try {
+                    const data = JSON.parse(body)
+                    const txList = [
+                      {
+                        from: data.inputs[0].address,
+                        to: data.outputs[0].address,
+                        amount: data.outputs[0].value,
+                        balance: convertSatoshiToBTC(data.outputs[0].value),
+                        timestamp: data.timestamp,
+                        hash: body.hash,
+                        confirmations: data.confirmations,
+                      },
+                    ]
+                    dispatch(updateBitcoinTxHistory({
+                      address,
+                      masterWalletAddress: ethAddress,
+                      txList,
+                      latestTxDate: data.timestamp,
+                    }))
+                  } catch (error) {
+                    // TODO: to handle any errors here
+                    // Silently ignore any errors for now.
+                    // eslint-disable-next-line no-console
+                    console.log(error)
+                  }
+                },
+              }))
+            })
+            .catch((error) => {
+              // eslint-disable-next-line no-console
+              console.log('Can\'t connect to RabbitMQ server', error)
+            })
+        })
+
+        // Set flag for session and proceed to Wallet list
+        dispatch(login(ethAddress))
+        return resolve()
+      })
+      .catch((error) => {
+        return reject('Can\'t create BTC wallet:', error)
+      })
   })
 }
 
