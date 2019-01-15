@@ -7,7 +7,7 @@ import Web3 from 'web3'
 import { Map } from 'immutable'
 import { marketAddToken } from '@chronobank/market/redux/thunks'
 import { amountToBalance } from '../utils/amount'
-import { updateEthereumBalance } from '../redux/thunks'
+import { ethereumUpdateBalance } from '../redux/thunks'
 import ERC20DAODefaultABI from './abi/ERC20DAODefaultABI'
 // import TokenManagementInterfaceABI from 'chronobank-smart-contracts/build/contracts/TokenManagementInterface.json'
 import BigNumber from 'bignumber.js'
@@ -88,13 +88,18 @@ export default class Web3Controller {
         this.provider
           .connect()
           .then(() => {
+            /* TODO: load info and subscribe for updates.
+             * need to get info from session.masterWalletAddres
+             * If not null (user is logged in) we need to load contracts and tokens
+             * subscribe for new events and setup handlers.
+             */
             // console.log('Connected?')
             this.provider
               .on('error', this.onErrorHandler)
               .on('end', this.onEndHandler)
             // console.log('this.provider.connected', this.provider.connected)
-            if (this.provider.connected) {
 
+            if (this.provider.connected) {
               this.web3 = new Web3(this.provider)
               // this.dispatch(Web3Actions.connectSuccess(this.host))
               this.web3.eth.net
@@ -137,29 +142,43 @@ export default class Web3Controller {
   }
 
   initTokenContract (tokenSymbol, tokenAddress, parentAddress) {
-    this.tokens = this.tokens.set(tokenSymbol, new this.web3.eth.Contract(ERC20DAODefaultABI.abi, tokenAddress))
-    if (parentAddress) {
+    console.log('10000 initTokenContract', tokenSymbol)
+    return new Promise((resolve, reject) => {
       try {
-        const currentToken = this.tokens.get(tokenSymbol)
-        currentToken.methods.balanceOf(parentAddress).call({ from: parentAddress })
-          .then((currentBalance) => {
-            currentToken.methods.decimals().call({ from: parentAddress })
-              .then((decimals) => {
-                const tokenDecimals = +decimals
-                const balance = amountToBalance(currentBalance, tokenDecimals)
-                this.dispatch(marketAddToken(tokenSymbol))
-                this.dispatch(updateEthereumBalance({ tokenSymbol, address: parentAddress, balance, amount: currentBalance, decimals: tokenDecimals }))
+        this.tokens = this.tokens.set(tokenSymbol, new this.web3.eth.Contract(ERC20DAODefaultABI.abi, tokenAddress))
+        if (parentAddress) {
+          try {
+            const currentToken = this.tokens.get(tokenSymbol)
+            currentToken.methods.balanceOf(parentAddress).call({ from: parentAddress })
+              .then((currentBalance) => {
+                currentToken.methods.decimals().call({ from: parentAddress })
+                  .then((decimals) => {
+                    const tokenDecimals = +decimals
+                    const balance = amountToBalance(currentBalance, tokenDecimals)
+                    this.dispatch(marketAddToken(tokenSymbol))
+                    this.dispatch(ethereumUpdateBalance({ tokenSymbol, address: parentAddress, balance, amount: currentBalance, decimals: tokenDecimals }))
+                  })
+                  .catch((error) => {
+                    // eslint-disable-next-line no-console
+                    console.warn('Getting decimals error: ', error)
+                  })
               })
-              // eslint-disable-next-line no-console
-              .catch((error) => console.warn('Getting decimals error: ', error))
-          })
-          // eslint-disable-next-line no-console
-          .catch((error) => console.warn('Getting current token balance error: ', error))
+              .catch((error) => {
+                // eslint-disable-next-line no-console
+                console.warn('Getting current token balance error: ', error)
+              })
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn('Error in Tokens contracts: ', error)
+          }
+        }
+        return resolve()
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.warn('Error in Tokens contracts: ', error)
+        console.warn('Error init token contract: ', error)
+        return reject(error)
       }
-    }
+    })
   }
 
   sendToken = async ({ from, to, tokenSymbol, value }) => {
@@ -174,6 +193,7 @@ export default class Web3Controller {
       const gasLimit = await currentToken.methods.transfer(to, newValue).estimateGas({ from, newValue })
       const data = currentToken.methods.transfer(to, newValue).encodeABI()
 
+      /* eslint-disable no-underscore-dangle */
       return {
         from,
         to: currentToken._address,
@@ -181,6 +201,7 @@ export default class Web3Controller {
         data,
         gasLimit: gasLimit + 1, // +1 explanation: copied from TimeX. May be we will need some constant here
       }
+      /* eslint-enable no-underscore-dangle */
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('Error during send Token: ', error)
@@ -212,42 +233,51 @@ export default class Web3Controller {
   }
 
   subscribeOnTokenEvents () {
-    this.tokens.forEach((tokenContract, tokenSymbol) => {
-      if (!tokenContract.events) {
-        return
+    console.log('10000 subscribeOnTokenEvents')
+    return new Promise((resolve, reject) => {
+      try {
+        this.tokens.forEach((tokenContract, tokenSymbol) => {
+          if (!tokenContract.events) {
+            return reject('Empty tokens list')
+          }
+
+          this.tokenSubscriptions.push(
+            tokenContract.events
+              .allEvents({})
+              .on('changed', (/*event*/) => {
+                //#console.log('Token %s changed event', tokenSymbol, event)
+              })
+              .on('data', (data) => {
+                if (!data || !data.event) {
+                  return
+                }
+                const eventType = data.event.toLowerCase()
+                switch (eventType) {
+                case 'transfer': {
+                  // eslint-disable-next-line no-console
+                  console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
+                  // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
+                  //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
+                  // }
+                  break
+                }
+                case 'approval': {
+                  // eslint-disable-next-line no-console
+                  console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
+                  break
+                }
+                }
+              })
+              .on('error', (error) => {
+                // eslint-disable-next-line no-console
+                console.log(`Error of token ${tokenSymbol}\n`, error)
+              })
+          )
+        })
+        return resolve()
+      } catch (error) {
+        return reject(error)
       }
-      this.tokenSubscriptions.push(
-        tokenContract.events
-          .allEvents({})
-          .on('changed', (/*event*/) => {
-            //#console.log('Token %s changed event', tokenSymbol, event)
-          })
-          .on('data', (data) => {
-            if (!data || !data.event) {
-              return
-            }
-            const eventType = data.event.toLowerCase()
-            switch (eventType) {
-              case 'transfer': {
-                // eslint-disable-next-line no-console
-                console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
-                // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
-                //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
-                // }
-                break
-              }
-              case 'approval': {
-                // eslint-disable-next-line no-console
-                console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
-                break
-              }
-            }
-          })
-          .on('error', (error) => {
-            // eslint-disable-next-line no-console
-            console.log(`Error of token ${tokenSymbol}\n`, error)
-          })
-      )
     })
   }
 
@@ -303,79 +333,140 @@ export default class Web3Controller {
     return this.tokens.get(tokenContractName)
   }
 
-  async loadTokens (ethAddress) {
-    const Erc20Manager = this.contracts.get('ERC20Manager')
-    if (Erc20Manager) {
+  loadTokens (ethAddress) {
+    return new Promise((resolve, reject) => {
       try {
-        const res = await Erc20Manager.methods.getTokens([]).call()
+        const Erc20Manager = this.contracts.get('ERC20Manager')
+        if (Erc20Manager) {
+          Erc20Manager.methods.getTokens([]).call()
+            .then( async (res) => {
+              console.log('10000 Got list of tokens')
+              /* eslint-disable no-underscore-dangle */
+              const addresses = res._tokensAddresses
+              const names = res._names
+              const symbols = res._symbols
+              const urls = res._urls
+              const decimalsArr = res._decimalsArr
+              const ipfsHashes = res._ipfsHashes
+              /* eslint-enable no-underscore-dangle */
+              const gasPrice = this.web3.eth.getGasPrice()
+              const bnGasPrice = new BigNumber(gasPrice)
 
-        /* eslint-disable no-underscore-dangle */
-        const addresses = res._tokensAddresses
-        const names = res._names
-        const symbols = res._symbols
-        const urls = res._urls
-        const decimalsArr = res._decimalsArr
-        const ipfsHashes = res._ipfsHashes
-        /* eslint-enable no-underscore-dangle */
-        const gasPrice = await this.web3.eth.getGasPrice()
-        const bnGasPrice = new BigNumber(gasPrice)
-        addresses.forEach((address, i) => {
-          const model = {
-            address: address.toLowerCase(),
-            name: web3utils.toUtf8(names[i]),
-            symbol: web3utils.toUtf8(symbols[i]).toUpperCase(),
-            url: web3utils.toUtf8(urls[i]),
-            decimals: parseInt(decimalsArr[i]),
-            icon: Utils.bytes32ToIPFSHash(ipfsHashes[i]),
-            feeRate: {
-              wei: bnGasPrice,
-              gwei: web3utils.fromWei(bnGasPrice, 'gwei'),
-            },
-            events: false,
-          }
-          this.initTokenContract(model.symbol, model.address, ethAddress)
-        })
-        this.subscribeOnTokenEvents()
+              // const sureThing = (promise) =>
+              //   promise
+              //     .then((data) => ({ok: true, data}))
+              //     .catch((error) => Promise.resolve({ok: false, error}))
+
+              Promise
+                .all(addresses.map((address, i) => {
+                  console.log('10000 Token %s', address)
+                  return new Promise((mresolve) => {
+                    try {
+                      const model = {
+                        address: address.toLowerCase(),
+                        name: web3utils.toUtf8(names[i]),
+                        symbol: web3utils.toUtf8(symbols[i]).toUpperCase(),
+                        url: web3utils.toUtf8(urls[i]),
+                        decimals: parseInt(decimalsArr[i]),
+                        icon: Utils.bytes32ToIPFSHash(ipfsHashes[i]),
+                        feeRate: {
+                          wei: bnGasPrice,
+                          gwei: web3utils.fromWei(bnGasPrice, 'gwei'),
+                        },
+                        events: false,
+                      }
+                      return mresolve(this.initTokenContract(model.symbol, model.address, ethAddress))
+                    } catch (error) {
+                      // Ignoring errors
+                      return mresolve()
+                    }
+                  })
+                }))
+                .then(() => {
+                  this.subscribeOnTokenEvents()
+                    .then(() => {
+                      return resolve()
+                    })
+                    .catch((error) => {
+                      // eslint-disable-next-line no-console
+                      console.log('Error subscribiing on tokens events', error)
+                      return resolve()
+                    })
+                })
+              // await addresses.forEach((address, i) => {
+              //   const model = {
+              //     address: address.toLowerCase(),
+              //     name: web3utils.toUtf8(names[i]),
+              //     symbol: web3utils.toUtf8(symbols[i]).toUpperCase(),
+              //     url: web3utils.toUtf8(urls[i]),
+              //     decimals: parseInt(decimalsArr[i]),
+              //     icon: Utils.bytes32ToIPFSHash(ipfsHashes[i]),
+              //     feeRate: {
+              //       wei: bnGasPrice,
+              //       gwei: web3utils.fromWei(bnGasPrice, 'gwei'),
+              //     },
+              //     events: false,
+              //   }
+              //   this.initTokenContract(model.symbol, model.address, ethAddress)
+              // })
+              // this.subscribeOnTokenEvents()
+
+              return resolve()
+            })
+            .catch((error) => {
+              // eslint-disable-next-line no-console
+              console.warn(error)
+              return reject(error)
+            })
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('Contract Erc20Manager is not initialized')
+          return reject('Contract Erc20Manager is not initialized')
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn(error)
+        return reject(error)
       }
-
-    } else {
-      // eslint-disable-next-line no-console
-      //#console.log('Contract Erc20Manager is not initialized.')
     }
-  }
+  )}
 
   initContracts (ethAddress) {
-    const abstractContracts = [
-      'ChronoBankPlatformEmitterABI',
-      'FeeInterfaceABI',
-      'PlatformTokenExtensionGatewayManagerEmitterABI',
-      'PollEmitterABI',
-      'PollInterfaceABI',
-      'WalletABI',
-    ]
-    const contractNameList = Object.keys(ContractList)
-    contractNameList.forEach((contractObjectName) => {
-      const contract = ContractList[contractObjectName]
-      const abi = contract.abi
+    return new Promise((resolve, reject) => {
       try {
-        const address = Utils.getContractAddressByNetworkId(contract.networks, this.networkId, contractObjectName)
-        this.contracts = this.contracts.set(contract.contractName, new this.web3.eth.Contract(abi, address))
-        this.dispatch(Web3Actions.appendContract(this.networkIndex, contractObjectName))
+        const abstractContracts = [
+          'ChronoBankPlatformEmitterABI',
+          'FeeInterfaceABI',
+          'PlatformTokenExtensionGatewayManagerEmitterABI',
+          'PollEmitterABI',
+          'PollInterfaceABI',
+          'WalletABI',
+        ]
+        const contractNameList = Object.keys(ContractList)
+        contractNameList.forEach((contractObjectName) => {
+          const contract = ContractList[contractObjectName]
+          const abi = contract.abi
+          try {
+            const address = Utils.getContractAddressByNetworkId(contract.networks, this.networkId, contractObjectName)
+            this.contracts = this.contracts.set(contract.contractName, new this.web3.eth.Contract(abi, address))
+            this.dispatch(Web3Actions.appendContract(this.networkIndex, contractObjectName))
+          } catch (error) {
+            if (abstractContracts.includes(contractObjectName)) {
+              this.contracts.set(contract.contractName, (address) => new this.web3.eth.Contract(abi, address))
+              this.dispatch(Web3Actions.appendContract(this.networkIndex, contractObjectName))
+            } else {
+              // TODO: to handle possible errors
+              // eslint-disable-next-line no-console
+              console.log(error.message)
+            }
+          }
+        })
+        this.loadTokens(ethAddress)
+        return resolve()
       } catch (error) {
-        if (abstractContracts.includes(contractObjectName)) {
-          this.contracts.set(contract.contractName, (address) => new this.web3.eth.Contract(abi, address))
-          this.dispatch(Web3Actions.appendContract(this.networkIndex, contractObjectName))
-        } else {
-          // TODO: to handle possible errors
-          // eslint-disable-next-line no-console
-          console.log(error.message)
-        }
+        return reject(error)
       }
     })
-    this.loadTokens(ethAddress)
   }
 
   getWeb3Instance () {

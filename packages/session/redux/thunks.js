@@ -14,175 +14,119 @@ import {
 import {
   rmqConnect,
   rmqDisconnect,
-  rmqSubscribe,
+  subscribeBtcChannels,
+  subscribeEthChannels,
 } from '@chronobank/network/redux/thunks'
-import { BLOCKCHAIN_BITCOIN } from '@chronobank/bitcoin/constants'
-import { getCurrentNetworkBlockchainChannels } from '@chronobank/network/redux/selectors'
+import { getCurrentNetworkType } from '@chronobank/network/redux/selectors'
 import { marketAddToken } from '@chronobank/market/redux/thunks'
-import { getBitcoinWalletsList } from '@chronobank/bitcoin/redux/selectors'
-import { getBalance, initContracts } from '@chronobank/ethereum/middleware/thunks'
-import { updateEthereumBalance } from '@chronobank/ethereum/redux/thunks'
-import * as apiBTC from '@chronobank/bitcoin/service/api'
-import * as apiETH from '@chronobank/ethereum/service/api'
-import { updateBitcoinBalance, updateBitcoinTxHistory, createBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
-import { parseBitcoinBalanceData, convertSatoshiToBTC } from '@chronobank/bitcoin/utils/amount'
-import * as EthAmountUtils from '@chronobank/ethereum/utils/amount'
+import { initContracts } from '@chronobank/ethereum/middleware/thunks'
+import { requestAndSubscribeEthereumWallet } from '@chronobank/ethereum/redux/thunks'
+import { requestAndSubscribeBitcoinWallets } from '@chronobank/bitcoin/redux/thunks'
+import { createBitcoinWallet } from '@chronobank/bitcoin/redux/thunks'
+import { parallelPromises } from '../utils'
 
-export const loginThunk = (ethAddress, privateKey) => (dispatch, getState) => {
-  return new Promise((resolve, reject) => {
-    if (!ethAddress || !privateKey) {
-      return reject('0003: No ETH address or privateKey provided!')
-    }
+// TODO: to implement common error handler somewhere and here should stay only error/warning messages with codes
+const SessionRTErrors = (errorCode, error) => {
+  const errorMessages = {
+    1: 'Warning SYSRT001: startMarket',
+    2: "Warning SYSRT002: : can't subscribe ro RabbitMQ with no masterWalletAddress",
+    3: 'Warning SESRT003, rmqConnect:',
+    4: 'Warning SYSRT004, loginThunk: No ETH address or privateKey provided',
+    5: "Warning SYSRT005, createBitcoinWallet. Can't login:",
+    6: 'Warning SYSRT006, logoutThunk:',
+  }
+  const errorMessage = errorMessages[errorCode]
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.log(errorMessage, error)
+  } else {
+    // eslint-disable-next-line no-console
+    console.log(errorMessage)
+  }
+  return errorMessage
+}
 
-    try {
-      dispatch(startMarket())
-      dispatch(marketAddToken('BTC')) // TODO: to remove hardcode
-      dispatch(marketAddToken('ETH')) // TODO: to remove hardcode
-    } catch (error) {
+/**
+ * Launch Market redux middleware and add predefined coins
+ */
+const runMarket = () => (dispatch) =>
+  dispatch(startMarket())
+    .then(() => {
+      dispatch(marketAddToken('BTC'))
+      dispatch(marketAddToken('ETH'))
+    })
+    .catch((error) => {
       // Ignoring market errors
-      // eslint-disable-next-line no-console
-      console.log('Market error:', error)
+      SessionRTErrors(1, error)
+    })
+
+/**
+ * Connect to RabbitMQ and assign handlers (all wallets and channels of current session)
+ * @param {string} masterWalletAddress
+ */
+const performRmqConnectAndSubscribe = (masterWalletAddress) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    if (!masterWalletAddress) {
+      return reject(SessionRTErrors(2))
     }
 
-    try {
-      dispatch(apiETH.requestEthereumSubscribeWalletByAddress(ethAddress))
-        .then(() => {
-          dispatch(apiETH.requestEthereumBalanceByAddress(ethAddress))
-            // eslint-disable-next-line no-console
-            .then((result) => console.log('result: ', result))
-            // eslint-disable-next-line no-console
-            .catch((er) => console.log('er: ', er))
-        })
-        // eslint-disable-next-line no-console
-        .catch((er) => console.log('er: ', er))
-      dispatch(getBalance(ethAddress))
-        .then((amount) => {
-          const balance = EthAmountUtils.amountToBalance(amount)
-          dispatch(updateEthereumBalance({ tokenSymbol: 'ETH', address: ethAddress, balance, amount }))
-        })
-        .catch((error) => {
-          return reject('Requiesting ETH balance error', error)
-        })
-      dispatch(initContracts(ethAddress))
-    } catch (error) {
-      // Something wrong during obtain info for ETH
-      // eslint-disable-next-line no-console
-      console.log(error)
-    }
-
-    dispatch(createBitcoinWallet(privateKey, ethAddress))
+    return dispatch(rmqConnect())
       .then(() => {
-        const BTCwalletsList = getBitcoinWalletsList(ethAddress)(getState())
-        BTCwalletsList.forEach((address) => {
-          // Get BTC balance
-          dispatch(apiBTC.requestBitcoinBalanceByAddress(address))
-            .then((balance) => {
-              dispatch(updateBitcoinBalance({
-                address,
-                masterWalletAddress: ethAddress,
-                balance: parseBitcoinBalanceData(balance),
-                amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
-              }))
-            })
-            .catch((error) => {
-              // eslint-disable-next-line no-console
-              console.log('Update BTC balance HTTP ERROR:', error)
-            })
-          
-          // Connect to RabbitMQ and subscribe for updates
-          dispatch(rmqConnect())
-            .then(() => {
-              const bitcoinChannels = getCurrentNetworkBlockchainChannels(BLOCKCHAIN_BITCOIN)(getState())
+        return resolve(parallelPromises([
+          () => dispatch(subscribeEthChannels(masterWalletAddress)),
+          () => dispatch(subscribeBtcChannels(masterWalletAddress)),
+        ]))
+      })
+      .catch((error) => {
+        SessionRTErrors(3, error)
+        return reject(error)
+      })
+  })
+}
 
-              dispatch(apiBTC.requestBitcoinSubscribeWalletByAddress(address))
-                .then(() => {
-                  // Do nothing, subscribed.
-                })
-                .catch((error) => {
-                  console.log('HTTP response ERROR:', error)
-                })
+/**
+ * Login thunk performs the following steps:
+ * 1) Start Market middleware and subscribe for updates
+ * 2) Subsribes for ETH updates from middleware
+ * 3) Creates BTC wallet (ETH wallet already created)
+ * 3.1) If BTC created succesfully, then trying to connect to RabbitMQ
+ * 3.2) If RabbitMQ connected, then subscribes for updates (balances, transactions etc.)
+ * Login fails only if we can't create BTC wallet for some reason.
+ * @param {string} ethAddress
+ * @param {strin} privateKey
+ */
+export const loginThunk = (masterWalletAddress, privateKey) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    if (!masterWalletAddress || !privateKey) {
+      return reject(SessionRTErrors(4))
+    }
 
-              // Subscribe on balance updates
-              dispatch(rmqSubscribe({
-                // TODO: need to get channel name from store
-                channel: `${bitcoinChannels.balance}.${address}`,
-                handler: ({ body }) => {
-                  if (!body) {
-                    // TODO: need to handle possible errors in reply
-                    return
-                  }
+    const state = getState()
+    const networkType = getCurrentNetworkType(state)
 
-                  try {
-                    const data = JSON.parse(body)
-                    const confirmations0 = data.balances.confirmations0
-                    const confirmations6 = data.balances.confirmations6
-                    const balance0 = convertSatoshiToBTC(confirmations0)
-                    const balance6 = convertSatoshiToBTC(confirmations6)
+    dispatch(createBitcoinWallet({ privateKey, masterWalletAddress, networkType }))
+      .then(() => {
+        // here we do need await, because all screens must be data-loss tolerant
+        // Any action in the array below may safely fail
+        parallelPromises([
+          // Run market middleware and add predefined coins (ERC20 tokens will be added later dynamically)
+          () => dispatch(runMarket()),
+          // // Load ETH constracts via Web3 redux middleware
+          () => dispatch(initContracts()),
+          // // request balances, start wallet listening on middleware
+          () => dispatch(requestAndSubscribeEthereumWallet(masterWalletAddress)),
+          // // request balances, start wallet listening on middleware
+          () => dispatch(requestAndSubscribeBitcoinWallets(masterWalletAddress)),
+          // // connect to RabbitMQ and assign handlers
+          () => dispatch(performRmqConnectAndSubscribe(masterWalletAddress)),
+        ])
 
-                    dispatch(updateBitcoinBalance({
-                      address: data.address,
-                      masterWalletAddress: ethAddress,
-                      balance: balance0 || balance6,
-                      amount: confirmations0 || confirmations6,
-                    }))
-                  } catch (error) {
-                    // TODO: to handle any errors here
-                    // Silently ignore any errors for now.
-                    // eslint-disable-next-line no-console
-                    console.log(error)
-                  }
-                },
-              }))
-
-              // Subscribe on transactions
-              dispatch(rmqSubscribe({
-                // TODO: need to get channel name from store
-                channel: `${bitcoinChannels.transaction}.${address}`,
-                handler: ({ body }) => {
-                  if (!body) {
-                    // TODO: need to handle possible errors in reply
-                    return
-                  }
-                  try {
-                    const data = JSON.parse(body)
-                    const txList = [
-                      {
-                        from: data.inputs[0].address,
-                        to: data.outputs[0].address,
-                        amount: data.outputs[0].value,
-                        balance: convertSatoshiToBTC(data.outputs[0].value),
-                        timestamp: data.timestamp,
-                        hash: body.hash,
-                        confirmations: data.confirmations,
-                      },
-                    ]
-                    dispatch(updateBitcoinTxHistory({
-                      address,
-                      masterWalletAddress: ethAddress,
-                      txList,
-                      latestTxDate: data.timestamp,
-                    }))
-                  } catch (error) {
-                    // TODO: to handle any errors here
-                    // Silently ignore any errors for now.
-                    // eslint-disable-next-line no-console
-                    console.log(error)
-                  }
-                },
-              }))
-            })
-            .catch((error) => {
-              // eslint-disable-next-line no-console
-              console.log('Can\'t connect to RabbitMQ server', error)
-            })
-        })
-
-        // Set flag for session and proceed to Wallet list
-        dispatch(login(ethAddress))
+        // TODO: Actually, we may start app even with no BTC wallet if we have only one ETH wallet.
+        dispatch(login(masterWalletAddress))
         return resolve()
       })
       .catch((error) => {
-        return reject('Can\'t create BTC wallet:', error)
+        return reject(SessionRTErrors(5, error))
       })
   })
 }
@@ -197,8 +141,8 @@ export const logoutThunk = () => (dispatch) => {
           return resolve()
         })
         .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.warn(error)
+          SessionRTErrors(6, error)
+          return reject(error)
         })
     } catch (error) {
       return reject(error)

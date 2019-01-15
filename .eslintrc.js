@@ -51,7 +51,7 @@ module.exports = {
     'eol-last': 'warn',
     'global-require': 'warn',
     'import/first': 'warn',
-    'import/no-extraneous-dependencies': 'off', // TODO Use webpack resolver possible to solve issues with aliased modules
+    'import/no-extraneous-dependencies': 'off',
     'import/no-named-as-default-member': 'warn',
     'import/prefer-default-export': 'warn',
     'jsx-a11y/alt-text': 'warn',

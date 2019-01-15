@@ -26,6 +26,15 @@ export const getCurrentNetwork = createSelector(
   (network) => network.selected
 )
 
+/**
+ * get network.selected.networkType
+ * @param {object} state
+ */
+export const getCurrentNetworkType = createSelector(
+  getDuckNetwork,
+  (network) => network.selected && network.selected .networkType
+)
+
 export const getCurrentNetworkBlockchains = createSelector(
   getCurrentNetwork,
   (selected) => selected.blockchain

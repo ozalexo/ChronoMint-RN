@@ -38,6 +38,7 @@ class WalletListItemContainer extends PureComponent {
       navigation,
       selectBitcoinWallet,
       selectEthereumWallet,
+      masterWalletAddress,
     } = this.props
 
     const params = {
@@ -45,8 +46,8 @@ class WalletListItemContainer extends PureComponent {
     }
 
     blockchain === BLOCKCHAIN_ETHEREUM
-      ? selectEthereumWallet({ address })
-      : selectBitcoinWallet({ address })
+      ? selectEthereumWallet({ address, masterWalletAddress })
+      : selectBitcoinWallet({ address, masterWalletAddress })
     navigation.navigate('Wallet', params)
   }
 
@@ -83,6 +84,7 @@ WalletListItemContainer.propTypes = {
   address: PropTypes.string,
   blockchain: PropTypes.string,
   selectedCurrency: PropTypes.string,
+  masterWalletAddress: PropTypes.string,
   selectBitcoinWallet: PropTypes.func,
   selectEthereumWallet: PropTypes.func,
 }

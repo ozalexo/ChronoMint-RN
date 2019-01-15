@@ -14,7 +14,7 @@ export const getRmqSubscriptions = createSelector(
   (duckRmqMiddleware) => duckRmqMiddleware.subscriptions
 )
 
-export const getRmwConnectionStatus = createSelector(
+export const getRmqConnectionStatus = createSelector(
   getDuckRmqMiddleware,
   (duckRmqMiddleware) => duckRmqMiddleware.isConnected
 )

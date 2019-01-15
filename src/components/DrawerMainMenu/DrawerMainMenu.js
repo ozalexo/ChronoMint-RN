@@ -5,10 +5,15 @@
 
 import React, { PureComponent } from 'react'
 import { SafeAreaView } from 'react-navigation'
+import PropTypes from 'prop-types'
 import TextButton from '../TextButton'
 import styles from './DrawerMainMenuStyles'
 
 class DrawerMainMenu extends PureComponent {
+  static propTypes = {
+    onLogout: PropTypes.func,
+  }
+
   render () {
     const { onLogout } = this.props
     return (

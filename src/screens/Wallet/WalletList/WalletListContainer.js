@@ -32,12 +32,8 @@ const mapStateToProps = (state) => {
 class WalletListContainer extends PureComponent {
 
   static propTypes = {
-    BTCwalletsList: PropTypes.arrayOf(
-      PropTypes.string
-    ),
     dropBitcoinSelectedWallet: PropTypes.func,
     dropEthereumSelectedWallet: PropTypes.func,
-    masterWalletAddress: PropTypes.string,
     navigation: PropTypes.shape({
       navigate: PropTypes.func,
     }),

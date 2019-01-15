@@ -66,7 +66,7 @@ const ethereumCreateDerivedWallet = (state, { masterWalletAddress, address }) =>
   }
 }
 
-const updateEthereumBalance = (state, { tokenSymbol, address, balance, amount, decimals = DECIMALS }) => {
+const ethereumUpdateBalance = (state, { tokenSymbol, address, balance, amount, decimals = DECIMALS }) => {
   let list = Object.assign({}, state.list)
   list = {
     ...list,
@@ -340,7 +340,7 @@ const mutations = {
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,
   [ActionsTypes.ETHEREUM_DROP_SELECTED_WALLET]: dropEthereumSelectedWallet,
-  [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: updateEthereumBalance,
+  [ActionsTypes.ETHEREUM_UPDATE_BALANCE]: ethereumUpdateBalance,
   [ActionsTypes.ETHEREUM_CREATE_TX_DRAFT]: ethereumCreateTxDraft,
   [ActionsTypes.ETHEREUM_DELETE_TX_DRAFT]: ethereumDeleteTxDraft,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_NONCE]: ethereumTxUpdateNonce,

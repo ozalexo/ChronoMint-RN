@@ -74,8 +74,10 @@ class LoginContainer extends PureComponent {
         }
       })
       .then(this.authenticate)
-      // eslint-disable-next-line no-console
-      .catch((e) => console.log(e.code))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error.code)
+      })
   }
 
   authenticate = () => {

@@ -21,8 +21,8 @@ export const init = () => (dispatch, getState) => {
       list: [],
     },
   }
-  newState.fill(initialNetworkState)
 
+  newState.fill(initialNetworkState)
   dispatch(Actions.init(newState))
 }
 

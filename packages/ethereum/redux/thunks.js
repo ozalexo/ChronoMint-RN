@@ -4,8 +4,8 @@
  */
 
 import * as Keychain from 'react-native-keychain'
-import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { requestEthereumTransactionsHistoryByAddress } from '../service/api'
+import * as apiETH from '../service/api'
+import { getBalance } from '../middleware/thunks'
 import { encryptWallet, createEthWallet, mnemonicToPrivateKeyAndAddress } from '../utils'
 import { amountToBalance } from '../utils/amount'
 import * as Actions from './actions'
@@ -60,7 +60,7 @@ export const createAccountByPrivateKey = (privateKey, password) => (dispatch) =>
   })
 }
 
-export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount, decimals }) => (dispatch) => {
+export const ethereumUpdateBalance = ({ tokenSymbol, address, balance, amount, decimals }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
       dispatch(Actions.ethereumUpdateBalance({ tokenSymbol, address, balance, amount, decimals }))
@@ -71,12 +71,11 @@ export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount, d
   })
 }
 
-export const selectEthereumWallet = ({ address }) => (dispatch, getState) => {
+export const selectEthereumWallet = ({ address, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(requestEthereumTransactionsHistoryByAddress(address))
+      dispatch(apiETH.requestEthereumTransactionsHistoryByAddress(address))
         .then((response) => {
-          const masterWalletAddress = getCurrentWallet(getState())
           const timestamps = []
           const txList = response.payload.data.map((tx) => {
             timestamps.push(tx.timestamp)
@@ -233,6 +232,47 @@ export const updateEthereumTxHistory = ({ latestTxDate, txList, masterWalletAddr
       return resolve()
     } catch (e) {
       return reject(e)
+    }
+  })
+}
+
+export const requestAndSubscribeEthereumWallet = (address) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      // Register a wallet on middleware
+      dispatch(apiETH.requestEthereumSubscribeWalletByAddress(address))
+        .then(() => {
+          // Do nothing. Data will be received via WS.
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log('Error registering ETH wallet on middlewre:', error)
+        })
+      
+      // Request ETH balance via middleware
+      // dispatch(apiETH.requestEthereumBalanceByAddress(address))
+      //   // eslint-disable-next-line no-console
+      //   .then(() => {
+      //     // TODO: do we need a balance from middleware at all?
+      //   })
+      //   .catch((error) => {
+      //     // eslint-disable-next-line no-console
+      //     console.log('Error requesting ETH wallet balance from middleware:', error)
+      //   })
+
+      dispatch(getBalance(address))
+        .then((amount) => {
+          const balance = amountToBalance(amount)
+          // TODO: we need to update ERC20 tokens also
+          dispatch(ethereumUpdateBalance({ tokenSymbol: 'ETH', address, balance, amount }))
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log('Error requiesting ETH balance via web3', error)
+        })
+      return resolve()
+    } catch (error) {
+      return reject(error)
     }
   })
 }

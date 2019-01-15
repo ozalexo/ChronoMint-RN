@@ -78,8 +78,10 @@ class PasswordEnterModalContainer extends React.Component {
         }
       })
       .then(this.authenticate)
-      // eslint-disable-next-line no-console
-      .catch((e) => console.log(e))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
   }
 
 
@@ -170,10 +172,8 @@ class PasswordEnterModalContainer extends React.Component {
 PasswordEnterModalContainer.propTypes = {
   visible: PropTypes.bool,
   modalToggle: PropTypes.func,
-  passwordChange: PropTypes.func,
   error: PropTypes.string,
   confirmPassword: PropTypes.func,
-  styles: PropTypes.shape({}),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordEnterModalContainer)

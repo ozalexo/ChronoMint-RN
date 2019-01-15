@@ -4,6 +4,14 @@
  */
 
 import { errors } from 'web3-core-helpers'
+import { parseResponse } from './utils'
+
+const W3PErrorCodes = {
+  'W3PE001': 'W3PE001: ',
+  'W3PE002': '',
+  'W3PE003': '',
+  'W3PE004': '',
+}
 
 export default class Web3Provider {
   constructor (url) {
@@ -16,30 +24,34 @@ export default class Web3Provider {
   }
 
   connect = (timeoutMs = 1500, numberOfRetries = 10) => {
+    // console.log('W3P connect: 1st line')
     this.connection = null
     let hasReturned = false
 
     const promise = new Promise((resolve, reject) => {
-
-      const rejectInternal = () => {
+      // console.log('W3P connect: promise inside')
+      const rejectInternal = (/*reason*/) => {
+        // console.log('W3P connect: rejectInternal', reason)
         if (numberOfRetries <= 0) {
-          return reject(`Can't establish WS connection to ${this.url}`)
+          // return reject(`Can't establish WS connection to ${this.url}`)
         } else {
           if (!hasReturned) {
             hasReturned = true
             // eslint-disable-next-line no-param-reassign
             --numberOfRetries
+            // console.log('Connect attempt %s', numberOfRetries)
             this.connect(timeoutMs, numberOfRetries)
               .then(resolve, reject)
           }
         }
       }
 
-      setTimeout(() => {
-        if(!hasReturned) {
-          rejectInternal()
-        }
-      }, numberOfRetries ? timeoutMs * numberOfRetries : timeoutMs)
+      // setTimeout(() => {
+      //   if(!hasReturned) {
+      //     rejectInternal('ws timeout')
+      //   }
+      // }, numberOfRetries ? timeoutMs * numberOfRetries : timeoutMs)
+
       if (!this.connection || (this.connection.readyState !== WebSocket.OPEN && this.connection.readyState !== WebSocket.CONNECTING)) {
         if (this.connection) {
           this.connection.close()
@@ -48,7 +60,6 @@ export default class Web3Provider {
         // console.log('WS Connection created!', this.url)
         // console.log('this.connection', this.connection)
         this.connection.onopen = () => {
-          // console.log('open')
           if (hasReturned) {
             this.connection.close()
           } else {
@@ -65,11 +76,12 @@ export default class Web3Provider {
         }
         this.connection.onmessage = (event) => {
           clearTimeout(this.WStimeout)
+          console.log('onmessage event.data', event, event.data)
           const data = typeof event.data === 'string'
             ? event.data
             : ''
 
-          this.parseResponse(data).forEach(this.envokeCallbacks)
+          parseResponse(data).forEach(this.envokeCallbacks)
         }
       } else {
         return resolve(this)
@@ -77,96 +89,69 @@ export default class Web3Provider {
 
     })
 
-    promise
+    return promise
       .then(() => {
+        // console.log('W3P connect: promise then')
         hasReturned = true
       })
       .catch(() => {
+        // console.log('W3P connect: promise catch')
         hasReturned = true
       })
-
-    return promise
   }
 
   envokeCallbacks = (result) => {
-    let id = null
-    if (Array.isArray(result)) {
-      result.forEach((load) => {
-        if (this.responseCallbacks[load.id]) {
-          id = load.id
-        } else {
-          id = result.id
-        }
-      })
-    } else {
-      id = result && result.id
-    }
-
-    if (
-      !id &&
-      result &&
-      result.method &&
-      result.method.indexOf('_subscription') !== -1
-    ) {
-      this.notificationCallbacks.forEach((callback) => {
-        if (typeof callback === 'function') {
-          callback(result)
-        }
-      })
-    } else {
-      if (this.responseCallbacks[id]) {
-        this.responseCallbacks[id](null, result)
-        delete this.responseCallbacks[id]
+    try {
+      console.log('envokeCallbacks', result)
+      let id = null
+      if (Array.isArray(result)) {
+        result.forEach((load) => {
+          console.log('envokeCallbacks load', load)
+          console.log('envokeCallbacks responseCallbacks', this.responseCallbacks)
+          if (this.responseCallbacks[load.id]) {
+            id = load.id
+          } else {
+            id = result.id
+          }
+        })
+      } else {
+        console.log('envokeCallbacks else id result', result)
+        id = result && result.id
       }
+
+      if (
+        !id &&
+        result &&
+        result.method &&
+        result.method.indexOf('_subscription') !== -1
+      ) {
+        console.log('envokeCallbacks _subscription found', result)
+        this.notificationCallbacks.forEach((callback) => {
+          if (typeof callback === 'function') {
+            callback(result)
+          }
+        })
+      } else {
+        console.log('envokeCallbacks _subscription not found, this.responseCallbacks', this.responseCallbacks)
+        console.log('envokeCallbacks _subscription not found, result', result)
+        if (this.responseCallbacks[id]) {
+          try {
+            this.responseCallbacks[id](null, result)
+          } catch (error) {
+            // eslint-disable-next-line
+            console.log('Error in callback', error)
+          }
+          delete this.responseCallbacks[id]
+        }
+      }
+    } catch (error) {
+      // eslint-disable-next-line
+      console.log('Error in envokeCallbacks', error)
     }
   }
 
   get connected () {
     return this.connection && this.connection.readyState === WebSocket.OPEN
-  }
-
-  parseResponse = (data) => {
-    const returnValues = []
-    let lastChunk = null
-    let lastChunkTimeout = null
-
-    // DE-CHUNKER
-    const dechunkedData = data
-      .replace(/\}[\n\r]?\{/g, '}|--|{') // }{
-      .replace(/\}\][\n\r]?\[\{/g, '}]|--|[{') // }][{
-      .replace(/\}[\n\r]?\[\{/g, '}|--|[{') // }[{
-      .replace(/\}\][\n\r]?\{/g, '}]|--|{') // }]{
-      .split('|--|')
-
-    dechunkedData.forEach((data) => {
-      if (lastChunk) {
-        data = lastChunk + data
-      }
-
-      let result = null
-
-      try {
-        result = JSON.parse(data)
-      } catch (error) {
-        lastChunk = data
-        lastChunkTimeout && clearTimeout(lastChunkTimeout)
-        lastChunkTimeout = setTimeout(() => {
-          this.timeout()
-          throw errors.InvalidResponse(data)
-        }, 1000 * 15)
-
-        return
-      }
-
-      clearTimeout(lastChunkTimeout)
-      lastChunk = null
-
-      if (result) {
-        returnValues.push(result)
-      }
-    })
-
-    return returnValues
   }
 
   timeout = () => {

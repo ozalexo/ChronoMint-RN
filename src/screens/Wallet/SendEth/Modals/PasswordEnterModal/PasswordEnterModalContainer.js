@@ -84,7 +84,10 @@ class PasswordEnterModalContainer extends React.Component {
       })
       .then(this.authenticate)
       // eslint-disable-next-line no-console
-      .catch((e) => console.log(e))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
   }
 
 
@@ -192,8 +195,10 @@ class PasswordEnterModalContainer extends React.Component {
             privateKey,
           })
         })
-        // eslint-disable-next-line no-console
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+        })
     }
   }
 
@@ -213,11 +218,15 @@ class PasswordEnterModalContainer extends React.Component {
           signedTx: signedTXresults.rawTransaction,
         })
           .then(() => confirmPassword())
-          // eslint-disable-next-line no-console
-          .catch((error) => console.log(error))
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log(error)
+          })
       })
-      // eslint-disable-next-line no-console
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
   }
 
   render () {
@@ -245,12 +254,20 @@ class PasswordEnterModalContainer extends React.Component {
 }
 
 PasswordEnterModalContainer.propTypes = {
-  visible: PropTypes.bool,
-  modalToggle: PropTypes.func,
-  passwordChange: PropTypes.func,
-  error: PropTypes.string,
   confirmPassword: PropTypes.func,
-  styles: PropTypes.shape({}),
+  currentEthWallet: PropTypes.func,
+  error: PropTypes.string,
+  masterWalletAddress: PropTypes.string,
+  modalToggle: PropTypes.func,
+  sendToken: PropTypes.func,
+  updateEthereumTxDraftData: PropTypes.func,
+  updateEthereumTxDraftGasLimit: PropTypes.func,
+  updateEthereumTxDraftSignedTx: PropTypes.func,
+  visible: PropTypes.bool,
+  token: PropTypes.shape({
+    decimals: PropTypes.number,
+    symbol: PropTypes.string,
+  }),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordEnterModalContainer)

@@ -94,7 +94,7 @@ const availableEthereumNodes = {
       providerTitle: 'Infura',
       isOnline: null,
       isSyncing: true,
-      ws: 'wss://rinkeby.infura.io/ws',
+      ws: `wss://mainnet.infura.io/ws/v3/442d153c1cc540048ac61175c989a69f`,
     },
     local: {
       disabled: false,

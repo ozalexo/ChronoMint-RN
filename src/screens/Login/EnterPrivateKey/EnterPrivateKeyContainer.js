@@ -28,20 +28,18 @@ class EnterPrivateKeyContainer extends PureComponent {
   handleDone = () => {
     const {
       navigation,
-      // onPrivateKeyLogin,
     } = this.props
     const { privateKey } = this.state
+    if (!privateKey || privateKey.length <= 6) {
+      this.setState({ error: 'Private Key is too short' })
+      return
+    }
     const ethereumMainAddress = getAddress(privateKey)
     const params = {
       privateKey,
       ethereumMainAddress,
     }
-    // onPrivateKeyLogin(privateKey)
-    if (privateKey.length <= 6) {
-      this.setState({ error: 'Private Key is too short' })
-    } else {
-      navigation.navigate('SetAccountPassword', params)
-    }
+    navigation.navigate('SetAccountPassword', params)
   }
 
   render () {

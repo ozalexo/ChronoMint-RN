@@ -3,33 +3,35 @@
  * Licensed under the AGPL Version 3 license.
  */
 
-import { getCurrentNetwork } from '@chronobank/network/redux/selectors'
-import { getCurrentWallet } from '@chronobank/session/redux/selectors'
+import {
+  getAddress,
+  parallelPromises,
+  processBalanceUpdateResponseBody,
+  processTransactionUpdateResponseBody,
+} from '../utils'
 import { requestBitcoinTransactionsHistoryByAddress } from '../service/api'
-import { convertSatoshiToBTC } from '../utils/amount'
-import { getAddress } from '../utils'
+import { convertSatoshiToBTC, parseBitcoinBalanceData } from '../utils/amount'
+import * as apiBTC from '../service/api'
 import * as Actions from './actions'
+import * as Selectors from './selectors'
 
-export const createBitcoinWallet = (privateKey, ethAddress) => (dispatch, getState) => {
-
+export const createBitcoinWallet = ({ privateKey, masterWalletAddress, networkType }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      const network = getCurrentNetwork(getState()).networkType
-      const bitcoinAddress = getAddress(privateKey, network)
-      dispatch(Actions.bitcoinCreateWallet(ethAddress, bitcoinAddress))
-      return resolve()
-    } catch (e) {
-      return reject(e)
+      const bitcoinAddress = getAddress(privateKey, networkType)
+      dispatch(Actions.bitcoinCreateWallet(masterWalletAddress, bitcoinAddress))
+      return resolve(bitcoinAddress)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
 
-export const selectBitcoinWallet = ({ address }) => (dispatch, getState) => {
+export const selectBitcoinWallet = ({ address, masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
       dispatch(requestBitcoinTransactionsHistoryByAddress(address))
         .then((response) => {
-          const masterWalletAddress = getCurrentWallet(getState())
           const timestamps = []
           const txList = response.payload.data.map((tx) => {
             timestamps.push(tx.timestamp)
@@ -187,6 +189,7 @@ export const deleteBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispa
 export const updateBitcoinBalance = ({ address, masterWalletAddress, balance, amount }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
+      console.log('updateBitcoinBalance 001', address, masterWalletAddress, balance, amount)
       dispatch(Actions.bitcoinUpdateBalance({ address, masterWalletAddress, balance, amount }))
       return resolve()
     } catch (e) {
@@ -194,3 +197,74 @@ export const updateBitcoinBalance = ({ address, masterWalletAddress, balance, am
     }
   })
 }
+
+// Process body from HTTP response (BTC balance) and update store
+export const balanceUpdateHandler = (address, masterWalletAddress) => (body) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const updatedData = processBalanceUpdateResponseBody(body, address, masterWalletAddress)
+      console.log('balanceUpdateHandler 002 updatedData', updatedData)
+      dispatch(updateBitcoinBalance(updatedData))
+        .then(() => {
+          return resolve()
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+
+// Process body from HTTP response (BTC transaction) and update store
+export const transactionUpdateHandler = (address, masterWalletAddress) => (body) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    if (!body) {
+      return reject('Error BTC002: no transaction data to update.')
+    }
+
+    try {
+      const updatedData = processTransactionUpdateResponseBody(body, address, masterWalletAddress)
+
+      dispatch(updateBitcoinTxHistory(updatedData))
+        .then(() => {
+          return resolve()
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+
+export const requestAndSubscribeBitcoinWallets = (masterWalletAddress) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const state = getState()
+      const btcWalletAddressList = Selectors.getBitcoinWalletsList(masterWalletAddress)(state)
+      const promises = btcWalletAddressList.reduce((acc, address) => {
+        return acc.concat([
+          () => dispatch(apiBTC.requestBitcoinSubscribeWalletByAddress(address)),
+          () => dispatch(apiBTC.requestBitcoinBalanceByAddress(address))
+            .then((balance) => {
+              dispatch(updateBitcoinBalance({
+                address,
+                masterWalletAddress,
+                balance: parseBitcoinBalanceData(balance),
+                amount: balance.payload.data.confirmations0.amount || balance.payload.data.confirmations6.amount,
+              }))
+            }),
+
+        ])}, []
+      )
+    
+      return resolve(parallelPromises(promises))
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+

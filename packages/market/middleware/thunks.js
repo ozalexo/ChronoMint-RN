@@ -94,23 +94,31 @@ export const stopMarket = (isGraceful = true) => (dispatch) => {
 }
 
 export const startMarket = () => (dispatch) => {
-  const MARKET_REQUEST_DELAY = 30000
-  dispatch(MarketMiddlewareActions.connect())
-    .then(() => {
-      dispatch(MarketMiddlewareActions.connectSuccess())
-      dispatch(MarketMiddlewareActions.setEventHandler('m', (data) => {
-        dispatch(updateMarket(data))
-      }))
-      dispatch(MarketMiddlewareActions.setEventHandler('disconnect', (isGraceful) => {
-        if (!isGraceful) {
-          dispatch(MarketMiddlewareActions.connectFailure())
-          // dispatch(startMarket())
+  return new Promise((resolve, reject) => {
+    const MARKET_REQUEST_DELAY = 30000
+    dispatch(MarketMiddlewareActions.connect())
+      .then(() => {
+        try {
+          dispatch(MarketMiddlewareActions.connectSuccess())
+          dispatch(MarketMiddlewareActions.setEventHandler('m', (data) => {
+            dispatch(updateMarket(data))
+          }))
+          dispatch(MarketMiddlewareActions.setEventHandler('disconnect', (isGraceful) => {
+            if (!isGraceful) {
+              dispatch(MarketMiddlewareActions.connectFailure())
+              // dispatch(startMarket())
+            }
+          }))
+          dispatch(MarketMiddlewareActions.subscribe())
+          return resolve()
+        } catch (error) {
+          return reject(error)
         }
-      }))
-      dispatch(MarketMiddlewareActions.subscribe())
-    })
-    .catch(() => {
-      // TODO: to add error handler
-    })
-  dispatch(MarketMiddlewareActions.startPricesPolling(MARKET_REQUEST_DELAY))
+      })
+      .catch((error) => {
+        // TODO: to add error handler
+        return resolve(error)
+      })
+    dispatch(MarketMiddlewareActions.startPricesPolling(MARKET_REQUEST_DELAY))
+  })
 }
