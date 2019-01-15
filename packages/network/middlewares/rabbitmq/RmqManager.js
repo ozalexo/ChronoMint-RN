@@ -25,6 +25,7 @@ class RmqManager {
       this.client = webstomp.over(this.ws, {
         heartbeat: false,
         debug: false,
+        binary: true,
       })
 
       this.client.connect(
