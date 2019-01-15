@@ -45,6 +45,18 @@ const availableChronoBankMiddlewareNodes = {
 }
 
 /**
+ * This is a list of all available RabbitMQ nodes
+ */
+const availableRabbitMqNodes = {
+  [MAINNET]: {
+    BASE_URL: 'wss://rabbitmq-prod-ws.chronobank.io/ws',
+  },
+  [TESTNET]: {
+    BASE_URL: 'wss://rabbitmq-stage-webstomp.chronobank.io/ws',
+  },
+}
+
+/**
  * This is a list of all available Ethereum nodes
  */
 const INFURA_TOKEN = 'PVe9zSjxTKIP3eAuAHFA'
@@ -275,6 +287,7 @@ export default {
       networkTitle: 'ChronoBank - Mainnet (production)',
       networkType: MAINNET,
       primaryNode: availableEthereumNodes[MAINNET].chronobank,
+      rabbitMqBaseUrl: availableRabbitMqNodes[MAINNET].BASE_URL,
     },
     {
       blockchain: blockchainMainnet,
@@ -284,6 +297,7 @@ export default {
       networkTitle: 'Infura - Mainnet (production)',
       networkType: MAINNET,
       primaryNode: availableEthereumNodes[MAINNET].infura,
+      rabbitMqBaseUrl: availableRabbitMqNodes[MAINNET].BASE_URL,
     },
     {
       blockchain: blockchainTestnet,
@@ -293,6 +307,7 @@ export default {
       networkTitle: 'ChronoBank - Rinkeby (testnet)',
       networkType: TESTNET,
       primaryNode: availableEthereumNodes[TESTNET].chronobank,
+      rabbitMqBaseUrl: availableRabbitMqNodes[TESTNET].BASE_URL,
     },
     {
       blockchain: blockchainTestnet,
@@ -302,6 +317,7 @@ export default {
       networkTitle: 'Infura - Rinkeby (testnet)',
       networkType: TESTNET,
       primaryNode: availableEthereumNodes[TESTNET].infura,
+      rabbitMqBaseUrl: availableRabbitMqNodes[TESTNET].BASE_URL,
     },
     // {
     //   blockchain: blockchainTestnet,

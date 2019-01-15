@@ -31,6 +31,11 @@ export const getCurrentNetworkBlockchains = createSelector(
   (selected) => selected.blockchain
 )
 
+export const getCurrentNetworkRmqbaseUrl = createSelector(
+  getCurrentNetwork,
+  (selected) => selected.rabbitMqBaseUrl
+)
+
 export const getCurrentNetworkBlockchainChannels = (blockchain) => createSelector(
   getCurrentNetworkBlockchains,
   (blockchains) => blockchains[blockchain].channels
