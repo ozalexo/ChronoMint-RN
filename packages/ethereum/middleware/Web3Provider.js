@@ -76,7 +76,7 @@ export default class Web3Provider {
         }
         this.connection.onmessage = (event) => {
           clearTimeout(this.WStimeout)
-          console.log('onmessage event.data', event, event.data)
+          // console.log('onmessage event.data', event, event.data)
           const data = typeof event.data === 'string'
             ? event.data
             : ''
@@ -102,12 +102,12 @@ export default class Web3Provider {
 
   envokeCallbacks = (result) => {
     try {
-      console.log('envokeCallbacks', result)
+      // console.log('envokeCallbacks', result)
       let id = null
       if (Array.isArray(result)) {
         result.forEach((load) => {
-          console.log('envokeCallbacks load', load)
-          console.log('envokeCallbacks responseCallbacks', this.responseCallbacks)
+          // console.log('envokeCallbacks load', load)
+          // console.log('envokeCallbacks responseCallbacks', this.responseCallbacks)
           if (this.responseCallbacks[load.id]) {
             id = load.id
           } else {
@@ -115,7 +115,7 @@ export default class Web3Provider {
           }
         })
       } else {
-        console.log('envokeCallbacks else id result', result)
+        // console.log('envokeCallbacks else id result', result)
         id = result && result.id
       }
 
@@ -125,15 +125,15 @@ export default class Web3Provider {
         result.method &&
         result.method.indexOf('_subscription') !== -1
       ) {
-        console.log('envokeCallbacks _subscription found', result)
+        // console.log('envokeCallbacks _subscription found', result)
         this.notificationCallbacks.forEach((callback) => {
           if (typeof callback === 'function') {
             callback(result)
           }
         })
       } else {
-        console.log('envokeCallbacks _subscription not found, this.responseCallbacks', this.responseCallbacks)
-        console.log('envokeCallbacks _subscription not found, result', result)
+        // console.log('envokeCallbacks _subscription not found, this.responseCallbacks', this.responseCallbacks)
+        // console.log('envokeCallbacks _subscription not found, result', result)
         if (this.responseCallbacks[id]) {
           try {
             this.responseCallbacks[id](null, result)

@@ -189,7 +189,7 @@ export const deleteBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispa
 export const updateBitcoinBalance = ({ address, masterWalletAddress, balance, amount }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      console.log('updateBitcoinBalance 001', address, masterWalletAddress, balance, amount)
+      // console.log('updateBitcoinBalance 001', address, masterWalletAddress, balance, amount)
       dispatch(Actions.bitcoinUpdateBalance({ address, masterWalletAddress, balance, amount }))
       return resolve()
     } catch (e) {

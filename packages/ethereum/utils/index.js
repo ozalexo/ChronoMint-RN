@@ -7,6 +7,7 @@ import Mnemonic from 'bitcore-mnemonic-react-native'
 import hdKey from 'ethereumjs-wallet/hdkey'
 import Accounts from 'web3-eth-accounts'
 import { WALLET_HD_PATH } from '../constants'
+import { amountToBalance } from './amount'
 
 const getDerivedWalletByPrivateKey = (privateKey, path = WALLET_HD_PATH) => {
   const accounts = new Accounts()
@@ -81,4 +82,52 @@ export const signEthTransaction = ({ tx, privateKey }) => {
   const accounts = new Accounts()
   const signedTx = accounts.signTransaction(tx, privateKey)
   return signedTx
+}
+
+export const processBalanceUpdateResponseBody = (body, address, masterWalletAddress) => {
+  if (!body || !address || !masterWalletAddress) {
+    throw new Error('Error ETHU005: processBalanceUpdateResponseBody, incorrect arguments')
+  }
+
+  const data = JSON.parse(body)
+  console.log('ETH processBalanceUpdateResponseBody data', data)
+  const confirmations0 = data.balances.confirmations0
+  const confirmations6 = data.balances.confirmations6
+  const balance0 = amountToBalance(confirmations0)
+  const balance6 = amountToBalance(confirmations6)
+  const updatedData = {
+    address: data.address,
+    masterWalletAddress,
+    balance: balance0 || balance6,
+    amount: confirmations0 || confirmations6,
+  }
+
+  return updatedData
+}
+
+export const processTransactionUpdateResponseBody = (body, address, masterWalletAddress) => {
+  if (!body || !address || !masterWalletAddress) {
+    throw new Error('Error ETHU006: processTransactionUpdateResponseBody, incorrect arguments')
+  }
+  const data = JSON.parse(body)
+  console.log('ETH processTransactionUpdateResponseBody data', data)
+  const txList = [
+    {
+      from: data.inputs[0].address,
+      to: data.outputs[0].address,
+      amount: data.outputs[0].value,
+      balance: amountToBalance(data.outputs[0].value),
+      timestamp: data.timestamp,
+      hash: body.hash,
+      confirmations: data.confirmations,
+    },
+  ]
+  const updatedData = {
+    address,
+    masterWalletAddress,
+    txList,
+    latestTxDate: data.timestamp,
+  }
+
+  return updatedData
 }

@@ -94,7 +94,7 @@ const availableEthereumNodes = {
       providerTitle: 'Infura',
       isOnline: null,
       isSyncing: true,
-      ws: `wss://mainnet.infura.io/ws/v3/442d153c1cc540048ac61175c989a69f`,
+      ws: 'wss://rinkeby.infura.io/ws',
     },
     local: {
       disabled: false,
@@ -116,7 +116,9 @@ const blockchainMainnet ={
     symbol: 'ETH',
     channels: {
       balance: '/exchange/events/mainnet-ethereum-middleware-chronobank-io_balance',
-      events: '/exchange/events/mainnet-ethereum-parity-middleware-chronobank-io_chrono_sc',
+      block: '/exchange/events/mainnet-ethereum-middleware-chronobank-io_block',
+      events: '/exchange/events/mainnet-ethereum-middleware-chronobank-io_chrono_sc',
+      transaction: '/exchange/events/mainnet-ethereum-middleware-chronobank-io_transaction',
     },
   },
   // [BLOCKCHAIN_BITCOINCASH]: {
@@ -138,6 +140,8 @@ const blockchainMainnet ={
     channels: {
       balance: '/exchange/events/mainnet-bitcoin-middleware-chronobank-io_balance',
       block: '/exchange/events/mainnet-bitcoin-middleware-chronobank-io_block',
+      events: '/exchange/events/mainnet-bitcoin-middleware-chronobank-io_chrono_sc',
+      transaction: '/exchange/event/mainnet-bitcoin-middleware-chronobank-io_transaction',
     },
   },
   // [BLOCKCHAIN_LITECOIN]: {
@@ -180,7 +184,9 @@ const blockchainTestnet ={
     symbol: 'ETH',
     channels: {
       balance: '/exchange/events/rinkeby-ethereum-middleware-chronobank-io_balance',
+      block: '/exchange/events/rinkeby-ethereum-middleware-chronobank-io_block',
       events: '/exchange/events/rinkeby-ethereum-middleware-chronobank-io_chrono_sc',
+      transaction: '/exchange/events/rinkeby-ethereum-middleware-chronobank-io_transaction',
     },
   },
   // [BLOCKCHAIN_BITCOINCASH]: {
@@ -201,8 +207,9 @@ const blockchainTestnet ={
     symbol: 'BTC',
     channels: {
       balance: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_balance',
-      transaction: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_transaction',
       block: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_block',
+      events: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_chrono_sc',
+      transaction: '/exchange/events/testnet-bitcoin-middleware-chronobank-io_transaction',
     },
   },
   // [BLOCKCHAIN_LITECOIN]: {

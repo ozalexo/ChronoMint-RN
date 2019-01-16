@@ -18,15 +18,20 @@ class RmqManager {
     return new Promise((resolve, reject) => {
       try {
         this.ws = new WebSocket(baseUrl)
+        this.ws.onclose = () => {
+          console.log('WS CLOSED!')
+        }
       } catch (error) {
         return reject(error.message)
       }
 
       this.client = webstomp.over(this.ws, {
         heartbeat: false,
-        debug: false,
+        debug: true,
         binary: true,
       })
+
+      console.log('this.client', this.client)
 
       this.client.connect(
         user,
@@ -44,10 +49,10 @@ class RmqManager {
             })
         },
         (error) => {
+          console.log('Disconnect detected?')
+          this.connect(baseUrl, user, password, handlers)
           if (!this.resolved) {
             return reject(error.message)
-          } else {
-            this.connect(baseUrl, user, password, handlers)
           }
         },
       )

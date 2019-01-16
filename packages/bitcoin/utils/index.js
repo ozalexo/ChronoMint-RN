@@ -165,7 +165,6 @@ export const processTransactionUpdateResponseBody = (body, address, masterWallet
   return updatedData
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const parallelPromises = (promises) => {
   const errorIgnoringPromises = promises
     .map((p) => {

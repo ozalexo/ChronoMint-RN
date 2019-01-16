@@ -142,7 +142,7 @@ export default class Web3Controller {
   }
 
   initTokenContract (tokenSymbol, tokenAddress, parentAddress) {
-    console.log('10000 initTokenContract', tokenSymbol)
+    // console.log('10000 initTokenContract', tokenSymbol)
     return new Promise((resolve, reject) => {
       try {
         this.tokens = this.tokens.set(tokenSymbol, new this.web3.eth.Contract(ERC20DAODefaultABI.abi, tokenAddress))
@@ -233,7 +233,7 @@ export default class Web3Controller {
   }
 
   subscribeOnTokenEvents () {
-    console.log('10000 subscribeOnTokenEvents')
+    // console.log('10000 subscribeOnTokenEvents')
     return new Promise((resolve, reject) => {
       try {
         this.tokens.forEach((tokenContract, tokenSymbol) => {
@@ -340,7 +340,7 @@ export default class Web3Controller {
         if (Erc20Manager) {
           Erc20Manager.methods.getTokens([]).call()
             .then( async (res) => {
-              console.log('10000 Got list of tokens')
+              // console.log('10000 Got list of tokens')
               /* eslint-disable no-underscore-dangle */
               const addresses = res._tokensAddresses
               const names = res._names
@@ -359,7 +359,7 @@ export default class Web3Controller {
 
               Promise
                 .all(addresses.map((address, i) => {
-                  console.log('10000 Token %s', address)
+                  // console.log('10000 Token %s', address)
                   return new Promise((mresolve) => {
                     try {
                       const model = {

@@ -6,17 +6,17 @@
 import * as Keychain from 'react-native-keychain'
 import * as apiETH from '../service/api'
 import { getBalance } from '../middleware/thunks'
-import { encryptWallet, createEthWallet, mnemonicToPrivateKeyAndAddress } from '../utils'
+import * as EthUtils from '../utils'
 import { amountToBalance } from '../utils/amount'
 import * as Actions from './actions'
 
 export const createAccountByMnemonic = (mnemonic, password) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const decryptedWallet = mnemonicToPrivateKeyAndAddress(mnemonic)
+      const decryptedWallet = EthUtils.mnemonicToPrivateKeyAndAddress(mnemonic)
 
       const ethAddress = decryptedWallet.address
-      const encryptedWallet = await encryptWallet(decryptedWallet, password)
+      const encryptedWallet = await EthUtils.encryptWallet(decryptedWallet, password)
 
       if (!ethAddress) {
         return reject('0001: No ETH address!')
@@ -39,9 +39,9 @@ export const createAccountByMnemonic = (mnemonic, password) => async (dispatch) 
 export const createAccountByPrivateKey = (privateKey, password) => (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const decryptedWallet = createEthWallet(privateKey)
+      const decryptedWallet = EthUtils.createEthWallet(privateKey)
       const ethAddress = decryptedWallet.address
-      const encryptedWallet = await encryptWallet(decryptedWallet, password)
+      const encryptedWallet = await EthUtils.encryptWallet(decryptedWallet, password)
 
       if (!ethAddress) {
         return reject('0001: No ETH address!')
@@ -271,6 +271,48 @@ export const requestAndSubscribeEthereumWallet = (address) => (dispatch) => {
           console.log('Error requiesting ETH balance via web3', error)
         })
       return resolve()
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+
+// Process body from HTTP response (BTC balance) and update store
+export const balanceUpdateHandler = (address, masterWalletAddress) => (body) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const updatedData = EthUtils.processBalanceUpdateResponseBody(body, address, masterWalletAddress)
+      console.log('balanceUpdateHandler 002 updatedData', updatedData)
+      dispatch(ethereumUpdateBalance(updatedData))
+        .then(() => {
+          return resolve()
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+
+// Process body from HTTP response (BTC transaction) and update store
+export const transactionUpdateHandler = (address, masterWalletAddress) => (body) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    if (!body) {
+      return reject('Error BTC002: no transaction data to update.')
+    }
+
+    try {
+      const updatedData = EthUtils.processTransactionUpdateResponseBody(body, address, masterWalletAddress)
+
+      dispatch(updateEthereumTxHistory(updatedData))
+        .then(() => {
+          return resolve()
+        })
+        .catch((error) => {
+          return reject(error)
+        })
     } catch (error) {
       return reject(error)
     }
